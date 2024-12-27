@@ -1,5 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
+import { getHomeInfo } from '../data/client';
+import { getProjectsInfo } from '../data/client';
+
+const projectsData = await getProjectsInfo();
+console.log(projectsData)
 
 // Layout import — provides basic page elements: <head>, <nav>, <footer> etc.
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -15,6 +20,7 @@ import PortfolioPreview from '../components/PortfolioPreview.astro';
 // Page section components
 import ContactCTA from '../components/ContactCTA.astro';
 import Skills from '../components/Skills.astro';
+import { createAnimationScope } from 'astro:transitions';
 
 // Content Fetching: List four most recent work projects
 const projects = (await getCollection('work'))
@@ -23,6 +29,9 @@ const projects = (await getCollection('work'))
 
 // Full Astro Component Syntax:
 // https://docs.astro.build/basics/astro-components/
+
+const data = await getHomeInfo()
+
 ---
 
 <BaseLayout>
@@ -30,22 +39,22 @@ const projects = (await getCollection('work'))
 		<div class="wrapper stack gap-8 lg:gap-20">
 			<header class="hero">
 				<Hero
-					title="Hello, my name is Jeanine White"
-					tagline="I am a Creative Developer who is currently based in Portland, Oregon."
+					title={`Hello, my name is ${data[0].homePageFields.name_field}`}
+					tagline={data[0].homePageFields.tagLine_field}
 					align="start"
 				>
 					<div class="roles">
-						<Pill><Icon icon="code" size="1.33em" /> Developer</Pill>
-						<Pill><Icon icon="microphone-stage" size="1.33em" /> Speaker</Pill>
-						<Pill><Icon icon="pencil-line" size="1.33em" /> Writer</Pill>
+						<Pill><Icon icon="code" size="1.33em" /> {data[0].homePageFields.role1_field}</Pill>
+						<Pill><Icon icon="microphone-stage" size="1.33em" /> {data[0].homePageFields.role2_field}</Pill>
+						<Pill><Icon icon="pencil-line" size="1.33em" /> {data[0].homePageFields.role3_field}</Pill>
 					</div>
 				</Hero>
 
 				<img
-					alt="Jeanine White smiling in a red plaid shirt and tortoise shell glasses"
+					alt="Alex Cuadra smiling in a red plaid shirt and tortoise shell glasses"
 					width="480"
 					height="620"
-					src="/assets/portrait.jpg"
+					src={data[0].homePageFields.photo_field.node.sourceUrl}
 				/>
 			</header>
 

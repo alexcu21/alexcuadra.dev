@@ -1,11 +1,14 @@
 ---
+import { getHomeInfo } from '../data/client';
 import CallToAction from './CallToAction.astro';
 import Icon from './Icon.astro';
+
+const data = await getHomeInfo();
 ---
 
 <aside>
 	<h2>Interested in working together?</h2>
-	<CallToAction href="mailto:me@example.com">
+	<CallToAction href={`mailto:${data[0].homePageFields.email}`}>
 		Send Me a Message
 		<Icon icon="paper-plane-tilt" size="1.2em" />
 	</CallToAction>
