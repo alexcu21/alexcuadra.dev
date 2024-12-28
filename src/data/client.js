@@ -10,32 +10,32 @@ export const getHomeInfo = async () => {
 
     // Define the GraphQL query
     const query = gql`
-    query getHomeFields {
-    pages(where: {id: 19}) {
-    nodes {
-        title
-        homePageFields {
-        fieldGroupName
-        name_field
-        photo_field {
-            node {
-            link
-            sourceUrl
+        query getHomeFields {
+            pages(where: {id: 19}) {
+                nodes {
+                    title
+                    homePageFields {
+                    fieldGroupName
+                    name_field
+                    photo_field {
+                        node {
+                        link
+                        sourceUrl
+                        }
+                    }
+                        role1_field
+                        role2_field
+                        role3_field
+                        tagLine_field
+                        twitterUrl
+                        youtubeUrl
+                        githubUrl
+                        linkedinUrl
+                        email
+                    }
+                }
             }
         }
-            role1_field
-            role2_field
-            role3_field
-            tagLine_field
-            twitterUrl
-            youtubeUrl
-            githubUrl
-            linkedinUrl
-            email
-        }
-    }
-    }
-    }
     `;
 
     // Fetch data
@@ -74,6 +74,7 @@ export const getProjectsInfo = async () => {
                         }
                     }
                     content
+                    slug
                 }
             }
         }

@@ -8,9 +8,14 @@ import PortfolioPreview from '../components/PortfolioPreview.astro';
 import Hero from '../components/Hero.astro';
 import Grid from '../components/Grid.astro';
 
-const projects = (await getCollection('work')).sort(
-	(a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
-);
+import { getProjectsInfo } from '../data/client';
+
+// const projects = (await getCollection('work')).sort(
+// 	(a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
+// );
+
+const projectsData = await getProjectsInfo();
+
 ---
 
 <BaseLayout
@@ -26,7 +31,7 @@ const projects = (await getCollection('work')).sort(
 			/>
 			<Grid variant="offset">
 				{
-					projects.map((project) => (
+					projectsData.map((project:any) => (
 						<li>
 							<PortfolioPreview project={project} />
 						</li>
