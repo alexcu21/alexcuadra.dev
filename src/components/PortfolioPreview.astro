@@ -12,8 +12,10 @@ const {
   featuredImage: {
     node: { sourceUrl: img },
   },
-  slug
+  slug,
+  modified
 } = Astro.props.project;
+
 ---
 
 <a class="card" href={`/work/${slug}`}>

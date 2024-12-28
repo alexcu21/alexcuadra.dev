@@ -1,22 +1,37 @@
 ---
+import { getHomeInfo } from '../data/client';
 import Icon from './Icon.astro';
+const homeData  = await getHomeInfo()
+
+const allskills = homeData [0].homePageFields.skills;
+
+const skillsArray = Object.entries(allskills)
+  .filter(([key]) => key.startsWith('skillName'))
+  .map(([key, value]) => {
+    const index = key.replace('skillName', '');
+    return {
+      name: value,
+      description: allskills[`skillDescription${index}`],
+    };
+  });
+
 ---
 
 <section class="box skills">
 	<div class="stack gap-2 lg:gap-4">
-		<Icon icon="terminal-window" color="var(--accent-regular)" size="2.5rem" gradient />
-		<h2>Full Stack</h2>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
+		<Icon icon="web" color="var(--accent-regular)" size="2.5rem" gradient />
+		<h2>{skillsArray[0].name}</h2>
+		<p>{skillsArray[0].description}</p>
 	</div>
 	<div class="stack gap-2 lg:gap-4">
 		<Icon icon="trophy" color="var(--accent-regular)" size="2.5rem" gradient />
-		<h2>Industry Leader</h2>
-		<p>Neque viverra justo nec ultrices dui. Est ultricies integer quis auctor elit.</p>
+		<h2>{skillsArray[1].name}</h2>
+		<p>{skillsArray[1].description}</p>
 	</div>
 	<div class="stack gap-2 lg:gap-4">
 		<Icon icon="strategy" color="var(--accent-regular)" size="2.5rem" gradient />
-		<h2>Strategy-Minded</h2>
-		<p>Urna porttitor rhoncus dolor purus non enim praesent ornare.</p>
+		<h2>{skillsArray[2].name}</h2>
+		<p>{skillsArray[2].description}</p>
 	</div>
 </section>
 

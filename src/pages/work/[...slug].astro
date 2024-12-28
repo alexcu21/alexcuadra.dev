@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-
+import LinksToProject from '../../components/LinksToProjects.astro';
 import ContactCTA from '../../components/ContactCTA.astro';
 import Hero from '../../components/Hero.astro';
 import Icon from '../../components/Icon.astro';
@@ -31,7 +31,8 @@ const {
   featuredImage: {
     node: { sourceUrl: img },
   },
-  content
+  content,
+  modified
 } = project;
 
 ---
@@ -45,7 +46,7 @@ const {
 					<Hero title={title} align="start">
 						<div class="details">
 							<div class="tags">
-								{tags.map((tag:any) => <Pill>{tag.name}</Pill>)}
+								{(tags as { name: string }[]).map((tag) => <Pill>{tag.name}</Pill>)}
 							</div>
 							<p class="description">{projectTagline}</p>
 						</div>
@@ -55,6 +56,16 @@ const {
 			<main class="wrapper">
 				<div class="stack gap-10 content">
 					{img && <img src={img} alt={projectTagline || ''} />}
+					<div class="links-to-project">
+						<LinksToProject 
+							href={ githuburl }
+							text='GitHub'
+						/>
+						<LinksToProject 
+							href={ websiteurl }
+							text='Website'
+						/>
+					</div>
 					<div class="content" set:html={content}></div>
 				</div>
 			</main>
@@ -67,6 +78,11 @@ const {
 	header {
 		padding-bottom: 2.5rem;
 		border-bottom: 1px solid var(--gray-800);
+	}
+
+	.links-to-project{
+		display: flex;
+		gap: 0.5rem;
 	}
 
 	.back-link {

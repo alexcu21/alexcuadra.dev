@@ -32,6 +32,14 @@ export const getHomeInfo = async () => {
                         githubUrl
                         linkedinUrl
                         email
+                        skills {
+                            skillDescription1
+                            skillDescription2
+                            skillDescription3
+                            skillName1
+                            skillName2
+                            skillName3
+                        }
                     }
                 }
             }
@@ -75,6 +83,7 @@ export const getProjectsInfo = async () => {
                     }
                     content
                     slug
+                    modified
                 }
             }
         }
