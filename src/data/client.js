@@ -1,10 +1,7 @@
 import { request, gql } from 'graphql-request';
 
-
 // GraphQL endpoint
 const endpoint = 'https://alexcuadra.dev/graphql';
-
-
 
 export const getHomeInfo = async () => {
 
@@ -93,3 +90,93 @@ export const getProjectsInfo = async () => {
 
     return projectInfo; 
 }
+
+//Articles Data
+
+export const getArticlesCategories = async () => {
+    const query = gql`
+        query getArticleCategories {
+            categories(where: {hideEmpty: true}) {
+                nodes {
+                        databaseId
+                        count
+                        name
+                        slug
+                        id
+                    }
+                }
+            }
+
+    `;
+    const articlesCategories = await request(endpoint, query);
+    return articlesCategories.categories.nodes;
+}
+
+export const getArticlesByCategory = async (slug) => {
+    const query = gql`
+    query getArticlesByCategory ($slug: String!){
+        articles(where: {categoryName: $slug}) {
+                nodes {
+                    slug
+                    title
+                    content
+                    id
+                    featuredImage {
+                        node {
+                            sourceUrl
+                        }
+                    }
+                }
+            }
+        }
+    `;
+
+    const variables = { slug };
+    const { articles } = await request(endpoint, query, variables);
+    return articles.nodes;
+}
+
+export const getArticleBySlug = async (slug) => {
+    const query = gql`
+
+        query getArticleBySlug ($slug: ID!){
+            article(id: $slug, idType: SLUG) {
+                content
+                featuredImage {
+                    node {
+                        sourceUrl
+                    }
+                }
+                slug
+                title
+                id
+                categories {
+                    nodes {
+                        id
+                        name
+                        slug
+                    }
+                }
+            }
+        }
+
+    `;
+
+    const variables = { slug };
+    const data = await request(endpoint, query, variables);
+    return data.article;
+}
+
+export async function getAllArticleSlugs() {
+    const query = gql`
+      query AllArticles {
+        articles(first: 100) {
+          nodes {
+            slug
+          }
+        }
+      }
+    `;
+    const data = await request(endpoint, query);
+    return data.articles.nodes.map((node) => node.slug);
+  }

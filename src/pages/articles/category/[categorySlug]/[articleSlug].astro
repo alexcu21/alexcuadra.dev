@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import Icon from '../../../../components/Icon.astro';
+import Hero from '../../../../components/Hero.astro';
+import { getArticlesCategories, getArticleBySlug, getArticlesByCategory } from '../../../../data/client';
+
+export async function getStaticPaths() {
+  // 1) Fetch an array of categories
+  const categories = await getArticlesCategories(); // (You define how to fetch categories)
+
+  // 2) For each category, fetch articles that belong to it
+  const paths = [];
+
+  for (const cat of categories) {
+    const articles = await getArticlesByCategory(cat.slug);
+
+    // 3) For each article, push an object with both `categorySlug` and `articleSlug`
+    for (const article of articles) {
+      paths.push({
+        params: {
+          categorySlug: cat.slug,      // matches folder [categorySlug]
+          articleSlug: article.slug,   // matches file   [articleSlug]
+        },
+      });
+    }
+  }
+
+  // 4) Return final array
+  return paths;
+}
+
+// At runtime or build time, fetch the single article for that slug:
+const { categorySlug, articleSlug } = Astro.params;
+const article = await getArticleBySlug(articleSlug);
+
+---
+
+<BaseLayout title={article.title} description="Article details">
+
+    <div class="stack gap-20">
+        <div class="stack gap-15">
+          <header>
+                <div class="wrapper stack gap-2">
+                    <a class="back-link" href={`/articles/category/${categorySlug}`}><Icon icon="arrow-left" /> {article.title}</a>
+                    <Hero title={article.title} align="start">
+                        <div class="details">
+                            <p class="description">{article.quote}</p>
+                        </div>
+                    </Hero>
+                </div>
+            </header>
+            <main class="wrapper">
+                {article.imageUrl && <img src={article.imageUrl} alt={article.title} />}
+                <div class="stack gap-10 content">
+                    <div set:html={article.content}></div>
+                </div>
+            </main>
+        </div>
+      </div>
+
+</BaseLayout>

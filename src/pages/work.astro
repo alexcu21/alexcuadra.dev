@@ -1,8 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
-
 import BaseLayout from '../layouts/BaseLayout.astro';
-
 import ContactCTA from '../components/ContactCTA.astro';
 import PortfolioPreview from '../components/PortfolioPreview.astro';
 import Hero from '../components/Hero.astro';
@@ -10,11 +7,11 @@ import Grid from '../components/Grid.astro';
 
 import { getProjectsInfo } from '../data/client';
 
-// const projects = (await getCollection('work')).sort(
-// 	(a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
-// );
-
 const projectsData = await getProjectsInfo();
+
+const projects = (projectsData).sort(
+	(a: any, b: any) => b.modified - a.modified,
+);
 
 ---
 
@@ -31,7 +28,7 @@ const projectsData = await getProjectsInfo();
 			/>
 			<Grid variant="offset">
 				{
-					projectsData.map((project:any) => (
+					projects.map((project:any) => (
 						<li>
 							<PortfolioPreview project={project} />
 						</li>
