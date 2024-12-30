@@ -157,6 +157,9 @@ export const getArticleBySlug = async (slug) => {
                         slug
                     }
                 }
+                    articlesFields {
+                        quote
+                    }
             }
         }
 

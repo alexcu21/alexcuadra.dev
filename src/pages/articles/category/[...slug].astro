@@ -24,25 +24,27 @@ const articles = await getArticlesByCategory(slug);
 <BaseLayout title='Articles' description='Articles in this category'>
   <div class="stack gap-20">
     <div class="stack gap-15">
-      <header>
-				<div class="wrapper stack gap-2">
-					<a class="back-link" href="/#articles"><Icon icon="arrow-left" /> {name}</a>
-					<Hero title={`Articles in ${name}`} align="start">
-						<div class="details">
-							<p class="description">Take a look on these articles</p>
-						</div>
-					</Hero>
-				</div>
-			</header>
+    	<header>
+			<div class="wrapper stack gap-2">
+				<a class="back-link" href="/articles"><Icon icon="arrow-left" /> {name}</a>
+				<Hero title={`Articles in ${name}`} align="start">
+					<div class="details">
+						<p class="description">Take a look on these articles</p>
+					</div>
+				</Hero>
+			</div>
+		</header>
       <main class="wrapper">
         <div class="stack gap-10 content">
-            <Grid>
-              {articles.map((article: any) => (
-                <li>
-                  <a href={`/articles/category/${slug}/${article.slug}`}>{article.title}</a>
-                </li>
-              ))}
-            </Grid>
+			<div class="gallery">
+				<Grid>
+					{articles.map((article: any) => (
+						<li class="mention-card">
+						<a href={`/articles/category/${slug}/${article.slug}`}>{article.title}</a>
+						</li>
+					))}
+				</Grid>
+			</div>
         </div>
       </main>
     </div>
@@ -146,4 +148,31 @@ const articles = await getArticlesByCategory(slug);
 			font-size: var(--text-2xl);
 		}
 	}
+
+	<style>
+    .gallery {
+		grid-area: gallery;
+	}
+
+    .mention-card {
+		display: flex;
+		height: 7rem;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+		border: 1px solid var(--gray-800);
+		border-radius: 1.5rem;
+		color: var(--gray-300);
+		background: var(--gradient-subtle);
+		box-shadow: var(--shadow-sm);
+	}
+
+	@media (min-width: 50em) {
+		.mention-card {
+			border-radius: 1.5rem;
+			height: 9.5rem;
+		}
+	}
+</style>
+
 </style>

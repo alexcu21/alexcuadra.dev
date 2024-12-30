@@ -1,0 +1,23 @@
+---
+import Icon from './Icon.astro'
+
+interface Props{
+    quote:string
+}
+
+const { quote } = Astro.props
+---
+<p>
+    <span>
+        <strong>
+            
+                <Icon
+                    icon='quote'
+                />
+            
+            <i> 
+                { quote }
+            </i>
+        </strong>
+    </span>
+</p>

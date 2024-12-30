@@ -1,0 +1,66 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro"
+import Hero from "../components/Hero.astro"
+import Grid from "../components/Grid.astro"
+import ContactCTA from "../components/ContactCTA.astro"
+import CountBadge from "../components/CountBadge.astro"
+import { getArticlesCategories } from '../data/client';
+
+const categories = await getArticlesCategories();
+---
+
+<BaseLayout
+	title="Articles and Mentions | Alex Cuadra"
+	description="Here you have some articles and mentions in some publications"
+>
+	<div class="stack gap-20">
+		<main class="wrapper stack gap-8">
+			<Hero
+				title="Articles & Mentions"
+				tagline="I have been writing and creating content for the community"
+				align="start"
+			/>
+            <div class="gallery">
+                <Grid>
+                    {
+                        categories.map((category:any) => (
+                            <li class="mention-card">
+                                <a 
+                                    href={`/articles/category/${category.slug}`}>{category.name} 
+                                    <CountBadge count={category.count} />
+                                </a>
+                            </li>
+                        ))
+                    }
+                </Grid>
+            </div>
+		</main>
+		<ContactCTA />
+	</div>
+</BaseLayout>
+
+<style>
+    .gallery {
+		grid-area: gallery;
+	}
+
+    .mention-card {
+		display: flex;
+		height: 7rem;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+		border: 1px solid var(--gray-800);
+		border-radius: 1.5rem;
+		color: var(--gray-300);
+		background: var(--gradient-subtle);
+		box-shadow: var(--shadow-sm);
+	}
+
+	@media (min-width: 50em) {
+		.mention-card {
+			border-radius: 1.5rem;
+			height: 9.5rem;
+		}
+	}
+</style>
