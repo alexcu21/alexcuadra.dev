@@ -183,3 +183,33 @@ export async function getAllArticleSlugs() {
     const data = await request(endpoint, query);
     return data.articles.nodes.map((node) => node.slug);
   }
+
+  export async function getAboutFields(){
+
+    const query = gql`
+
+    query getAboutFields {
+        pages(where: {id: 68}) {
+                edges {
+                    node {
+                        id
+                            aboutPage {
+                                education
+                                introText
+                                skillsText
+                            }
+                        content
+                        featuredImage {
+                            node {
+                                sourceUrl
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    `;
+    const data = await request(endpoint, query)
+    return data.pages.edges[0].node;
+  }
