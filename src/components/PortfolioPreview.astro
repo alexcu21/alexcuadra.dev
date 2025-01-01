@@ -2,17 +2,15 @@
 import { getProjectsInfo } from "../data/client";
 
 const projects = await getProjectsInfo();
+
 const project = projects[0];
 
 const {
   title,
-  projects: { githuburl, projectTagline, websiteurl },
-  tags: { nodes: tags },
   featuredImage: {
     node: { sourceUrl: img },
   },
   slug,
-  modified
 } = Astro.props.project;
 
 ---
