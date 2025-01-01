@@ -1,7 +1,7 @@
 import { request, gql } from 'graphql-request';
 
 // GraphQL endpoint
-const endpoint = 'https://alexcuadra.dev/graphql';
+const endpoint = process.env.APIURL;
 
 export const getHomeInfo = async () => {
 
