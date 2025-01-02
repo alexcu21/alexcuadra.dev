@@ -42,7 +42,7 @@ const categories = await getArticlesCategories();
 		<div class="wrapper stack gap-8 lg:gap-20">
 			<header class="hero">
 				<Hero
-					title={`Hello, my name is ${data[0].homePageFields.name_field}`}
+					title={data[0].homePageFields.name_field ? `Hello, my name is ${data[0].homePageFields.name_field}` : "Need a name"}
 					tagline={data[0].homePageFields.tagLine_field}
 					align="start"
 				>
