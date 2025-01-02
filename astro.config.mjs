@@ -9,6 +9,6 @@ dotenv.config()
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind()],
-  output: 'static',
-  adapter: cloudflare(),
+  // output: 'server',
+  // adapter: cloudflare(),
 });
