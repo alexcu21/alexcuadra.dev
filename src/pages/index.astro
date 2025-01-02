@@ -26,12 +26,8 @@ const projects = (projectsData)
 	.sort((a: any, b: any) => b.modified - a.modified)
 	.slice(0, 4);
 
-// Full Astro Component Syntax:
-// https://docs.astro.build/basics/astro-components/
 
 const data = await getHomeInfo()
-
-console.log(data[0].homePageFields)
 
 const categories = await getArticlesCategories();
 
