@@ -6,7 +6,6 @@ import CountBadge from '../components/CountBadge.astro';
 
 const projectsData = await getProjectsInfo();
 
-console.log(projectsData)
 // Layout import — provides basic page elements: <head>, <nav>, <footer> etc.
 import BaseLayout from '../layouts/BaseLayout.astro';
 
@@ -31,6 +30,8 @@ const projects = (projectsData)
 // https://docs.astro.build/basics/astro-components/
 
 const data = await getHomeInfo()
+
+console.log(data[0].homePageFields)
 
 const categories = await getArticlesCategories();
 

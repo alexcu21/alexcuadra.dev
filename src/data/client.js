@@ -51,7 +51,7 @@ export const getHomeInfo = async () => {
         info = data.pages.nodes;
 
     } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching Home data:', error);
     }
 
     return info;
@@ -92,7 +92,7 @@ export const getProjectsInfo = async () => {
         projectInfo = projectData.projects.nodes
 
     }catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching Projects data:', error);
     }
     
 
@@ -123,7 +123,7 @@ export const getArticlesCategories = async () => {
         const articlesCategories = await request(endpoint, query);
         categories = articlesCategories.categories.nodes;
     }catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching categories data:', error);
     }
     return categories;
 }
