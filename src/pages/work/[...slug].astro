@@ -5,12 +5,13 @@ import ContactCTA from '../../components/ContactCTA.astro';
 import Hero from '../../components/Hero.astro';
 import Icon from '../../components/Icon.astro';
 import Pill from '../../components/Pill.astro';
-
 import { getProjectsInfo } from '../../data/client';
+
+export const prerender = true;
 
 // Fetch static paths for dynamic routing
 export async function getStaticPaths() {
-  // Fetch project data (replace `getCollection` with `getProjectsInfo`)
+  // Fetch project data
   const projects = await getProjectsInfo();
 
   // Map over projects to generate paths
@@ -24,8 +25,8 @@ const { project } = Astro.props;
 
 // Destructure project fields
 const {
-  title,
-  projects: { githuburl, projectTagline, websiteurl },
+  title = "Hey this project needs a title",
+  projects: { githuburl = "/404", projectTagline = "Do you need ideas for a tagline", websiteurl = "/404" },
   tags: { nodes: tags },
   featuredImage: {
     node: { sourceUrl: img },
@@ -36,7 +37,7 @@ const {
 
 ---
 
-<BaseLayout title={title} description={projectTagline}>
+<BaseLayout title={ title } description={ projectTagline }>
 	<div class="stack gap-20">
 		<div class="stack gap-15">
 			<header>
