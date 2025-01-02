@@ -5,35 +5,6 @@ import Hero from '../../../../components/Hero.astro';
 import { getArticlesCategories, getArticleBySlug, getArticlesByCategory } from '../../../../data/client';
 import ArticleQuote from '../../../../components/ArticleQuote.astro';
 
-// export async function getStaticPaths() {
-//   // 1) Fetch an array of categories
-//   const categories = await getArticlesCategories(); // (You define how to fetch categories)
-
-//   // 2) For each category, fetch articles that belong to it
-//   const paths = [];
-
-//   for (const cat of categories) {
-//     const articles = await getArticlesByCategory(cat.slug);
-
-//     // 3) For each article, push an object with both `categorySlug` and `articleSlug`
-//     for (const article of articles) {
-//       paths.push({
-//         params: {
-//           categorySlug: cat.slug,      // matches folder [categorySlug]
-//           articleSlug: article.slug,   // matches file   [articleSlug]
-//         },
-//       });
-//     }
-//   }
-
-//   // 4) Return final array
-//   return paths;
-// }
-
-// // At runtime or build time, fetch the single article for that slug:
-// const { categorySlug, articleSlug } = Astro.params;
-// const article = await getArticleBySlug(articleSlug);
-
 // Get the dynamic parameters from the URL
 const { categorySlug, articleSlug } = Astro.params;
 
