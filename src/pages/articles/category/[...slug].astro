@@ -5,20 +5,30 @@ import { getArticlesByCategory, getArticlesCategories } from '../../../data/clie
 import Hero from '../../../components/Hero.astro';
 import Icon from '../../../components/Icon.astro';
 
-// Build-time: generate paths for all categories
-export async function getStaticPaths() {
-  const categories = await getArticlesCategories(); // e.g. fetch WP categories
-  return categories.map((category:any) => ({
-    params: { slug: category.slug },
-    props: { name: category.name }
-  }));
-}
-
-// Runtime: fetch articles for the specific category slug
+// Get the category slug dynamically from the URL
 const { slug } = Astro.params;
-const { name } = Astro.props;
-const articles = await getArticlesByCategory(slug);
 
+// Fetch the category name and articles dynamically
+let name;
+let articles = [];
+
+try {
+  // Fetch all categories to find the name of the current category
+  const categories = await getArticlesCategories();
+  const currentCategory = categories.find((category: any) => category.slug === slug);
+
+  if (currentCategory) {
+    name = currentCategory.name;
+    // Fetch articles for the current category
+    articles = await getArticlesByCategory(slug);
+  } else {
+    throw new Error(`Category with slug "${slug}" not found.`);
+  }
+
+} catch (error) {
+  console.error("Error fetching category or articles:", error);
+  throw new Error("Failed to load articles for this category.");
+}
 ---
 
 <BaseLayout title='Articles' description='Articles in this category'>
