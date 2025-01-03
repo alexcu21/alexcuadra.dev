@@ -8,6 +8,7 @@ dotenv.config()
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://alexcuadra.dev',
   integrations: [tailwind()],
   output: 'server',
   adapter: cloudflare(),
