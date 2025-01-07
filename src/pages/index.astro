@@ -1,7 +1,7 @@
 ---
-import { getHomeInfo } from '../data/client';
-import { getProjectsInfo } from '../data/client';
-import { getArticlesCategories } from '../data/client';
+import { getHomeInfo } from '../data/querys';
+import { getProjectsInfo } from '../data/querys';
+import { getArticlesCategories } from '../data/querys';
 import CountBadge from '../components/CountBadge.astro';
 
 const projectsData = await getProjectsInfo();
