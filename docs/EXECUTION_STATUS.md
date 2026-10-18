@@ -1,5 +1,9 @@
 # Ejecución del rediseño
 
+## Export de registros ACF revisado — 18 octubre 2026
+
+Archivo acf-export-2026-10-18 (1).json incluye cuatro grupos idénticos al export original y los dos CPT. Claves/GraphQL, relaciones y supports correctos; custom-fields añadido intencionalmente por Alex. Diferencias pendientes: Projects usa post/posts en vez de page/pages; feeds desactivados en ambos frente al default activo del registro original. Guía de ajustes en docs/wordpress/CPT_EXPORT_REVIEW.md; lectura publicada ya validada, equivalencia de configuración todavía pendiente de estos ajustes.
+
 ## Lectura de CPT tras sustitución validada — 18 octubre 2026
 
 Alex activó Excerpt en Articles. cms:baseline -- --verify pasa sin modificar la referencia: 7 proyectos y 10 referencias externas publicados conservan IDs, slugs y hashes de campos/relaciones consultados. No fue necesario copiar entradas. Pendiente export ACF de ambos registros para verificar permisos/supports y revisión de estados no publicados/edición desde admin. Conservar el plugin original desactivado como respaldo.
