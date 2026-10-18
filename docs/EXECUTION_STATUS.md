@@ -1,5 +1,11 @@
 # Ejecución del rediseño
 
+## Lectura de CPT tras sustitución validada — 18 octubre 2026
+
+Alex activó Excerpt en Articles. cms:baseline -- --verify pasa sin modificar la referencia: 7 proyectos y 10 referencias externas publicados conservan IDs, slugs y hashes de campos/relaciones consultados. No fue necesario copiar entradas. Pendiente export ACF de ambos registros para verificar permisos/supports y revisión de estados no publicados/edición desde admin. Conservar el plugin original desactivado como respaldo.
+
+Smoke público posterior correcto: identidad autenticada, siete rutas de contenido, favicon y dos controles 404 sin dependencia del CMS.
+
 ## Aclaración Articles/Posts y verificación CPT — 18 octubre 2026
 
 Alex informa que creó ambos CPT en ACF. Aclara articles como referencias externas (publicaciones suyas en otras plataformas y menciones de terceros) y post como blog nativo del sitio. Plan actualizado con modelos, rutas, campos, templates, bilingüismo, SEO y pruebas separados. No se trasladó contenido entre tipos ni se implementó el blog.
