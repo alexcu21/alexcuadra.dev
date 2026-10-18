@@ -14,7 +14,7 @@ IDs comprobados contra la referencia previa, sin modificar el CMS:
 | 84 | podcast-hablemos-de-opensource-y-comunidad | es |
 | 82 | podcast-hablemos-del-2024 | es |
 
-## Pendiente de confirmar idioma del texto local
+## Español adicional confirmado por Alex
 
 | ID | Slug |
 | --- | --- |
@@ -22,6 +22,8 @@ IDs comprobados contra la referencia previa, sin modificar el CMS:
 | 80 | charla-el-camino-del-desarrollador-wordpress |
 | 87 | talkno-todo-en-wordpress-es-codigo |
 | 93 | descubriendo-playground-la-herramienta-para-hacer-demos |
+
+Estas cuatro fichas también fueron confirmadas en español. Total: nueve referencias españolas, sin cambios aplicados todavía al CMS.
 
 ID 75, how-to-build-a-custom-dynamic-gutenberg-block-step-by-step: conservar idioma hasta completar clasificación. No convertir referencias españolas existentes en contenido inglés solo porque sea el idioma principal. Si se traduce una ficha, conservar su registro y URL legacy y vincular otro registro para la traducción revisada. La correspondencia exacta entre URLs legacy y rutas localizadas debe probarse antes de mover publicaciones a nuevos archivos por idioma.
 

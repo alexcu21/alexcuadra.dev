@@ -1,5 +1,7 @@
 # Ejecución del rediseño
 
+Alex confirmó también español para IDs 78/80/87/93: nueve referencias españolas identificadas en total. Se actualizó ARTICLE_LANGUAGES.md; sigue sin aplicarse la asignación en WordPress.
+
 ## Clasificación inicial de idiomas Articles — 18 octubre 2026
 
 Alex completó el asistente de Polylang con inglés y medios traducibles. Aclara que hay fichas españolas; cinco slugs confirmados y contrastados con IDs 97/95/91/84/82, registrados en wordpress/ARTICLE_LANGUAGES.md. Projects y Articles no están marcados como traducibles. Baseline tras el asistente sin cambios. Otras cuatro fichas con slugs españoles pendientes de confirmación del idioma del texto local; no se asigna idioma por heurística. Conector Valu v0.7.1 inspeccionado en arranque/inclusión de autoload, pendiente piloto. No se cambió contenido ni rutas.
