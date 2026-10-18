@@ -1,5 +1,11 @@
 # Ejecución del rediseño
 
+## Traslado del dominio confirmado — 18 octubre 2026
+
+Alex creó alexcuadra-dev y trasladó alexcuadra.dev desde Pages. Smoke remoto del dominio público correcto: favicon y siete rutas, con identidad de servicio confirmada. Home HTTP 200, canonical https://alexcuadra.dev/ y sin cabecera/meta noindex. Se registra custom_domain solo en env.production. La prueba HTTP no sustituye revisión visual ni seguimiento de los 429/503.
+
+Pendientes: confirmar otros consumidores de GraphQL y credenciales locales antes de activar la restricción; desactivar builds del antiguo Pages antes de fusionar main y coordinar después la rama de producción. Pages se conserva como respaldo; main sigue sin modificarse.
+
 ## Preparación de producción Workers — decisión de Alex
 
 Alex eligió preparar la migración a Workers en lugar de adaptar Pages. Entorno Wrangler production separado, nombre propuesto alexcuadra-dev, build:production y CI para ambos destinos. No se creó el Worker ni se trasladó el dominio; instrucciones en WORKERS_PRODUCTION.md. Pendiente creación y credenciales por Alex.

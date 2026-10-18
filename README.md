@@ -54,14 +54,14 @@ Los smoke tests usan contenido publicado del CMS y necesitan un proyecto, una ca
 
 | Entorno | Estado |
 | --- | --- |
-| Producción — [alexcuadra.dev](https://alexcuadra.dev/) | Continúa en el proyecto Pages existente conectado a `main`. |
+| Producción — [alexcuadra.dev](https://alexcuadra.dev/) | Worker `alexcuadra-dev`, entorno Wrangler `production`, conectado a `codex/workers-upgrade` durante la migración. Pages se conserva como respaldo. |
 | Staging — [Workers](https://alexcuadra-dev-staging.alexcu21.workers.dev/) | Worker `alexcuadra-dev-staging`, conectado a `codex/workers-upgrade`. |
 
 El staging está desplegado, pero su validación continúa: se han observado errores HTTP 429 y 500 procedentes del CMS. Los fallos reconocidos del CMS se convierten en 503 sin caché, con diagnósticos estructurados en Observability. Las consultas repetidas se deduplican dentro de cada petición. Home, proyectos y categorías públicos usan además una caché de datos de 60 segundos por centro de datos; cookies, autorización y previews la omiten. La política y sus límites se describen en [CMS: caché y diagnóstico](docs/CMS_CACHE.md).
 
 Workers Builds usa `npm run build` y después `npx wrangler deploy`, con la raíz del repositorio como directorio de trabajo. El nombre del Worker debe coincidir con `wrangler.jsonc`. Las respuestas SSR bajo `workers.dev` incluyen `noindex`; esto no es control de acceso.
 
-No fusionar la migración en `main` ni cambiar el dominio público antes de completar la validación y coordinar la transición desde Pages. La configuración de esta rama está preparada para Workers.
+El dominio público ya está asociado al Worker y validado por HTTP con autenticación. Antes de fusionar en `main`, desactivar los builds automáticos del antiguo Pages y coordinar el cambio de rama del Worker de producción. La configuración de esta rama está preparada para Workers; no sirve para desplegar de nuevo en Pages.
 
 ## Pruebas y CI
 

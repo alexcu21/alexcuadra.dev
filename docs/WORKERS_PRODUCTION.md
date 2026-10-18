@@ -1,6 +1,8 @@
 # Migración de producción de Pages a Workers
 
-Alex eligió preparar esta ruta. Estado: configuración y builds preparados; Worker de producción, credenciales y traslado del dominio pendientes. Pages continúa sirviendo el sitio público. No activar todavía la restricción global de WPGraphQL.
+Estado al 18 de octubre de 2026: Worker `alexcuadra-dev` creado, identidad de servicio confirmada y dominio `alexcuadra.dev` trasladado por Alex. Smoke público: favicon y siete rutas correctas; Home HTTP 200 con identidad verificada, canonical público correcto y sin noindex. Pages se conserva como respaldo. Pendientes revisión visual, seguimiento de disponibilidad, coordinación de main y restricción global de WPGraphQL.
+
+Los pasos siguientes describen el procedimiento de migración y reversión. La ruta custom_domain se guarda solo en env.production; staging no recibe dominios de producción.
 
 ## Destinos separados
 
@@ -11,7 +13,7 @@ Alex eligió preparar esta ruta. Estado: configuración y builds preparados; Wor
 
 El entorno Wrangler `production` se selecciona durante el build mediante `CLOUDFLARE_ENV=production`. Astro genera la configuración que Wrangler despliega; no usar el artefacto de staging para producción ni añadir `--env` después de compilar otro entorno. CI valida ambos builds sin desplegar ni utilizar secretos.
 
-No hay rutas ni dominios personalizados en esta configuración. La autenticación está habilitada en `env.production.vars`; necesita credenciales propias de runtime. Los secretos de staging no se transfieren automáticamente al otro Worker.
+El dominio `alexcuadra.dev` está declarado únicamente en `env.production.routes`. La autenticación está habilitada en `env.production.vars` y usa credenciales propias de runtime. Los secretos de staging no se transfieren automáticamente al otro Worker.
 
 ## Paso actual: crear el Worker sin trasladar el dominio
 

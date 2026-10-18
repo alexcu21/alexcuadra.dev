@@ -12,6 +12,9 @@
     "production": {
       "name": "alexcuadra-dev",
       "workers_dev": true,
+      "routes": [
+        { "pattern": "alexcuadra.dev", "custom_domain": true }
+      ],
       "vars": {
         "WPGRAPHQL_AUTH_ENABLED": "true"
       }
