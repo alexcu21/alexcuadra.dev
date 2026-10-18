@@ -1,4 +1,5 @@
-import { request, gql } from 'graphql-request';
+import { gql } from 'graphql-request';
+import { request, cmsFailure } from './cms-request.js';
 
 // GraphQL endpoint
 const endpoint = 'https://content.alexcuadra.dev/graphql';
@@ -43,17 +44,11 @@ export const getHomeInfo = async () => {
         }
     `;
 
-    // Fetch data
-    let info = [];
-
-    try {
-        const data = await request(endpoint, query);
-        info = data.pages.nodes;
-
-    } catch (error) {
-        console.error('Error fetching Home data:', error);
+    const data = await request(endpoint, query);
+    const info = data.pages?.nodes;
+    if (!info?.[0]?.homePageFields) {
+        throw cmsFailure('CMS_HOME_MISSING', 'getHomeFields');
     }
-
     return info;
 }
 
@@ -85,18 +80,8 @@ export const getProjectsInfo = async () => {
             }
         }
     `
-    let projectInfo = [];
-
-    try{
-        const projectData = await request(endpoint, query)
-        projectInfo = projectData.projects.nodes
-
-    }catch (error) {
-        console.error('Error fetching Projects data:', error);
-    }
-    
-
-    return projectInfo; 
+    const projectData = await request(endpoint, query);
+    return projectData.projects.nodes;
 }
 
 //Articles Data
@@ -117,15 +102,8 @@ export const getArticlesCategories = async () => {
 
     `;
 
-    let categories =[];
-
-    try{
-        const articlesCategories = await request(endpoint, query);
-        categories = articlesCategories.categories.nodes;
-    }catch (error) {
-        console.error('Error fetching categories data:', error);
-    }
-    return categories;
+    const data = await request(endpoint, query);
+    return data.categories.nodes;
 }
 
 export const getArticlesByCategory = async (slug) => {

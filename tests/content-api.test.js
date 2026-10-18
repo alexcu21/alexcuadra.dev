@@ -48,7 +48,7 @@ test('article lookup returns featured media and ACF quote', async t => {
 
 test('GraphQL authentication errors reject even when HTTP status is 200', async t => {
   respond(t, { errors: [{ message: 'Operation requires authentication' }] });
-  await assert.rejects(api.getArticleBySlug('one'), /authentication/);
+  await assert.rejects(api.getArticleBySlug('one'), { code: 'CMS_AUTHORIZATION', status: 200 });
 });
 
 test('HTTP authorization failure rejects category loading', async t => {
@@ -58,5 +58,5 @@ test('HTTP authorization failure rejects category loading', async t => {
 
 test('network failures reject article loading', async t => {
   t.mock.method(globalThis, 'fetch', async () => { throw new Error('CMS unavailable'); });
-  await assert.rejects(api.getArticleBySlug('one'), /CMS unavailable/);
+  await assert.rejects(api.getArticleBySlug('one'), { code: 'CMS_NETWORK' });
 });
