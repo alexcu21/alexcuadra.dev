@@ -1,5 +1,11 @@
 # Ejecución del rediseño
 
+## Restricción WPGraphQL activa y validada — 18 octubre 2026
+
+Alex confirmó que solo consumen el CMS el portfolio local y los dos Workers, configuró credenciales locales y activó la restricción de operaciones autenticadas. Una consulta anónima a pages se rechaza con mensaje explícito de falta de autenticación; no se interpreta el HTTP 200 de un error GraphQL como acceso permitido. Smoke con --require-cms-auth correcto en producción, staging y local: favicon y siete rutas por entorno. El runtime local carga .dev.vars y Git lo ignora. No se leyeron ni registraron credenciales.
+
+Quedan coordinación de main/builds del antiguo Pages, revisión visual y seguimiento del límite de Hostinger. La restricción no demuestra que los 429 estén resueltos. El Pages de respaldo usa código anónimo y requiere revertir la restricción del CMS si se vuelve a utilizar.
+
 ## Traslado del dominio confirmado — 18 octubre 2026
 
 Alex creó alexcuadra-dev y trasladó alexcuadra.dev desde Pages. Smoke remoto del dominio público correcto: favicon y siete rutas, con identidad de servicio confirmada. Home HTTP 200, canonical https://alexcuadra.dev/ y sin cabecera/meta noindex. Se registra custom_domain solo en env.production. La prueba HTTP no sustituye revisión visual ni seguimiento de los 429/503.

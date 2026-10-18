@@ -18,7 +18,7 @@ La excepción para proyectos autenticados exige credenciales inyectadas por el s
 
 Las claves separan respuestas anónimas de las de servicio e incluyen la credencial en el material hasheado para cambiar de clave al rotarla. Ni la credencial ni su codificación Basic aparecen en URLs o logs. La revocación puede tardar hasta el TTL en afectar a una entrada existente de proyectos; Home sigue comprobando identidad en origen. Un cambio de publicación a privado también puede tardar hasta 60 segundos en reflejarse: usar invalidación por versión si se requiere retirada inmediata.
 
-No activar la restricción GraphQL todavía: producción Pages y otros consumidores deben estar adaptados antes. Nuevas operaciones autenticadas quedan sin caché hasta definir y probar su propio contrato público.
+La restricción GraphQL está activa y validada en producción Workers, staging y local. El antiguo Pages queda como respaldo y necesita desactivar la restricción antes de una reversión a su código anónimo. Nuevas operaciones autenticadas quedan sin caché hasta definir y probar su propio contrato público.
 
 ## Observability
 

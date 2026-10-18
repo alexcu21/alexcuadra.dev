@@ -1,6 +1,6 @@
 # Autenticación de WordPress desde Workers
 
-Estado: transporte preparado; pendiente crear credenciales y validar en staging. No activar todavía la restricción de WPGraphQL. La autenticación no evita necesariamente el limitador de infraestructura de Hostinger.
+Estado al 18 de octubre de 2026: restricción de WPGraphQL activada por Alex y verificada. Una consulta anónima a RootQuery.pages se rechaza por falta de autenticación; producción, staging y local confirman identidad y pasan favicon y siete rutas cada uno. Credenciales independientes configuradas, archivo local .dev.vars ignorado por Git. Los pasos siguientes se conservan como guía de configuración y reversión. La autenticación no evita necesariamente el limitador de infraestructura de Hostinger.
 
 ## 1. Crear una cuenta de servicio
 
