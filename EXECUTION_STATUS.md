@@ -71,3 +71,9 @@ Rama publicada en origin/codex/workers-upgrade, commit inicial 394262c. main sin
 Alex inició la configuración desde repo con comandos de build/deploy; no se mostró selector de ramas y Preview command quedó por defecto. Pendiente confirmar nombre/URL del Worker y resultado del build. Selección de rama guiada desde Settings → Build/Builds → Branch control según documentación actual. No se declara desplegado ni validado staging.
 
 Diagnóstico del log de Cloudflare aportado por Alex: Wrangler 3.99.0, CSS anidado y consulta redundante de PortfolioPreview siguen presentes; el build no corresponde al código migrado actual. Sin rama/SHA en el log no se identifica el commit exacto. Añadido prebuild con SHA y versiones del lockfile para el siguiente intento. No se imprimen variables de entorno ni secretos.
+
+## Verificación del staging publicado
+
+URL proporcionada por Alex: https://alexcuadra-dev-staging.alexcu21.workers.dev . La petición GET remota devuelve HTTP 500 con cuerpo vacío; HEAD también 500. Prueba explícita `npm run test:smoke -- https://alexcuadra-dev-staging.alexcu21.workers.dev` falla en Home. Corregido el runner para aceptar e imprimir destino por argumento: la primera ejecución con variable de entorno no constituye evidencia válida del remoto. Staging desplegado pero NO funcional/aceptado aún. Se requieren logs de ejecución del Worker para identificar la excepción; el log de build no basta. No avanzar al cambio de dominio ni restricción GraphQL.
+
+Alex informa que staging ya es visible. Activados logs e invocation_logs en configuración Wrangler de staging para registrar errores y solicitudes tras el siguiente despliegue. Se mantiene pendiente comprobar respuestas remotas y noindex.

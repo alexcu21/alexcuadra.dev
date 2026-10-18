@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 
-const base = process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4321';
+const base = process.argv[2] || process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4321';
+console.log(`Smoke target: ${base}`);
 async function check(path) {
   const response = await fetch(new URL(path, base), { signal: AbortSignal.timeout(30000) });
   const html = await response.text();
