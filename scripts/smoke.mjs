@@ -2,6 +2,12 @@ import assert from 'node:assert/strict';
 
 const base = process.argv[2] || process.env.SMOKE_BASE_URL || 'http://127.0.0.1:4321';
 console.log(`Smoke target: ${base}`);
+const favicon = await fetch(new URL('/favicon.ico', base), {
+  redirect: 'manual', signal: AbortSignal.timeout(30000),
+});
+assert.equal(favicon.status, 308, 'favicon.ico must redirect without rendering CMS content');
+assert.equal(favicon.headers.get('location'), '/favicon.svg');
+console.log('PASS /favicon.ico: direct redirect to static SVG');
 async function check(path) {
   const response = await fetch(new URL(path, base), { signal: AbortSignal.timeout(30000) });
   const html = await response.text();
