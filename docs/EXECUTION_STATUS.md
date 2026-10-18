@@ -1,5 +1,11 @@
 # Ejecución del rediseño
 
+## Fase 1 iniciada: inventario CMS — 18 octubre 2026
+
+Inventario GraphQL autenticado de solo lectura: ContentType.name confirma project para proyectos y articles para artículos; GraphQL project/projects y article/articles. Cinco tipos visibles para la cuenta de servicio. Los null de configuración no se interpretan como false. Informe CMS_SCHEMA_INVENTORY.md y comando cms:inventory sin imprimir credenciales ni contenidos editoriales.
+
+Alex confirma ausencia de staging WordPress. Se preparó CMS_MIGRATION_GUIDE.md para crear copia independiente, obtener plugin custom y exportar grupos ACF. Pendiente saber si hPanel ofrece staging y recibir definiciones antes de registrar CPT o fields. No se modificó WordPress ni se desactivó el plugin.
+
 ## Incidente 429 y amplificación por rutas inexistentes — 18 octubre 2026
 
 Export aportado por Alex: 100 eventos entre 07:05:32 y 07:06:34 UTC, 36 cms_failure, todos CMS_HTTP/429. Incluye sondas de /.env, /README.md, /.github/copilot-instructions.md y otras rutas inexistentes, además de consultas rest_route al frontend. No incluye el requestId c4dfa945-9fb6-4017-8232-4b85b6a43133 de la prueba posterior; no se atribuye ese 503 concreto al export anterior.

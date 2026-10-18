@@ -85,5 +85,6 @@ Los planes, guías y documentos de seguimiento se guardan en `docs/`:
 - [Estado de ejecución](docs/EXECUTION_STATUS.md): comprobaciones realizadas, incidentes y tareas pendientes.
 - [Guía de Workers staging](docs/WORKERS_STAGING.md): configuración y validación del entorno paralelo.
 - [Migración de producción a Workers](docs/WORKERS_PRODUCTION.md): entorno separado, pasos de creación, traslado del dominio y reversión.
+- [Inventario y transición CPT/ACF](docs/CMS_MIGRATION_GUIDE.md): claves internas confirmadas, copia de WordPress y exports necesarios antes de crear campos.
 
 Las referencias de diseño bajo `docs/design-proposal/` permanecen locales y están excluidas de Git. Las colecciones Markdown heredadas se conservan durante la transición; no son la fuente editorial prevista para el rediseño.

@@ -13,6 +13,7 @@
     "check": "astro check",
     "deploy:staging": "npm run build && wrangler deploy",
     "test:smoke": "node scripts/smoke.mjs",
+    "cms:inventory": "node scripts/cms-inventory.mjs",
     "prebuild": "node scripts/build-info.mjs"
   },
   "dependencies": {
