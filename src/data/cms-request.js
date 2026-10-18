@@ -73,6 +73,10 @@ export async function request(endpoint, document, variables, options = {}) {
       if (scope?.requestId) headers.set('X-Request-ID', scope.requestId);
       let data = await graphqlRequest({ url: endpoint, document, variables,
         requestHeaders: headers, signal: AbortSignal.timeout(10000) });
+      if (serviceHeaders.has('authorization') && typeof options.validateServiceData === 'function'
+        && options.validateServiceData(data) !== true) {
+        throw cmsFailure('CMS_PUBLIC_CONTRACT', operation);
+      }
       if (servicePublic) {
         data = options.servicePublicProjection(data);
         if (!data) throw cmsFailure('CMS_PUBLIC_CONTRACT', operation);

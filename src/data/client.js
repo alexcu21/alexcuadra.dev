@@ -1,6 +1,7 @@
 import { gql } from 'graphql-request';
 import { request, cmsFailure } from './cms-request.js';
 import { publicProjects } from './public-projects.js';
+import { isPublicContent, publicCollection } from './content-visibility.js';
 
 // GraphQL endpoint
 const endpoint = 'https://content.alexcuadra.dev/graphql';
@@ -11,8 +12,11 @@ export const getHomeInfo = async () => {
     const query = gql`
         query getHomeFields {
             viewer { databaseId }
-            pages(where: {id: 19}) {
+            pages(where: {id: 19, status: PUBLISH, hasPassword: false}) {
                 nodes {
+                    status
+                    isRestricted
+                    hasPassword
                     title
                     homePageFields {
                     fieldGroupName
@@ -48,6 +52,7 @@ export const getHomeInfo = async () => {
 
     const data = await request(endpoint, query, undefined, {
         verifyServiceIdentity: true,
+        validateServiceData: data => publicCollection(data?.pages?.nodes),
         publicCache: true,
         validatePublicData: data => Boolean(data?.pages?.nodes?.[0]?.homePageFields),
     });
@@ -125,8 +130,11 @@ export const getArticlesCategories = async () => {
 export const getArticlesByCategory = async (slug) => {
     const query = gql`
     query getArticlesByCategory ($slug: String!){
-        articles(where: {categoryName: $slug}) {
+        articles(where: {categoryName: $slug, status: PUBLISH, hasPassword: false}) {
                 nodes {
+                    status
+                    isRestricted
+                    hasPassword
                     slug
                     title
                     content
@@ -142,7 +150,9 @@ export const getArticlesByCategory = async (slug) => {
     `;
 
     const variables = { slug };
-    const { articles } = await request(endpoint, query, variables);
+    const { articles } = await request(endpoint, query, variables, {
+        validateServiceData: data => publicCollection(data?.articles?.nodes),
+    });
     return articles.nodes;
 }
 
@@ -151,6 +161,9 @@ export const getArticleBySlug = async (slug) => {
 
         query getArticleBySlug ($slug: ID!){
             article(id: $slug, idType: SLUG) {
+                status
+                isRestricted
+                hasPassword
                 content
                 featuredImage {
                     node {
@@ -176,21 +189,28 @@ export const getArticleBySlug = async (slug) => {
     `;
 
     const variables = { slug };
-    const data = await request(endpoint, query, variables);
+    const data = await request(endpoint, query, variables, {
+        validateServiceData: data => data?.article === null || isPublicContent(data?.article),
+    });
     return data.article;
 }
 
 export async function getAllArticleSlugs() {
     const query = gql`
       query AllArticles {
-        articles(first: 100) {
+        articles(first: 100, where: {status: PUBLISH, hasPassword: false}) {
           nodes {
+            status
+            isRestricted
+            hasPassword
             slug
           }
         }
       }
     `;
-    const data = await request(endpoint, query);
+    const data = await request(endpoint, query, undefined, {
+        validateServiceData: data => publicCollection(data?.articles?.nodes),
+    });
     return data.articles.nodes.map((node) => node.slug);
   }
 
@@ -199,9 +219,12 @@ export async function getAllArticleSlugs() {
     const query = gql`
 
     query getAboutFields {
-        pages(where: {id: 68}) {
+        pages(where: {id: 68, status: PUBLISH, hasPassword: false}) {
                 edges {
                     node {
+                        status
+                        isRestricted
+                        hasPassword
                         id
                             aboutPage {
                                 education
@@ -220,6 +243,10 @@ export async function getAllArticleSlugs() {
         }
 
     `;
-    const data = await request(endpoint, query)
+    const data = await request(endpoint, query, undefined, {
+        validateServiceData: data => Array.isArray(data?.pages?.edges)
+            && publicCollection(data.pages.edges.map(edge => edge?.node)),
+    });
+    if (!data.pages?.edges?.[0]?.node) throw cmsFailure('CMS_ABOUT_MISSING', 'getAboutFields');
     return data.pages.edges[0].node;
   }

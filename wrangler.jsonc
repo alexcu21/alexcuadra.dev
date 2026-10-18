@@ -8,6 +8,15 @@
   ],
   "workers_dev": true,
   "keep_vars": true,
+  "env": {
+    "production": {
+      "name": "alexcuadra-dev",
+      "workers_dev": true,
+      "vars": {
+        "WPGRAPHQL_AUTH_ENABLED": "true"
+      }
+    }
+  },
   "observability": {
     "logs": {
       "enabled": true,

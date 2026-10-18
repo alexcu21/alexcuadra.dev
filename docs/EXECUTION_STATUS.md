@@ -1,5 +1,11 @@
 # Ejecución del rediseño
 
+## Preparación de producción Workers — decisión de Alex
+
+Alex eligió preparar la migración a Workers en lugar de adaptar Pages. Entorno Wrangler production separado, nombre propuesto alexcuadra-dev, build:production y CI para ambos destinos. No se creó el Worker ni se trasladó el dominio; instrucciones en WORKERS_PRODUCTION.md. Pendiente creación y credenciales por Alex.
+
+Las consultas autenticadas de Home, About y artículos verifican publicación, ausencia de contraseña y ausencia de restricciones antes de renderizar. Las colecciones filtran PUBLISH/hasPassword false. La cuenta de servicio no debe recibir permisos administrativos. El historial que sigue contiene estados anteriores; este bloque y el de validación de autenticación reflejan el estado actual.
+
 ## Validación de autenticación y caché pública — 17 octubre 2026
 
 - Staging confirmó la cuenta de servicio mediante `viewer`, HTTP 200 y `X-CMS-Auth: verified`.

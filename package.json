@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
+    "build:production": "CLOUDFLARE_ENV=production npm run build",
     "preview": "astro preview",
     "astro": "astro",
     "test": "node --test tests/*.test.js",

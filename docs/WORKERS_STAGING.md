@@ -1,6 +1,6 @@
 # Workers staging: preparación y configuración
 
-Estado: configuración local preparada en `codex/workers-upgrade`; rama publicada en GitHub; todavía no se ha creado un Worker. Pages sigue siendo producción.
+Estado actual: Worker creado y desplegado, autenticación de servicio confirmada y smoke remoto correcto. Persiste el seguimiento de la intermitencia de Hostinger. Pages sigue siendo producción; la preparación del traslado está en [WORKERS_PRODUCTION.md](WORKERS_PRODUCTION.md). Los pasos de creación posteriores se conservan como referencia del procedimiento.
 
 ## Preparación local
 

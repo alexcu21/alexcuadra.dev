@@ -42,6 +42,7 @@ Detén el servidor de desarrollo antes de usar el mismo puerto para preview. Par
 | `npm test` | Ejecuta pruebas deterministas sin CMS ni credenciales reales. |
 | `npm run check` | Revisa tipos y archivos Astro. |
 | `npm run build` | Imprime revisión/versiones, valida y compila para Workers. |
+| `npm run build:production` | Compila para el Worker de producción propuesto, sin desplegar. |
 | `npm run preview` | Sirve el build local con el runtime de Workers. |
 | `npm run test:smoke` | Comprueba el favicon y siete páginas en localhost:4321. |
 | `npm run test:smoke -- https://dominio` | Ejecuta las mismas comprobaciones contra un destino explícito. |
@@ -83,5 +84,6 @@ Los planes, guías y documentos de seguimiento se guardan en `docs/`:
 - [Plan de rediseño](docs/REDESIGN_PLAN.md): contenido bilingüe, templates, LAB, migración CPT/ACF, seguridad, SEO y soporte Gutenberg.
 - [Estado de ejecución](docs/EXECUTION_STATUS.md): comprobaciones realizadas, incidentes y tareas pendientes.
 - [Guía de Workers staging](docs/WORKERS_STAGING.md): configuración y validación del entorno paralelo.
+- [Migración de producción a Workers](docs/WORKERS_PRODUCTION.md): entorno separado, pasos de creación, traslado del dominio y reversión.
 
 Las referencias de diseño bajo `docs/design-proposal/` permanecen locales y están excluidas de Git. Las colecciones Markdown heredadas se conservan durante la transición; no son la fuente editorial prevista para el rediseño.
