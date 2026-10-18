@@ -89,3 +89,29 @@ Corrección: transporte central con timeout de 10 s y errores tipados/clasificad
 25/25 pruebas pasan, incluyendo rechazos HTTP/GraphQL, ausencia de Home, timeout, logs redactados, aislamiento/deduplicación y 503. Build Astro/Workers pasa. La clasificación de la causa upstream debe comprobarse en los nuevos eventos cms_failure tras despliegue; esta entrega no implementa aún autenticación ni afirma resolver la disponibilidad de WordPress.
 
 Archivo de eventos posterior contiene las mismas marcas de las 20:51 del 17 de octubre (hora Nicaragua), con 200 y luego upstream 429. No aporta un incidente nuevo ni identifica la regla de Hostinger/AIOS. Se añade endpoint favicon.ico con redirect directo al SVG para evitar renderizar 404 con consultas al CMS; el smoke comprueba ese redirect. No se implementan reintentos ni se modifica el límite de batch de WPGraphQL. Pendiente correlación con logs de Hostinger/AIOS.
+
+## Investigación Hostinger / DNS
+
+Alex confirma hosting Hostinger, AIOS 5.4.10 desactivado durante la investigación, WPGraphQL 2.24.2 y addons WPGraphQL for ACF + IDE. No se verificó aún si el 429 persiste en eventos nuevos después de desactivar AIOS. No tomar el histórico como prueba de ese resultado.
+
+Consulta DNS pública puntual: content.alexcuadra.dev devuelve un A, sin AAAA/CNAME en esta consulta. Una única consulta POST mínima __typename devuelve HTTP 200, JSON GraphQL válido y server LiteSpeed. Esto prueba resolución/TLS/servicio desde el entorno de prueba en ese momento, no disponibilidad sostenida desde Workers ni consistencia global del DNS.
+
+La documentación oficial de Hostinger describe límites por IP en LiteSpeed y agregación de tráfico detrás de proxies como posibles fuentes de 429. No se ha probado cuál aplica a este sitio. DNS no genera el status HTTP por sí mismo, aunque diferentes destinos/proxies pueden alterar quién aplica el límite. No cambiar nameservers/proxy ni desactivar protecciones por hipótesis.
+
+Pendiente: logs de Hostinger en POST /graphql correlacionados con hora/IP/regla, estado Hostinger CDN y proxy de Cloudflare del registro content; confirmar con eventos posteriores al cambio de AIOS. Maximum operations per batch sigue sin relación con solicitudes por minuto: el cliente no envía batches. La futura autenticación no garantiza exención de rate limiting.
+
+Fuentes: https://www.hostinger.com/support/hostinger-cdn-429-too-many-requests-errors/ ; https://www.wpgraphql.com/docs/security ; https://teamupdraft.com/documentation/all-in-one-security/faqs/important-note-on-intermediate-and-advanced-features/ .
+
+## Evidencia de logs Hostinger
+
+Alex aporta cinco POST /graphql con 429 entre 21:51:10 y 21:51:11 del 17 de octubre y dirección registrada 2a06:98c0:3600::103. Esa dirección pertenece a Cloudflare y está documentada como valor sintético de CF-Connecting-IP en subrequests cross-zone de Workers. No asumir que es una IP de salida dedicada al proyecto ni autorizarla globalmente.
+
+Hipótesis a validar con Hostinger: agregación de tráfico por esa identidad/IP en su limitador o mecanismo de restauración de IP de cliente. Solicitar la regla, umbral, ventana y si el campo de log procede de conexión TCP/REMOTE_ADDR o de CF-Connecting-IP/X-Forwarded-For. El DNS only observado no prueba por sí solo el comportamiento de cabeceras de toda la ruta. Los registros prueban rechazo HTTP, no un fallo de resolución DNS; no justifican cambiar nameservers.
+
+Fuente primaria: https://developers.cloudflare.com/fundamentals/reference/http-headers/#cf-connecting-ip .
+
+## Mejoras para reducir llamadas entre visitas
+
+Caché pública opt-in de 60 segundos mediante Cache API de Workers para Home/proyectos/categorías, segregada por query, variables, endpoint y host. Exclusión de cookies, autorización, previews y futuras cabeceras custom de transporte. Fallos no cacheados; sin reintentos automáticos. X-Request-ID, User-Agent identificable y eventos HIT/MISS/BYPASS con duración y Retry-After. 40/40 pruebas y build pasan. Dos visitas locales responden 200 con contenido y requestId distinto: logs muestran tres MISS en primera visita y tres HIT en segunda, sin llamadas al CMS en esa segunda visita. Guía operativa en CMS_CACHE.md. Autenticación y validación del límite Hostinger siguen pendientes.
+
+Se incluye en esta entrega el traslado ya solicitado de planes/guías desde raíz a docs, con enlaces README actualizados y referencias de diseño locales aún ignoradas. README sigue en la raíz; archivo .claude local no se incorpora.

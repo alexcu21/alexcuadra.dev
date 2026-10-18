@@ -173,7 +173,7 @@ Orden recomendado: completar la fase 0.1 antes de implementar autenticación y c
 
 Recopilar evidencia de desarrollo web senior, calidad, automatización y DevOps; disponibilidad y CTA principal; mantener tema claro; qué casos tienen permiso para mostrar resultados; tipo de hosting Cloudflare y acceso al staging; versiones/plugins de autenticación; si artículos se escriben en WordPress o son mayoritariamente enlaces; contenido y estado real de qa-training-lab para su entrada LAB. Estas decisiones no bloquean acordar tokens y componentes base, pero sí el contenido final y la activación de autenticación.
 
-Los assets de propuestas permanecen bajo `docs/`, actualmente ignorado por un cambio local previo del usuario. Este plan está en la raíz para poder versionarlo sin alterar ese `.gitignore` ni incorporar imágenes de referencia accidentalmente.
+Los documentos resultantes de planificación, seguimiento y guías se guardan en `docs/`. Los documentos se versionan en Git; las propuestas de referencia bajo `docs/design-proposal/` permanecen locales. Los documentos nuevos también deben guardarse en `docs/`. README.md permanece en la raíz como entrada del proyecto.
 
 ## Referencias oficiales consultadas
 

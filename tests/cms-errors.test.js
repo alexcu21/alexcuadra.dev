@@ -31,9 +31,13 @@ test('HTTP rejection is logged as structured status without upstream body or sec
   respond(t, { secret: 'PRIVATE-UPSTREAM-BODY' }, 503);
   await assert.rejects(api.getHomeInfo(), { code: 'CMS_HTTP', status: 503 });
   const calls = console.error.mock.calls;
-  assert.deepEqual(JSON.parse(calls[0].arguments[0]), {
-    event: 'cms_failure', code: 'CMS_HTTP', operation: 'getHomeFields', httpStatus: 503,
-  });
+  const event = JSON.parse(calls[0].arguments[0]);
+  assert.equal(event.event, 'cms_failure');
+  assert.equal(event.code, 'CMS_HTTP');
+  assert.equal(event.httpStatus, 503);
+  assert.equal(event.operation, 'getHomeFields');
+  assert.equal(event.attempt, 1);
+  assert.equal(typeof event.durationMs, 'number');
   assert.ok(!JSON.stringify(calls).includes('PRIVATE-UPSTREAM-BODY'));
 });
 

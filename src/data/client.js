@@ -44,7 +44,10 @@ export const getHomeInfo = async () => {
         }
     `;
 
-    const data = await request(endpoint, query);
+    const data = await request(endpoint, query, undefined, {
+        publicCache: true,
+        validatePublicData: data => Boolean(data?.pages?.nodes?.[0]?.homePageFields),
+    });
     const info = data.pages?.nodes;
     if (!info?.[0]?.homePageFields) {
         throw cmsFailure('CMS_HOME_MISSING', 'getHomeFields');
@@ -80,7 +83,10 @@ export const getProjectsInfo = async () => {
             }
         }
     `
-    const projectData = await request(endpoint, query);
+    const projectData = await request(endpoint, query, undefined, {
+        publicCache: true,
+        validatePublicData: data => Array.isArray(data?.projects?.nodes),
+    });
     return projectData.projects.nodes;
 }
 
@@ -102,7 +108,10 @@ export const getArticlesCategories = async () => {
 
     `;
 
-    const data = await request(endpoint, query);
+    const data = await request(endpoint, query, undefined, {
+        publicCache: true,
+        validatePublicData: data => Array.isArray(data?.categories?.nodes),
+    });
     return data.categories.nodes;
 }
 

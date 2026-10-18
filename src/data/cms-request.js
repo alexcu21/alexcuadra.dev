@@ -1,5 +1,6 @@
 import { AsyncLocalStorage } from 'node:async_hooks';
 import { request as graphqlRequest } from 'graphql-request';
+import { publicCacheKey, PUBLIC_CMS_TTL, retryAfterSeconds } from './cms-cache.js';
 
 const requests = new AsyncLocalStorage();
 
@@ -13,20 +14,60 @@ export class CmsError extends Error {
   }
 }
 
-export function cmsFailure(code, operation, status) {
+export function cmsFailure(code, operation, status, details = {}) {
   const error = new CmsError(code, operation, status);
   const scope = requests.getStore();
   if (scope) scope.failure = error;
+  error.retryAfter = details.retryAfter;
   // Do not log raw GraphQL errors, queries, headers or response bodies.
-  console.error(JSON.stringify({ event: 'cms_failure', code, operation, httpStatus: status }));
+  console.error(JSON.stringify({ event: 'cms_failure', code, operation, httpStatus: status,
+    requestId: scope?.requestId, ...details }));
   return error;
 }
 
-export async function request(endpoint, document, variables) {
+export async function request(endpoint, document, variables, options = {}) {
   const operation = /\bquery\s+(\w+)/.exec(document)?.[1] || 'unknown';
+  const scope = requests.getStore();
+  // Opt-in only. Any future credential-bearing request bypasses shared cache.
+  const credentials = new Headers(options.requestHeaders);
+  const canShare = options.publicCache === true && scope?.edgeCache
+    && typeof options.validatePublicData === 'function' && [...credentials].length === 0;
   const load = async () => {
+    const started = Date.now();
+    let key;
+    if (canShare) {
+      try {
+        key = await publicCacheKey(scope.cacheOrigin, endpoint, document, variables);
+        const hit = await scope.edgeCache.match(key);
+        if (hit) {
+          const cached = await hit.json();
+          if (options.validatePublicData(cached) === true) {
+            console.info(JSON.stringify({ event: 'cms_query', requestId: scope.requestId, operation,
+              cache: 'HIT', durationMs: Date.now() - started, attempt: 0 }));
+            return cached;
+          }
+        }
+      } catch {
+        // A cache failure must not prevent a request to the CMS.
+        key = undefined;
+      }
+    }
     try {
-      return await graphqlRequest({ url: endpoint, document, variables, signal: AbortSignal.timeout(10000) });
+      const headers = new Headers(options.requestHeaders);
+      headers.set('User-Agent', 'AlexCuadraPortfolio/1.0 (SSR; Cloudflare Workers)');
+      if (scope?.requestId) headers.set('X-Request-ID', scope.requestId);
+      const data = await graphqlRequest({ url: endpoint, document, variables,
+        requestHeaders: headers, signal: AbortSignal.timeout(10000) });
+      if (key && options.validatePublicData?.(data) === true) {
+        try {
+          await scope.edgeCache.put(key, new Response(JSON.stringify(data), {
+            headers: { 'Content-Type': 'application/json', 'Cache-Control': `public, max-age=${PUBLIC_CMS_TTL}` },
+          }));
+        } catch { /* Optional cache storage must not affect a successful query. */ }
+      }
+      if (scope?.requestId) console.info(JSON.stringify({ event: 'cms_query', requestId: scope.requestId,
+        operation, cache: canShare ? 'MISS' : 'BYPASS', durationMs: Date.now() - started, attempt: 1 }));
+      return data;
     } catch (error) {
       const status = error?.response?.status;
       const messages = error?.response?.errors?.map(item => item.message).join(' ') || '';
@@ -35,18 +76,19 @@ export async function request(endpoint, document, variables) {
         : status >= 400 ? 'CMS_HTTP'
         : error?.response ? 'CMS_GRAPHQL'
         : ['TimeoutError', 'AbortError'].includes(error?.name) ? 'CMS_TIMEOUT' : 'CMS_NETWORK';
-      throw cmsFailure(code, operation, status);
+      const retryAfter = retryAfterSeconds(error?.response?.headers?.get?.('retry-after'));
+      throw cmsFailure(code, operation, status, { durationMs: Date.now() - started,
+        attempt: 1, retryAfter });
     }
   };
-  const scope = requests.getStore();
   if (!scope) return load();
-  const key = JSON.stringify([endpoint, document, variables]);
+  const key = JSON.stringify([endpoint, document, variables, [...credentials], options.publicCache === true]);
   if (!scope.cache.has(key)) scope.cache.set(key, load());
   return scope.cache.get(key);
 }
 
-export function withCmsRequest(next) {
-  const scope = { cache: new Map(), failure: null };
+export function withCmsRequest(next, options = {}) {
+  const scope = { ...options, cache: new Map(), failure: null };
   return requests.run(scope, async () => {
     let response;
     try {
@@ -61,7 +103,7 @@ export function withCmsRequest(next) {
         headers: {
           'Content-Type': 'text/plain; charset=utf-8',
           'Cache-Control': 'no-store',
-          'Retry-After': '60',
+          'Retry-After': String(scope.failure.retryAfter ?? 60),
           'X-Robots-Tag': 'noindex',
         },
       });
