@@ -8,6 +8,12 @@ const favicon = await fetch(new URL('/favicon.ico', base), {
 assert.equal(favicon.status, 308, 'favicon.ico must redirect without rendering CMS content');
 assert.equal(favicon.headers.get('location'), '/favicon.svg');
 console.log('PASS /favicon.ico: direct redirect to static SVG');
+for (const path of ['/__smoke_missing_page__', '/?rest_route=%2Fwp%2Fv2%2Fusers']) {
+  const response = await fetch(new URL(path, base), { signal: AbortSignal.timeout(30000) });
+  assert.equal(response.status, 404, `${path}: must return 404 independently of CMS availability`);
+  assert.equal(response.headers.get('x-cms-auth'), null);
+  console.log(`PASS ${path}: 404 without CMS identity query`);
+}
 async function check(path) {
   const response = await fetch(new URL(path, base), { signal: AbortSignal.timeout(30000) });
   const html = await response.text();
