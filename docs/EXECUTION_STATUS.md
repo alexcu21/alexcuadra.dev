@@ -1,5 +1,11 @@
 # Ejecución del rediseño
 
+## Plugin y export ACF recibidos — 18 octubre 2026
+
+Alex acepta operar directamente en producción con posibles interrupciones; no se exige staging. PHP recibido: solo registro de project y articles, sin hooks de limpieza ni resolvers. Projects usa capability_type page; Articles usa post por defecto. Cuatro grupos ACF conservan sus ubicaciones y field keys, sin campos PRO. Snapshot de configuración en docs/wordpress y guía CPT_TRANSITION.md. Ruta propuesta: sustituir proveedor de registro manteniendo claves, sin copiar entradas.
+
+Baseline autenticado guardado: 7 proyectos y 10 artículos publicados sin contraseña visibles al servicio, IDs/slugs y hashes de campos consultados. No sustituye backup ni inventario administrativo de borradores/privados. Pendientes versiones ACF/WPGraphQL for ACF, backup y creación guiada de los registros; no se modificó WordPress.
+
 ## Fase 1 iniciada: inventario CMS — 18 octubre 2026
 
 Inventario GraphQL autenticado de solo lectura: ContentType.name confirma project para proyectos y articles para artículos; GraphQL project/projects y article/articles. Cinco tipos visibles para la cuenta de servicio. Los null de configuración no se interpretan como false. Informe CMS_SCHEMA_INVENTORY.md y comando cms:inventory sin imprimir credenciales ni contenidos editoriales.

@@ -1,0 +1,778 @@
+[
+    {
+        "key": "group_67707e6a6a0df",
+        "title": "About_Page",
+        "fields": [
+            {
+                "key": "field_67707e6bed233",
+                "label": "Intro Text",
+                "name": "intro_text",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "allow_in_bindings": 0,
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "show_in_graphql": 1,
+                "graphql_description": "",
+                "graphql_field_name": "introText",
+                "graphql_non_null": 0
+            },
+            {
+                "key": "field_677083aced234",
+                "label": "Education Text",
+                "name": "education",
+                "aria-label": "",
+                "type": "textarea",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "allow_in_bindings": 0,
+                "rows": "",
+                "placeholder": "",
+                "new_lines": "",
+                "show_in_graphql": 1,
+                "graphql_description": "",
+                "graphql_field_name": "education",
+                "graphql_non_null": 0
+            },
+            {
+                "key": "field_677083bded235",
+                "label": "Skills Text",
+                "name": "skills_text",
+                "aria-label": "",
+                "type": "textarea",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "allow_in_bindings": 0,
+                "rows": "",
+                "placeholder": "",
+                "new_lines": "",
+                "show_in_graphql": 1,
+                "graphql_description": "",
+                "graphql_field_name": "skillsText",
+                "graphql_non_null": 0
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "page",
+                    "operator": "==",
+                    "value": "68"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0,
+        "display_title": "",
+        "allow_ai_access": false,
+        "ai_description": "",
+        "show_in_graphql": 1,
+        "graphql_field_name": "about_page",
+        "map_graphql_types_from_location_rules": 1,
+        "graphql_types": [
+            "ContentNode",
+            "Article",
+            "MediaItem",
+            "Page",
+            "Post",
+            "Project",
+            "TermNode",
+            "Category",
+            "PostFormat",
+            "Tag"
+        ]
+    },
+    {
+        "key": "group_67708756478c5",
+        "title": "Articles Fields",
+        "fields": [
+            {
+                "key": "field_677087569b36b",
+                "label": "quote",
+                "name": "quote",
+                "aria-label": "",
+                "type": "textarea",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "allow_in_bindings": 0,
+                "rows": "",
+                "placeholder": "",
+                "new_lines": "",
+                "show_in_graphql": 1,
+                "graphql_description": "",
+                "graphql_field_name": "quote",
+                "graphql_non_null": 0
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "articles"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0,
+        "display_title": "",
+        "allow_ai_access": false,
+        "ai_description": "",
+        "show_in_graphql": 1,
+        "graphql_field_name": "articlesFields",
+        "map_graphql_types_from_location_rules": 1,
+        "graphql_types": [
+            "ContentNode",
+            "Article",
+            "MediaItem",
+            "Page",
+            "Post",
+            "Project",
+            "TermNode",
+            "Category",
+            "PostFormat",
+            "Tag"
+        ]
+    },
+    {
+        "key": "group_676ca62b35b45",
+        "title": "Home_page",
+        "fields": [
+            {
+                "key": "field_676ca62b664f7",
+                "label": "photo",
+                "name": "photo",
+                "aria-label": "",
+                "type": "image",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array",
+                "library": "all",
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": "",
+                "allow_in_bindings": 1,
+                "preview_size": "medium",
+                "show_in_graphql": 1,
+                "graphql_description": "",
+                "graphql_field_name": "photo_field"
+            },
+            {
+                "key": "field_676ca65229d5f",
+                "label": "Name",
+                "name": "name",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "allow_in_bindings": 0,
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "show_in_graphql": 1,
+                "graphql_description": "",
+                "graphql_field_name": "name_field",
+                "graphql_non_null": 0
+            },
+            {
+                "key": "field_676ca66129d60",
+                "label": "Tag Line",
+                "name": "tag_line",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "allow_in_bindings": 0,
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "show_in_graphql": 1,
+                "graphql_description": "",
+                "graphql_field_name": "tagLine_field",
+                "graphql_non_null": 0
+            },
+            {
+                "key": "field_676ca66b29d61",
+                "label": "Role_1",
+                "name": "role_1",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "allow_in_bindings": 0,
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "show_in_graphql": 1,
+                "graphql_description": "",
+                "graphql_field_name": "role1_field",
+                "graphql_non_null": 0
+            },
+            {
+                "key": "field_676ca6c829d62",
+                "label": "Role_2",
+                "name": "role_2",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "allow_in_bindings": 0,
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "show_in_graphql": 1,
+                "graphql_description": "",
+                "graphql_field_name": "role2_field",
+                "graphql_non_null": 0
+            },
+            {
+                "key": "field_676ca6ce29d63",
+                "label": "Role_3",
+                "name": "role_3",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "allow_in_bindings": 0,
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "show_in_graphql": 1,
+                "graphql_description": "",
+                "graphql_field_name": "role3_field",
+                "graphql_non_null": 0
+            },
+            {
+                "key": "field_676d483082dce",
+                "label": "twitter_url",
+                "name": "twitter_url",
+                "aria-label": "",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "allow_in_bindings": 0,
+                "placeholder": "",
+                "show_in_graphql": 1,
+                "graphql_description": "",
+                "graphql_field_name": "twitterUrl",
+                "graphql_non_null": 0
+            },
+            {
+                "key": "field_676d484982dcf",
+                "label": "github_url",
+                "name": "github_url",
+                "aria-label": "",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "allow_in_bindings": 0,
+                "placeholder": "",
+                "show_in_graphql": 1,
+                "graphql_description": "",
+                "graphql_field_name": "githubUrl",
+                "graphql_non_null": 0
+            },
+            {
+                "key": "field_676d770d5cea1",
+                "label": "youtube_url",
+                "name": "youtube_url",
+                "aria-label": "",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "allow_in_bindings": 0,
+                "placeholder": "",
+                "show_in_graphql": 1,
+                "graphql_description": "",
+                "graphql_field_name": "youtubeUrl",
+                "graphql_non_null": 0
+            },
+            {
+                "key": "field_676d784416993",
+                "label": "linkedin_url",
+                "name": "linkedin_url",
+                "aria-label": "",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "allow_in_bindings": 0,
+                "placeholder": "",
+                "show_in_graphql": 1,
+                "graphql_description": "",
+                "graphql_field_name": "linkedinUrl",
+                "graphql_non_null": 0
+            },
+            {
+                "key": "field_676dc1b691095",
+                "label": "email",
+                "name": "email",
+                "aria-label": "",
+                "type": "email",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "allow_in_bindings": 0,
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "show_in_graphql": 1,
+                "graphql_description": "",
+                "graphql_field_name": "email",
+                "graphql_non_null": 0
+            },
+            {
+                "key": "field_676f876887a9a",
+                "label": "skills",
+                "name": "skills",
+                "aria-label": "",
+                "type": "group",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "layout": "block",
+                "show_in_graphql": 1,
+                "graphql_description": "",
+                "graphql_field_name": "skills",
+                "graphql_non_null": 0,
+                "sub_fields": [
+                    {
+                        "key": "field_676f87e087a9b",
+                        "label": "Skill name 1",
+                        "name": "skill_name_1",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "allow_in_bindings": 0,
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "show_in_graphql": 1,
+                        "graphql_description": "",
+                        "graphql_field_name": "skillName1",
+                        "graphql_non_null": 0
+                    },
+                    {
+                        "key": "field_676f880187a9c",
+                        "label": "Skill description 1",
+                        "name": "skill_description_1",
+                        "aria-label": "",
+                        "type": "textarea",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "allow_in_bindings": 0,
+                        "rows": "",
+                        "placeholder": "",
+                        "new_lines": "",
+                        "show_in_graphql": 1,
+                        "graphql_description": "",
+                        "graphql_field_name": "skillDescription1",
+                        "graphql_non_null": 0
+                    },
+                    {
+                        "key": "field_676f883987a9d",
+                        "label": "Skill name 2",
+                        "name": "skill_name_2",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "allow_in_bindings": 0,
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "show_in_graphql": 1,
+                        "graphql_description": "",
+                        "graphql_field_name": "skillName2",
+                        "graphql_non_null": 0
+                    },
+                    {
+                        "key": "field_676f884387a9e",
+                        "label": "Skill description 2",
+                        "name": "skill_description_2",
+                        "aria-label": "",
+                        "type": "textarea",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "allow_in_bindings": 0,
+                        "rows": "",
+                        "placeholder": "",
+                        "new_lines": "",
+                        "show_in_graphql": 1,
+                        "graphql_description": "",
+                        "graphql_field_name": "skillDescription2",
+                        "graphql_non_null": 0
+                    },
+                    {
+                        "key": "field_676f885187a9f",
+                        "label": "Skill name 3",
+                        "name": "skill_name_3",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "allow_in_bindings": 0,
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "show_in_graphql": 1,
+                        "graphql_description": "",
+                        "graphql_field_name": "skillName3",
+                        "graphql_non_null": 0
+                    },
+                    {
+                        "key": "field_676f886387aa0",
+                        "label": "Skill description 3",
+                        "name": "skill_description_3",
+                        "aria-label": "",
+                        "type": "textarea",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "allow_in_bindings": 0,
+                        "rows": "",
+                        "placeholder": "",
+                        "new_lines": "",
+                        "show_in_graphql": 1,
+                        "graphql_description": "",
+                        "graphql_field_name": "skillDescription3",
+                        "graphql_non_null": 0
+                    }
+                ]
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "page"
+                },
+                {
+                    "param": "page",
+                    "operator": "==",
+                    "value": "19"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 1,
+        "display_title": "",
+        "allow_ai_access": false,
+        "ai_description": "",
+        "show_in_graphql": 1,
+        "graphql_field_name": "home_page_fields",
+        "map_graphql_types_from_location_rules": 1,
+        "graphql_types": [
+            "ContentNode",
+            "MediaItem",
+            "Page",
+            "Post",
+            "TermNode",
+            "Category",
+            "PostFormat",
+            "Tag"
+        ]
+    },
+    {
+        "key": "group_676d40f7bb646",
+        "title": "Projects",
+        "fields": [
+            {
+                "key": "field_676dcb2aec8d4",
+                "label": "Project Tagline",
+                "name": "project_tagline",
+                "aria-label": "",
+                "type": "textarea",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "allow_in_bindings": 0,
+                "rows": "",
+                "placeholder": "",
+                "new_lines": "",
+                "show_in_graphql": 1,
+                "graphql_description": "",
+                "graphql_field_name": "projectTagline",
+                "graphql_non_null": 0
+            },
+            {
+                "key": "field_676dcd0783231",
+                "label": "Github URL",
+                "name": "githuburl",
+                "aria-label": "",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "allow_in_bindings": 0,
+                "placeholder": "",
+                "show_in_graphql": 1,
+                "graphql_description": "",
+                "graphql_field_name": "githuburl",
+                "graphql_non_null": 0
+            },
+            {
+                "key": "field_676dcd1383232",
+                "label": "Website URL",
+                "name": "websiteurl",
+                "aria-label": "",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "allow_in_bindings": 0,
+                "placeholder": "",
+                "show_in_graphql": 1,
+                "graphql_description": "",
+                "graphql_field_name": "websiteurl",
+                "graphql_non_null": 0
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "project"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0,
+        "display_title": "",
+        "allow_ai_access": false,
+        "ai_description": "",
+        "show_in_graphql": 1,
+        "graphql_field_name": "projects",
+        "map_graphql_types_from_location_rules": 1,
+        "graphql_types": [
+            "ContentNode",
+            "MediaItem",
+            "Page",
+            "Post",
+            "TermNode",
+            "Category",
+            "PostFormat",
+            "Tag"
+        ]
+    }
+]

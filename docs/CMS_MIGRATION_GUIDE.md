@@ -1,6 +1,6 @@
 # Fase 1: inventario y transición de CPT a ACF
 
-Estado: iniciada el 18 de octubre de 2026. Alex confirma que no existe staging de WordPress. Los Workers de staging y producción leen actualmente el mismo CMS; no son una copia aislada de WordPress.
+Estado: iniciada el 18 de octubre de 2026. Alex confirma que no existe staging de WordPress y autorizó trabajar en producción aceptando interrupciones. Los Workers leen el mismo CMS. La ruta actual está en [CPT_TRANSITION.md](wordpress/CPT_TRANSITION.md): plugin y export ACF recibidos, análisis de equivalencia y guía de sustitución sin copiar contenido. La sección de staging siguiente se conserva como alternativa, no como requisito.
 
 ## Hallazgos confirmados por lectura del esquema
 

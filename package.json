@@ -14,6 +14,7 @@
     "deploy:staging": "npm run build && wrangler deploy",
     "test:smoke": "node scripts/smoke.mjs",
     "cms:inventory": "node scripts/cms-inventory.mjs",
+    "cms:baseline": "node scripts/cms-baseline.mjs",
     "prebuild": "node scripts/build-info.mjs"
   },
   "dependencies": {
