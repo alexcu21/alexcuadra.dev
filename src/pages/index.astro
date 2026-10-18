@@ -8,6 +8,7 @@ const projectsData = await getProjectsInfo();
 
 // Layout import — provides basic page elements: <head>, <nav>, <footer> etc.
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { sortProjectsByModified } from '../data/projects.js';
 
 // Component Imports
 import CallToAction from '../components/CallToAction.astro';
@@ -22,8 +23,7 @@ import ContactCTA from '../components/ContactCTA.astro';
 import Skills from '../components/Skills.astro';
 
 // Content Fetching: List four most recent work projects
-const projects = (projectsData)
-	.sort((a: any, b: any) => b.modified - a.modified)
+const projects = sortProjectsByModified(projectsData)
 	.slice(0, 4);
 
 const data = await getHomeInfo()

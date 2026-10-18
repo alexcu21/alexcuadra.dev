@@ -1,0 +1,29 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "alexcuadra-dev-staging",
+  "main": "@astrojs/cloudflare/entrypoints/server",
+  "compatibility_date": "2026-10-17",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "workers_dev": true,
+  "keep_vars": true,
+  "env": {
+    "production": {
+      "name": "alexcuadra-dev",
+      "workers_dev": true,
+      "routes": [
+        { "pattern": "alexcuadra.dev", "custom_domain": true }
+      ],
+      "vars": {
+        "WPGRAPHQL_AUTH_ENABLED": "true"
+      }
+    }
+  },
+  "observability": {
+    "logs": {
+      "enabled": true,
+      "invocation_logs": true
+    }
+  }
+}

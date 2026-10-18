@@ -1,15 +1,15 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import dotenv from 'dotenv'
-import tailwind from '@astrojs/tailwind';
+import dotenv from 'dotenv';
+import tailwindcss from '@tailwindcss/vite';
 import cloudflare from '@astrojs/cloudflare';
 
-dotenv.config()
+dotenv.config();
 
-// https://astro.build/config
 export default defineConfig({
   site: 'https://alexcuadra.dev',
-  integrations: [tailwind()],
   output: 'server',
-  adapter: cloudflare(),
+  session: false,
+  adapter: cloudflare({ imageService: 'compile' }),
+  vite: { plugins: [tailwindcss()] },
 });

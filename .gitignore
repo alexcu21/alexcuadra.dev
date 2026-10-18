@@ -22,3 +22,12 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+# Keep planning documents versioned; reference proposals remain local.
+/docs/design-proposal/
+
+# Cloudflare local state and secrets
+.wrangler/
+.dev.vars
+.dev.vars.*
+.env.*
+!.env.example
