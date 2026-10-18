@@ -1,6 +1,7 @@
 import { defineMiddleware } from 'astro:middleware';
 import { withCmsRequest } from './data/cms-request.js';
 import { allowsPublicCmsCache } from './data/cms-cache.js';
+import { env } from 'cloudflare:workers';
 
 export const onRequest = defineMiddleware(async (context, next) => {
   const requestId = crypto.randomUUID();
@@ -8,7 +9,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
   if (allowsPublicCmsCache(context.request)) {
     try { edgeCache = await caches.open('alexcuadra-public-cms'); } catch { /* Cache is optional. */ }
   }
-  const response = await withCmsRequest(next, { requestId, edgeCache, cacheOrigin: context.url.origin });
+  const response = await withCmsRequest(next, { requestId, edgeCache, cacheOrigin: context.url.origin,
+    cmsConfig: env });
   const headers = new Headers(response.headers);
   headers.set('X-Request-ID', requestId);
   // Staging uses workers.dev; this is an indexing policy, not access control.

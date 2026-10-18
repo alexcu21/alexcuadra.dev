@@ -1,6 +1,7 @@
 import { AsyncLocalStorage } from 'node:async_hooks';
 import { request as graphqlRequest } from 'graphql-request';
 import { publicCacheKey, PUBLIC_CMS_TTL, retryAfterSeconds } from './cms-cache.js';
+import { cmsAuthHeaders } from './cms-auth.js';
 
 const requests = new AsyncLocalStorage();
 
@@ -30,6 +31,13 @@ export async function request(endpoint, document, variables, options = {}) {
   const scope = requests.getStore();
   // Opt-in only. Any future credential-bearing request bypasses shared cache.
   const credentials = new Headers(options.requestHeaders);
+  let serviceHeaders;
+  try { serviceHeaders = cmsAuthHeaders(scope?.cmsConfig); }
+  catch { throw cmsFailure('CMS_AUTH_CONFIG', operation); }
+  if (serviceHeaders.has('authorization')) {
+    if (new URL(endpoint).protocol !== 'https:') throw cmsFailure('CMS_AUTH_CONFIG', operation);
+    credentials.set('authorization', serviceHeaders.get('authorization'));
+  }
   const canShare = options.publicCache === true && scope?.edgeCache
     && typeof options.validatePublicData === 'function' && [...credentials].length === 0;
   const load = async () => {
@@ -53,7 +61,7 @@ export async function request(endpoint, document, variables, options = {}) {
       }
     }
     try {
-      const headers = new Headers(options.requestHeaders);
+      const headers = new Headers(credentials);
       headers.set('User-Agent', 'AlexCuadraPortfolio/1.0 (SSR; Cloudflare Workers)');
       if (scope?.requestId) headers.set('X-Request-ID', scope.requestId);
       const data = await graphqlRequest({ url: endpoint, document, variables,
