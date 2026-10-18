@@ -16,6 +16,7 @@
     "cms:inventory": "node scripts/cms-inventory.mjs",
     "cms:baseline": "node scripts/cms-baseline.mjs",
     "cms:languages": "node scripts/cms-languages.mjs",
+    "test:cms-security": "sh tests/integration/wordpress-polylang/run.sh",
     "prebuild": "node scripts/build-info.mjs"
   },
   "dependencies": {

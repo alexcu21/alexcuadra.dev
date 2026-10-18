@@ -1,0 +1,169 @@
+{
+  "testedAt": "2026-10-18T22:07:49.498Z",
+  "versions": {
+    "wordpress": "7.1.3",
+    "phpCli": "8.5.11",
+    "advanced-custom-fields": "6.8.10",
+    "polylang": "3.8.11",
+    "wp-graphql": "2.24.2",
+    "wpgraphql-acf": "3.0.0",
+    "wp-graphql-polylang": "0.7.1"
+  },
+  "scope": "Isolated synthetic fixtures. Not a complete security audit; no production data or credentials used.",
+  "total": 37,
+  "passed": 33,
+  "results": [
+    {
+      "name": "anonymous language metadata rejected",
+      "status": "PASS"
+    },
+    {
+      "name": "category translations and language filters resolve consistently",
+      "status": "PASS"
+    },
+    {
+      "name": "subscriber cannot create or change category language",
+      "status": "PASS"
+    },
+    {
+      "name": "anonymous content rejected",
+      "status": "PASS"
+    },
+    {
+      "name": "subscriber identity authenticated",
+      "status": "PASS"
+    },
+    {
+      "name": "post: collections isolate EN/ES and exclude protected content",
+      "status": "PASS"
+    },
+    {
+      "name": "post/publish: translation, translations and direct read respect visibility",
+      "status": "PASS"
+    },
+    {
+      "name": "post/draft: translation, translations and direct read respect visibility",
+      "status": "PASS"
+    },
+    {
+      "name": "post/private: translation, translations and direct read respect visibility",
+      "status": "PASS"
+    },
+    {
+      "name": "post/future: translation, translations and direct read respect visibility",
+      "status": "PASS"
+    },
+    {
+      "name": "post/password: translation, translations and direct read respect visibility",
+      "status": "FAIL",
+      "reason": "ERR_ASSERTION"
+    },
+    {
+      "name": "post: portfolio guard rejects live password-protected result",
+      "status": "PASS"
+    },
+    {
+      "name": "post: subscriber cannot create or change language through mutations",
+      "status": "PASS"
+    },
+    {
+      "name": "page: collections isolate EN/ES and exclude protected content",
+      "status": "PASS"
+    },
+    {
+      "name": "page/publish: translation, translations and direct read respect visibility",
+      "status": "PASS"
+    },
+    {
+      "name": "page/draft: translation, translations and direct read respect visibility",
+      "status": "PASS"
+    },
+    {
+      "name": "page/private: translation, translations and direct read respect visibility",
+      "status": "PASS"
+    },
+    {
+      "name": "page/future: translation, translations and direct read respect visibility",
+      "status": "PASS"
+    },
+    {
+      "name": "page/password: translation, translations and direct read respect visibility",
+      "status": "FAIL",
+      "reason": "ERR_ASSERTION"
+    },
+    {
+      "name": "page: portfolio guard rejects live password-protected result",
+      "status": "PASS"
+    },
+    {
+      "name": "page: subscriber cannot create or change language through mutations",
+      "status": "PASS"
+    },
+    {
+      "name": "project: collections isolate EN/ES and exclude protected content",
+      "status": "PASS"
+    },
+    {
+      "name": "project/publish: translation, translations and direct read respect visibility",
+      "status": "PASS"
+    },
+    {
+      "name": "project/draft: translation, translations and direct read respect visibility",
+      "status": "PASS"
+    },
+    {
+      "name": "project/private: translation, translations and direct read respect visibility",
+      "status": "PASS"
+    },
+    {
+      "name": "project/future: translation, translations and direct read respect visibility",
+      "status": "PASS"
+    },
+    {
+      "name": "project/password: translation, translations and direct read respect visibility",
+      "status": "FAIL",
+      "reason": "ERR_ASSERTION"
+    },
+    {
+      "name": "project: portfolio guard rejects live password-protected result",
+      "status": "PASS"
+    },
+    {
+      "name": "project: subscriber cannot create or change language through mutations",
+      "status": "PASS"
+    },
+    {
+      "name": "articles: collections isolate EN/ES and exclude protected content",
+      "status": "PASS"
+    },
+    {
+      "name": "articles/publish: translation, translations and direct read respect visibility",
+      "status": "PASS"
+    },
+    {
+      "name": "articles/draft: translation, translations and direct read respect visibility",
+      "status": "PASS"
+    },
+    {
+      "name": "articles/private: translation, translations and direct read respect visibility",
+      "status": "PASS"
+    },
+    {
+      "name": "articles/future: translation, translations and direct read respect visibility",
+      "status": "PASS"
+    },
+    {
+      "name": "articles/password: translation, translations and direct read respect visibility",
+      "status": "FAIL",
+      "reason": "ERR_ASSERTION"
+    },
+    {
+      "name": "articles: portfolio guard rejects live password-protected result",
+      "status": "PASS"
+    },
+    {
+      "name": "articles: subscriber cannot create or change language through mutations",
+      "status": "PASS"
+    }
+  ]
+}

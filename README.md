@@ -89,5 +89,6 @@ Los planes, guías y documentos de seguimiento se guardan en `docs/`:
 - [Migración de producción a Workers](docs/WORKERS_PRODUCTION.md): entorno separado, pasos de creación, traslado del dominio y reversión.
 - [Inventario y transición CPT/ACF](docs/CMS_MIGRATION_GUIDE.md): claves internas confirmadas, copia de WordPress y exports necesarios antes de crear campos.
 - [Configuración bilingüe](docs/BILINGUAL_SETUP.md): compatibilidad, instalación guiada y validación EN/ES sin mezclar blog y referencias externas.
+- [Prueba aislada del conector Polylang](docs/wordpress/POLYLANG_LAB_REPORT.md): matriz de autorización y resultados, incluidos los cuatro fallos de política de campos ACF protegidos con contraseña.
 
 Las referencias de diseño bajo `docs/design-proposal/` permanecen locales y están excluidas de Git. Las colecciones Markdown heredadas se conservan durante la transición; no son la fuente editorial prevista para el rediseño.

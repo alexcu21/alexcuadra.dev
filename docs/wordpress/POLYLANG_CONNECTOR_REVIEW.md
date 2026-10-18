@@ -2,6 +2,8 @@
 
 Fecha: 18 de octubre de 2026. Alex lo instaló sin activarlo. Mantenerlo desactivado hasta decidir la ruta de pruebas. Esta es una revisión estática acotada, no una certificación de seguridad ni prueba de compatibilidad.
 
+Actualización: se completó el laboratorio aislado tras activar Docker. Ver [resultados de ejecución y límites](POLYLANG_LAB_REPORT.md); la nota de entorno sin daemon que aparece al final describe el estado previo.
+
 ## Alcance y procedencia
 
 Tag oficial v0.7.1 de valu-digital/wp-graphql-polylang. Se leyeron el bootstrap, composer.json y los nueve archivos src: Loader, PostObject, TermObject, Helpers, LanguageRootQueries, PolylangTypes, MenuItem, StringsTranslations y OptionsPages. Se verificó inclusión de vendor/autoload.php; no se ejecutó el plugin ni se auditó un entorno WordPress aislado con PHP 8.5.

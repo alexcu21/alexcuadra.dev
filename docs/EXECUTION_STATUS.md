@@ -1,5 +1,13 @@
 # Ejecución del rediseño
 
+## Laboratorio local del conector ejecutado — 18 octubre 2026
+
+Docker activado por Alex. Laboratorio aislado con WP 7.1.3/PHP 8.5.11 y versiones ACF/WPGraphQL de producción, Polylang 3.8.11 y puente 0.7.1. Datos ficticios y credenciales propias, sin .dev.vars ni CMS real. Se corrigieron dos ajustes del harness inicial (opción real restrict_endpoint_to_logged_in_users y persistencia mediante API de opciones de Polylang) antes de la matriz final; no se atribuyeron al conector.
+
+33/37 checks pasan: auth, filtros/traducciones, ocultación de draft/private/future, categorías y escrituras denegadas al Suscriptor. Cuatro fallos de política por fields ACF en publicados con contraseña se reproducen idénticos sin el conector; no se clasifican como vulnerabilidad confirmada del puente. Guardas existentes del portfolio rechazan esos nodos. 60 tests frontend pasan. Informe/evidencia en wordpress/POLYLANG_LAB_REPORT.md y JSON asociados. Runner reproducible preserva salida no-cero por los fallos conocidos.
+
+Disco virtual Docker lleno: no se borraron recursos ajenos; solo se recrearon volúmenes propios ficticios con tmpfs limitado. Conector de producción continúa desactivado. Preparar filtros/DTOs por idioma antes del piloto del CMS real; no se certifica seguridad total ni se declaran listas las rutas ES.
+
 ## Conector instalado sin activar; revisión estática — 18 octubre 2026
 
 Alex confirma WP GraphQL Polylang 0.7.1 instalado y desactivado. Se revisaron bootstrap, composer.json y nueve archivos src del tag oficial. Informe wordpress/POLYLANG_CONNECTOR_REVIEW.md: sin vulnerabilidad confirmada; asimetría entre resolvers translation/translations, hooks de mutaciones que dependen de autorización de WPGraphQL y uso de contexto admin de Polylang requieren pruebas reales. No se confunde contexto PLL_Admin con rol administrador. No se ejecutó el conector ni se validó compatibilidad PHP 8.5. Decisión pendiente: piloto aislado del conector o puente de lectura propio con mantenimiento/pruebas explícitos. No activar por defecto tras esta revisión.
