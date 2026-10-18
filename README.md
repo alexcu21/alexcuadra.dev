@@ -70,7 +70,7 @@ Las pruebas cubren contratos del cliente GraphQL, variables, errores de autoriza
 
 ## Configuración y seguridad
 
-El cliente consulta `https://content.alexcuadra.dev/graphql`. El transporte con Application Password está preparado y se activa mediante `WPGRAPHQL_AUTH_ENABLED=true` y dos secretos de runtime. Sin activación conserva el acceso anónimo. Sigue la [guía de autenticación](docs/CMS_AUTH.md): **no activar aún la restricción de operaciones a usuarios autenticados** hasta validar staging y adaptar también producción Pages y los demás consumidores. Las consultas autenticadas omiten la caché compartida.
+El cliente consulta `https://content.alexcuadra.dev/graphql`. El transporte con Application Password se activa mediante `WPGRAPHQL_AUTH_ENABLED=true` y las credenciales de runtime. Sin activación conserva el acceso anónimo. Sigue la [guía de autenticación](docs/CMS_AUTH.md): **no activar aún la restricción de operaciones a usuarios autenticados** hasta adaptar también producción Pages y los demás consumidores. Solo proyectos autenticados tienen caché compartida, con un contrato de campos públicos y controles de publicación/contraseña/restricción; Home verifica la identidad en origen.
 
 No guardar tokens, Application Passwords ni credenciales en Git, contenido ACF, logs o variables `PUBLIC_*`. `.env`, sus variantes y `.dev.vars` están ignorados, salvo `.env.example`. Los secretos futuros se configurarán en el runtime del Worker, separados por entorno. No registrar respuestas crudas del CMS para diagnosticar fallos.
 

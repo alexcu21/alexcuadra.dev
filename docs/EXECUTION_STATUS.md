@@ -1,5 +1,13 @@
 # Ejecución del rediseño
 
+## Validación de autenticación y caché pública — 17 octubre 2026
+
+- Staging confirmó la cuenta de servicio mediante `viewer`, HTTP 200 y `X-CMS-Auth: verified`.
+- Smoke remoto: favicon y siete rutas correctas (inicio, work, About, articles, proyecto, categoría y artículo). Es una comprobación puntual, no prueba de eliminación de los 429.
+- Esquema real validado: proyectos y páginas admiten status PUBLISH, hasPassword false y los indicadores status/isRestricted/hasPassword.
+- Caché autenticada de proyectos limitada a un DTO público, separación por credencial y validación de visibilidad. Home continúa verificando identidad directamente. Pendientes contratos de caché para las demás operaciones.
+- La restricción global de WPGraphQL continúa pendiente de adaptar producción Pages y otros consumidores. No se modificó main ni el dominio de producción.
+
 ## Fase 0.1 — en curso
 
 Baseline: main, commit `8cea9f341a4de6602d487b9c8f959169fdfb9b3e`, conservando los cambios locales previos del plan, pruebas y correcciones. Node 22.23.2, npm 10.9.8. Sin publicaciones ni cambios en WordPress/Cloudflare.

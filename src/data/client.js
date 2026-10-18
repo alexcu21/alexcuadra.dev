@@ -1,5 +1,6 @@
 import { gql } from 'graphql-request';
 import { request, cmsFailure } from './cms-request.js';
+import { publicProjects } from './public-projects.js';
 
 // GraphQL endpoint
 const endpoint = 'https://content.alexcuadra.dev/graphql';
@@ -60,8 +61,11 @@ export const getHomeInfo = async () => {
 export const getProjectsInfo = async () => {
     const query = gql `
         query getProjectFields {
-            projects {
+            projects(where: {status: PUBLISH, hasPassword: false}) {
                 nodes {
+                    status
+                    isRestricted
+                    hasPassword
                     title
                         projects {
                             githuburl
@@ -87,6 +91,7 @@ export const getProjectsInfo = async () => {
     `
     const projectData = await request(endpoint, query, undefined, {
         publicCache: true,
+        servicePublicProjection: publicProjects,
         validatePublicData: data => Array.isArray(data?.projects?.nodes),
     });
     return projectData.projects.nodes;

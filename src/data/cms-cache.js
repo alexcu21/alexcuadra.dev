@@ -10,9 +10,9 @@ export function allowsPublicCmsCache(request) {
     && ![...url.searchParams.keys()].some(key => /preview|draft|nonce|token/i.test(key));
 }
 
-export async function publicCacheKey(origin, endpoint, document, variables) {
+export async function publicCacheKey(origin, endpoint, document, variables, partition = 'anonymous') {
   // Include the entire query and variables; never expose them in the cache URL.
-  const bytes = new TextEncoder().encode(JSON.stringify([endpoint, document, variables ?? null]));
+  const bytes = new TextEncoder().encode(JSON.stringify([endpoint, document, variables ?? null, partition]));
   const digest = await crypto.subtle.digest('SHA-256', bytes);
   const hash = [...new Uint8Array(digest)].map(byte => byte.toString(16).padStart(2, '0')).join('');
   return new Request(new URL(`/__internal-cache/${CACHE_VERSION}/${hash}`, origin));

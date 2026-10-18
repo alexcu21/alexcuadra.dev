@@ -12,6 +12,10 @@ async function check(path) {
   const response = await fetch(new URL(path, base), { signal: AbortSignal.timeout(30000) });
   const html = await response.text();
   assert.equal(response.status, 200, `${path}: HTTP ${response.status}`);
+  if (path === '/' && process.argv.includes('--require-cms-auth')) {
+    assert.equal(response.headers.get('x-cms-auth'), 'verified', 'CMS service identity must be verified');
+    console.log('PASS CMS service identity: verified');
+  }
   assert.match(html, /<title>[^<]+<\/title>/, `${path}: missing title`);
   assert.match(html, /<h1[\s>]/, `${path}: missing page heading`);
   assert.doesNotMatch(html, /astro-error-overlay|Cannot read properties of undefined|Invalid URL/);

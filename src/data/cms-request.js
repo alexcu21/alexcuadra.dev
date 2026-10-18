@@ -29,7 +29,7 @@ export function cmsFailure(code, operation, status, details = {}) {
 export async function request(endpoint, document, variables, options = {}) {
   const operation = /\bquery\s+(\w+)/.exec(document)?.[1] || 'unknown';
   const scope = requests.getStore();
-  // Opt-in only. Any future credential-bearing request bypasses shared cache.
+  // Caller-provided credentials always bypass shared cache.
   const credentials = new Headers(options.requestHeaders);
   let serviceHeaders;
   try { serviceHeaders = cmsAuthHeaders(scope?.cmsConfig); }
@@ -38,17 +38,24 @@ export async function request(endpoint, document, variables, options = {}) {
     if (new URL(endpoint).protocol !== 'https:') throw cmsFailure('CMS_AUTH_CONFIG', operation);
     credentials.set('authorization', serviceHeaders.get('authorization'));
   }
+  const servicePublic = serviceHeaders.has('authorization')
+    && [...new Headers(options.requestHeaders)].length === 0
+    && typeof options.servicePublicProjection === 'function';
   const canShare = options.publicCache === true && scope?.edgeCache
-    && typeof options.validatePublicData === 'function' && [...credentials].length === 0;
+    && typeof options.validatePublicData === 'function' && ([...credentials].length === 0 || servicePublic);
+  // Separate anonymous/service entries and rotate the key when credentials change.
+  // The partition is hashed, never logged or placed verbatim in the cache URL.
+  const partition = servicePublic ? `service-public-v1:${serviceHeaders.get('authorization')}` : 'anonymous';
   const load = async () => {
     const started = Date.now();
     let key;
     if (canShare) {
       try {
-        key = await publicCacheKey(scope.cacheOrigin, endpoint, document, variables);
+        key = await publicCacheKey(scope.cacheOrigin, endpoint, document, variables, partition);
         const hit = await scope.edgeCache.match(key);
         if (hit) {
-          const cached = await hit.json();
+          let cached = await hit.json();
+          if (servicePublic) cached = options.servicePublicProjection(cached);
           if (options.validatePublicData(cached) === true) {
             console.info(JSON.stringify({ event: 'cms_query', requestId: scope.requestId, operation,
               cache: 'HIT', durationMs: Date.now() - started, attempt: 0 }));
@@ -64,8 +71,12 @@ export async function request(endpoint, document, variables, options = {}) {
       const headers = new Headers(credentials);
       headers.set('User-Agent', 'AlexCuadraPortfolio/1.0 (SSR; Cloudflare Workers)');
       if (scope?.requestId) headers.set('X-Request-ID', scope.requestId);
-      const data = await graphqlRequest({ url: endpoint, document, variables,
+      let data = await graphqlRequest({ url: endpoint, document, variables,
         requestHeaders: headers, signal: AbortSignal.timeout(10000) });
+      if (servicePublic) {
+        data = options.servicePublicProjection(data);
+        if (!data) throw cmsFailure('CMS_PUBLIC_CONTRACT', operation);
+      }
       if (options.verifyServiceIdentity) {
         const authenticated = Number.isInteger(data?.viewer?.databaseId) && data.viewer.databaseId > 0;
         delete data.viewer;
@@ -102,7 +113,7 @@ export async function request(endpoint, document, variables, options = {}) {
   };
   if (!scope) return load();
   const key = JSON.stringify([endpoint, document, variables, [...credentials], options.publicCache === true,
-    options.verifyServiceIdentity === true]);
+    options.verifyServiceIdentity === true, servicePublic]);
   if (!scope.cache.has(key)) scope.cache.set(key, load());
   return scope.cache.get(key);
 }

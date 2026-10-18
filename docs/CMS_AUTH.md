@@ -31,7 +31,9 @@ La implementación aplica las credenciales a todas las consultas del cliente des
 
 La consulta de Home incluye `viewer { databaseId }` para verificar identidad sin añadir otra petición. Con autenticación activa, una identidad nula produce 503 `CMS_IDENTITY_UNCONFIRMED`. Una identidad válida genera el evento `cms_auth_verified` y la cabecera `X-CMS-Auth: verified`; el identificador se elimina antes de devolver los datos al template y nunca se registra. Sin autenticación activa no se emite esa confirmación.
 
-**La caché compartida se omite con autenticación.** La deduplicación dentro de cada petición continúa. Antes de activar, evaluaremos la mayor carga potencial; la reutilización entre peticiones autenticadas requiere otro contrato de contenido público y pruebas contra borradores, contenido privado y protegido con contraseña. No basta con comprobar que existen campos en la respuesta.
+Smoke con comprobación de identidad: `npm run test:smoke -- https://alexcuadra-dev-staging.alexcu21.workers.dev --require-cms-auth`. Ejecutarlo puntualmente, sin bucles ni ráfagas.
+
+**La caché autenticada está limitada a proyectos publicados sin contraseña y no restringidos**, mediante un contrato explícito de campos públicos y pruebas contra borradores, contenido privado y protegido con contraseña. El resto de consultas autenticadas omite la caché compartida. Home sigue verificando identidad en origen. La deduplicación dentro de cada petición continúa. Véase [la política de caché](CMS_CACHE.md).
 
 Solo tras validar la identidad y los permisos, activar en WPGraphQL «Limit the execution of GraphQL operations to authenticated requests». Confirmar que la consulta anónima se rechaza y las rutas del Worker funcionan. Esto afecta también a producción Pages, desarrollo y cualquier otro consumidor del mismo CMS: **inventariarlos y adaptar todos antes de activar la restricción global**.
 

@@ -2,7 +2,7 @@
 
 ## Alcance implementado
 
-Caché de datos para tres consultas anónimas y explícitamente autorizadas: Home, lista de proyectos y categorías. Cada consulta debe declarar publicCache y un validador de forma; no hay caché indiscriminada de documentos GraphQL. Las consultas de About, artículo y artículos por categoría aún consultan origen, aunque reutilizan globales cacheados cuando corresponda.
+Caché de datos para tres consultas anónimas y explícitamente autorizadas: Home, lista de proyectos y categorías. Con autenticación de servicio, **solo la lista de proyectos** tiene caché compartida mediante un contrato público explícito. Home continúa verificando la identidad en origen; categorías, About y artículos autenticados también consultan origen. Cada consulta debe declarar publicCache y un validador; no hay caché indiscriminada de documentos GraphQL.
 
 Se usa Cache API de Workers, sin KV ni nuevos recursos. TTL: 60 segundos; expiración como mecanismo de actualización editorial. Una edición puede tardar hasta un minuto en verse. El namespace public-cms-v1 puede incrementarse para invalidar por versión: las entradas previas dejan de consultarse, aunque no se borran globalmente al instante. No existe webhook de purga desde WordPress en esta entrega.
 
@@ -12,9 +12,13 @@ La caché es local a cada centro de datos, puede expulsarse antes de expirar y n
 
 Solo se reutilizan datos anónimos publicados, con validación básica de forma y sin errores GraphQL. La clave incluye origen del frontend, endpoint CMS, documento completo y variables, con hash SHA-256. El nombre de la operación por sí solo nunca identifica una respuesta.
 
-Requests con Authorization, cualquier Cookie, parámetros de preview/draft/nonce/token o métodos distintos de GET/HEAD no usan caché compartida. Cualquier cabecera custom en opciones del transporte saliente también desactiva el uso compartido, incluidas futuras credenciales de servicio. Los errores no se almacenan y no hay fallback a contenido caducado.
+Requests entrantes con Authorization, cualquier Cookie, parámetros de preview/draft/nonce/token o métodos distintos de GET/HEAD no usan caché compartida. Cualquier cabecera custom en opciones del transporte saliente también desactiva el uso compartido. Los errores no se almacenan y no hay fallback a contenido caducado.
 
-No activar la restricción GraphQL todavía. Al integrar autenticación habrá que definir un DTO público explícito, consultar únicamente publicaciones y volver a validar permisos/aislamiento antes de permitir caché de esos resultados. La caché anónima de esta entrega no autoriza almacenar respuestas autenticadas.
+La excepción para proyectos autenticados exige credenciales inyectadas por el servidor y el proyector `publicProjects`. La consulta filtra `status: PUBLISH, hasPassword: false`; cada nodo debe confirmar `status=publish`, `hasPassword=false` e `isRestricted=false`. Si faltan indicadores o hay contenido no público, la consulta falla con 503 sin almacenar ni renderizar esos datos. Se reconstruye un objeto con solo título, contenido, slug, fecha, campos editoriales del proyecto, nombres de tags y URL de imagen. Campos extra, identidad y metadatos ajenos se descartan antes de almacenar o renderizar. La validación se repite al leer caché.
+
+Las claves separan respuestas anónimas de las de servicio e incluyen la credencial en el material hasheado para cambiar de clave al rotarla. Ni la credencial ni su codificación Basic aparecen en URLs o logs. La revocación puede tardar hasta el TTL en afectar a una entrada existente de proyectos; Home sigue comprobando identidad en origen. Un cambio de publicación a privado también puede tardar hasta 60 segundos en reflejarse: usar invalidación por versión si se requiere retirada inmediata.
+
+No activar la restricción GraphQL todavía: producción Pages y otros consumidores deben estar adaptados antes. Nuevas operaciones autenticadas quedan sin caché hasta definir y probar su propio contrato público.
 
 ## Observability
 

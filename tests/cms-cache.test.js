@@ -2,7 +2,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { allowsPublicCmsCache, publicCacheKey, retryAfterSeconds } from '../src/data/cms-cache.js';
 import { request, withCmsRequest } from '../src/data/cms-request.js';
-import { getHomeInfo } from '../src/data/client.js';
+import { getHomeInfo, getProjectsInfo } from '../src/data/client.js';
+import { publicProjects } from '../src/data/public-projects.js';
 
 const endpoint = 'https://content.example.com/graphql';
 const query = 'query PublishedHome { pages { nodes { title } } }';
@@ -46,6 +47,42 @@ test('reuses public data between requests and refreshes after TTL', async t => {
   await ctx.run();
   assert.equal(ctx.fetchMock.mock.callCount(), 2);
 });
+
+const serviceConfig = { WPGRAPHQL_AUTH_ENABLED: 'true', WPGRAPHQL_USERNAME: 'reader',
+  WPGRAPHQL_APPLICATION_PASSWORD: 'private-password' };
+const publicNode = { status: 'publish', isRestricted: false, hasPassword: false,
+  title: 'Project', slug: 'project', content: '<p>Public</p>', secret: 'DO-NOT-STORE',
+  projects: { projectTagline: 'Public tagline', internalNotes: 'DO-NOT-STORE' },
+  featuredImage: { node: { sourceUrl: 'https://example.com/image.png', privateMeta: 'DO-NOT-STORE' } } };
+
+test('service project cache stores only public fields and reuses projected data', async t => {
+  const ctx = setup(t, { data: { viewer: { databaseId: 99 }, projects: { nodes: [publicNode] } } });
+  const config = { ...ctx.options, cmsConfig: serviceConfig };
+  const first = await ctx.run(getProjectsInfo, config);
+  const second = await ctx.run(getProjectsInfo, config);
+  assert.equal(first.response.status, 200);
+  assert.deepEqual(first.result, second.result);
+  assert.equal(ctx.fetchMock.mock.callCount(), 1);
+  assert.doesNotMatch(JSON.stringify(first.result), /DO-NOT-STORE|databaseId|viewer/);
+  const entry = [...ctx.entries.values()][0];
+  assert.doesNotMatch(await entry.response.clone().text(), /DO-NOT-STORE|databaseId|viewer/);
+  assert.ok([...ctx.entries.keys()].every(key => !key.includes('private-password')));
+  await ctx.run(getProjectsInfo, { ...config, cmsConfig: { ...serviceConfig, WPGRAPHQL_APPLICATION_PASSWORD: 'rotated' } });
+  assert.equal(ctx.fetchMock.mock.callCount(), 2);
+  await ctx.run(getProjectsInfo, ctx.options);
+  assert.equal(ctx.fetchMock.mock.callCount(), 3, 'anonymous request cannot read service cache');
+});
+
+for (const changes of [{ status: 'draft' }, { status: 'private' }, { status: 'future' },
+  { hasPassword: true }, { isRestricted: true }, { status: undefined }, { hasPassword: undefined }]) {
+  test(`rejects non-public service project without caching: ${JSON.stringify(changes)}`, async t => {
+    const ctx = setup(t, { data: { projects: { nodes: [{ ...publicNode, ...changes }] } } });
+    assert.equal(publicProjects({ projects: { nodes: [{ ...publicNode, ...changes }] } }), undefined);
+    const { response } = await ctx.run(getProjectsInfo, { ...ctx.options, cmsConfig: serviceConfig });
+    assert.equal(response.status, 503);
+    assert.equal(ctx.entries.size, 0);
+  });
+}
 
 test('cache hits record attempt zero without contacting origin', async t => {
   const ctx = setup(t);
