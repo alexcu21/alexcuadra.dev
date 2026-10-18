@@ -1,6 +1,6 @@
 # Workers staging: preparación y configuración
 
-Estado: configuración local preparada en `codex/workers-upgrade`; no se ha publicado la rama ni creado un Worker. Pages sigue siendo producción.
+Estado: configuración local preparada en `codex/workers-upgrade`; rama publicada en GitHub; todavía no se ha creado un Worker. Pages sigue siendo producción.
 
 ## Preparación local
 

@@ -65,3 +65,5 @@ Preview del build activo con workerd en http://127.0.0.1:4321/. `npm run test:sm
 Revisión visual automática pendiente: el acceso al navegador fue rechazado por su política de URL; no se intentó eludir ese bloqueo. La verificación de HTML por HTTP y los logs de workerd son correctos, pero no sustituyen comparar capturas o revisar manualmente ambos temas.
 
 No se ha creado Worker ni publicado en Cloudflare. Instrucciones concretas en WORKERS_STAGING.md. Falta validar staging real, revisión visual y autenticación antes de cerrar fase 0.1. No fusionar en main mientras su despliegue siga en Pages.
+
+Rama publicada en origin/codex/workers-upgrade, commit inicial 394262c. main sin cambios. Worker de staging todavía no creado.
