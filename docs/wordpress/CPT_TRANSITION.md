@@ -2,7 +2,7 @@
 
 ## Decisión de ejecución
 
-Versiones confirmadas por Alex: ACF gratuito 6.8.10 y WPGraphQL for ACF 3.0.0. Backup reciente de BD y archivos confirmado. Ambos CPT creados; tras restaurar Supports → Excerpt en Articles, la comparación completa de la referencia publicada pasa: mismos IDs, slugs y hashes para 7 proyectos y 10 referencias externas. Pendiente revisar export de los registros ACF para confirmar argumentos/permisos efectivos y revisión administrativa de estados no publicados/edición; no se equipara una prueba de lectura a validar todo el registro.
+Versiones confirmadas por Alex: ACF gratuito 6.8.10 y WPGraphQL for ACF 3.0.0. Backup reciente de BD y archivos confirmado. Ambos CPT creados; export final revisado con permisos page/pages de Projects, post/posts de Articles y feeds activos. Registro y lectura publicados validados: mismos IDs, slugs y hashes para 7 proyectos y 10 referencias externas; smoke público correcto. Export final: acf-current-2026-10-18.json. La revisión administrativa de estados no publicados y edición se mantiene separada; no se equipara una prueba de lectura a auditar toda la base de datos.
 
 Aclaración editorial: articles son referencias externas y menciones; el tipo nativo post es el blog propio. La sustitución de registro no cambia esta distinción ni mueve entradas entre ambos.
 

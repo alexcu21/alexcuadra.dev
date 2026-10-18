@@ -2,6 +2,12 @@
 
 Fecha: 18 de octubre de 2026. Fuente: [export recibido](acf-after-cpt-registration-2026-10-18.json). Comparado con los cuatro grupos originales y el PHP del plugin aportado por Alex.
 
+## Resultado de la corrección
+
+El [export final](acf-current-2026-10-18.json), recibido como acf-export-2026-10-18 (2).json, corrige únicamente las diferencias señaladas: Projects rename_capabilities=true, page/pages y feeds activos en ambos CPT. No hay otros cambios entre los dos exports. Los cuatro grupos originales siguen idénticos. La configuración de registro revisada queda aceptada con la adición intencional de custom-fields.
+
+Baseline autenticado posterior correcto para los 7 proyectos y 10 referencias externas publicados: mismos IDs, slugs y hashes de campos consultados. Smoke de producción correcto para identidad, siete rutas, favicon y dos controles 404. Estas comprobaciones no incluyen editar contenido ni auditar todos los estados/metadatos de la base de datos. El resto del documento conserva los hallazgos anteriores y los ajustes ya completados.
+
 ## Correcto
 
 - Cuatro grupos ACF idénticos por comparación JSON estructural: mismas keys, tipos, nombres, reglas de ubicación y ajustes GraphQL.

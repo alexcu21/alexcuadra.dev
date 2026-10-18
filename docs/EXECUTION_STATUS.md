@@ -1,5 +1,11 @@
 # Ejecución del rediseño
 
+## Registro ACF final verificado — 18 octubre 2026
+
+Export acf-export-2026-10-18 (2).json: Projects usa page/pages con rename_capabilities activo; Articles conserva post/posts; feeds activos en ambos. Solo cambian esos ajustes respecto al export anterior. Cuatro grupos ACF idénticos al original; custom-fields añadido intencionalmente en ambos CPT. Snapshot final docs/wordpress/acf-current-2026-10-18.json.
+
+Baseline posterior correcto: mismos IDs/slugs/hashes consultados en 7 proyectos y 10 referencias externas publicados. Smoke público correcto para identidad autenticada, siete rutas, favicon y dos controles 404. Se valida sustitución del registro y lectura publicada sin copiar contenido. No se declara auditada la edición ni todos los estados/meta del CMS. Plugin original se conserva desactivado como respaldo. Siguiente decisión de modelado: estrategia bilingüe antes de crear los nuevos grupos y LAB.
+
 ## Export de registros ACF revisado — 18 octubre 2026
 
 Archivo acf-export-2026-10-18 (1).json incluye cuatro grupos idénticos al export original y los dos CPT. Claves/GraphQL, relaciones y supports correctos; custom-fields añadido intencionalmente por Alex. Diferencias pendientes: Projects usa post/posts en vez de page/pages; feeds desactivados en ambos frente al default activo del registro original. Guía de ajustes en docs/wordpress/CPT_EXPORT_REVIEW.md; lectura publicada ya validada, equivalencia de configuración todavía pendiente de estos ajustes.
