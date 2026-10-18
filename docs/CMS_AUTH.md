@@ -27,6 +27,8 @@ Cuando los dos secretos estén guardados, avisa sin compartirlos. Activaremos `W
 
 La implementación aplica las credenciales a todas las consultas del cliente desde el servidor; no toma credenciales del visitante. Exige HTTPS, falla con 503 si la configuración activa es incompleta, no registra secretos y no reintenta errores automáticamente.
 
+La consulta de Home incluye `viewer { databaseId }` para verificar identidad sin añadir otra petición. Con autenticación activa, una identidad nula produce 503 `CMS_IDENTITY_UNCONFIRMED`. Una identidad válida genera el evento `cms_auth_verified` y la cabecera `X-CMS-Auth: verified`; el identificador se elimina antes de devolver los datos al template y nunca se registra. Sin autenticación activa no se emite esa confirmación.
+
 **La caché compartida se omite con autenticación.** La deduplicación dentro de cada petición continúa. Antes de activar, evaluaremos la mayor carga potencial; la reutilización entre peticiones autenticadas requiere otro contrato de contenido público y pruebas contra borradores, contenido privado y protegido con contraseña. No basta con comprobar que existen campos en la respuesta.
 
 Solo tras validar la identidad y los permisos, activar en WPGraphQL «Limit the execution of GraphQL operations to authenticated requests». Confirmar que la consulta anónima se rechaza y las rutas del Worker funcionan. Esto afecta también a producción Pages, desarrollo y cualquier otro consumidor del mismo CMS: **inventariarlos y adaptar todos antes de activar la restricción global**.

@@ -66,6 +66,16 @@ export async function request(endpoint, document, variables, options = {}) {
       if (scope?.requestId) headers.set('X-Request-ID', scope.requestId);
       const data = await graphqlRequest({ url: endpoint, document, variables,
         requestHeaders: headers, signal: AbortSignal.timeout(10000) });
+      if (options.verifyServiceIdentity) {
+        const authenticated = Number.isInteger(data?.viewer?.databaseId) && data.viewer.databaseId > 0;
+        delete data.viewer;
+        if (serviceHeaders.has('authorization')) {
+          if (!authenticated) throw cmsFailure('CMS_IDENTITY_UNCONFIRMED', operation);
+          scope.serviceIdentityVerified = true;
+          console.info(JSON.stringify({ event: 'cms_auth_verified', requestId: scope.requestId,
+            operation, authenticated: true }));
+        }
+      }
       if (key && options.validatePublicData?.(data) === true) {
         try {
           await scope.edgeCache.put(key, new Response(JSON.stringify(data), {
@@ -77,6 +87,7 @@ export async function request(endpoint, document, variables, options = {}) {
         operation, cache: canShare ? 'MISS' : 'BYPASS', durationMs: Date.now() - started, attempt: 1 }));
       return data;
     } catch (error) {
+      if (error instanceof CmsError) throw error;
       const status = error?.response?.status;
       const messages = error?.response?.errors?.map(item => item.message).join(' ') || '';
       const code = status === 401 || status === 403 || /authenticat|not authorized|unauthorized/i.test(messages)
@@ -90,7 +101,8 @@ export async function request(endpoint, document, variables, options = {}) {
     }
   };
   if (!scope) return load();
-  const key = JSON.stringify([endpoint, document, variables, [...credentials], options.publicCache === true]);
+  const key = JSON.stringify([endpoint, document, variables, [...credentials], options.publicCache === true,
+    options.verifyServiceIdentity === true]);
   if (!scope.cache.has(key)) scope.cache.set(key, load());
   return scope.cache.get(key);
 }
@@ -115,6 +127,11 @@ export function withCmsRequest(next, options = {}) {
           'X-Robots-Tag': 'noindex',
         },
       });
+    }
+    if (scope.serviceIdentityVerified) {
+      const headers = new Headers(response.headers);
+      headers.set('X-CMS-Auth', 'verified');
+      return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
     }
     return response;
   });

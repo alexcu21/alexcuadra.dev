@@ -9,6 +9,7 @@ export const getHomeInfo = async () => {
     // Define the GraphQL query
     const query = gql`
         query getHomeFields {
+            viewer { databaseId }
             pages(where: {id: 19}) {
                 nodes {
                     title
@@ -45,6 +46,7 @@ export const getHomeInfo = async () => {
     `;
 
     const data = await request(endpoint, query, undefined, {
+        verifyServiceIdentity: true,
         publicCache: true,
         validatePublicData: data => Boolean(data?.pages?.nodes?.[0]?.homePageFields),
     });
