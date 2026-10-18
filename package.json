@@ -15,6 +15,7 @@
     "test:smoke": "node scripts/smoke.mjs",
     "cms:inventory": "node scripts/cms-inventory.mjs",
     "cms:baseline": "node scripts/cms-baseline.mjs",
+    "cms:languages": "node scripts/cms-languages.mjs",
     "prebuild": "node scripts/build-info.mjs"
   },
   "dependencies": {

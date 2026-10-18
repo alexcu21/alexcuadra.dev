@@ -1,5 +1,11 @@
 # Ejecución del rediseño
 
+## Preparación bilingüe — 18 octubre 2026
+
+WP 7.1.3/PHP 8.5.11 confirmados por Alex. Investigación primaria: Polylang 3.8.11 cumple mínimos WP/PHP y declara pruebas hasta WP 7.1.3; no equivale a compatibilidad completa de PHP 8.5 y demás plugins. Conector valu-digital v0.7.1, última release/push observado mayo 2025, sin certificación encontrada para la combinación actual. Piloto necesario antes de adoptar el puente.
+
+Comando cms:languages implementado y ejecutado con credenciales locales: esquema todavía sin languages/defaultLanguage, language/translations ni filtros en Page/Project/Article/Post/Category. Estado guardado en wordpress/LANGUAGE_SCHEMA_STATUS.md; no se instaló plugin ni se alteró contenido. BILINGUAL_SETUP.md define instalación guiada, separación EN/ES, limitaciones ACF gratuito, protección de reglas Home/About, filtros obligatorios y pruebas de aislamiento. Pendiente instalación inicial de Polylang por Alex.
+
 ## Registro ACF final verificado — 18 octubre 2026
 
 Export acf-export-2026-10-18 (2).json: Projects usa page/pages con rename_capabilities activo; Articles conserva post/posts; feeds activos en ambos. Solo cambian esos ajustes respecto al export anterior. Cuatro grupos ACF idénticos al original; custom-fields añadido intencionalmente en ambos CPT. Snapshot final docs/wordpress/acf-current-2026-10-18.json.
