@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { sortProjectsByModified } from '../data/projects.js';
 import ContactCTA from '../components/ContactCTA.astro';
 import PortfolioPreview from '../components/PortfolioPreview.astro';
 import Hero from '../components/Hero.astro';
@@ -9,9 +10,7 @@ import { getProjectsInfo } from '../data/client';
 
 const projectsData = await getProjectsInfo();
 
-const projects = (projectsData).sort(
-	(a: any, b: any) => b.modified - a.modified,
-);
+const projects = sortProjectsByModified(projectsData);
 
 ---
 
