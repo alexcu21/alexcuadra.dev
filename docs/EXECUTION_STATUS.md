@@ -1,5 +1,9 @@
 # Ejecución del rediseño
 
+## Clasificación inicial de idiomas Articles — 18 octubre 2026
+
+Alex completó el asistente de Polylang con inglés y medios traducibles. Aclara que hay fichas españolas; cinco slugs confirmados y contrastados con IDs 97/95/91/84/82, registrados en wordpress/ARTICLE_LANGUAGES.md. Projects y Articles no están marcados como traducibles. Baseline tras el asistente sin cambios. Otras cuatro fichas con slugs españoles pendientes de confirmación del idioma del texto local; no se asigna idioma por heurística. Conector Valu v0.7.1 inspeccionado en arranque/inclusión de autoload, pendiente piloto. No se cambió contenido ni rutas.
+
 ## Preparación bilingüe — 18 octubre 2026
 
 WP 7.1.3/PHP 8.5.11 confirmados por Alex. Investigación primaria: Polylang 3.8.11 cumple mínimos WP/PHP y declara pruebas hasta WP 7.1.3; no equivale a compatibilidad completa de PHP 8.5 y demás plugins. Conector valu-digital v0.7.1, última release/push observado mayo 2025, sin certificación encontrada para la combinación actual. Piloto necesario antes de adoptar el puente.
