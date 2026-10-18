@@ -463,3 +463,32 @@ Fuentes oficiales para validar el procedimiento:
 
 - [ACF: registro de CPT y clave del tipo](https://www.advancedcustomfields.com/resources/registering-a-custom-post-type/)
 - [ACF: post types, taxonomías e importación desde CPT UI](https://www.advancedcustomfields.com/resources/post-types-and-taxonomies/)
+
+## 17. Compatibilidad editorial con Gutenberg y estilos básicos
+
+Evaluar e implementar soporte de contenido creado con los bloques nativos de WordPress en artículos, casos de estudio, About y LAB. No exigir convertir headings, imágenes, columnas o citas en campos ACF: el cuerpo editorial vive en Gutenberg; ACF conserva los datos estructurados del template.
+
+Recibir HTML renderizado por WordPress vía GraphQL no importa automáticamente las hojas de estilo del tema ni los estilos globales de Gutenberg. Inventariar bloques y HTML reales del CMS antes de elegir el conjunto CSS; no cargar todo el tema de WordPress ni scripts del editor en el frontend Astro.
+
+| Bloque / formato | Soporte previsto |
+| --- | --- |
+| Párrafos, negrita, cursiva, enlaces y listas | Semántica y espaciado coherentes con Prose; enlaces seguros y foco visible |
+| Encabezados | H2–H6 dentro del cuerpo, con escala responsive y anchors/TOC; H1 reservado al título de página. Detectar y corregir H1 editoriales o niveles incorrectos antes de publicar |
+| Imágenes y figuras | Imagen, alt localizado, caption, dimensiones y alineación; tamaños responsive y límites del ancho de lectura |
+| Citas y pullquotes | Blockquote, cite y variantes permitidas, con contraste y tipografía de ambos temas |
+| Columnas y grupos | Reconocer columnas, bloques anidados y alineaciones; apilar en móvil según el comportamiento editorial permitido, sin desbordamiento |
+| Tablas | Encabezados semánticos, captions y scroll horizontal contenido en móvil |
+| Código y preformateado | Preservar espacios, escapes y scroll; resaltado compatible, sin ejecutar contenido |
+| Separadores, botones y media-text | Evaluar según inventario real; variantes acotadas y enlaces validados |
+
+Comparar tres alternativas en staging: (A) CSS propio y acotado para HTML semántico y clases core, (B) importar solo estilos core de los bloques utilizados y adaptar tokens, (C) renderizado por bloques para casos que necesiten componentes específicos. Recomendación inicial: A para tipografía y estructura básica, B solo donde reduzca mantenimiento sin conflictos con Tailwind; C para embeds/interacciones que no puedan resolverse de forma segura con HTML. Documentar la elección y el coste de actualización de WordPress.
+
+Crear una capa `.wp-content`/Prose aislada y una allowlist de clases estructurales necesarias, como `wp-block-columns`, `wp-block-column`, `wp-block-image`, `wp-block-quote`, clases de alineación y layouts soportados. Verificar qué selectores/tokens de layout genera la versión real; CSS core por sí solo puede no incluir estilos dinámicos del tema. Mapear tamaños y colores permitidos a tokens del diseño y valorar alinear presets del editor mediante configuración versionada de WordPress, compatible con ACF gratuito.
+
+Valorar ajustes editoriales básicos de alineación, tamaños, proporciones de columnas y espaciados. No prometer copia pixel-perfect del tema del CMS ni permitir cualquier CSS inline. Si Gutenberg necesita estilos inline, admitir únicamente propiedades y valores validados (por ejemplo proporciones de columnas acotadas), o convertirlos a clases controladas, coordinándolo con sanitización y CSP. Mantener prohibición de scripts, eventos, HTML peligroso y URLs ejecutables. No eliminar indiscriminadamente todas las clases/estilos y romper columnas legítimas, ni permitir `style` completo solo para conservarlas.
+
+Durante la guía de WordPress, crear con Alex una página de prueba de bloques que contenga todos los formatos acordados; explicar qué opciones son compatibles. Comprobar HTML que entrega GraphQL, sanitización, render SSR y paridad visual EN/ES, móvil/escritorio y temas claro/oscuro. Pruebas de regresión: columnas anidadas, imágenes con caption, textos largos, tablas, citas, código y payloads XSS. Confirmar que la sanitización conserva el formato aprobado y elimina el peligroso. Las actualizaciones de WordPress/core block CSS requieren repetir estas comprobaciones.
+
+Esta valoración se hace en fase 1 al inventariar contenido; la implementación se comparte entre fase 3 (Prose y estilos) y fases 4–5 (templates), con aceptación en fase 6. No está implementada todavía.
+
+Referencia: [WordPress: arquitectura de estilos del editor y frontend](https://developer.wordpress.org/block-editor/explanations/architecture/styles/).

@@ -67,3 +67,7 @@ Revisión visual automática pendiente: el acceso al navegador fue rechazado por
 No se ha creado Worker ni publicado en Cloudflare. Instrucciones concretas en WORKERS_STAGING.md. Falta validar staging real, revisión visual y autenticación antes de cerrar fase 0.1. No fusionar en main mientras su despliegue siga en Pages.
 
 Rama publicada en origin/codex/workers-upgrade, commit inicial 394262c. main sin cambios. Worker de staging todavía no creado.
+
+Alex inició la configuración desde repo con comandos de build/deploy; no se mostró selector de ramas y Preview command quedó por defecto. Pendiente confirmar nombre/URL del Worker y resultado del build. Selección de rama guiada desde Settings → Build/Builds → Branch control según documentación actual. No se declara desplegado ni validado staging.
+
+Diagnóstico del log de Cloudflare aportado por Alex: Wrangler 3.99.0, CSS anidado y consulta redundante de PortfolioPreview siguen presentes; el build no corresponde al código migrado actual. Sin rama/SHA en el log no se identifica el commit exacto. Añadido prebuild con SHA y versiones del lockfile para el siguiente intento. No se imprimen variables de entorno ni secretos.
