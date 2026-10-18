@@ -1,5 +1,9 @@
 # Ejecución del rediseño
 
+## Conector instalado sin activar; revisión estática — 18 octubre 2026
+
+Alex confirma WP GraphQL Polylang 0.7.1 instalado y desactivado. Se revisaron bootstrap, composer.json y nueve archivos src del tag oficial. Informe wordpress/POLYLANG_CONNECTOR_REVIEW.md: sin vulnerabilidad confirmada; asimetría entre resolvers translation/translations, hooks de mutaciones que dependen de autorización de WPGraphQL y uso de contexto admin de Polylang requieren pruebas reales. No se confunde contexto PLL_Admin con rol administrador. No se ejecutó el conector ni se validó compatibilidad PHP 8.5. Decisión pendiente: piloto aislado del conector o puente de lectura propio con mantenimiento/pruebas explícitos. No activar por defecto tras esta revisión.
+
 Alex confirmó también español para IDs 78/80/87/93: nueve referencias españolas identificadas en total. Se actualizó ARTICLE_LANGUAGES.md; sigue sin aplicarse la asignación en WordPress.
 
 ## Clasificación inicial de idiomas Articles — 18 octubre 2026
