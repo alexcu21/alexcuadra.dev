@@ -19,6 +19,8 @@ Workers & Pages → `alexcuadra-dev-staging` → Settings → Variables and Secr
 
 Mantén `WPGRAPHQL_AUTH_ENABLED` ausente o con valor `false` mientras guardas ambos secretos. Guardar/desplegar la configuración según indique Cloudflare. Nunca compartir los valores por chat, capturas o Git.
 
+`wrangler.jsonc` usa `keep_vars: true` para conservar las variables de runtime administradas en el dashboard durante los despliegues. El usuario puede ser una variable de texto (su nombre no es una contraseña); la contraseña de aplicación debe ser siempre Secret. La pestaña Production de este Worker corresponde a `alexcuadra-dev-staging`, no al sitio de producción Pages.
+
 Para desarrollo local, los mismos nombres van en `.dev.vars`, ignorado por Git. No usar prefijos `PUBLIC_`. El build y CI no necesitan credenciales.
 
 ## 3. Validación coordinada antes de restringir GraphQL
