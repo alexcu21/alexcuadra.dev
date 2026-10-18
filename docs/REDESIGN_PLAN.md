@@ -26,7 +26,7 @@ Se revisaron las cuatro imágenes `screen.png`, sus correspondientes `code.html`
 | --- | --- | --- |
 | Home / Senior Web Developer & SDET | Hero de posicionamiento, disciplinas, proyectos con contexto, CTA visible; buen puente entre frontend y calidad | Reducir altura y densidad en móvil. El terminal de pruebas y la disponibilidad deben ser información real cargada en WordPress; si falta, ocultar el bloque. No lanzar un botón de ejecutar CI público |
 | Template individual de proyectos (carpeta `christianity_today_case_study_alex_cuadra_portfolio`) | Estructura reutilizable para TODOS los proyectos: rol, alcance, problema, decisiones, arquitectura, resultados y navegación entre proyectos | Christianity Today es solo el ejemplo visual del template, no una página especial ni su contenido definitivo. Cada proyecto aporta sus propios datos desde WordPress; mostrar únicamente los bloques que correspondan |
-| Articles & Mentions / archive | Tarjetas por formato, búsqueda, filtros por plataforma y temas, artículo destacado | Los cuatro canales actuales son plataformas, no tipos de contenido. No confundir un artículo propio con una mención externa. Reducir estadísticas y evitar filtros vacíos; paginar antes de hacer búsqueda global |
+| Articles & Mentions / archive | Tarjetas por formato, búsqueda, filtros por plataforma y temas, referencia destacada | El CPT articles contiene referencias externas: publicaciones de Alex alojadas fuera del sitio o menciones de terceros. El blog propio usa post y necesita un archivo/template diferenciado aunque el mockup no lo distinga. Reducir estadísticas y evitar filtros vacíos |
 | Article template | Lectura con buen ancho, resumen, bloques de código, tabla de contenidos, autor y relacionados | En móvil, TOC desplegable. Sin contador de aplausos, bookmarks con cuenta ni estado de CI en vivo en MVP. Compartir/copiar puede usar APIs del navegador; estados accesibles al completar o fallar |
 | Obsidian Flow | Plus Jakarta Sans para títulos/cuerpo, JetBrains Mono para código y metadatos; cian, violeta y verde con jerarquía | Hay contradicciones entre tokens YAML, descripción y HTML: fondo `#0e131f` vs `#030712`, radios y primarios distintos. Definir una única fuente de tokens antes de construir componentes |
 
@@ -50,13 +50,14 @@ La tabla siguiente describe las rutas inglesas existentes. Las equivalentes espa
 | `/work/` | Archivo de proyectos; filtro por disciplina/tecnología cuando el volumen lo justifique |
 | `/work/[slug]` | Caso de estudio: contexto, rol, alcance, problema, decisiones, entregables y resultados verificables |
 | `/about/` | Trayectoria, contribuciones, experiencia y formas de colaborar; ampliar la página actual |
-| `/articles/` | Archivo unificado de artículos propios, apariciones, vídeos y charlas con destino interno o externo explícito |
+| `/articles/` | Archivo de referencias externas y menciones, desde el CPT articles; indicar plataforma y distinguir publicación de Alex de mención de terceros |
+| `/blog/` y `/blog/[slug]` | Archivo y lectura de publicaciones propias del sitio, desde el tipo nativo post. /blog/ existe como placeholder; su implementación y el detalle son parte del rediseño |
 | `/articles/category/[slug]` | Conservar archivos actuales de plataformas como páginas indexables; no cambiar slugs existentes |
 | `/articles/category/[categorySlug]/[articleSlug]` | Conservar URLs de artículos; validar la relación categoría/artículo y devolver 404 si no existe |
 | `/#contact` | CTA por email y perfiles reales, sin formulario ni proveedor de newsletter en primera fase |
 | `/lab/` y `/lab/[slug]` | Nueva sección y detalle de proyectos personales en desarrollo, con CPT propio `lab_project`; primer candidato: qa-training-lab. Datos reales desde WordPress, sin ejecutar aplicaciones ni CI desde el portfolio |
 
-Orden principal: Work, About, Articles y Contact; Home desde el logotipo. Incluir Lab como sección nueva del rediseño, con contenido propio y diferenciada de los trabajos para clientes. El avatar de cuenta de las propuestas no aporta un flujo al portfolio público y se omite. No lanzar RSS, newsletter, búsqueda remota o telemetría sin definir su fuente y funcionamiento.
+La navegación del rediseño debe distinguir Blog de las publicaciones externas/menciones, además de Work, About, Lab y Contact; Home desde el logotipo. Ajustar etiquetas y menú móvil con contenido administrado en WordPress. Home puede mostrar ambos en una sección de novedades solo si cada tarjeta identifica claramente su origen y destino. El avatar de cuenta de las propuestas no aporta un flujo al portfolio público y se omite. No lanzar RSS, newsletter, búsqueda remota o telemetría sin definir su fuente y funcionamiento.
 
 ## 4. Modelo editorial con ACF gratuito
 
@@ -70,8 +71,8 @@ Primero exportar/inventariar CPT, taxonomías y grupos ACF existentes desde Word
 | Página de ajustes del sitio, slug `site-settings` | `contact_email` email, `github_url` URL, `linkedin_url` URL, `youtube_url` URL, `social_description` textarea, `default_social_image` image | Datos globales en una página normal con campos simples, sin ACF Options Page; decidir visibilidad y excluirla de navegación/sitemap |
 | CPT `projects` existente | `summary` textarea, `client_name` text, `role` text, `period` text, `live_url` URL, `repository_url` URL, `featured` true/false, `display_order` number, `discipline` taxonomy | Tarjetas y cabecera del caso; conservar campos legacy hasta migrar |
 | Caso de estudio, mismo proyecto | `problem` textarea, `approach` WYSIWYG, `outcomes` WYSIWYG, `testimonial_quote` textarea opcional, `testimonial_author` text, `evidence_url` URL | Estructura común más cuerpo Gutenberg para arquitectura, capturas, listas y bloques de código |
-| CPT `articles` existente | `content_kind` select (article, talk, podcast, video, mention), `source_url` URL, `source_name` text, `published_at` date, `duration_minutes` number opcional, `featured` true/false, `summary` textarea, `social_image` image opcional | Diferenciar formato, plataforma y destino. Usar contenido nativo para artículo propio y resumen/enlace para mención externa |
-| Artículo propio | título, extracto, contenido Gutenberg, autor, fecha, imagen destacada y temas nativos; `quote` actual opcional | Evitar duplicar datos nativos con nuevos campos; lectura estimada derivada del contenido |
+| CPT `articles` existente: referencias externas | `content_kind` select (article, talk, podcast, video, interview), `reference_kind` select (authored, mention), `source_url` URL y `source_name` text requeridos para publicar, `source_language` select opcional, `published_at` date, `duration_minutes` number opcional, `featured` true/false, `summary` textarea, `social_image` image opcional; conservar quote existente | Formato, autoría de la pieza y plataforma son dimensiones distintas. Alex puede ser autor en una plataforma externa o la persona mencionada; ambos pertenecen a articles. Cuerpo local para contexto/resumen editorial, sin asumir reproducción íntegra |
+| Tipo nativo `post`: blog del sitio | título, extracto, contenido Gutenberg, autor, fecha, imagen destacada y temas nativos; SEO y traducción asociados | Publicación propia alojada en el portfolio, lectura completa en /blog/[slug]. No crear un CPT blog ni reutilizar articles para este propósito. quote sigue perteneciendo al grupo legacy de articles |
 | Página About existente | Campos actuales más `resume` file opcional; trayectoria en Gutenberg | No hace falta crear un CPT de experiencia para una sola biografía |
 
 Conservar categorías actuales para Medium, Podcast, ValexWeb y WordPress.TV durante la migración. Añadir taxonomía de temas si se necesitan filtros transversales y tecnología/disciplina para proyectos. No convertir de golpe Podcast en taxonomía distinta: guardar una tabla de equivalencias y preservar sus archivos públicos.
@@ -338,6 +339,7 @@ Conservar inglés como idioma predeterminado sin prefijo y añadir `/es/` para e
 | `/articles/` | `/es/articulos/` |
 | `/articles/category/[slug]` | `/es/articulos/categoria/[slug-es]` |
 | `/articles/category/[categorySlug]/[articleSlug]` | `/es/articulos/categoria/[categoria-es]/[articulo-es]` |
+| `/blog/` y `/blog/[slug]` (blog por implementar) | `/es/blog/` y `/es/blog/[slug-es]` |
 | `/#contact` | `/es/#contacto` |
 | `/lab/` y `/lab/[slug]` | `/es/laboratorio/` y `/es/laboratorio/[slug-es]` |
 
@@ -403,7 +405,7 @@ Preservar URLs inglesas y crear mapa 301 para cambios inevitables; probar artíc
 
 ### Datos estructurados, medios y rendimiento
 
-JSON-LD Person/ProfilePage donde corresponda, Article para artículos propios y BreadcrumbList para páginas jerárquicas. Usar IDs estables y `inLanguage`; datos deben coincidir con contenido visible y evidencia real. No convertir menciones externas en artículos propios ni añadir ratings, premios, empleos o cifras no verificadas. La validez del schema no garantiza resultados enriquecidos. Revisar XSS al serializar JSON-LD desde campos editoriales.
+JSON-LD Person/ProfilePage donde corresponda, BlogPosting/Article para publicaciones propias del tipo post y BreadcrumbList para páginas jerárquicas. Las fichas locales de articles describen referencias externas: no atribuir a Alex la autoría de una mención de terceros ni representar un resumen como si alojara el artículo completo. Usar IDs estables y `inLanguage`; datos deben coincidir con contenido visible y evidencia real. No añadir ratings, premios, empleos o cifras no verificadas. La validez del schema no garantiza resultados enriquecidos. Revisar XSS al serializar JSON-LD desde campos editoriales.
 
 Imágenes con alt localizado, dimensiones, formatos eficientes y proporción reservada; imagen principal priorizada cuando sea LCP y lazy loading para imágenes bajo el pliegue. Imagen social pública y válida por contenido/idioma, sin bloquear rastreadores con autenticación del endpoint GraphQL. Fuentes optimizadas, poco JS y HTML SSR con el contenido principal ya presente. Mantener las metas de Core Web Vitals de la sección 8 como objetivos medibles.
 
@@ -492,3 +494,16 @@ Durante la guía de WordPress, crear con Alex una página de prueba de bloques q
 Esta valoración se hace en fase 1 al inventariar contenido; la implementación se comparte entre fase 3 (Prose y estilos) y fases 4–5 (templates), con aceptación en fase 6. No está implementada todavía.
 
 Referencia: [WordPress: arquitectura de estilos del editor y frontend](https://developer.wordpress.org/block-editor/explanations/architecture/styles/).
+
+## 18. Aclaración editorial confirmada: Articles frente a Posts
+
+Alex confirmó que articles es exclusivamente el archivo de referencias a otras webs/plataformas: publicaciones suyas alojadas fuera del sitio y menciones de terceros. post es el blog nativo del portfolio. El hecho de que el mockup no los diferencie no autoriza fusionarlos ni migrar registros entre ambos.
+
+- Fase 1: conservar ambos tipos, inventariar por separado y preparar fields de fuente/formato/relación para articles. No usar quote o campos de referencias como requisito del blog.
+- Fase 2: clientes/DTO independientes para posts y articles, con controles de publicación, idioma, paginación y URLs seguras. Conservar las rutas actuales de referencias; implementar las rutas propuestas del blog sin renombrar las existentes.
+- Fase 5: archivo y lectura Blog para post; archivo y ficha contextual de publicaciones externas/menciones para articles. Las tarjetas externas indican plataforma, si Alex es autor o mencionado y una acción explícita para abrir la fuente. La ficha local puede presentar resumen y contexto; no borrar de inmediato el contenido legacy ni redirigir sus URLs automáticamente.
+- Bilingüismo: traducir la ficha/resumen local de una referencia sin fingir que la fuente externa tiene traducción. Registrar el idioma de origen cuando se necesite y conservar su URL real.
+- SEO: canonical propio para fichas locales con contexto original, salvo excepciones justificadas; autoría/JSON-LD de acuerdo con el contenido alojado y la fuente. No usar el autor de la ficha como autor automático de la publicación externa.
+- QA: demostrar que /blog consume post y /articles consume articles, que no hay registros cruzados por usar categorías compartidas, que funcionan ambos templates y enlaces externos, y que se conservan URLs legacy. Los filtros de formato no sustituyen la separación de modelos.
+
+Este cambio actualiza el plan; todavía no implementa el blog, los nuevos fields ni el rediseño editorial.

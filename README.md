@@ -12,6 +12,8 @@ Portfolio de Alex Cuadra, desarrollador web senior con experiencia en calidad, a
 
 Todo el contenido editorial del rediseño se administrará en WordPress. Los mockups son referencias de diseño; sus cifras no son datos reales del portfolio.
 
+El CPT `articles` reúne referencias a publicaciones externas y menciones; el tipo nativo `post` contiene el blog propio. El rediseño conserva esta separación aunque las maquetas no la distingan. El blog todavía no está implementado.
+
 ## Desarrollo local
 
 Usa Node.js **22.23.2**, declarado en `.nvmrc` (requisito mínimo: 22.22.0), y npm.

@@ -47,6 +47,7 @@ async function main() {
 }
 main().catch(error => {
   console.error(JSON.stringify({ event: 'cms_baseline_failed', httpStatus: error?.response?.status,
+    schemaErrors: error?.response?.errors?.flatMap(item => item.message?.match(/Cannot query field "[\w]+" on type "[\w]+"|Unknown argument "[\w]+" on field "[\w.]+"/g) || []),
     code: error?.code === 'EEXIST' ? 'BASELINE_ALREADY_EXISTS' : ['AUTH_REQUIRED', 'INCOMPLETE_BASELINE'].includes(error?.message)
       ? error.message : 'BASELINE_UNAVAILABLE' }));
   process.exitCode = 1;

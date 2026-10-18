@@ -2,6 +2,10 @@
 
 ## Decisión de ejecución
 
+Versiones confirmadas por Alex: ACF gratuito 6.8.10 y WPGraphQL for ACF 3.0.0. Backup reciente de BD y archivos confirmado. Alex informa que ambos CPT están creados; verificación posterior detecta ausencia de Article.excerpt, pendiente activar Supports → Excerpt en Articles y repetir baseline. La equivalencia completa todavía no se declara cerrada.
+
+Aclaración editorial: articles son referencias externas y menciones; el tipo nativo post es el blog propio. La sustitución de registro no cambia esta distinción ni mueve entradas entre ambos.
+
 Alex autorizó trabajar directamente en content.alexcuadra.dev y acepta interrupciones. No se exige staging para esta operación. Conservar backup de base de datos y archivos y el plugin original para revertir; el export ACF solo contiene configuración y no reemplaza el backup de contenido.
 
 El PHP aportado registra únicamente project y articles mediante init. No contiene hooks de desactivación/desinstalación, migraciones, taxonomías nuevas ni resolvers custom. No se observa lógica adicional que trasladar. Esto describe el archivo recibido, no otros plugins o modificaciones del servidor.

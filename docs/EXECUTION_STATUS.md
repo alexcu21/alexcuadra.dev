@@ -1,5 +1,11 @@
 # Ejecución del rediseño
 
+## Aclaración Articles/Posts y verificación CPT — 18 octubre 2026
+
+Alex informa que creó ambos CPT en ACF. Aclara articles como referencias externas (publicaciones suyas en otras plataformas y menciones de terceros) y post como blog nativo del sitio. Plan actualizado con modelos, rutas, campos, templates, bilingüismo, SEO y pruebas separados. No se trasladó contenido entre tipos ni se implementó el blog.
+
+Comparación posterior del baseline bloqueada por error de esquema: Cannot query field excerpt on type Article. El registro original sí soportaba excerpt. Pendiente activar Excerpt en Supports de Articles y repetir la comparación completa; no se modifica el baseline para ocultar esa diferencia. Backup de BD/archivos confirmado por Alex; ACF 6.8.10 y WPGraphQL for ACF 3.0.0.
+
 ## Plugin y export ACF recibidos — 18 octubre 2026
 
 Alex acepta operar directamente en producción con posibles interrupciones; no se exige staging. PHP recibido: solo registro de project y articles, sin hooks de limpieza ni resolvers. Projects usa capability_type page; Articles usa post por defecto. Cuatro grupos ACF conservan sus ubicaciones y field keys, sin campos PRO. Snapshot de configuración en docs/wordpress y guía CPT_TRANSITION.md. Ruta propuesta: sustituir proveedor de registro manteniendo claves, sin copiar entradas.
