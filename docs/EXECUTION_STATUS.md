@@ -1,5 +1,11 @@
 # Ejecución del rediseño
 
+## Incidente 429 y amplificación por rutas inexistentes — 18 octubre 2026
+
+Export aportado por Alex: 100 eventos entre 07:05:32 y 07:06:34 UTC, 36 cms_failure, todos CMS_HTTP/429. Incluye sondas de /.env, /README.md, /.github/copilot-instructions.md y otras rutas inexistentes, además de consultas rest_route al frontend. No incluye el requestId c4dfa945-9fb6-4017-8232-4b85b6a43133 de la prueba posterior; no se atribuye ese 503 concreto al export anterior.
+
+La página 404 heredaba BaseLayout y consultaba Home desde WordPress para URLs inexistentes. Se sustituye por una página prerenderizada sin CMS y se rechaza rest_route en middleware con 404 antes de consultar datos. Esto elimina esa amplificación conocida; no demuestra que los bots sean la única causa ni elimina el límite de Hostinger. Los nombres de archivos solicitados no prueban exposición de sus contenidos.
+
 ## Restricción WPGraphQL activa y validada — 18 octubre 2026
 
 Alex confirmó que solo consumen el CMS el portfolio local y los dos Workers, configuró credenciales locales y activó la restricción de operaciones autenticadas. Una consulta anónima a pages se rechaza con mensaje explícito de falta de autenticación; no se interpreta el HTTP 200 de un error GraphQL como acceso permitido. Smoke con --require-cms-auth correcto en producción, staging y local: favicon y siete rutas por entorno. El runtime local carga .dev.vars y Git lo ignora. No se leyeron ni registraron credenciales.

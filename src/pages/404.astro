@@ -1,8 +1,29 @@
 ---
-import Hero from '../components/Hero.astro';
-import BaseLayout from '../layouts/BaseLayout.astro';
+// Missing URLs must never query WordPress, including during a CMS outage.
+export const prerender = true;
 ---
 
-<BaseLayout title="Not Found" description="404 Error — this page was not found">
-	<Hero title="Page Not Found" tagline="Not found" />
-</BaseLayout>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="noindex" />
+    <title>Page not found — Alex Cuadra</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <main>
+      <p>404</p>
+      <h1>Page not found</h1>
+      <p>The page you requested is unavailable.</p>
+      <a href="/">Return home</a>
+    </main>
+  </body>
+</html>
+<style>
+  :global(html) { color-scheme: light dark; font-family: system-ui, sans-serif; }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; }
+  main { max-width: 40rem; padding: 2rem; }
+  a { color: inherit; text-underline-offset: .2em; }
+</style>
