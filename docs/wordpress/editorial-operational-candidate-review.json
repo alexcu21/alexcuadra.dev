@@ -1,0 +1,100 @@
+{
+  "format": "editorial-operational-candidate-review-v1",
+  "reviewDate": "2026-10-21",
+  "targetSite": "https://content.alexcuadra.dev",
+  "baseVersion": "0.5.0-lab",
+  "decision": "hold",
+  "artifactKind": "source-review-only",
+  "installable": false,
+  "authorizationForInstallationOrScopes": false,
+  "priorApplicationChecks": {
+    "passed": 531,
+    "rerunThisIncrement": false
+  },
+  "liveObservation": {
+    "observedAtUtc": "2026-10-21T13:50:08Z",
+    "wordpress": "7.1.3",
+    "php": "8.2.34",
+    "diagnosticChecksPassed": 8,
+    "callbacksRegisteredInSelectedHooks": 84
+  },
+  "files": [
+    {
+      "path": "wordpress/plugins/alexcuadra-editorial-changes/alexcuadra-editorial-changes.php",
+      "sha256": "9fcfe807c725797ad705b455bdd7a17fb327c798f33deb8fe4ce205e89a2bec4",
+      "bytes": 20420
+    },
+    {
+      "path": "wordpress/plugins/alexcuadra-editorial-changes/storage.php",
+      "sha256": "a36773794ad61f4c10d0ea037349a35edbdb6bc828af101f12d2654093ebe4ea",
+      "bytes": 8734
+    },
+    {
+      "path": "wordpress/plugins/alexcuadra-editorial-changes/reviews.php",
+      "sha256": "22a4c7b877e08d08a4e5a128aaef45c7d9c21523809f0e12c58b725b82ebaf4a",
+      "bytes": 26142
+    },
+    {
+      "path": "wordpress/plugins/alexcuadra-editorial-changes/applications.php",
+      "sha256": "a32d8d9030c2fcb189fb4f3efe6b338f4d067284eb30227377a3766246767f03",
+      "bytes": 27931
+    },
+    {
+      "path": "wordpress/plugins/alexcuadra-editorial-changes/README.md",
+      "sha256": "26b9718fe4d77b6420f9daeb561bbe1ed470fbb22e4cb519229490e7e46cf4de",
+      "bytes": 10760
+    },
+    {
+      "path": "docs/WORDPRESS_MCP_PROJECT_CHANGES.md",
+      "sha256": "b3ec931d3e9ef360f3afaadd54e5531cc85d124f6e4283a5be46260fb198eda7",
+      "bytes": 14399
+    },
+    {
+      "path": "docs/WORDPRESS_MCP_SOURCE_APPLICATION.md",
+      "sha256": "e5184aecc541fc630e5dc82184ae21b0e0f3321a70d67669f103f34546a6a04d",
+      "bytes": 15787
+    },
+    {
+      "path": "docs/wordpress/editorial-source-application-contract.json",
+      "sha256": "6b87be87daed474d0d079f5722e09c6a2ad10781115bdc85e512422677a8f641",
+      "bytes": 8295
+    },
+    {
+      "path": "docs/qa/MCP_EDITORIAL_APPLICATIONS_RESULT_2026-10-20.json",
+      "sha256": "6b6bf636bc8c5f974d92b94fa058aaa5974e5dbb1ad25435b9ac320442f46ba7",
+      "bytes": 37831
+    },
+    {
+      "path": "wordpress/plugins/alexcuadra-editorial-read/alexcuadra-editorial-read.php",
+      "sha256": "9e4def28919b5dc896037fa13dddf62b4f63e4a725095fe12b3e0d8419f22619",
+      "bytes": 8334
+    },
+    {
+      "path": "artifacts/wordpress/alexcuadra-editorial-read-0.1.0.zip",
+      "sha256": "72f1fa195c04ff1da690d2788e287451d52cc210d69d67eb453c869b8922f302",
+      "bytes": 4385
+    },
+    {
+      "path": "wordpress/operations/editorial-changes-preflight.php",
+      "sha256": "adefc6a8e2061a93b5cc477fe066e24097eb07c28076eb78ae60c65a47995d07",
+      "bytes": 10649
+    },
+    {
+      "path": "tests/operations/editorial-changes-preflight.php",
+      "sha256": "d46049c6101b8fbace7fa51adb07a91cc9806dc51ef5e348637e2f0c3d70cfa4",
+      "bytes": 6522
+    },
+    {
+      "path": "docs/qa/MCP_EDITORIAL_OPERATIONS_RESULT_2026-10-21.json",
+      "sha256": "e557c4415ccaa52b74e7deefbd1377a4e33ee542a564a429d774bca0bc8a32c3",
+      "bytes": 41046
+    }
+  ],
+  "releaseGates": [
+    "external-effects-and-translation-sync-in-request-contexts",
+    "backup-restore-verification",
+    "operational-package-and-explicit-scopes-and-diff-approval",
+    "private-export-retention-policy"
+  ],
+  "runbook": "docs/WORDPRESS_MCP_OPERATIONAL_READINESS.md"
+}

@@ -1,0 +1,1130 @@
+{
+  "format": "editorial-operational-review-v1",
+  "reviewDate": "2026-10-21",
+  "liveDiagnostic": {
+    "format": "editorial-changes-preflight-v1",
+    "site": "https://content.alexcuadra.dev",
+    "observedAtUtc": "2026-10-21T13:50:08Z",
+    "context": "wp-cli-selected-hooks-only",
+    "actor": {
+      "id": 2,
+      "roles": [
+        "subscriber"
+      ],
+      "capabilities": {
+        "read": true,
+        "alexcuadra_read_public_projects": true,
+        "alexcuadra_prepare_project_changes": false,
+        "alexcuadra_apply_project_changes": false,
+        "alexcuadra_recover_project_changes": false,
+        "alexcuadra_approve_public_project_changes": false,
+        "edit_posts": false,
+        "edit_pages": false,
+        "publish_posts": false,
+        "publish_pages": false,
+        "manage_options": false,
+        "install_plugins": false,
+        "edit_users": false
+      }
+    },
+    "wordpress": "7.1.3",
+    "php": "8.2.34",
+    "plugins": [
+      {
+        "file": "advanced-custom-fields/acf.php",
+        "version": "6.8.10",
+        "active": true
+      },
+      {
+        "file": "alexcuadra-editorial-read/alexcuadra-editorial-read.php",
+        "version": "0.1.0",
+        "active": true
+      },
+      {
+        "file": "all-in-one-wp-security-and-firewall/wp-security.php",
+        "version": "5.4.10",
+        "active": false
+      },
+      {
+        "file": "projects-cpt-for-headless/projects-cpt.php",
+        "version": "1.0",
+        "active": false
+      },
+      {
+        "file": "hostinger-ai-assistant/hostinger-ai-assistant.php",
+        "version": "3.1.3",
+        "active": false
+      },
+      {
+        "file": "hostinger-easy-onboarding/hostinger-easy-onboarding.php",
+        "version": "3.0.5",
+        "active": true
+      },
+      {
+        "file": "hostinger-reach/hostinger-reach.php",
+        "version": "1.8.7",
+        "active": true
+      },
+      {
+        "file": "hostinger/hostinger.php",
+        "version": "3.0.79",
+        "active": true
+      },
+      {
+        "file": "litespeed-cache/litespeed-cache.php",
+        "version": "7.9.2",
+        "active": true
+      },
+      {
+        "file": "mcp-adapter/mcp-adapter.php",
+        "version": "0.7.1",
+        "active": true
+      },
+      {
+        "file": "minimal-coming-soon-maintenance-mode/minimal-coming-soon-maintenance-mode.php",
+        "version": "2.45",
+        "active": false
+      },
+      {
+        "file": "polylang/polylang.php",
+        "version": "3.9.0",
+        "active": true
+      },
+      {
+        "file": "wordpress-beta-tester/wp-beta-tester.php",
+        "version": "4.0.1",
+        "active": true
+      },
+      {
+        "file": "wp-graphql/wp-graphql.php",
+        "version": "2.24.2",
+        "active": true
+      },
+      {
+        "file": "wpgraphql-acf/wpgraphql-acf.php",
+        "version": "3.0.0",
+        "active": true
+      },
+      {
+        "file": "wpgraphql-ide/wpgraphql-ide.php",
+        "version": "5.6.0",
+        "active": true
+      },
+      {
+        "file": "wp-graphql-polylang-0.7.1/wp-graphql-polylang.php",
+        "version": "0.7.1",
+        "active": true
+      },
+      {
+        "file": "wp-migrate-db/wp-migrate-db.php",
+        "version": "2.7.12",
+        "active": false
+      }
+    ],
+    "muPlugins": [
+      {
+        "file": "hostinger-preview-domain.php",
+        "version": "1.4.0"
+      },
+      {
+        "file": "hostinger-auto-updates.php",
+        "version": "1.0.8"
+      }
+    ],
+    "projectSupports": [
+      "title",
+      "editor",
+      "thumbnail",
+      "custom-fields",
+      "excerpt",
+      "autosave"
+    ],
+    "fieldMapping": {
+      "fieldKey": "field_676dcb2aec8d4",
+      "name": "project_tagline",
+      "type": "textarea",
+      "graphqlField": "projectTagline",
+      "groupKey": "group_676d40f7bb646",
+      "active": true,
+      "location": [
+        [
+          {
+            "param": "post_type",
+            "operator": "==",
+            "value": "project"
+          }
+        ]
+      ],
+      "definitionHash": "0bfee099177070b7fba998c0bbbc1f210cb14f3ee43db10f1ce17b96f21bee92"
+    },
+    "samples": [
+      {
+        "id": 146,
+        "locale": "en",
+        "eligible": true,
+        "expectedTranslationLinked": true,
+        "taglineRows": 1,
+        "referenceRows": 1,
+        "referenceMatches": true
+      },
+      {
+        "id": 196,
+        "locale": "es",
+        "eligible": true,
+        "expectedTranslationLinked": true,
+        "taglineRows": 1,
+        "referenceRows": 1,
+        "referenceMatches": true
+      }
+    ],
+    "sourceTableEngines": [
+      {
+        "TABLE_NAME": "wp_postmeta",
+        "ENGINE": "InnoDB"
+      },
+      {
+        "TABLE_NAME": "wp_posts",
+        "ENGINE": "InnoDB"
+      },
+      {
+        "TABLE_NAME": "wp_terms",
+        "ENGINE": "InnoDB"
+      },
+      {
+        "TABLE_NAME": "wp_term_relationships",
+        "ENGINE": "InnoDB"
+      },
+      {
+        "TABLE_NAME": "wp_term_taxonomy",
+        "ENGINE": "InnoDB"
+      }
+    ],
+    "selectedHooks": {
+      "acf/delete_value": [
+        {
+          "priority": 10,
+          "symbol": "_acf_apply_hook_variations",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/acf-hook-functions.php",
+          "line": 86,
+          "fileHash": "915b780fa92ed1cdb9738173c57a22f9e50b5e07cd6851e564fa71e689e40dea"
+        }
+      ],
+      "acf/delete_value/type=group": [
+        {
+          "priority": 10,
+          "symbol": "acf_field__group::delete_value",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/fields/class-acf-field-group.php",
+          "line": 564,
+          "fileHash": "a3e212f084cafe3a8876e0a1b47faa1e13078dc93d35b588126d4a49d247607a"
+        }
+      ],
+      "acf/load_field": [
+        {
+          "priority": 10,
+          "symbol": "_acf_apply_hook_variations",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/acf-hook-functions.php",
+          "line": 86,
+          "fileHash": "915b780fa92ed1cdb9738173c57a22f9e50b5e07cd6851e564fa71e689e40dea"
+        }
+      ],
+      "acf/load_field/type=accordion": [
+        {
+          "priority": 10,
+          "symbol": "acf_field__accordion::load_field",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/fields/class-acf-field-accordion.php",
+          "line": 135,
+          "fileHash": "90f24bef66d15787b44d178048ff1cf793ec62d1d07ab74a247c3bbaaaf8beb7"
+        }
+      ],
+      "acf/load_field/type=date_picker": [
+        {
+          "priority": 10,
+          "symbol": "acf_field_date_picker::load_field",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/fields/class-acf-field-date_picker.php",
+          "line": 288,
+          "fileHash": "8c21bcbb327d5a5b29b3a5cdeae0b2402566a5063a3a0eed1d1dfd8d42340dbf"
+        }
+      ],
+      "acf/load_field/type=date_time_picker": [
+        {
+          "priority": 10,
+          "symbol": "acf_field_date_and_time_picker::load_field",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/fields/class-acf-field-date_time_picker.php",
+          "line": 265,
+          "fileHash": "d5b5d4025e590aef397b13cf6cc84ba0fe4a734aa32dfd6be259c0b7e15d027a"
+        }
+      ],
+      "acf/load_field/type=group": [
+        {
+          "priority": 10,
+          "symbol": "acf_field__group::load_field",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/fields/class-acf-field-group.php",
+          "line": 61,
+          "fileHash": "a3e212f084cafe3a8876e0a1b47faa1e13078dc93d35b588126d4a49d247607a"
+        }
+      ],
+      "acf/load_field/type=message": [
+        {
+          "priority": 10,
+          "symbol": "acf_field_message::load_field",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/fields/class-acf-field-message.php",
+          "line": 161,
+          "fileHash": "a49a7dcbbc744e6d75e1c8cc915d6562ef75ffa2aeeb6a207d92784d7bc3160b"
+        }
+      ],
+      "acf/load_field/type=tab": [
+        {
+          "priority": 10,
+          "symbol": "acf_field_tab::load_field",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/fields/class-acf-field-tab.php",
+          "line": 151,
+          "fileHash": "1185a333f874e3f43af62e8a415ab9f5257865154e6e26151dc4af9f87f18642"
+        }
+      ],
+      "acf/load_field/type=time_picker": [
+        {
+          "priority": 10,
+          "symbol": "acf_field_time_picker::load_field",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/fields/class-acf-field-time_picker.php",
+          "line": 172,
+          "fileHash": "19dd8c5b4104b5f89fef5bcff17479ca48f3eefc3bb5fec1f84202a4b1ad6f71"
+        }
+      ],
+      "acf/update_value": [
+        {
+          "priority": 10,
+          "symbol": "_acf_apply_hook_variations",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/acf-hook-functions.php",
+          "line": 86,
+          "fileHash": "915b780fa92ed1cdb9738173c57a22f9e50b5e07cd6851e564fa71e689e40dea"
+        }
+      ],
+      "acf/update_value/type=checkbox": [
+        {
+          "priority": 10,
+          "symbol": "acf_field_checkbox::update_value",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/fields/class-acf-field-checkbox.php",
+          "line": 490,
+          "fileHash": "fc57b13f5dc1198f870678cae9438985aa8365ff2e6f97eef5a75cbfa02564fb"
+        }
+      ],
+      "acf/update_value/type=file": [
+        {
+          "priority": 10,
+          "symbol": "acf_field_file::update_value",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/fields/class-acf-field-file.php",
+          "line": 367,
+          "fileHash": "1df5ff2a1b4de8800c89ba6c6487280948559035d7263b41ceca68eb1a29f076"
+        }
+      ],
+      "acf/update_value/type=google_map": [
+        {
+          "priority": 10,
+          "symbol": "acf_field_google_map::update_value",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/fields/class-acf-field-google-map.php",
+          "line": 285,
+          "fileHash": "bc12d5c77cdb1ea850de32214caf6f6c90e62657370ab344d16d6540e63f46cd"
+        }
+      ],
+      "acf/update_value/type=group": [
+        {
+          "priority": 10,
+          "symbol": "acf_field__group::update_value",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/fields/class-acf-field-group.php",
+          "line": 165,
+          "fileHash": "a3e212f084cafe3a8876e0a1b47faa1e13078dc93d35b588126d4a49d247607a"
+        }
+      ],
+      "acf/update_value/type=image": [
+        {
+          "priority": 10,
+          "symbol": "acf_field_image::update_value",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/fields/class-acf-field-image.php",
+          "line": 429,
+          "fileHash": "6ab4e4cd47cbdd659b74c42b8633daa58ddceb1ee45571a9e03244207c19d50c"
+        }
+      ],
+      "acf/update_value/type=link": [
+        {
+          "priority": 10,
+          "symbol": "acf_field_link::update_value",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/fields/class-acf-field-link.php",
+          "line": 241,
+          "fileHash": "ea23f2c1ad103653749700c2d8c6c2cf54e67e4240385b2aa2ba802061e0a388"
+        }
+      ],
+      "acf/update_value/type=number": [
+        {
+          "priority": 10,
+          "symbol": "acf_field_number::update_value",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/fields/class-acf-field-number.php",
+          "line": 270,
+          "fileHash": "5e371fdd6f2a1a4f1a77914d868456a5505ddc7c97834396cfef724526530216"
+        }
+      ],
+      "acf/update_value/type=page_link": [
+        {
+          "priority": 10,
+          "symbol": "acf_field_page_link::update_value",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/fields/class-acf-field-page_link.php",
+          "line": 607,
+          "fileHash": "63be57e445fea808b94bfc73e322a9d8467efcd6ed536921459cbdf893a2b470"
+        }
+      ],
+      "acf/update_value/type=post_object": [
+        {
+          "priority": 10,
+          "symbol": "acf_field_post_object::update_value",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/fields/class-acf-field-post_object.php",
+          "line": 531,
+          "fileHash": "afb9bf2627375928890b4ff21ee1a5d491f34a07303a37399b0b03890c154ca3"
+        }
+      ],
+      "acf/update_value/type=radio": [
+        {
+          "priority": 10,
+          "symbol": "acf_field_radio::update_value",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/fields/class-acf-field-radio.php",
+          "line": 340,
+          "fileHash": "eb283a54ad5b4655cb9e06c6fbc6adaa7933368efb529b0bda33e3f8fff341d6"
+        }
+      ],
+      "acf/update_value/type=range": [
+        {
+          "priority": 10,
+          "symbol": "acf_field_number::update_value",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/fields/class-acf-field-number.php",
+          "line": 270,
+          "fileHash": "5e371fdd6f2a1a4f1a77914d868456a5505ddc7c97834396cfef724526530216"
+        }
+      ],
+      "acf/update_value/type=relationship": [
+        {
+          "priority": 10,
+          "symbol": "acf_field_relationship::update_value",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/fields/class-acf-field-relationship.php",
+          "line": 816,
+          "fileHash": "da2abb015467b293c545abf7f553711d2d03863f9b8c9a3d2590644cc680a4cc"
+        }
+      ],
+      "acf/update_value/type=select": [
+        {
+          "priority": 10,
+          "symbol": "acf_field_select::update_value",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/fields/class-acf-field-select.php",
+          "line": 560,
+          "fileHash": "399293cc907d9ba263f6f72ab673a35203de6ae63c25c4837a0320c2a094efd9"
+        }
+      ],
+      "acf/update_value/type=taxonomy": [
+        {
+          "priority": 10,
+          "symbol": "acf_field_taxonomy::update_value",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/fields/class-acf-field-taxonomy.php",
+          "line": 360,
+          "fileHash": "e318e93075a9a99d6cc9f6e19e34342a0ef2b8c379cac7cebd0262e01e4db676"
+        }
+      ],
+      "acf/update_value/type=user": [
+        {
+          "priority": 10,
+          "symbol": "ACF_Field_User::update_value",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/fields/class-acf-field-user.php",
+          "line": 340,
+          "fileHash": "19beeced1ffcd6171a178ee9891e82f6fb90e498dd00165896aef42df14ab528"
+        }
+      ],
+      "add_post_metadata": [
+        {
+          "priority": 1,
+          "symbol": "PLL_Sync_Metas::can_synchronize_metadata",
+          "source": "wp-content/plugins/polylang/src/modules/sync/sync-metas.php",
+          "line": 155,
+          "fileHash": "050648145f957ecc28fa9eff9c651a1b9f4ce94ae921ac8cfbe4c7346c1e7093"
+        }
+      ],
+      "added_post_meta": [
+        {
+          "priority": 10,
+          "symbol": "wp_cache_set_posts_last_changed",
+          "source": "wp-includes/post.php",
+          "line": 8641,
+          "fileHash": "34678856a4326b7e76ef120ba80a9e46c6903193e058b988555ec5c1f5cb8f26"
+        },
+        {
+          "priority": 10,
+          "symbol": "PLL_Sync_Metas::add_meta",
+          "source": "wp-content/plugins/polylang/src/modules/sync/sync-metas.php",
+          "line": 182,
+          "fileHash": "050648145f957ecc28fa9eff9c651a1b9f4ce94ae921ac8cfbe4c7346c1e7093"
+        }
+      ],
+      "clean_object_term_cache": [],
+      "clean_post_cache": [
+        {
+          "priority": 1,
+          "symbol": "PLL_Cache_Compat::clean_post_cache",
+          "source": "wp-content/plugins/polylang/src/integrations/cache/cache-compat.php",
+          "line": 98,
+          "fileHash": "2749a4b4582fcc63ff8bd3eeb0e21ac133fcb3729e0e4f92fa174583cce63edb"
+        }
+      ],
+      "content_save_pre": [
+        {
+          "priority": 8,
+          "symbol": "wp_strip_custom_css_from_blocks",
+          "source": "wp-includes/block-supports/custom-css.php",
+          "line": 195,
+          "fileHash": "083ef446b34a63cbb811a980185b63dc931325bfba60b922b2093a4821418808"
+        },
+        {
+          "priority": 9,
+          "symbol": "wp_filter_global_styles_post",
+          "source": "wp-includes/kses.php",
+          "line": 2464,
+          "fileHash": "ead6be7192295b9e7417c2146704c1935748f92b9ef4f6adca193a0e4118469d"
+        },
+        {
+          "priority": 10,
+          "symbol": "convert_invalid_entities",
+          "source": "wp-includes/formatting.php",
+          "line": 2512,
+          "fileHash": "350f6b32303915df970bb0e3ea360fcd54bb0b8a7ecc3d504c3d860ab9468d32"
+        },
+        {
+          "priority": 10,
+          "symbol": "wp_filter_post_kses",
+          "source": "wp-includes/kses.php",
+          "line": 2452,
+          "fileHash": "ead6be7192295b9e7417c2146704c1935748f92b9ef4f6adca193a0e4118469d"
+        },
+        {
+          "priority": 50,
+          "symbol": "balanceTags",
+          "source": "wp-includes/formatting.php",
+          "line": 2564,
+          "fileHash": "350f6b32303915df970bb0e3ea360fcd54bb0b8a7ecc3d504c3d860ab9468d32"
+        }
+      ],
+      "delete_post_metadata": [
+        {
+          "priority": 1,
+          "symbol": "PLL_Sync_Metas::can_synchronize_metadata",
+          "source": "wp-content/plugins/polylang/src/modules/sync/sync-metas.php",
+          "line": 155,
+          "fileHash": "050648145f957ecc28fa9eff9c651a1b9f4ce94ae921ac8cfbe4c7346c1e7093"
+        }
+      ],
+      "deleted_post_meta": [
+        {
+          "priority": 10,
+          "symbol": "wp_cache_set_posts_last_changed",
+          "source": "wp-includes/post.php",
+          "line": 8641,
+          "fileHash": "34678856a4326b7e76ef120ba80a9e46c6903193e058b988555ec5c1f5cb8f26"
+        },
+        {
+          "priority": 10,
+          "symbol": "PLL_Sync_Metas::delete_meta",
+          "source": "wp-content/plugins/polylang/src/modules/sync/sync-metas.php",
+          "line": 292,
+          "fileHash": "050648145f957ecc28fa9eff9c651a1b9f4ce94ae921ac8cfbe4c7346c1e7093"
+        }
+      ],
+      "map_meta_cap": [
+        {
+          "priority": 1,
+          "symbol": "WP_Syntex\\Polylang\\Capabilities\\Capabilities::map_custom_caps",
+          "source": "wp-content/plugins/polylang/src/Capabilities/Capabilities.php",
+          "line": 47,
+          "fileHash": "e502ed49b458d56f8725ceb715b2b7b2f589d4ba7cbb4f3d26b2df834aade414"
+        },
+        {
+          "priority": 10,
+          "symbol": "PLL_Default_Term::fix_delete_default_term",
+          "source": "wp-content/plugins/polylang/src/default-term.php",
+          "line": 204,
+          "fileHash": "3f924cdd3a74307c46d2c75901209c874173b3db8370608021fcae9279560d4c"
+        },
+        {
+          "priority": 10,
+          "symbol": "PLL_Filters::fix_privacy_policy_page_editing",
+          "source": "wp-content/plugins/polylang/src/filters.php",
+          "line": 291,
+          "fileHash": "e5e5abf61d0c654196c1057d55e9e16c45657eabc429005bbc1ab46f155b2ebd"
+        }
+      ],
+      "pll_save_post": [
+        {
+          "priority": 10,
+          "symbol": "PLL_Admin_Static_Pages::pll_save_post",
+          "source": "wp-content/plugins/polylang/src/admin/admin-static-pages.php",
+          "line": 72,
+          "fileHash": "bf38e0df76fc2e330d5487468dd074c5e4178e5f40065fc2ff11286ce9de866b"
+        },
+        {
+          "priority": 10,
+          "symbol": "PLL_Sync_Metas::save_object",
+          "source": "wp-content/plugins/polylang/src/modules/sync/sync-metas.php",
+          "line": 376,
+          "fileHash": "050648145f957ecc28fa9eff9c651a1b9f4ce94ae921ac8cfbe4c7346c1e7093"
+        },
+        {
+          "priority": 10,
+          "symbol": "PLL_Admin_Sync::pll_save_post",
+          "source": "wp-content/plugins/polylang/src/modules/sync/admin-sync.php",
+          "line": 188,
+          "fileHash": "d499822ff4390765eda859425adcff3c8c2d70eadb17d452f937aa6006f759dd"
+        }
+      ],
+      "post_updated": [
+        {
+          "priority": 10,
+          "symbol": "wp_save_post_revision",
+          "source": "wp-includes/revision.php",
+          "line": 130,
+          "fileHash": "1dc942d5eb3d9cee81b6c705a6fd52917c4ce5e5f509ece5ad6f748e345f8647"
+        },
+        {
+          "priority": 10,
+          "symbol": "PLL_CRUD_Posts::force_tags_translation",
+          "source": "wp-content/plugins/polylang/src/crud-posts.php",
+          "line": 364,
+          "fileHash": "657f57dbe2e0d6fc318fc13d0a2db3592345c78c4c7e5618fc1b6297999a2adc"
+        },
+        {
+          "priority": 10,
+          "symbol": "WP_Privacy_Policy_Content::_policy_page_updated",
+          "source": "wp-admin/includes/class-wp-privacy-policy-content.php",
+          "line": 165,
+          "fileHash": "774fe563dbdeb4f7e036708f8487a1a65559b34904d1df2eaa970671b4bf8a14"
+        },
+        {
+          "priority": 12,
+          "symbol": "wp_check_for_changed_slugs",
+          "source": "wp-includes/post.php",
+          "line": 7575,
+          "fileHash": "34678856a4326b7e76ef120ba80a9e46c6903193e058b988555ec5c1f5cb8f26"
+        },
+        {
+          "priority": 12,
+          "symbol": "wp_check_for_changed_dates",
+          "source": "wp-includes/post.php",
+          "line": 7620,
+          "fileHash": "34678856a4326b7e76ef120ba80a9e46c6903193e058b988555ec5c1f5cb8f26"
+        }
+      ],
+      "pre_http_request": [
+        {
+          "priority": 10,
+          "symbol": "hostinger_use_proxy_services",
+          "source": "wp-content/mu-plugins/hostinger-auto-updates.php",
+          "line": 262,
+          "fileHash": "2492da0336ed34b4377b2a2de882603280e0fde70df712b08fcd2ddef588a5bf"
+        },
+        {
+          "priority": 10,
+          "symbol": "{closure}",
+          "source": "wp-content/plugins/wp-graphql/wp-graphql.php",
+          "line": 203,
+          "fileHash": "989f89a3fcc94410e5994cf8fcf40662d813970e08fff6f07831e019f4b9f230"
+        },
+        {
+          "priority": 10,
+          "symbol": "{closure}",
+          "source": "wp-content/plugins/wpgraphql-acf/wpgraphql-acf.php",
+          "line": 112,
+          "fileHash": "6ef3736685ea63e4707e631886dea03dd8cee05c7e76b87cc1f6b0eae72db842"
+        },
+        {
+          "priority": 10,
+          "symbol": "WPGraphQLIDE\\Telemetry::mirror_request",
+          "source": "wp-content/plugins/wpgraphql-ide/includes/Telemetry.php",
+          "line": 75,
+          "fileHash": "4f04103e6167b816f83d92b8aaed3e4350c21e8d8441080e09489df6fe626ac5"
+        }
+      ],
+      "pre_post_update": [
+        {
+          "priority": 10,
+          "symbol": "PLL_Admin_Filters_Term::pre_post_update",
+          "source": "wp-content/plugins/polylang/src/admin/admin-filters-term.php",
+          "line": 260,
+          "fileHash": "ee7ee6d6a5f7784ea403931645790a709d127b9cb6dfe54e1e2c80bb5b2cd4ff"
+        }
+      ],
+      "pre_schedule_event": [],
+      "pre_wp_mail": [],
+      "publish_project": [],
+      "save_post": [
+        {
+          "priority": 10,
+          "symbol": "delete_get_calendar_cache",
+          "source": "wp-includes/general-template.php",
+          "line": 2853,
+          "fileHash": "3fa163fdd315e122ec721a66cfffbb64863d479d4edbabfac8f1dc4bdda1f845"
+        },
+        {
+          "priority": 10,
+          "symbol": "ACF_Form_Post::save_post",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/forms/form-post.php",
+          "line": 313,
+          "fileHash": "ce2e4760e75d77f90e8ecb0a16e0afc262421c402a64679f11cac202f286f83b"
+        },
+        {
+          "priority": 10,
+          "symbol": "Hostinger\\EasyOnboarding\\Hooks::save_post_content",
+          "source": "wp-content/plugins/hostinger-easy-onboarding/includes/Hooks.php",
+          "line": 137,
+          "fileHash": "d8f07ac7e8c69a09943eacbdd5bb4f49d1d78552c703f5387e50ce0887537265"
+        },
+        {
+          "priority": 10,
+          "symbol": "PLL_CRUD_Posts::save_post",
+          "source": "wp-content/plugins/polylang/src/crud-posts.php",
+          "line": 123,
+          "fileHash": "657f57dbe2e0d6fc318fc13d0a2db3592345c78c4c7e5618fc1b6297999a2adc"
+        }
+      ],
+      "save_post_project": [],
+      "schedule_event": [],
+      "set_object_terms": [
+        {
+          "priority": 10,
+          "symbol": "PLL_Sync_Tax::set_object_terms",
+          "source": "wp-content/plugins/polylang/src/modules/sync/sync-tax.php",
+          "line": 166,
+          "fileHash": "50d30ca6b6a0bab73b779c068cb4f17c77cf97fe09b732713077804908d93f70"
+        },
+        {
+          "priority": 10,
+          "symbol": "PLL_CRUD_Posts::set_object_terms",
+          "source": "wp-content/plugins/polylang/src/crud-posts.php",
+          "line": 165,
+          "fileHash": "657f57dbe2e0d6fc318fc13d0a2db3592345c78c4c7e5618fc1b6297999a2adc"
+        }
+      ],
+      "transition_post_status": [
+        {
+          "priority": 5,
+          "symbol": "_transition_post_status",
+          "source": "wp-includes/post.php",
+          "line": 8162,
+          "fileHash": "34678856a4326b7e76ef120ba80a9e46c6903193e058b988555ec5c1f5cb8f26"
+        },
+        {
+          "priority": 5,
+          "symbol": "PLL_Nav_Menu::auto_add_pages_to_menu",
+          "source": "wp-content/plugins/polylang/src/nav-menu.php",
+          "line": 159,
+          "fileHash": "9ce74e9f10952b2616aa26274410c53c4f688b1d023b8db3e7b165119d1662f0"
+        },
+        {
+          "priority": 10,
+          "symbol": "_update_term_count_on_transition_post_status",
+          "source": "wp-includes/post.php",
+          "line": 8453,
+          "fileHash": "34678856a4326b7e76ef120ba80a9e46c6903193e058b988555ec5c1f5cb8f26"
+        },
+        {
+          "priority": 10,
+          "symbol": "_wp_auto_add_pages_to_menu",
+          "source": "wp-includes/nav-menu.php",
+          "line": 1137,
+          "fileHash": "ac0b7d23b3839121ca36c39480a6ff5eeca5b22c97ae69b75da74428e69ecadb"
+        },
+        {
+          "priority": 10,
+          "symbol": "_wp_customize_publish_changeset",
+          "source": "wp-includes/theme.php",
+          "line": 3647,
+          "fileHash": "b32dd01a7df72ad34fd6770ace7db730759fc0e5bd06b9ed82a3c7c92da428e9"
+        },
+        {
+          "priority": 10,
+          "symbol": "__clear_multi_author_cache",
+          "source": "wp-includes/author-template.php",
+          "line": 645,
+          "fileHash": "66f27ee8be733b1c0fb94fc6293a9bc130fd02db55eb40612a052471bfd33e10"
+        },
+        {
+          "priority": 10,
+          "symbol": "block_core_calendar_update_has_published_post_on_transition_post_status",
+          "source": "wp-includes/blocks/calendar.php",
+          "line": 171,
+          "fileHash": "3c799ca830852934eb8e4779c328459756cc283cff7fb43da695473b51310926"
+        },
+        {
+          "priority": 10,
+          "symbol": "Hostinger\\Hooks::handle_transition_post_status",
+          "source": "wp-content/plugins/hostinger/includes/Hooks.php",
+          "line": 26,
+          "fileHash": "3143a692c5d133b55d2980db2a1001006f0ec74c3b7fa97f6e45575a42c236e2"
+        },
+        {
+          "priority": 10,
+          "symbol": "LiteSpeed\\Purge::purge_publish",
+          "source": "wp-content/plugins/litespeed-cache/src/purge.cls.php",
+          "line": 130,
+          "fileHash": "b9a53d0221687eafa935245b592138f989c143036b56bce00e633ff8fe5bc5a6"
+        },
+        {
+          "priority": 10,
+          "symbol": "Hostinger\\LlmsTxtGenerator\\LlmsTxtGenerator::on_post_status_change",
+          "source": "wp-content/plugins/hostinger/includes/LlmsTxtGenerator/LlmsTxtGenerator.php",
+          "line": 86,
+          "fileHash": "b92b065f4fce03638d5baccc7aa4a00fc3cd2b32c4858a309ec961883e594e1f"
+        },
+        {
+          "priority": 20,
+          "symbol": "_wp_keep_alive_customize_changeset_dependent_auto_drafts",
+          "source": "wp-includes/theme.php",
+          "line": 3872,
+          "fileHash": "b32dd01a7df72ad34fd6770ace7db730759fc0e5bd06b9ed82a3c7c92da428e9"
+        }
+      ],
+      "update_post_metadata": [
+        {
+          "priority": 1,
+          "symbol": "PLL_Sync_Metas::can_synchronize_metadata",
+          "source": "wp-content/plugins/polylang/src/modules/sync/sync-metas.php",
+          "line": 155,
+          "fileHash": "050648145f957ecc28fa9eff9c651a1b9f4ce94ae921ac8cfbe4c7346c1e7093"
+        },
+        {
+          "priority": 999,
+          "symbol": "PLL_Sync_Metas::update_metadata",
+          "source": "wp-content/plugins/polylang/src/modules/sync/sync-metas.php",
+          "line": 215,
+          "fileHash": "050648145f957ecc28fa9eff9c651a1b9f4ce94ae921ac8cfbe4c7346c1e7093"
+        }
+      ],
+      "updated_post_meta": [
+        {
+          "priority": 10,
+          "symbol": "wp_cache_set_posts_last_changed",
+          "source": "wp-includes/post.php",
+          "line": 8641,
+          "fileHash": "34678856a4326b7e76ef120ba80a9e46c6903193e058b988555ec5c1f5cb8f26"
+        }
+      ],
+      "user_has_cap": [
+        {
+          "priority": 1,
+          "symbol": "wp_maybe_grant_install_languages_cap",
+          "source": "wp-includes/capabilities.php",
+          "line": 1309,
+          "fileHash": "f5aaf3dd6a3c669f244fd6f01ad3a906556afd55941b443f1e9b34f65bb08573"
+        },
+        {
+          "priority": 1,
+          "symbol": "wp_maybe_grant_resume_extensions_caps",
+          "source": "wp-includes/capabilities.php",
+          "line": 1325,
+          "fileHash": "f5aaf3dd6a3c669f244fd6f01ad3a906556afd55941b443f1e9b34f65bb08573"
+        },
+        {
+          "priority": 1,
+          "symbol": "wp_maybe_grant_site_health_caps",
+          "source": "wp-includes/capabilities.php",
+          "line": 1356,
+          "fileHash": "f5aaf3dd6a3c669f244fd6f01ad3a906556afd55941b443f1e9b34f65bb08573"
+        }
+      ],
+      "wp_after_insert_post": [
+        {
+          "priority": 9,
+          "symbol": "wp_save_post_revision_on_insert",
+          "source": "wp-includes/revision.php",
+          "line": 107,
+          "fileHash": "1dc942d5eb3d9cee81b6c705a6fd52917c4ce5e5f509ece5ad6f748e345f8647"
+        }
+      ],
+      "wp_insert_post": [],
+      "wp_insert_post_data": [
+        {
+          "priority": 10,
+          "symbol": "_wp_customize_changeset_filter_insert_post_data",
+          "source": "wp-includes/theme.php",
+          "line": 3722,
+          "fileHash": "b32dd01a7df72ad34fd6770ace7db730759fc0e5bd06b9ed82a3c7c92da428e9"
+        },
+        {
+          "priority": 10,
+          "symbol": "PLL_Sync::can_sync_post_data",
+          "source": "wp-content/plugins/polylang/src/modules/sync/sync.php",
+          "line": 134,
+          "fileHash": "4d503d694b93ff558ce4c07a7d35557d7a09677f46f29142578b52bd7b10ca73"
+        },
+        {
+          "priority": 10,
+          "symbol": "PLL_Admin_Sync::wp_insert_post_data",
+          "source": "wp-content/plugins/polylang/src/modules/sync/admin-sync.php",
+          "line": 74,
+          "fileHash": "d499822ff4390765eda859425adcff3c8c2d70eadb17d452f937aa6006f759dd"
+        },
+        {
+          "priority": 10,
+          "symbol": "WPGraphQLIDE\\Access::cap_document_title_length",
+          "source": "wp-content/plugins/wpgraphql-ide/includes/Access.php",
+          "line": 195,
+          "fileHash": "7278e221cf86c977488f66eb179451cb349f194c985b577a87ea494d3f5ccbb5"
+        }
+      ],
+      "wp_insert_post_empty_content": [
+        {
+          "priority": 10,
+          "symbol": "ACF_Form_Post::wp_insert_post_empty_content",
+          "source": "wp-content/plugins/advanced-custom-fields/includes/forms/form-post.php",
+          "line": 252,
+          "fileHash": "ce2e4760e75d77f90e8ecb0a16e0afc262421c402a64679f11cac202f286f83b"
+        }
+      ],
+      "wp_mail": [
+        {
+          "priority": 10,
+          "symbol": "wp_staticize_emoji_for_email",
+          "source": "wp-includes/formatting.php",
+          "line": 6222,
+          "fileHash": "350f6b32303915df970bb0e3ea360fcd54bb0b8a7ecc3d504c3d860ab9468d32"
+        }
+      ]
+    },
+    "sourceFingerprintsBefore": {
+      "146": "07a18648ce7c7d9a202d56e4aece608f91f08107147c93ce24da8139cfd2f7be",
+      "196": "0c87442bcc25223655cc77be80839fff34a0ba16a450fb6a9277e897344dc8b6"
+    },
+    "sourceFingerprintsAfter": {
+      "146": "07a18648ce7c7d9a202d56e4aece608f91f08107147c93ce24da8139cfd2f7be",
+      "196": "0c87442bcc25223655cc77be80839fff34a0ba16a450fb6a9277e897344dc8b6"
+    },
+    "checks": {
+      "existing_read_account_preserved": true,
+      "no_write_or_approval_scope_enabled": true,
+      "no_checked_global_edit_or_admin_caps": true,
+      "public_project_type": true,
+      "expected_acf_mapping": true,
+      "two_public_localized_samples": true,
+      "source_tables_innodb": true,
+      "sample_fingerprints_unchanged": true
+    },
+    "technicalSnapshotPassed": true,
+    "backupAndRestoreVerified": false,
+    "allRequestContextsAudited": false,
+    "installationEligible": false,
+    "permissionsGranted": false,
+    "operatorWritesPerformed": false,
+    "currentUserContextRestored": true
+  },
+  "localDiagnosticVerification": {
+    "lints": [
+      {
+        "path": "wordpress/operations/editorial-changes-preflight.php",
+        "exitCode": 0
+      },
+      {
+        "path": "tests/operations/editorial-changes-preflight.php",
+        "exitCode": 0
+      }
+    ],
+    "exitCode": 0,
+    "passed": 9,
+    "failed": 0,
+    "wordpressOrNetworkLoaded": false,
+    "cases": [
+      {
+        "scenario": "baseline",
+        "expectedStatus": 0,
+        "observedStatus": 0,
+        "queriesReadOnly": true,
+        "contextRestored": true,
+        "privateValuesAbsent": true
+      },
+      {
+        "scenario": "wrong-site",
+        "expectedStatus": 1,
+        "observedStatus": 1,
+        "queriesReadOnly": true,
+        "contextRestored": true,
+        "privateValuesAbsent": true
+      },
+      {
+        "scenario": "missing-user",
+        "expectedStatus": 1,
+        "observedStatus": 1,
+        "queriesReadOnly": true,
+        "contextRestored": true,
+        "privateValuesAbsent": true
+      },
+      {
+        "scenario": "invalid-arguments",
+        "expectedStatus": 1,
+        "observedStatus": 1,
+        "queriesReadOnly": true,
+        "contextRestored": true,
+        "privateValuesAbsent": true
+      },
+      {
+        "scenario": "schema-drift",
+        "expectedStatus": 1,
+        "observedStatus": 1,
+        "queriesReadOnly": true,
+        "contextRestored": true,
+        "privateValuesAbsent": true
+      },
+      {
+        "scenario": "myisam",
+        "expectedStatus": 1,
+        "observedStatus": 1,
+        "queriesReadOnly": true,
+        "contextRestored": true,
+        "privateValuesAbsent": true
+      },
+      {
+        "scenario": "write-scope",
+        "expectedStatus": 1,
+        "observedStatus": 1,
+        "queriesReadOnly": true,
+        "contextRestored": true,
+        "privateValuesAbsent": true
+      },
+      {
+        "scenario": "source-drift",
+        "expectedStatus": 1,
+        "observedStatus": 1,
+        "queriesReadOnly": true,
+        "contextRestored": true,
+        "privateValuesAbsent": true
+      },
+      {
+        "scenario": "query-failure",
+        "expectedStatus": 1,
+        "observedStatus": 1,
+        "queriesReadOnly": true,
+        "contextRestored": true,
+        "privateValuesAbsent": true
+      }
+    ]
+  },
+  "reviewedInstalledMethods": [
+    {
+      "symbol": "PLL_Sync_Metas::can_synchronize_metadata",
+      "source": "wp-content/plugins/polylang/src/modules/sync/sync-metas.php",
+      "line": 155,
+      "fileHash": "050648145f957ecc28fa9eff9c651a1b9f4ce94ae921ac8cfbe4c7346c1e7093",
+      "methodHash": "59931ad4929cf6db6c6563892e4b097e4f5e3b69603397581e979dbadaa31560"
+    },
+    {
+      "symbol": "PLL_Sync_Metas::update_metadata",
+      "source": "wp-content/plugins/polylang/src/modules/sync/sync-metas.php",
+      "line": 215,
+      "fileHash": "050648145f957ecc28fa9eff9c651a1b9f4ce94ae921ac8cfbe4c7346c1e7093",
+      "methodHash": "2acdeff20e8d6075754c08eff04a322d27f4e2ea4915c585cf2f66a89933bc8a"
+    },
+    {
+      "symbol": "PLL_Sync_Metas::save_object",
+      "source": "wp-content/plugins/polylang/src/modules/sync/sync-metas.php",
+      "line": 376,
+      "fileHash": "050648145f957ecc28fa9eff9c651a1b9f4ce94ae921ac8cfbe4c7346c1e7093",
+      "methodHash": "6af5ade1e159a9ea5c5679f59d57bf688f13e8473a34b2b89070bf72e6ae5049"
+    },
+    {
+      "symbol": "PLL_Admin_Sync::pll_save_post",
+      "source": "wp-content/plugins/polylang/src/modules/sync/admin-sync.php",
+      "line": 188,
+      "fileHash": "d499822ff4390765eda859425adcff3c8c2d70eadb17d452f937aa6006f759dd",
+      "methodHash": "7545cfad5dbd422dbc470a24fe816090e799312b44399ab78d7c55e6afea8b49"
+    },
+    {
+      "symbol": "PLL_Admin_Sync::wp_insert_post_data",
+      "source": "wp-content/plugins/polylang/src/modules/sync/admin-sync.php",
+      "line": 74,
+      "fileHash": "d499822ff4390765eda859425adcff3c8c2d70eadb17d452f937aa6006f759dd",
+      "methodHash": "d54e198a2adfa9a2183758b4b0013b9bbd82943ce4e2d4929c5872705c50116a"
+    },
+    {
+      "symbol": "Hostinger\\Hooks::handle_transition_post_status",
+      "source": "wp-content/plugins/hostinger/includes/Hooks.php",
+      "line": 26,
+      "fileHash": "3143a692c5d133b55d2980db2a1001006f0ec74c3b7fa97f6e45575a42c236e2",
+      "methodHash": "baa020d8e8885463113dd18a305103a16a814fdc145ed70cfb66ffed27ff2247"
+    },
+    {
+      "symbol": "LiteSpeed\\Purge::purge_publish",
+      "source": "wp-content/plugins/litespeed-cache/src/purge.cls.php",
+      "line": 130,
+      "fileHash": "b9a53d0221687eafa935245b592138f989c143036b56bce00e633ff8fe5bc5a6",
+      "methodHash": "548ea1820b20673398beb707ee6e8bfc769368d3238c679262582cc636a14253"
+    },
+    {
+      "symbol": "Hostinger\\LlmsTxtGenerator\\LlmsTxtGenerator::on_post_status_change",
+      "source": "wp-content/plugins/hostinger/includes/LlmsTxtGenerator/LlmsTxtGenerator.php",
+      "line": 86,
+      "fileHash": "b92b065f4fce03638d5baccc7aa4a00fc3cd2b32c4858a309ec961883e594e1f",
+      "methodHash": "95e3e7a5fc330b864a50ecbbbc03b4bcf196b415467472c4832a5637de7c0062"
+    },
+    {
+      "symbol": "WPGraphQLIDE\\Telemetry::mirror_request",
+      "source": "wp-content/plugins/wpgraphql-ide/includes/Telemetry.php",
+      "line": 75,
+      "fileHash": "4f04103e6167b816f83d92b8aaed3e4350c21e8d8441080e09489df6fe626ac5",
+      "methodHash": "a38631685a030dc6759864bf3a6c087f605e34d430e425bb79cf77792f61e0ef"
+    },
+    {
+      "symbol": "WPGraphQLIDE\\Access::cap_document_title_length",
+      "source": "wp-content/plugins/wpgraphql-ide/includes/Access.php",
+      "line": 195,
+      "fileHash": "7278e221cf86c977488f66eb179451cb349f194c985b577a87ea494d3f5ccbb5",
+      "methodHash": "154e49f05bbcba73ba07373ebe5db34b2f04d018737e93bbf7e605842256718e"
+    },
+    {
+      "symbol": "LiteSpeed\\Purge::_purge_post",
+      "source": "wp-content/plugins/litespeed-cache/src/purge.cls.php",
+      "line": 1102,
+      "fileHash": "b9a53d0221687eafa935245b592138f989c143036b56bce00e633ff8fe5bc5a6",
+      "methodHash": "b30ef36b20619baf1c7f6c25e968946cc4506a80ca9a74e33af6e0c65e062bfd"
+    },
+    {
+      "symbol": "Hostinger\\LlmsTxtGenerator\\LlmsTxtGenerator::is_post_type_supported",
+      "source": "wp-content/plugins/hostinger/includes/LlmsTxtGenerator/LlmsTxtGenerator.php",
+      "line": 165,
+      "fileHash": "b92b065f4fce03638d5baccc7aa4a00fc3cd2b32c4858a309ec961883e594e1f",
+      "methodHash": "9d33afc307a33dcc3cb116417d2b9f660b8cfc508a6bade3adb0cdda3a546cbf"
+    },
+    {
+      "symbol": "Hostinger\\LlmsTxtGenerator\\LlmsTxtGenerator::generate",
+      "source": "wp-content/plugins/hostinger/includes/LlmsTxtGenerator/LlmsTxtGenerator.php",
+      "line": 131,
+      "fileHash": "b92b065f4fce03638d5baccc7aa4a00fc3cd2b32c4858a309ec961883e594e1f",
+      "methodHash": "3baf3765921d96c5fc7eae2ce56b65eff974a4227e4d4f5c482bad1adb5b4246"
+    },
+    {
+      "symbol": "PLL_Sync_Metas::get_metas_to_copy",
+      "source": "wp-content/plugins/polylang/src/modules/sync/sync-metas.php",
+      "line": 129,
+      "fileHash": "050648145f957ecc28fa9eff9c651a1b9f4ce94ae921ac8cfbe4c7346c1e7093",
+      "methodHash": "0fa67ee65de652aa4fe14c77a87d0111d441ff821dbd2e3a823058c8a6d2c81d"
+    },
+    {
+      "symbol": "PLL_Sync_Metas::update_meta",
+      "source": "wp-content/plugins/polylang/src/modules/sync/sync-metas.php",
+      "line": 234,
+      "fileHash": "050648145f957ecc28fa9eff9c651a1b9f4ce94ae921ac8cfbe4c7346c1e7093",
+      "methodHash": "56be3876d3915481bdeaeba947b1ddce698a1f77d3c53d63569763edfd5e865b"
+    }
+  ],
+  "decision": {
+    "status": "hold",
+    "installablePackageProduced": false,
+    "labGuardChanged": false,
+    "liveEditorialApiInvoked": false,
+    "livePermissionsChanged": false,
+    "liveBackupsInspectedOrRestored": false,
+    "pending": [
+      "external-effects-and-translation-sync-in-request-contexts",
+      "backup-restore-verification",
+      "operational-package-and-explicit-scopes-and-diff-approval",
+      "private-export-retention-policy"
+    ]
+  }
+}
