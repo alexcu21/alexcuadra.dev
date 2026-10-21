@@ -4,6 +4,8 @@
 
 [Resultado saneado](qa/MCP_EDITORIAL_OPERATIONS_RESULT_2026-10-21.json) · [manifiesto de la base revisada](wordpress/editorial-operational-candidate-review.json) · [QA y límites](qa/MCP_EDITORIAL_OPERATIONS_2026-10-21.md).
 
+**Actualización posterior21oct:** [matriz y tratamiento de efectos completados](WORDPRESS_MCP_EFFECTS_POLICY.md). Se trazaron las ramas pendientes: Hostinger notificación/llms excluyen project; Polylang sync vacío observado; LiteSpeed puede emitir cabeceras inmediatamente, no solo en shutdown. La llamada wp_update_post innecesaria para tagline está identificada, sin corregir todavía. Próximo entregable: candidato operativo de propuestas privadas, sin registrar apply/recover; adaptación de efectos antes de cualquier escritura de fuente. El diagnóstico/manifiesto inferiores conservan su captura histórica, no se reescriben como si ya hubieran verificado estos hallazgos. Respaldos/archivo/paquete/instalación siguen pendientes.
+
 ## Qué quedó comprobado
 
 En el contexto CLI del21oct: WP7.1.3/PHP8.2.34,13 plugins activos y2 MU; usuario2 subscriber con lectura específica y sin los scopes de preparación/aplicación/recuperación/aprobación ni capacidades globales comprobadas de edición/administración. Projects146EN↔196ES públicos, vinculados, una fila de tagline y referencia ACF original. Grupo `group_676d40f7bb646`, textarea `project_tagline`, key `field_676dcb2aec8d4`. Cinco tablas fuente InnoDB. Huellas de post/meta/relaciones iguales antes/después en ambas muestras.
@@ -36,7 +38,7 @@ Antes de presentar instalación deben cerrarse estas puertas concretas:
 3. **Paquete operativo:** versión/destino explícitos, guard cerrado para el sitio aprobado, registro privado y migración aditiva verificables, ZIP/checksum, scopes mínimos por cuenta y aceptación sin scope. No habilitar apply/recover por instalar. Designar aprobador distinto del ejecutor y presentar diff/efecto público antes de cualquier aplicación.
 4. **Archivo/retención:** exportación privada verificable y restaurable de propuestas, historial, revisiones, aprobaciones, eventos y recibos con versiones/hashes y relaciones; definir responsables y plazo con Alex. El prototipo conserva todo, sin TTL ni borrado. No reutilizar los30 días del formulario de contacto como política editorial. Al llegar a cuota se rechaza trabajo nuevo; no purgar registros para continuar.
 
-**Siguiente incremento acotado:** cerrar la primera puerta con una matriz por callback/campo/contexto y una propuesta de tratamiento de efectos; a continuación preparar el candidato operativo y ensayo de respaldo/restauración. Sin repetir las531 pruebas salvo cambios de código/perfil que lo justifiquen. La instalación se solicita cuando exista el paquete revisable y se cumplan las puertas, no mediante una aprobación genérica anticipada.
+**Continuidad actualizada:** matriz/diseño de tratamiento ya entregados en la actualización superior. Su implementación y aceptación en contextos reales siguen pendientes; preparar primero el candidato operativo de propuestas privadas y ensayo de respaldo/restauración. Sin repetir las531 pruebas salvo cambios de código/perfil que lo justifiquen. La instalación se solicita cuando exista el paquete revisable y se cumplan las puertas, no mediante una aprobación genérica anticipada.
 
 ## Procedimiento de reversión que debe acompañar al paquete
 

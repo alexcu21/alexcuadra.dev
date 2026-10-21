@@ -1,0 +1,989 @@
+{
+  "format": "editorial-effects-review-v1",
+  "reviewDate": "2026-10-21",
+  "baseCommit": "8ef8b20",
+  "observationTimesUtc": [
+    "2026-10-21T14:58:15Z",
+    "2026-10-21T15:01:39Z",
+    "2026-10-21T15:11:21Z"
+  ],
+  "profile": {
+    "format": "editorial-effects-profile-v1",
+    "observedAtUtc": "2026-10-21T15:27:16Z",
+    "context": {
+      "wpCli": true,
+      "isAdmin": false,
+      "doingCron": false,
+      "doingAjax": false,
+      "restRequest": false
+    },
+    "polylangSync": {
+      "post_meta": false,
+      "comment_status": false,
+      "ping_status": false,
+      "menu_order": false,
+      "post_date": false,
+      "post_parent": false,
+      "sticky_posts": false,
+      "_thumbnail_id": false,
+      "_wp_page_template": false,
+      "taxonomies": false
+    },
+    "polylangSyncOtherCount": 0,
+    "hostingerTypeGuards": {
+      "hostingerNotification": {
+        "projectAllowed": false,
+        "fileHash": "8b87e0f4f336539b6e15d1ddb799fdf0488f2cdb5cdd6b643e3721f6cfd607f9"
+      },
+      "hostingerLlmsFile": {
+        "projectAllowed": false,
+        "fileHash": "b92b065f4fce03638d5baccc7aa4a00fc3cd2b32c4858a309ec961883e594e1f"
+      }
+    },
+    "hooks": {
+      "transition_post_status": [
+        {
+          "symbol": "_transition_post_status",
+          "priority": 5,
+          "acceptedArgs": 3,
+          "source": "wp-includes/post.php",
+          "line": 8162,
+          "fileHash": "34678856a4326b7e76ef120ba80a9e46c6903193e058b988555ec5c1f5cb8f26"
+        },
+        {
+          "symbol": "PLL_Nav_Menu::auto_add_pages_to_menu",
+          "priority": 5,
+          "acceptedArgs": 3,
+          "source": "wp-content/plugins/polylang/src/nav-menu.php",
+          "line": 159,
+          "fileHash": "9ce74e9f10952b2616aa26274410c53c4f688b1d023b8db3e7b165119d1662f0"
+        },
+        {
+          "symbol": "_update_term_count_on_transition_post_status",
+          "priority": 10,
+          "acceptedArgs": 3,
+          "source": "wp-includes/post.php",
+          "line": 8453,
+          "fileHash": "34678856a4326b7e76ef120ba80a9e46c6903193e058b988555ec5c1f5cb8f26"
+        },
+        {
+          "symbol": "_wp_auto_add_pages_to_menu",
+          "priority": 10,
+          "acceptedArgs": 3,
+          "source": "wp-includes/nav-menu.php",
+          "line": 1137,
+          "fileHash": "ac0b7d23b3839121ca36c39480a6ff5eeca5b22c97ae69b75da74428e69ecadb"
+        },
+        {
+          "symbol": "_wp_customize_publish_changeset",
+          "priority": 10,
+          "acceptedArgs": 3,
+          "source": "wp-includes/theme.php",
+          "line": 3647,
+          "fileHash": "b32dd01a7df72ad34fd6770ace7db730759fc0e5bd06b9ed82a3c7c92da428e9"
+        },
+        {
+          "symbol": "__clear_multi_author_cache",
+          "priority": 10,
+          "acceptedArgs": 1,
+          "source": "wp-includes/author-template.php",
+          "line": 645,
+          "fileHash": "66f27ee8be733b1c0fb94fc6293a9bc130fd02db55eb40612a052471bfd33e10"
+        },
+        {
+          "symbol": "block_core_calendar_update_has_published_post_on_transition_post_status",
+          "priority": 10,
+          "acceptedArgs": 3,
+          "source": "wp-includes/blocks/calendar.php",
+          "line": 171,
+          "fileHash": "3c799ca830852934eb8e4779c328459756cc283cff7fb43da695473b51310926"
+        },
+        {
+          "symbol": "Hostinger\\Hooks::handle_transition_post_status",
+          "priority": 10,
+          "acceptedArgs": 3,
+          "source": "wp-content/plugins/hostinger/includes/Hooks.php",
+          "line": 26,
+          "fileHash": "3143a692c5d133b55d2980db2a1001006f0ec74c3b7fa97f6e45575a42c236e2"
+        },
+        {
+          "symbol": "LiteSpeed\\Purge::purge_publish",
+          "priority": 10,
+          "acceptedArgs": 3,
+          "source": "wp-content/plugins/litespeed-cache/src/purge.cls.php",
+          "line": 130,
+          "fileHash": "b9a53d0221687eafa935245b592138f989c143036b56bce00e633ff8fe5bc5a6"
+        },
+        {
+          "symbol": "Hostinger\\LlmsTxtGenerator\\LlmsTxtGenerator::on_post_status_change",
+          "priority": 10,
+          "acceptedArgs": 3,
+          "source": "wp-content/plugins/hostinger/includes/LlmsTxtGenerator/LlmsTxtGenerator.php",
+          "line": 86,
+          "fileHash": "b92b065f4fce03638d5baccc7aa4a00fc3cd2b32c4858a309ec961883e594e1f"
+        },
+        {
+          "symbol": "_wp_keep_alive_customize_changeset_dependent_auto_drafts",
+          "priority": 20,
+          "acceptedArgs": 3,
+          "source": "wp-includes/theme.php",
+          "line": 3872,
+          "fileHash": "b32dd01a7df72ad34fd6770ace7db730759fc0e5bd06b9ed82a3c7c92da428e9"
+        }
+      ],
+      "notify_mcp": [
+        {
+          "symbol": "{closure}",
+          "priority": 10,
+          "acceptedArgs": 1,
+          "source": "wp-content/plugins/hostinger/includes/Admin/Jobs/AbstractJob.php",
+          "line": 22,
+          "fileHash": "76047124cd8f0e8b77d7196def5623e97c4977e980b230e61e84720c5db9d557"
+        }
+      ],
+      "litespeed_purge_post": [
+        {
+          "symbol": "LiteSpeed\\API::purge_post",
+          "priority": 10,
+          "acceptedArgs": 1,
+          "source": "wp-content/plugins/litespeed-cache/src/api.cls.php",
+          "line": 222,
+          "fileHash": "6408cf1a59eeb5354fc89df08cd2fbaf756eb06bb8df94decc2f7727d71c1809"
+        }
+      ],
+      "litespeed_api_purge_post": [],
+      "litespeed_purged_post": [],
+      "litespeed_delay_purge": [],
+      "pll_copy_post_metas": [],
+      "pll_pre_current_user_can_synchronize_post": [],
+      "is_protected_meta": [],
+      "clean_post_cache": [
+        {
+          "symbol": "PLL_Cache_Compat::clean_post_cache",
+          "priority": 1,
+          "acceptedArgs": 1,
+          "source": "wp-content/plugins/polylang/src/integrations/cache/cache-compat.php",
+          "line": 98,
+          "fileHash": "2749a4b4582fcc63ff8bd3eeb0e21ac133fcb3729e0e4f92fa174583cce63edb"
+        }
+      ],
+      "updated_post_meta": [
+        {
+          "symbol": "wp_cache_set_posts_last_changed",
+          "priority": 10,
+          "acceptedArgs": 1,
+          "source": "wp-includes/post.php",
+          "line": 8641,
+          "fileHash": "34678856a4326b7e76ef120ba80a9e46c6903193e058b988555ec5c1f5cb8f26"
+        }
+      ]
+    },
+    "objectCache": {
+      "externalBackendInUse": null,
+      "dropinPresent": false
+    },
+    "callbacksInvokedByOperator": false,
+    "editorialWritesPerformedByOperator": false,
+    "installationEligible": false
+  },
+  "hostingerNotificationTypeAllowlist": {
+    "observedAtUtc": "2026-10-21T15:17:46Z",
+    "source": "wp-content/plugins/hostinger/includes/Mcp/Handlers/WebsitePageUpdated.php",
+    "fileHash": "8b87e0f4f336539b6e15d1ddb799fdf0488f2cdb5cdd6b643e3721f6cfd607f9",
+    "allowedPostTypes": [
+      "post",
+      "product",
+      "page"
+    ]
+  },
+  "postflight": {
+    "observedAtUtc": "2026-10-21T15:17:46Z",
+    "context": "wp-cli-selected-hooks-only",
+    "actor": {
+      "id": 2,
+      "roles": [
+        "subscriber"
+      ],
+      "capabilities": {
+        "read": true,
+        "alexcuadra_read_public_projects": true,
+        "alexcuadra_prepare_project_changes": false,
+        "alexcuadra_apply_project_changes": false,
+        "alexcuadra_recover_project_changes": false,
+        "alexcuadra_approve_public_project_changes": false,
+        "edit_posts": false,
+        "edit_pages": false,
+        "publish_posts": false,
+        "publish_pages": false,
+        "manage_options": false,
+        "install_plugins": false,
+        "edit_users": false
+      }
+    },
+    "wordpress": "7.1.3",
+    "php": "8.5.11",
+    "samples": [
+      {
+        "id": 146,
+        "locale": "en",
+        "eligible": true,
+        "expectedTranslationLinked": true,
+        "taglineRows": 1,
+        "referenceRows": 1,
+        "referenceMatches": true
+      },
+      {
+        "id": 196,
+        "locale": "es",
+        "eligible": true,
+        "expectedTranslationLinked": true,
+        "taglineRows": 1,
+        "referenceRows": 1,
+        "referenceMatches": true
+      }
+    ],
+    "checks": {
+      "existing_read_account_preserved": true,
+      "no_write_or_approval_scope_enabled": true,
+      "no_checked_global_edit_or_admin_caps": true,
+      "public_project_type": true,
+      "expected_acf_mapping": true,
+      "two_public_localized_samples": true,
+      "source_tables_innodb": true,
+      "sample_fingerprints_unchanged": true
+    },
+    "sourceFingerprintsBefore": {
+      "146": "07a18648ce7c7d9a202d56e4aece608f91f08107147c93ce24da8139cfd2f7be",
+      "196": "0c87442bcc25223655cc77be80839fff34a0ba16a450fb6a9277e897344dc8b6"
+    },
+    "sourceFingerprintsAfter": {
+      "146": "07a18648ce7c7d9a202d56e4aece608f91f08107147c93ce24da8139cfd2f7be",
+      "196": "0c87442bcc25223655cc77be80839fff34a0ba16a450fb6a9277e897344dc8b6"
+    },
+    "currentUserContextRestored": true
+  },
+  "reviewedMethods": [
+    {
+      "symbol": "Hostinger\\EasyOnboarding\\Hooks::save_post_content",
+      "source": "wp-content/plugins/hostinger-easy-onboarding/includes/Hooks.php",
+      "line": 137,
+      "endLine": 152,
+      "fileHash": "d8f07ac7e8c69a09943eacbdd5bb4f49d1d78552c703f5387e50ce0887537265",
+      "methodHash": "94e60334a33c94e863c07cce31f1b87ff3d020f40762138ad20160687976920e"
+    },
+    {
+      "symbol": "Hostinger\\Admin\\Jobs\\AbstractJob::__construct",
+      "source": "wp-content/plugins/hostinger/includes/Admin/Jobs/AbstractJob.php",
+      "line": 14,
+      "endLine": 16,
+      "fileHash": "76047124cd8f0e8b77d7196def5623e97c4977e980b230e61e84720c5db9d557",
+      "methodHash": "f0dae59d96156ab49952a973d2afd5943f32acc46f038efe8a55d4e9a515bc3d"
+    },
+    {
+      "symbol": "Hostinger\\Admin\\Jobs\\AbstractJob::init",
+      "source": "wp-content/plugins/hostinger/includes/Admin/Jobs/AbstractJob.php",
+      "line": 18,
+      "endLine": 26,
+      "fileHash": "76047124cd8f0e8b77d7196def5623e97c4977e980b230e61e84720c5db9d557",
+      "methodHash": "0a55eb44d45a39a2a0ad2dd91f3d58460e47063236b17421adc32c3e3544ed4d"
+    },
+    {
+      "symbol": "{closure:Hostinger\\Admin\\Jobs\\AbstractJob::init():22}",
+      "source": "wp-content/plugins/hostinger/includes/Admin/Jobs/AbstractJob.php",
+      "line": 22,
+      "endLine": 24,
+      "fileHash": "76047124cd8f0e8b77d7196def5623e97c4977e980b230e61e84720c5db9d557",
+      "methodHash": "6582b6e2a5d62d265665e5d98991e0c288fa8f8c8ea46a7839c83b4ca15a9639"
+    },
+    {
+      "symbol": "Hostinger\\Admin\\Jobs\\AbstractJob::can_schedule",
+      "source": "wp-content/plugins/hostinger/includes/Admin/Jobs/AbstractJob.php",
+      "line": 28,
+      "endLine": 30,
+      "fileHash": "76047124cd8f0e8b77d7196def5623e97c4977e980b230e61e84720c5db9d557",
+      "methodHash": "91ce7abf12f3dce5037e8aab40348be98c585c5fa1c184e03305fa09d9b866ee"
+    },
+    {
+      "symbol": "Hostinger\\Admin\\Jobs\\AbstractJob::handle_process_items_action",
+      "source": "wp-content/plugins/hostinger/includes/Admin/Jobs/AbstractJob.php",
+      "line": 32,
+      "endLine": 34,
+      "fileHash": "76047124cd8f0e8b77d7196def5623e97c4977e980b230e61e84720c5db9d557",
+      "methodHash": "50b17be3d9f996045d4117b73b79984880464358d31db97e7e9fa4eb08b27421"
+    },
+    {
+      "symbol": "Hostinger\\Admin\\Jobs\\AbstractJob::get_process_item_hook",
+      "source": "wp-content/plugins/hostinger/includes/Admin/Jobs/AbstractJob.php",
+      "line": 36,
+      "endLine": 38,
+      "fileHash": "76047124cd8f0e8b77d7196def5623e97c4977e980b230e61e84720c5db9d557",
+      "methodHash": "cb1e3a6638c092801f000084e9810fb7a3e22bb22b6fb4080e00cbdfca24318e"
+    },
+    {
+      "symbol": "Hostinger\\Admin\\Jobs\\AbstractJob::get_start_hook",
+      "source": "wp-content/plugins/hostinger/includes/Admin/Jobs/AbstractJob.php",
+      "line": 40,
+      "endLine": 42,
+      "fileHash": "76047124cd8f0e8b77d7196def5623e97c4977e980b230e61e84720c5db9d557",
+      "methodHash": "e791b1c8a78b5812580edebefabaefa37b8f769f795f75eb21295f226487e18e"
+    },
+    {
+      "symbol": "Hostinger\\Admin\\Jobs\\AbstractJob::is_running",
+      "source": "wp-content/plugins/hostinger/includes/Admin/Jobs/AbstractJob.php",
+      "line": 44,
+      "endLine": 46,
+      "fileHash": "76047124cd8f0e8b77d7196def5623e97c4977e980b230e61e84720c5db9d557",
+      "methodHash": "64c71da3e0c1e363930e51e3225dd942eee03fb8d741a9ed3da94e8118e74aa1"
+    },
+    {
+      "symbol": "Hostinger\\Admin\\Jobs\\AbstractJob::get_hook_base_name",
+      "source": "wp-content/plugins/hostinger/includes/Admin/Jobs/AbstractJob.php",
+      "line": 48,
+      "endLine": 50,
+      "fileHash": "76047124cd8f0e8b77d7196def5623e97c4977e980b230e61e84720c5db9d557",
+      "methodHash": "e3a1b22281608c5cefbdc3e5a6ac9077d989217d37309bb1b58311146c805488"
+    },
+    {
+      "symbol": "Hostinger\\Admin\\Jobs\\AbstractJob::get_name",
+      "source": "wp-content/plugins/hostinger/includes/Admin/Jobs/AbstractJob.php",
+      "line": 52,
+      "endLine": 52,
+      "fileHash": "76047124cd8f0e8b77d7196def5623e97c4977e980b230e61e84720c5db9d557",
+      "methodHash": "277515b758f09652e6a195700fa5d1af138f2ce396a582891c8473bd3dca123e"
+    },
+    {
+      "symbol": "Hostinger\\Admin\\Jobs\\AbstractJob::process_items",
+      "source": "wp-content/plugins/hostinger/includes/Admin/Jobs/AbstractJob.php",
+      "line": 53,
+      "endLine": 53,
+      "fileHash": "76047124cd8f0e8b77d7196def5623e97c4977e980b230e61e84720c5db9d557",
+      "methodHash": "abb2973007527ef7eec740db10641d0fbacf1e6c2953462f6185df38aadef450"
+    },
+    {
+      "symbol": "Hostinger\\Admin\\Jobs\\ActionScheduler::get_group",
+      "source": "wp-content/plugins/hostinger/includes/Admin/Jobs/ActionScheduler.php",
+      "line": 13,
+      "endLine": 15,
+      "fileHash": "a0c4734c1cab15859b30ca38339bddec5a2ae23ede7dc517aa4c1272358cf7fc",
+      "methodHash": "836e1fabedee1d580d6579c9eeb5e5f806fdce724df0fd0a37e1c20d20f79eb7"
+    },
+    {
+      "symbol": "Hostinger\\Admin\\Jobs\\ActionScheduler::schedule_single",
+      "source": "wp-content/plugins/hostinger/includes/Admin/Jobs/ActionScheduler.php",
+      "line": 17,
+      "endLine": 23,
+      "fileHash": "a0c4734c1cab15859b30ca38339bddec5a2ae23ede7dc517aa4c1272358cf7fc",
+      "methodHash": "9b57ae068c7e3647b4ce05e9edbb4e84eefcc8bccd220cf14229a49c32559db1"
+    },
+    {
+      "symbol": "Hostinger\\Admin\\Jobs\\ActionScheduler::schedule_immediate",
+      "source": "wp-content/plugins/hostinger/includes/Admin/Jobs/ActionScheduler.php",
+      "line": 25,
+      "endLine": 31,
+      "fileHash": "a0c4734c1cab15859b30ca38339bddec5a2ae23ede7dc517aa4c1272358cf7fc",
+      "methodHash": "fc80e92445ae241c9a396cb462990a0c0847423ddb60e5edbac8053f8cf11f14"
+    },
+    {
+      "symbol": "Hostinger\\Admin\\Jobs\\ActionScheduler::has_scheduled_action",
+      "source": "wp-content/plugins/hostinger/includes/Admin/Jobs/ActionScheduler.php",
+      "line": 33,
+      "endLine": 39,
+      "fileHash": "a0c4734c1cab15859b30ca38339bddec5a2ae23ede7dc517aa4c1272358cf7fc",
+      "methodHash": "9af06219bf474af5e0c00e6cee7395bafe0fe38b325a71bd75dc0a4e589a5115"
+    },
+    {
+      "symbol": "Hostinger\\Admin\\Jobs\\NotifyMcpJob::__construct",
+      "source": "wp-content/plugins/hostinger/includes/Admin/Jobs/NotifyMcpJob.php",
+      "line": 14,
+      "endLine": 17,
+      "fileHash": "0859ffaeaf914231b32fae7baa44264a71d425bd9bd21494699338286da783dc",
+      "methodHash": "3919c6b14cddf77e1b56a828653ffa637a9ec824d421726f991e0da9e6a2b8ab"
+    },
+    {
+      "symbol": "Hostinger\\Admin\\Jobs\\NotifyMcpJob::get_name",
+      "source": "wp-content/plugins/hostinger/includes/Admin/Jobs/NotifyMcpJob.php",
+      "line": 19,
+      "endLine": 21,
+      "fileHash": "0859ffaeaf914231b32fae7baa44264a71d425bd9bd21494699338286da783dc",
+      "methodHash": "a5e5b60eceb887cb68552bd4cff8b4196be359512b1b42cffdc08b724818693b"
+    },
+    {
+      "symbol": "Hostinger\\Admin\\Jobs\\NotifyMcpJob::event_handler",
+      "source": "wp-content/plugins/hostinger/includes/Admin/Jobs/NotifyMcpJob.php",
+      "line": 23,
+      "endLine": 25,
+      "fileHash": "0859ffaeaf914231b32fae7baa44264a71d425bd9bd21494699338286da783dc",
+      "methodHash": "d03fe26e0764615e3ddecc03b34fb1ead2960f46a51f9651971fa59ab67a74f3"
+    },
+    {
+      "symbol": "Hostinger\\Admin\\Jobs\\NotifyMcpJob::process_items",
+      "source": "wp-content/plugins/hostinger/includes/Admin/Jobs/NotifyMcpJob.php",
+      "line": 27,
+      "endLine": 30,
+      "fileHash": "0859ffaeaf914231b32fae7baa44264a71d425bd9bd21494699338286da783dc",
+      "methodHash": "4b605cd946a0e5ef43e1c3d7fb03df0a618b8d18963adeb154c61425c66f09e0"
+    },
+    {
+      "symbol": "Hostinger\\Admin\\Jobs\\NotifyMcpJob::schedule",
+      "source": "wp-content/plugins/hostinger/includes/Admin/Jobs/NotifyMcpJob.php",
+      "line": 32,
+      "endLine": 36,
+      "fileHash": "0859ffaeaf914231b32fae7baa44264a71d425bd9bd21494699338286da783dc",
+      "methodHash": "78edc920b7ad06e40823915b0437b48a75da6e9d5909b779f02d55f3a1095bd3"
+    },
+    {
+      "symbol": "Hostinger\\Admin\\Jobs\\NotifyMcpJob::can_schedule",
+      "source": "wp-content/plugins/hostinger/includes/Admin/Jobs/NotifyMcpJob.php",
+      "line": 38,
+      "endLine": 49,
+      "fileHash": "0859ffaeaf914231b32fae7baa44264a71d425bd9bd21494699338286da783dc",
+      "methodHash": "2d0eb7965b773f9ad8f2f028ca8607a23d54c00a786818213d04b06563629880"
+    },
+    {
+      "symbol": "Hostinger\\Admin\\Proxy::__construct",
+      "source": "wp-content/plugins/hostinger/includes/Admin/Proxy.php",
+      "line": 22,
+      "endLine": 26,
+      "fileHash": "18f975332318939f72f5ae5401fc98c55a98b86eec408c84224105004a8fc5e7",
+      "methodHash": "2291856ccf006da52090ee7b09675a5fcc4f95120a36e7139adf10ff223d1fe4"
+    },
+    {
+      "symbol": "Hostinger\\Admin\\Proxy::trigger_event",
+      "source": "wp-content/plugins/hostinger/includes/Admin/Proxy.php",
+      "line": 28,
+      "endLine": 42,
+      "fileHash": "18f975332318939f72f5ae5401fc98c55a98b86eec408c84224105004a8fc5e7",
+      "methodHash": "e565fdd8a11aa36ea92d3bef3195bd1258bc07e1c78c3d3b0acb42c9bc3ace5d"
+    },
+    {
+      "symbol": "Hostinger\\Admin\\Proxy::is_free_subdomain",
+      "source": "wp-content/plugins/hostinger/includes/Admin/Proxy.php",
+      "line": 44,
+      "endLine": 47,
+      "fileHash": "18f975332318939f72f5ae5401fc98c55a98b86eec408c84224105004a8fc5e7",
+      "methodHash": "0974812d93d173ba6c200ed274ad81748d31d1eba68f0617f8f4fb976db04c26"
+    },
+    {
+      "symbol": "Hostinger\\Admin\\Proxy::remove_www",
+      "source": "wp-content/plugins/hostinger/includes/Admin/Proxy.php",
+      "line": 49,
+      "endLine": 55,
+      "fileHash": "18f975332318939f72f5ae5401fc98c55a98b86eec408c84224105004a8fc5e7",
+      "methodHash": "321dd57f4c7bbd5b9fb05da91b5c0fe3bdf443b02e8a652c1aa503ea2e025b5f"
+    },
+    {
+      "symbol": "Hostinger\\Mcp\\EventHandlerFactory::__construct",
+      "source": "wp-content/plugins/hostinger/includes/Mcp/EventHandlerFactory.php",
+      "line": 21,
+      "endLine": 28,
+      "fileHash": "856ff4ae0740182827ec961190993262ec9eb6a26c72fe6f16cec0498bd52f55",
+      "methodHash": "7e1e5bb54cc9f724f7b37791de204a2624fe797f24952a27f6009f58307c6cb6"
+    },
+    {
+      "symbol": "Hostinger\\Mcp\\EventHandlerFactory::get_handler",
+      "source": "wp-content/plugins/hostinger/includes/Mcp/EventHandlerFactory.php",
+      "line": 30,
+      "endLine": 37,
+      "fileHash": "856ff4ae0740182827ec961190993262ec9eb6a26c72fe6f16cec0498bd52f55",
+      "methodHash": "0aebc5a8ae8fab80ec0713dca439cd3dab9261a7f9dd5cc2c7466735b8f466f4"
+    },
+    {
+      "symbol": "Hostinger\\Mcp\\Handlers\\EventHandler::__construct",
+      "source": "wp-content/plugins/hostinger/includes/Mcp/Handlers/EventHandler.php",
+      "line": 14,
+      "endLine": 16,
+      "fileHash": "361df488e878600b5ccc9a8ade0dfd3bd29376d95c6d70804c8eccbe4a1119f2",
+      "methodHash": "5ad20625cb7625352b61c48f0a763baddcd9f92b0196839fe76b336e5b0a2f1c"
+    },
+    {
+      "symbol": "Hostinger\\Mcp\\Handlers\\EventHandler::send_to_proxy",
+      "source": "wp-content/plugins/hostinger/includes/Mcp/Handlers/EventHandler.php",
+      "line": 18,
+      "endLine": 39,
+      "fileHash": "361df488e878600b5ccc9a8ade0dfd3bd29376d95c6d70804c8eccbe4a1119f2",
+      "methodHash": "a1e77e9a5c0c0696ba37db4e8ff0af86d714389a4c278151d80acda31fdb40d7"
+    },
+    {
+      "symbol": "Hostinger\\Mcp\\Handlers\\EventHandler::can_send",
+      "source": "wp-content/plugins/hostinger/includes/Mcp/Handlers/EventHandler.php",
+      "line": 41,
+      "endLine": 43,
+      "fileHash": "361df488e878600b5ccc9a8ade0dfd3bd29376d95c6d70804c8eccbe4a1119f2",
+      "methodHash": "3072656f261683d2b8358933062e7906172d462b8c4f85bd39abcb0684d928ce"
+    },
+    {
+      "symbol": "Hostinger\\Mcp\\Handlers\\EventHandler::is_opted_in",
+      "source": "wp-content/plugins/hostinger/includes/Mcp/Handlers/EventHandler.php",
+      "line": 45,
+      "endLine": 48,
+      "fileHash": "361df488e878600b5ccc9a8ade0dfd3bd29376d95c6d70804c8eccbe4a1119f2",
+      "methodHash": "2e03391c8bab87d813a0b7f0f9528e857c2db457a81d73b33df316abcc04f3d7"
+    },
+    {
+      "symbol": "Hostinger\\Mcp\\Handlers\\EventHandler::is_optin_event",
+      "source": "wp-content/plugins/hostinger/includes/Mcp/Handlers/EventHandler.php",
+      "line": 50,
+      "endLine": 52,
+      "fileHash": "361df488e878600b5ccc9a8ade0dfd3bd29376d95c6d70804c8eccbe4a1119f2",
+      "methodHash": "b6cdc0956b48e3eb201c9131f06fb7d5aea9eeab24e397cc34095631e076e28a"
+    },
+    {
+      "symbol": "Hostinger\\Mcp\\Handlers\\EventHandler::debug_mcp",
+      "source": "wp-content/plugins/hostinger/includes/Mcp/Handlers/EventHandler.php",
+      "line": 54,
+      "endLine": 58,
+      "fileHash": "361df488e878600b5ccc9a8ade0dfd3bd29376d95c6d70804c8eccbe4a1119f2",
+      "methodHash": "ecfb129605d52af53aaed1e1eec04ef29f3462f6b4314b1360e95cd143050014"
+    },
+    {
+      "symbol": "Hostinger\\Mcp\\Handlers\\EventHandler::send",
+      "source": "wp-content/plugins/hostinger/includes/Mcp/Handlers/EventHandler.php",
+      "line": 60,
+      "endLine": 60,
+      "fileHash": "361df488e878600b5ccc9a8ade0dfd3bd29376d95c6d70804c8eccbe4a1119f2",
+      "methodHash": "f9230a7ca2e28c117d23c7d1e5cc2a50412b97de985798cb1daebdddf7921d5a"
+    },
+    {
+      "symbol": "Hostinger\\Mcp\\Handlers\\WebsitePageUpdated::send",
+      "source": "wp-content/plugins/hostinger/includes/Mcp/Handlers/WebsitePageUpdated.php",
+      "line": 11,
+      "endLine": 19,
+      "fileHash": "8b87e0f4f336539b6e15d1ddb799fdf0488f2cdb5cdd6b643e3721f6cfd607f9",
+      "methodHash": "aa1a41fb2de283dc0ff1f800238dfcf60b9d804461d594381ad77ffcafd41ab2"
+    },
+    {
+      "symbol": "Hostinger\\Mcp\\Handlers\\WebsitePageUpdated::can_send",
+      "source": "wp-content/plugins/hostinger/includes/Mcp/Handlers/WebsitePageUpdated.php",
+      "line": 21,
+      "endLine": 34,
+      "fileHash": "8b87e0f4f336539b6e15d1ddb799fdf0488f2cdb5cdd6b643e3721f6cfd607f9",
+      "methodHash": "f48483861fc6548e79c6c06523dc595a857c14804c3f4f1ae4f41c5d9bfbb7dc"
+    },
+    {
+      "symbol": "ActionScheduler_QueueRunner::maybe_dispatch_async_request",
+      "source": "wp-content/plugins/hostinger/vendor/woocommerce/action-scheduler/classes/ActionScheduler_QueueRunner.php",
+      "line": 123,
+      "endLine": 132,
+      "fileHash": "dc4601923266c1d2c28404b292ed208c8a5913044daeaa1fb0eeaa5c92693309",
+      "methodHash": "9ebb6a1c976c7a455518fbd94c4336c06aee2bc68bb56f9695f14e2abc2fd38c"
+    },
+    {
+      "symbol": "LiteSpeed\\API::purge_post",
+      "source": "wp-content/plugins/litespeed-cache/src/api.cls.php",
+      "line": 222,
+      "endLine": 224,
+      "fileHash": "6408cf1a59eeb5354fc89df08cd2fbaf756eb06bb8df94decc2f7727d71c1809",
+      "methodHash": "089bc2afe8a7534595f61977c02f59adb114b9be44b8d9a813abcfa6425a8f69"
+    },
+    {
+      "symbol": "LiteSpeed\\Core::send_headers",
+      "source": "wp-content/plugins/litespeed-cache/src/core.cls.php",
+      "line": 654,
+      "endLine": 789,
+      "fileHash": "6aaf320f025b691c2646deda652f1c6a0e31e1b5585062858b1d2326779ed7e4",
+      "methodHash": "b4f4e0dc50df57a145d27169a25daed8ea111563d7b6e444ea4d9327c90427bc"
+    },
+    {
+      "symbol": "LiteSpeed\\Core::kick_purge_queue",
+      "source": "wp-content/plugins/litespeed-cache/src/core.cls.php",
+      "line": 796,
+      "endLine": 811,
+      "fileHash": "6aaf320f025b691c2646deda652f1c6a0e31e1b5585062858b1d2326779ed7e4",
+      "methodHash": "62b87cd2c82efb2a11c79a8acf431e178fd5056d58287417dbf4874055a1a2fb"
+    },
+    {
+      "symbol": "LiteSpeed\\Purge::add",
+      "source": "wp-content/plugins/litespeed-cache/src/purge.cls.php",
+      "line": 654,
+      "endLine": 656,
+      "fileHash": "b9a53d0221687eafa935245b592138f989c143036b56bce00e633ff8fe5bc5a6",
+      "methodHash": "11b640a68954a5ee626c161f2c61b86999022d10a598fe6eb5e59fe0a19ca8c9"
+    },
+    {
+      "symbol": "LiteSpeed\\Purge::_add",
+      "source": "wp-content/plugins/litespeed-cache/src/purge.cls.php",
+      "line": 666,
+      "endLine": 702,
+      "fileHash": "b9a53d0221687eafa935245b592138f989c143036b56bce00e633ff8fe5bc5a6",
+      "methodHash": "1ae3a5a4562b562b88fc758a7f91b0a535baf2dfb7953cc787b2db3d3e13e087"
+    },
+    {
+      "symbol": "LiteSpeed\\Purge::_finalize",
+      "source": "wp-content/plugins/litespeed-cache/src/purge.cls.php",
+      "line": 1194,
+      "endLine": 1216,
+      "fileHash": "b9a53d0221687eafa935245b592138f989c143036b56bce00e633ff8fe5bc5a6",
+      "methodHash": "ace1940647fe3892a5f998f4eaa2717d5e93aa669b79aa8a03364c7986697ee2"
+    },
+    {
+      "symbol": "LiteSpeed\\Purge::output",
+      "source": "wp-content/plugins/litespeed-cache/src/purge.cls.php",
+      "line": 1224,
+      "endLine": 1230,
+      "fileHash": "b9a53d0221687eafa935245b592138f989c143036b56bce00e633ff8fe5bc5a6",
+      "methodHash": "a82e48be4ae3c4e8e2157136ded8ca0188c3f9e8c4ccad17a6a3c6cb0d8d8293"
+    },
+    {
+      "symbol": "LiteSpeed\\Purge::_build",
+      "source": "wp-content/plugins/litespeed-cache/src/purge.cls.php",
+      "line": 1239,
+      "endLine": 1285,
+      "fileHash": "b9a53d0221687eafa935245b592138f989c143036b56bce00e633ff8fe5bc5a6",
+      "methodHash": "0783c2a160fe7be26a8f8e4f05369e81912d7f4f84283e4b6f4a62d3868a4d7c"
+    },
+    {
+      "symbol": "LiteSpeed\\Purge::_get_purge_tags_by_post",
+      "source": "wp-content/plugins/litespeed-cache/src/purge.cls.php",
+      "line": 1366,
+      "endLine": 1473,
+      "fileHash": "b9a53d0221687eafa935245b592138f989c143036b56bce00e633ff8fe5bc5a6",
+      "methodHash": "93d3920fcd00680fc6f7d7181fe1df4e899af14709e21edcf34e4378e5396475"
+    },
+    {
+      "symbol": "WP_Syntex\\Polylang\\Options\\Options::save_all",
+      "source": "wp-content/plugins/polylang/src/Options/Options.php",
+      "line": 190,
+      "endLine": 217,
+      "fileHash": "82a3e2f4992c8a315de34b47f9889fc25ef7c2276a2003d14fb436d14741cdad",
+      "methodHash": "f6e8c0e015c803108b1b1004cfca3e70bdc23ab9ebbb9cb2336adfb702674949"
+    },
+    {
+      "symbol": "PLL_Admin_Static_Pages::pll_save_post",
+      "source": "wp-content/plugins/polylang/src/admin/admin-static-pages.php",
+      "line": 72,
+      "endLine": 76,
+      "fileHash": "bf38e0df76fc2e330d5487468dd074c5e4178e5f40065fc2ff11286ce9de866b",
+      "methodHash": "b6f59f749a7218284fe62c10289f2dd89145ee46fee35b3e118d7acceb5c195f"
+    },
+    {
+      "symbol": "PLL_CRUD_Posts::save_post",
+      "source": "wp-content/plugins/polylang/src/crud-posts.php",
+      "line": 123,
+      "endLine": 152,
+      "fileHash": "657f57dbe2e0d6fc318fc13d0a2db3592345c78c4c7e5618fc1b6297999a2adc",
+      "methodHash": "56f7be8d9e38e4aea33a00d9b536571cd3ab4efe92844fdc8cc30d82c1dda23a"
+    },
+    {
+      "symbol": "PLL_Cache_Compat::clean_post_cache",
+      "source": "wp-content/plugins/polylang/src/integrations/cache/cache-compat.php",
+      "line": 98,
+      "endLine": 107,
+      "fileHash": "2749a4b4582fcc63ff8bd3eeb0e21ac133fcb3729e0e4f92fa174583cce63edb",
+      "methodHash": "08d2a6645dda79cf4d849c6caee5ba27e662dc7c22be737aa1b4ef12558488bd"
+    },
+    {
+      "symbol": "PLL_Admin_Sync::get_fields_to_sync",
+      "source": "wp-content/plugins/polylang/src/modules/sync/admin-sync.php",
+      "line": 143,
+      "endLine": 177,
+      "fileHash": "d499822ff4390765eda859425adcff3c8c2d70eadb17d452f937aa6006f759dd",
+      "methodHash": "5ad0d94886cc56ad492caf1f1a0dc29557e92a658b4e44ff539973602c01010a"
+    },
+    {
+      "symbol": "PLL_Admin_Sync::pll_save_post",
+      "source": "wp-content/plugins/polylang/src/modules/sync/admin-sync.php",
+      "line": 188,
+      "endLine": 201,
+      "fileHash": "d499822ff4390765eda859425adcff3c8c2d70eadb17d452f937aa6006f759dd",
+      "methodHash": "7545cfad5dbd422dbc470a24fe816090e799312b44399ab78d7c55e6afea8b49"
+    },
+    {
+      "symbol": "PLL_Sync_Metas::__construct",
+      "source": "wp-content/plugins/polylang/src/modules/sync/sync-metas.php",
+      "line": 45,
+      "endLine": 55,
+      "fileHash": "050648145f957ecc28fa9eff9c651a1b9f4ce94ae921ac8cfbe4c7346c1e7093",
+      "methodHash": "1c7e2c072e93e29d16be2399338e5b47fae476e31d7092c7b23f9b17d7baa620"
+    },
+    {
+      "symbol": "PLL_Sync_Metas::add_meta",
+      "source": "wp-content/plugins/polylang/src/modules/sync/sync-metas.php",
+      "line": 182,
+      "endLine": 201,
+      "fileHash": "050648145f957ecc28fa9eff9c651a1b9f4ce94ae921ac8cfbe4c7346c1e7093",
+      "methodHash": "49f2267bba92c0cdc2d863b7c19c65d2c58f920438e1d54e58db87a519cd4b4e"
+    },
+    {
+      "symbol": "PLL_Sync_Metas::delete_meta",
+      "source": "wp-content/plugins/polylang/src/modules/sync/sync-metas.php",
+      "line": 292,
+      "endLine": 313,
+      "fileHash": "050648145f957ecc28fa9eff9c651a1b9f4ce94ae921ac8cfbe4c7346c1e7093",
+      "methodHash": "3008f1ec09d38e52bff4751631deebfb82aae9325a875b68bd4e661be0efa4f4"
+    },
+    {
+      "symbol": "PLL_Sync_Metas::save_object",
+      "source": "wp-content/plugins/polylang/src/modules/sync/sync-metas.php",
+      "line": 376,
+      "endLine": 382,
+      "fileHash": "050648145f957ecc28fa9eff9c651a1b9f4ce94ae921ac8cfbe4c7346c1e7093",
+      "methodHash": "6af5ade1e159a9ea5c5679f59d57bf688f13e8473a34b2b89070bf72e6ae5049"
+    },
+    {
+      "symbol": "PLL_Sync_Post_Metas::__construct",
+      "source": "wp-content/plugins/polylang/src/modules/sync/sync-post-metas.php",
+      "line": 26,
+      "endLine": 34,
+      "fileHash": "700d35326223dfaefe38404318066bd349b9bd6b21a3efb291c9de56c2ce6960",
+      "methodHash": "38e8ebf2955a9c8570d7b7747e54cdbb0b98965b01d59b47f9ff4779526ea2e9"
+    },
+    {
+      "symbol": "PLL_Sync_Post_Metas::get_metas_to_copy",
+      "source": "wp-content/plugins/polylang/src/modules/sync/sync-post-metas.php",
+      "line": 47,
+      "endLine": 79,
+      "fileHash": "700d35326223dfaefe38404318066bd349b9bd6b21a3efb291c9de56c2ce6960",
+      "methodHash": "9681b254697cdd6ac9a6a8ad2eb8f54decce266abe0fd4d29ea5eaabca0f4c16"
+    },
+    {
+      "symbol": "PLL_Sync_Post_Metas::translate_thumbnail_id",
+      "source": "wp-content/plugins/polylang/src/modules/sync/sync-post-metas.php",
+      "line": 91,
+      "endLine": 98,
+      "fileHash": "700d35326223dfaefe38404318066bd349b9bd6b21a3efb291c9de56c2ce6960",
+      "methodHash": "16ae706c6104f045641f66f19f9d5e51a95182e791a9ce1bbcf8779934aac47e"
+    },
+    {
+      "symbol": "PLL_Sync::__construct",
+      "source": "wp-content/plugins/polylang/src/modules/sync/sync.php",
+      "line": 47,
+      "endLine": 71,
+      "fileHash": "4d503d694b93ff558ce4c07a7d35557d7a09677f46f29142578b52bd7b10ca73",
+      "methodHash": "b240110ea59748c15cda2ea56723377084f55ff2552f6e929314d75b220d4a7c"
+    },
+    {
+      "symbol": "PLL_Sync::get_fields_to_sync",
+      "source": "wp-content/plugins/polylang/src/modules/sync/sync.php",
+      "line": 81,
+      "endLine": 100,
+      "fileHash": "4d503d694b93ff558ce4c07a7d35557d7a09677f46f29142578b52bd7b10ca73",
+      "methodHash": "0c407a4a9919fe8e02e60bc9c21d7f4d673784a95f4961e7ff131403a6313619"
+    },
+    {
+      "symbol": "PLL_Sync::can_sync_post_data",
+      "source": "wp-content/plugins/polylang/src/modules/sync/sync.php",
+      "line": 134,
+      "endLine": 145,
+      "fileHash": "4d503d694b93ff558ce4c07a7d35557d7a09677f46f29142578b52bd7b10ca73",
+      "methodHash": "2b2a22f4944ebe0bc897f8408441cc36b5a0b9f7a28c00b2da0ba61b24b358a5"
+    },
+    {
+      "symbol": "PLL_Sync::pll_save_post",
+      "source": "wp-content/plugins/polylang/src/modules/sync/sync.php",
+      "line": 157,
+      "endLine": 189,
+      "fileHash": "4d503d694b93ff558ce4c07a7d35557d7a09677f46f29142578b52bd7b10ca73",
+      "methodHash": "b45fefa61c51f851a6f99cb42a489433a20973040fa1d7ea061714b8cdf887f5"
+    },
+    {
+      "symbol": "PLL_Translated_Post::current_user_can_synchronize",
+      "source": "wp-content/plugins/polylang/src/translated-object.php",
+      "line": 364,
+      "endLine": 399,
+      "fileHash": "3cb8512d80ce79e49145dbed6335684ec118e453aecfaa56078246b9722ad186",
+      "methodHash": "9b9af85e3cb8cc0387c97b63530e3629651e124f3aa4545cd7e5b326d343391a"
+    },
+    {
+      "symbol": "_wp_cron",
+      "source": "wp-includes/cron.php",
+      "line": 1048,
+      "endLine": 1092,
+      "fileHash": "dc27910a1ad004eb2aaabc19352246cc0b9e601bf2da870e141646fd9dd95591",
+      "methodHash": "340dfbf88ae5861de02ebd7998d7dc88843f66cacb82868df50fe5c4d73f2336"
+    },
+    {
+      "symbol": "wp_ob_end_flush_all",
+      "source": "wp-includes/functions.php",
+      "line": 5578,
+      "endLine": 5583,
+      "fileHash": "cac8a17e293df99f0683a88debd3ba5e5cce274183a4e9fd3c9f18375747f41c",
+      "methodHash": "9fc8aad2e19b8242efa47346eeb898a7164f98541f9a9bb5987e45550f0c72b7"
+    },
+    {
+      "symbol": "is_protected_meta",
+      "source": "wp-includes/meta.php",
+      "line": 1312,
+      "endLine": 1327,
+      "fileHash": "b1b49d1d3ddbf10d0f17286f53c30ce9582c636a4679f9a0ef92ee5ebb020a3e",
+      "methodHash": "26f4c9dedca2d35dad13ccb39db6b91ca5064fa8d0f526584c87e448a64d79fe"
+    },
+    {
+      "symbol": "wp_update_post",
+      "source": "wp-includes/post.php",
+      "line": 5327,
+      "endLine": 5393,
+      "fileHash": "34678856a4326b7e76ef120ba80a9e46c6903193e058b988555ec5c1f5cb8f26",
+      "methodHash": "ccb4bc563a0fb6bfb8919dd1d3a37909b1a2f1b7a1b2399b4a4573a4346511ad"
+    },
+    {
+      "symbol": "wp_transition_post_status",
+      "source": "wp-includes/post.php",
+      "line": 5912,
+      "endLine": 5989,
+      "fileHash": "34678856a4326b7e76ef120ba80a9e46c6903193e058b988555ec5c1f5cb8f26",
+      "methodHash": "942ca6aec226fad4ccf0d8fcb5d9b6007e913a800f3745f168137d6e5fb86247"
+    },
+    {
+      "symbol": "wp_after_insert_post",
+      "source": "wp-includes/post.php",
+      "line": 6001,
+      "endLine": 6022,
+      "fileHash": "34678856a4326b7e76ef120ba80a9e46c6903193e058b988555ec5c1f5cb8f26",
+      "methodHash": "013440ed55f9d22c85e37179f89f54da1c1ce3f3090c398767468a97a48c971c"
+    }
+  ],
+  "reviewedCoreCallSiteSnippets": [
+    {
+      "source": "wp-includes/post.php",
+      "anchorLine": 5176,
+      "fileHash": "34678856a4326b7e76ef120ba80a9e46c6903193e058b988555ec5c1f5cb8f26",
+      "snippetHash": "87be48bbe158d713df3fc6511a5d9c92d82c7b75fabc10a6c66141f32d5e5f07"
+    },
+    {
+      "source": "wp-includes/post.php",
+      "anchorLine": 5286,
+      "fileHash": "34678856a4326b7e76ef120ba80a9e46c6903193e058b988555ec5c1f5cb8f26",
+      "snippetHash": "f19ffe195e4ae43c6e98e22827c2c63aa33e2a2a37f1817875a1b5b40cc47219"
+    },
+    {
+      "source": "wp-includes/post.php",
+      "anchorLine": 5299,
+      "fileHash": "34678856a4326b7e76ef120ba80a9e46c6903193e058b988555ec5c1f5cb8f26",
+      "snippetHash": "5926dac3f27f6bbae36d6d3ccff89c58045353f256257986bf2b75b33295c991"
+    }
+  ],
+  "reviewedFiles": [
+    {
+      "path": "wp-content/plugins/hostinger-easy-onboarding/includes/Hooks.php",
+      "sha256": "d8f07ac7e8c69a09943eacbdd5bb4f49d1d78552c703f5387e50ce0887537265"
+    },
+    {
+      "path": "wp-content/plugins/hostinger/includes/Admin/Jobs/AbstractJob.php",
+      "sha256": "76047124cd8f0e8b77d7196def5623e97c4977e980b230e61e84720c5db9d557"
+    },
+    {
+      "path": "wp-content/plugins/hostinger/includes/Admin/Jobs/ActionScheduler.php",
+      "sha256": "a0c4734c1cab15859b30ca38339bddec5a2ae23ede7dc517aa4c1272358cf7fc"
+    },
+    {
+      "path": "wp-content/plugins/hostinger/includes/Admin/Jobs/NotifyMcpJob.php",
+      "sha256": "0859ffaeaf914231b32fae7baa44264a71d425bd9bd21494699338286da783dc"
+    },
+    {
+      "path": "wp-content/plugins/hostinger/includes/Admin/Proxy.php",
+      "sha256": "18f975332318939f72f5ae5401fc98c55a98b86eec408c84224105004a8fc5e7"
+    },
+    {
+      "path": "wp-content/plugins/hostinger/includes/Mcp/EventHandlerFactory.php",
+      "sha256": "856ff4ae0740182827ec961190993262ec9eb6a26c72fe6f16cec0498bd52f55"
+    },
+    {
+      "path": "wp-content/plugins/hostinger/includes/Mcp/Handlers/EventHandler.php",
+      "sha256": "361df488e878600b5ccc9a8ade0dfd3bd29376d95c6d70804c8eccbe4a1119f2"
+    },
+    {
+      "path": "wp-content/plugins/hostinger/includes/Mcp/Handlers/WebsitePageUpdated.php",
+      "sha256": "8b87e0f4f336539b6e15d1ddb799fdf0488f2cdb5cdd6b643e3721f6cfd607f9"
+    },
+    {
+      "path": "wp-content/plugins/hostinger/vendor/woocommerce/action-scheduler/classes/ActionScheduler_QueueRunner.php",
+      "sha256": "dc4601923266c1d2c28404b292ed208c8a5913044daeaa1fb0eeaa5c92693309"
+    },
+    {
+      "path": "wp-content/plugins/litespeed-cache/src/api.cls.php",
+      "sha256": "6408cf1a59eeb5354fc89df08cd2fbaf756eb06bb8df94decc2f7727d71c1809"
+    },
+    {
+      "path": "wp-content/plugins/litespeed-cache/src/core.cls.php",
+      "sha256": "6aaf320f025b691c2646deda652f1c6a0e31e1b5585062858b1d2326779ed7e4"
+    },
+    {
+      "path": "wp-content/plugins/litespeed-cache/src/purge.cls.php",
+      "sha256": "b9a53d0221687eafa935245b592138f989c143036b56bce00e633ff8fe5bc5a6"
+    },
+    {
+      "path": "wp-content/plugins/polylang/src/Options/Options.php",
+      "sha256": "82a3e2f4992c8a315de34b47f9889fc25ef7c2276a2003d14fb436d14741cdad"
+    },
+    {
+      "path": "wp-content/plugins/polylang/src/admin/admin-static-pages.php",
+      "sha256": "bf38e0df76fc2e330d5487468dd074c5e4178e5f40065fc2ff11286ce9de866b"
+    },
+    {
+      "path": "wp-content/plugins/polylang/src/crud-posts.php",
+      "sha256": "657f57dbe2e0d6fc318fc13d0a2db3592345c78c4c7e5618fc1b6297999a2adc"
+    },
+    {
+      "path": "wp-content/plugins/polylang/src/integrations/cache/cache-compat.php",
+      "sha256": "2749a4b4582fcc63ff8bd3eeb0e21ac133fcb3729e0e4f92fa174583cce63edb"
+    },
+    {
+      "path": "wp-content/plugins/polylang/src/modules/sync/admin-sync.php",
+      "sha256": "d499822ff4390765eda859425adcff3c8c2d70eadb17d452f937aa6006f759dd"
+    },
+    {
+      "path": "wp-content/plugins/polylang/src/modules/sync/sync-metas.php",
+      "sha256": "050648145f957ecc28fa9eff9c651a1b9f4ce94ae921ac8cfbe4c7346c1e7093"
+    },
+    {
+      "path": "wp-content/plugins/polylang/src/modules/sync/sync-post-metas.php",
+      "sha256": "700d35326223dfaefe38404318066bd349b9bd6b21a3efb291c9de56c2ce6960"
+    },
+    {
+      "path": "wp-content/plugins/polylang/src/modules/sync/sync.php",
+      "sha256": "4d503d694b93ff558ce4c07a7d35557d7a09677f46f29142578b52bd7b10ca73"
+    },
+    {
+      "path": "wp-content/plugins/polylang/src/translated-object.php",
+      "sha256": "3cb8512d80ce79e49145dbed6335684ec118e453aecfaa56078246b9722ad186"
+    },
+    {
+      "path": "wp-includes/cron.php",
+      "sha256": "dc27910a1ad004eb2aaabc19352246cc0b9e601bf2da870e141646fd9dd95591"
+    },
+    {
+      "path": "wp-includes/functions.php",
+      "sha256": "cac8a17e293df99f0683a88debd3ba5e5cce274183a4e9fd3c9f18375747f41c"
+    },
+    {
+      "path": "wp-includes/meta.php",
+      "sha256": "b1b49d1d3ddbf10d0f17286f53c30ce9582c636a4679f9a0ef92ee5ebb020a3e"
+    },
+    {
+      "path": "wp-includes/post.php",
+      "sha256": "34678856a4326b7e76ef120ba80a9e46c6903193e058b988555ec5c1f5cb8f26"
+    }
+  ],
+  "evidenceConsistencyChecks": {
+    "live_preflight_eight_checks": true,
+    "sample_fingerprints_match_prior_increment": true,
+    "hostinger_project_excluded_from_notifications": true,
+    "hostinger_project_excluded_from_llms_file": true,
+    "observed_sync_options_empty": true,
+    "selected_sync_and_protected_key_filters_absent_in_cli": true,
+    "inspected_source_file_hashes_consistent_between_reads": true
+  },
+  "counts": {
+    "uniqueMethodsInspected": 71,
+    "uniqueSourceFilesInspected": 25,
+    "coreCallSiteSnippets": 3,
+    "evidenceConsistencyChecks": 7
+  },
+  "decision": {
+    "designComplete": true,
+    "effectsAdapterImplemented": false,
+    "installedCandidateProduced": false,
+    "installationEligible": false,
+    "sourceWritesEnabled": false,
+    "runtimeSourceWriteChecksPerformed": 0,
+    "httpAdminRestAutosaveContextsObserved": false,
+    "scope": "static-source-and-cli-read-only-profile",
+    "nextDelivery": "private-proposals-operational-candidate"
+  },
+  "limitations": [
+    "No source write, hook invocation or effect replay was requested by the operator. WordPress bootstrap and third-party shutdown behavior were not instrumented exhaustively.",
+    "The external object-cache getter returned null. No object-cache.php drop-in was present. This is not a certified false runtime backend flag.",
+    "Polylang public-meta selection uses its subclass override, not only the parent method. Empty filters do not alone establish empty selection.",
+    "No changed runtime code: prior 531 application checks and nine diagnostic scenarios were not rerun. No new application or deployment validation is claimed."
+  ]
+}

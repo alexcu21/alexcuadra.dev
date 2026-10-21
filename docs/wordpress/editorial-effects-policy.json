@@ -1,0 +1,113 @@
+{
+  "format": "editorial-effects-policy-v1",
+  "status": "design-only-source-write-hold",
+  "targetSite": "https://content.alexcuadra.dev",
+  "targetPostType": "project",
+  "baseRuntime": "0.5.0-lab",
+  "cases": [
+    {
+      "operation": "private-proposal",
+      "fields": [
+        "body_html",
+        "tagline"
+      ],
+      "currentSourcePostApiCalled": false,
+      "treatment": "candidate-first-six-proposal-abilities-only",
+      "implementation": "existing-lab-proposal-flow-not-packaged"
+    },
+    {
+      "operation": "apply-or-recover",
+      "fields": [
+        "body_html"
+      ],
+      "currentSourcePostApiCalled": true,
+      "treatment": "defer-audited-native-purge-and-persist-postcommit-intent",
+      "implementation": "design-only"
+    },
+    {
+      "operation": "apply-or-recover",
+      "fields": [
+        "tagline"
+      ],
+      "currentSourcePostApiCalled": true,
+      "treatment": "omit-unneeded-wp-update-post-use-acf-and-postcommit-purge",
+      "implementation": "design-only"
+    },
+    {
+      "operation": "apply-or-recover",
+      "fields": [
+        "body_html",
+        "tagline"
+      ],
+      "currentSourcePostApiCalled": true,
+      "treatment": "single-purge-intent-after-both-fields-commit",
+      "implementation": "design-only"
+    }
+  ],
+  "supportedRuntimeObservationContexts": [
+    "wp-cli-read-only"
+  ],
+  "requiredProfileBeforeFutureSourceWrites": [
+    "pinned-site-schema-plugins-and-audited-callback-identities",
+    "no-unknown-or-enabled-polylang-sync",
+    "check-linked-translation-invariants-and-media-meta-branches",
+    "known-admitted-object-cache-backend",
+    "effects-adapter-and-durable-outbox-tested-in-isolation"
+  ],
+  "outbox": {
+    "implemented": false,
+    "uniqueKey": [
+      "content_event_version",
+      "effect_type",
+      "project_id"
+    ],
+    "effectTypes": [
+      "litespeed_purge"
+    ],
+    "statesProposed": [
+      "pending",
+      "delivering",
+      "succeeded",
+      "uncertain"
+    ],
+    "insertTogetherWithContentEvent": true,
+    "visibleOnlyAfterCommit": true,
+    "rollbackEmitsNoDeferredEffects": true,
+    "retryContentWriteOnEffectFailure": false,
+    "deliverySemantics": "idempotent-invalidation-with-reconciliation-not-exactly-once",
+    "requiresVersionedStatusContract": true
+  },
+  "initialOperationalCandidate": {
+    "scope": "six-existing-private-proposal-abilities",
+    "registerApplyRecover": false,
+    "autoGrantCapabilities": false,
+    "installAuthorized": false
+  },
+  "notImplementedInThisIncrement": [
+    "tagline-only-API-correction",
+    "operation-scoped-native-purge-adapter",
+    "outbox-table-and-consumer",
+    "new-version-effects-status-receipts",
+    "operational-package-and-installation"
+  ],
+  "verificationScenariosRequired": [
+    "body-tagline-both-and-recovery-success",
+    "failure-before-commit-no-effect",
+    "process-loss-after-commit-before-purge",
+    "duplicate-retry",
+    "purge-failure-and-uncertain-state",
+    "concurrent-editor-preserved",
+    "plugin-sync-filter-profile-drift-denied",
+    "native-callback-restored-after-exception-other-operations-unaffected",
+    "external-object-cache-cannot-leak-uncommitted-values"
+  ],
+  "evidence": {
+    "path": "docs/qa/MCP_EDITORIAL_EFFECTS_RESULT_2026-10-21.json",
+    "sha256": "91b3d8a802a5c07f58f36532a4865b78fd2b43a50b092b31273ac9473e992f81"
+  },
+  "operator": {
+    "path": "wordpress/operations/editorial-effects-profile.php",
+    "sha256": "c2af259d6dff63595b774c53d5345c344abd8a20e6205f66a77a77b94c27cf08"
+  },
+  "design": "docs/WORDPRESS_MCP_EFFECTS_POLICY.md"
+}
