@@ -1,0 +1,11 @@
+{
+  "package": "alexcuadra-editorial-read-0.1.0.zip",
+  "version": "0.1.0",
+  "sha256": "72f1fa195c04ff1da690d2788e287451d52cc210d69d67eb453c869b8922f302",
+  "files": {
+    "README.md": "53e02012f3edc4d7a968d4ced9bda51298a49d824e83f181662d0e4c10586f77",
+    "alexcuadra-editorial-read.php": "9e4def28919b5dc896037fa13dddf62b4f63e4a725095fe12b3e0d8419f22619"
+  },
+  "sharedCmsInstalled": false,
+  "sharedPermissionsChanged": false
+}

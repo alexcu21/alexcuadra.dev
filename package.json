@@ -24,6 +24,9 @@
     "cms:baseline": "node scripts/cms-baseline.mjs",
     "cms:languages": "node scripts/cms-languages.mjs",
     "test:cms-security": "sh tests/integration/wordpress-polylang/run.sh",
+    "test:mcp-read": "sh tests/integration/wordpress-mcp-read/run.sh",
+    "test:mcp-http": "sh tests/integration/wordpress-mcp-read/run.sh --http-only",
+    "test:mcp-site-stack": "sh tests/integration/wordpress-mcp-read/run.sh --site-stack",
     "prebuild": "node scripts/build-info.mjs",
     "test:cms-streaming": "node --test tests/integration/cms-streaming.test.mjs",
     "test:references-ssr": "node --test tests/integration/references-ssr.test.mjs"

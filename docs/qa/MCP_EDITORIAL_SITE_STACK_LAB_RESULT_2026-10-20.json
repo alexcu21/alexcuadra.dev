@@ -1,0 +1,426 @@
+{
+  "environment": "isolated-site-stack-docker",
+  "wordpress": "7.1.3",
+  "phpCli": "8.2.34",
+  "phpHttpServer": "8.2.34",
+  "polylang": "3.9.0",
+  "mcpAdapter": "0.7.1",
+  "framework": {
+    "environment": "isolated-docker",
+    "wordpress": "7.1.3",
+    "polylang": "3.9.0",
+    "passed": 55,
+    "failed": 0,
+    "cases": [
+      "abilities_registered",
+      "readonly_annotations",
+      "mcp_only_exposure",
+      "activation_does_not_grant_subscriber_capability",
+      "anonymous_denied",
+      "subscriber_without_specific_capability_denied",
+      "direct_callback_also_denied",
+      "administrator_not_automatically_authorized",
+      "reader_still_cannot_edit_or_manage_options",
+      "pagination_complete_unique_and_public_only",
+      "spanish_list_is_exact_language",
+      "empty_inventory_is_explicit",
+      "search_never_queries_body_or_meta_fields",
+      "public_metadata_has_exact_fields",
+      "only_reciprocal_public_translation_announced",
+      "body_meta_and_recipients_not_exposed",
+      "nonpublic_missing_or_other_type_404_16",
+      "nonpublic_missing_or_other_type_404_17",
+      "nonpublic_missing_or_other_type_404_18",
+      "nonpublic_missing_or_other_type_404_19",
+      "nonpublic_missing_or_other_type_404_20",
+      "nonpublic_missing_or_other_type_404_21",
+      "nonpublic_missing_or_other_type_404_22",
+      "wrong_language_has_no_fallback",
+      "nonpublic_translation_excluded_24",
+      "nonpublic_translation_excluded_25",
+      "invalid_list_schema_rejected_26",
+      "invalid_direct_list_callback_rejected_27",
+      "invalid_list_schema_rejected_28",
+      "invalid_direct_list_callback_rejected_29",
+      "invalid_list_schema_rejected_30",
+      "invalid_direct_list_callback_rejected_31",
+      "invalid_list_schema_rejected_32",
+      "invalid_direct_list_callback_rejected_33",
+      "invalid_list_schema_rejected_34",
+      "invalid_direct_list_callback_rejected_35",
+      "invalid_list_schema_rejected_36",
+      "invalid_direct_list_callback_rejected_37",
+      "invalid_list_schema_rejected_38",
+      "invalid_direct_list_callback_rejected_39",
+      "invalid_list_schema_rejected_40",
+      "invalid_direct_list_callback_rejected_41",
+      "unicode_search_within_character_bound",
+      "arbitrary_fields_rejected",
+      "invalid_get_id_rejected",
+      "contradictory_inventory_fails_closed",
+      "nonreciprocal_translation_is_omitted",
+      "missing_post_type_fails_closed",
+      "rest_discovery_excludes_mcp_only_abilities",
+      "official_adapter_discovers_read_abilities",
+      "official_adapter_exposes_restricted_schema",
+      "official_adapter_executes_authorized_read",
+      "reads_do_not_mutate_editorial_records",
+      "revocation_denies_adapter_execution",
+      "subscriber_role_remains_unchanged"
+    ],
+    "officialAdapterRegistryVerified": true,
+    "httpTransportVerified": false,
+    "sharedCmsModified": false,
+    "sharedPermissionsModified": false,
+    "emailSent": false
+  },
+  "http": {
+    "environment": "isolated-docker-http",
+    "httpTransportVerified": true,
+    "sharedCmsModified": false,
+    "sharedPermissionsModified": false,
+    "hostPortsPublished": false,
+    "emailSent": false,
+    "syntheticCredentialsRevoked": true,
+    "syntheticCapabilitiesRemoved": true,
+    "passed": 36,
+    "failed": 0,
+    "cases": [
+      "anonymous_http_initialization_denied",
+      "invalid_application_password_denied",
+      "subscriber_application_password_initializes_http_mcp",
+      "initialized_notification_accepted",
+      "missing_protocol_header_denied",
+      "mismatched_protocol_header_denied",
+      "default_server_lists_three_official_meta_tools",
+      "missing_session_header_denied",
+      "unknown_session_denied",
+      "session_cannot_be_reused_by_another_user",
+      "transport_access_does_not_grant_editorial_permission",
+      "editorial_reader_remains_subscriber_without_edit_or_admin",
+      "http_discovery_includes_two_editorial_abilities",
+      "http_ability_schema_restricts_inputs",
+      "http_pagination_returns_only_public_projects",
+      "http_read_returns_exact_public_fields",
+      "http_read_has_real_reciprocal_translation",
+      "http_read_excludes_private_body_and_meta",
+      "http_spanish_read_preserves_exact_language",
+      "http_private_project_denied",
+      "http_protected_project_denied",
+      "http_missing_project_denied",
+      "http_wrong_language_denied",
+      "http_unknown_fields_denied",
+      "http_unbounded_pagination_denied",
+      "capability_revocation_blocks_existing_http_session",
+      "plugin_deactivation_removes_http_abilities",
+      "deactivated_ability_cannot_execute",
+      "plugin_reactivation_restores_authorized_read",
+      "http_delete_closes_session",
+      "closed_session_cannot_be_reused",
+      "new_session_after_close_initializes",
+      "revoked_application_password_blocks_existing_session",
+      "http_reads_do_not_mutate_editorial_records",
+      "synthetic_credentials_removed_after_test",
+      "synthetic_capabilities_removed_after_test"
+    ]
+  },
+  "preflightScenarios": [
+    {
+      "scenario": "before",
+      "exitCode": 0,
+      "report": {
+        "site": "http://wordpress",
+        "phase": "before",
+        "userId": 5,
+        "roles": [
+          "subscriber"
+        ],
+        "wordpress": "7.1.3",
+        "php": "8.2.34",
+        "capabilities": {
+          "read": true,
+          "alexcuadra_read_public_projects": false,
+          "manage_options": false,
+          "install_plugins": false,
+          "activate_plugins": false,
+          "edit_users": false,
+          "promote_users": false,
+          "delete_users": false,
+          "edit_posts": false,
+          "edit_pages": false,
+          "publish_posts": false,
+          "publish_pages": false,
+          "edit_others_pages": false,
+          "delete_pages": false
+        },
+        "unexpectedStoredGrants": [],
+        "dependencies": {
+          "alexcuadra-editorial-read/": {
+            "version": "0.1.0",
+            "active": false
+          },
+          "mcp-adapter/": {
+            "version": "0.7.1",
+            "active": true
+          },
+          "polylang/": {
+            "version": "3.9.0",
+            "active": true
+          }
+        },
+        "checks": {
+          "subscriber_only": true,
+          "read_allowed": true,
+          "scope_matches_phase": true,
+          "subscriber_role_has_no_editorial_scope": true,
+          "no_checked_edit_or_admin_capabilities": true,
+          "no_unexpected_stored_grants": true,
+          "supported_wordpress_php": true,
+          "abilities_api_available": true,
+          "application_passwords_available": true,
+          "project_is_public": true,
+          "project_is_translatable": true,
+          "tested_polylang_active": true,
+          "tested_runtime_combination": true,
+          "tested_adapter_active": true,
+          "extension_activation_matches_phase": true,
+          "extension_version_if_installed": true
+        },
+        "technicalChecksPassed": true,
+        "manualAclReviewRequired": true,
+        "installationAuthorized": false
+      },
+      "invariants": {
+        "databaseUnchanged": true,
+        "currentUserRestored": true
+      }
+    },
+    {
+      "scenario": "after",
+      "exitCode": 0,
+      "report": {
+        "site": "http://wordpress",
+        "phase": "after",
+        "userId": 6,
+        "roles": [
+          "subscriber"
+        ],
+        "wordpress": "7.1.3",
+        "php": "8.2.34",
+        "capabilities": {
+          "read": true,
+          "alexcuadra_read_public_projects": true,
+          "manage_options": false,
+          "install_plugins": false,
+          "activate_plugins": false,
+          "edit_users": false,
+          "promote_users": false,
+          "delete_users": false,
+          "edit_posts": false,
+          "edit_pages": false,
+          "publish_posts": false,
+          "publish_pages": false,
+          "edit_others_pages": false,
+          "delete_pages": false
+        },
+        "unexpectedStoredGrants": [],
+        "dependencies": {
+          "alexcuadra-editorial-read/": {
+            "version": "0.1.0",
+            "active": true
+          },
+          "mcp-adapter/": {
+            "version": "0.7.1",
+            "active": true
+          },
+          "polylang/": {
+            "version": "3.9.0",
+            "active": true
+          }
+        },
+        "checks": {
+          "subscriber_only": true,
+          "read_allowed": true,
+          "scope_matches_phase": true,
+          "subscriber_role_has_no_editorial_scope": true,
+          "no_checked_edit_or_admin_capabilities": true,
+          "no_unexpected_stored_grants": true,
+          "supported_wordpress_php": true,
+          "abilities_api_available": true,
+          "application_passwords_available": true,
+          "project_is_public": true,
+          "project_is_translatable": true,
+          "tested_polylang_active": true,
+          "tested_runtime_combination": true,
+          "tested_adapter_active": true,
+          "extension_activation_matches_phase": true,
+          "extension_version_if_installed": true
+        },
+        "technicalChecksPassed": true,
+        "manualAclReviewRequired": true,
+        "installationAuthorized": false
+      },
+      "invariants": {
+        "databaseUnchanged": true,
+        "currentUserRestored": true
+      }
+    },
+    {
+      "scenario": "extra-cap",
+      "exitCode": 1,
+      "report": {
+        "site": "http://wordpress",
+        "phase": "after",
+        "userId": 7,
+        "roles": [
+          "subscriber"
+        ],
+        "wordpress": "7.1.3",
+        "php": "8.2.34",
+        "capabilities": {
+          "read": true,
+          "alexcuadra_read_public_projects": true,
+          "manage_options": true,
+          "install_plugins": false,
+          "activate_plugins": false,
+          "edit_users": false,
+          "promote_users": false,
+          "delete_users": false,
+          "edit_posts": false,
+          "edit_pages": false,
+          "publish_posts": false,
+          "publish_pages": false,
+          "edit_others_pages": false,
+          "delete_pages": false
+        },
+        "unexpectedStoredGrants": [
+          "manage_options"
+        ],
+        "dependencies": {
+          "alexcuadra-editorial-read/": {
+            "version": "0.1.0",
+            "active": true
+          },
+          "mcp-adapter/": {
+            "version": "0.7.1",
+            "active": true
+          },
+          "polylang/": {
+            "version": "3.9.0",
+            "active": true
+          }
+        },
+        "checks": {
+          "subscriber_only": true,
+          "read_allowed": true,
+          "scope_matches_phase": true,
+          "subscriber_role_has_no_editorial_scope": true,
+          "no_checked_edit_or_admin_capabilities": false,
+          "no_unexpected_stored_grants": false,
+          "supported_wordpress_php": true,
+          "abilities_api_available": true,
+          "application_passwords_available": true,
+          "project_is_public": true,
+          "project_is_translatable": true,
+          "tested_polylang_active": true,
+          "tested_runtime_combination": true,
+          "tested_adapter_active": true,
+          "extension_activation_matches_phase": true,
+          "extension_version_if_installed": true
+        },
+        "technicalChecksPassed": false,
+        "manualAclReviewRequired": true,
+        "installationAuthorized": false
+      },
+      "invariants": {
+        "databaseUnchanged": true,
+        "currentUserRestored": true
+      }
+    },
+    {
+      "scenario": "wrong-phase",
+      "exitCode": 1,
+      "report": {
+        "site": "http://wordpress",
+        "phase": "after",
+        "userId": 8,
+        "roles": [
+          "subscriber"
+        ],
+        "wordpress": "7.1.3",
+        "php": "8.2.34",
+        "capabilities": {
+          "read": true,
+          "alexcuadra_read_public_projects": false,
+          "manage_options": false,
+          "install_plugins": false,
+          "activate_plugins": false,
+          "edit_users": false,
+          "promote_users": false,
+          "delete_users": false,
+          "edit_posts": false,
+          "edit_pages": false,
+          "publish_posts": false,
+          "publish_pages": false,
+          "edit_others_pages": false,
+          "delete_pages": false
+        },
+        "unexpectedStoredGrants": [],
+        "dependencies": {
+          "alexcuadra-editorial-read/": {
+            "version": "0.1.0",
+            "active": true
+          },
+          "mcp-adapter/": {
+            "version": "0.7.1",
+            "active": true
+          },
+          "polylang/": {
+            "version": "3.9.0",
+            "active": true
+          }
+        },
+        "checks": {
+          "subscriber_only": true,
+          "read_allowed": true,
+          "scope_matches_phase": false,
+          "subscriber_role_has_no_editorial_scope": true,
+          "no_checked_edit_or_admin_capabilities": true,
+          "no_unexpected_stored_grants": true,
+          "supported_wordpress_php": true,
+          "abilities_api_available": true,
+          "application_passwords_available": true,
+          "project_is_public": true,
+          "project_is_translatable": true,
+          "tested_polylang_active": true,
+          "tested_runtime_combination": true,
+          "tested_adapter_active": true,
+          "extension_activation_matches_phase": true,
+          "extension_version_if_installed": true
+        },
+        "technicalChecksPassed": false,
+        "manualAclReviewRequired": true,
+        "installationAuthorized": false
+      },
+      "invariants": {
+        "databaseUnchanged": true,
+        "currentUserRestored": true
+      }
+    },
+    {
+      "scenario": "missing-user",
+      "exitCode": 1,
+      "error": "TARGET_USER_NOT_FOUND",
+      "invariants": {
+        "databaseUnchanged": true,
+        "currentUserRestored": true
+      }
+    }
+  ],
+  "combinedChecksPassed": 91,
+  "preflightScenariosPassed": 5,
+  "failed": 0,
+  "hostPortsPublished": false,
+  "sharedCmsModified": false,
+  "sharedPermissionsModified": false
+}

@@ -1,0 +1,650 @@
+{
+  "date": "2026-10-20",
+  "environment": "shared-wordpress-cms",
+  "userAuthorization": "ok instala y continua",
+  "package": "alexcuadra-editorial-read-0.1.0.zip",
+  "packageSha256": "72f1fa195c04ff1da690d2788e287451d52cc210d69d67eb453c869b8922f302",
+  "pluginInstalled": true,
+  "pluginActive": true,
+  "userId": 2,
+  "roles": [
+    "subscriber"
+  ],
+  "grantedCapability": "alexcuadra_read_public_projects",
+  "globalRoleModified": false,
+  "preflightBefore": {
+    "site": "https://content.alexcuadra.dev",
+    "phase": "before",
+    "userId": 2,
+    "roles": [
+      "subscriber"
+    ],
+    "wordpress": "7.1.3",
+    "php": "8.2.34",
+    "capabilities": {
+      "read": true,
+      "alexcuadra_read_public_projects": false,
+      "manage_options": false,
+      "install_plugins": false,
+      "activate_plugins": false,
+      "edit_users": false,
+      "promote_users": false,
+      "delete_users": false,
+      "edit_posts": false,
+      "edit_pages": false,
+      "publish_posts": false,
+      "publish_pages": false,
+      "edit_others_pages": false,
+      "delete_pages": false
+    },
+    "unexpectedStoredGrants": [],
+    "dependencies": {
+      "mcp-adapter/": {
+        "version": "0.7.1",
+        "active": true
+      },
+      "polylang/": {
+        "version": "3.9.0",
+        "active": true
+      }
+    },
+    "checks": {
+      "subscriber_only": true,
+      "read_allowed": true,
+      "scope_matches_phase": true,
+      "subscriber_role_has_no_editorial_scope": true,
+      "no_checked_edit_or_admin_capabilities": true,
+      "no_unexpected_stored_grants": true,
+      "supported_wordpress_php": true,
+      "abilities_api_available": true,
+      "application_passwords_available": true,
+      "project_is_public": true,
+      "project_is_translatable": true,
+      "tested_polylang_active": true,
+      "tested_runtime_combination": true,
+      "tested_adapter_active": true,
+      "extension_activation_matches_phase": true,
+      "extension_version_if_installed": true
+    },
+    "technicalChecksPassed": true,
+    "manualAclReviewRequired": true,
+    "installationAuthorized": false
+  },
+  "preflightAfter": {
+    "site": "https://content.alexcuadra.dev",
+    "phase": "after",
+    "userId": 2,
+    "roles": [
+      "subscriber"
+    ],
+    "wordpress": "7.1.3",
+    "php": "8.2.34",
+    "capabilities": {
+      "read": true,
+      "alexcuadra_read_public_projects": true,
+      "manage_options": false,
+      "install_plugins": false,
+      "activate_plugins": false,
+      "edit_users": false,
+      "promote_users": false,
+      "delete_users": false,
+      "edit_posts": false,
+      "edit_pages": false,
+      "publish_posts": false,
+      "publish_pages": false,
+      "edit_others_pages": false,
+      "delete_pages": false
+    },
+    "unexpectedStoredGrants": [],
+    "dependencies": {
+      "alexcuadra-editorial-read/": {
+        "version": "0.1.0",
+        "active": true
+      },
+      "mcp-adapter/": {
+        "version": "0.7.1",
+        "active": true
+      },
+      "polylang/": {
+        "version": "3.9.0",
+        "active": true
+      }
+    },
+    "checks": {
+      "subscriber_only": true,
+      "read_allowed": true,
+      "scope_matches_phase": true,
+      "subscriber_role_has_no_editorial_scope": true,
+      "no_checked_edit_or_admin_capabilities": true,
+      "no_unexpected_stored_grants": true,
+      "supported_wordpress_php": true,
+      "abilities_api_available": true,
+      "application_passwords_available": true,
+      "project_is_public": true,
+      "project_is_translatable": true,
+      "tested_polylang_active": true,
+      "tested_runtime_combination": true,
+      "tested_adapter_active": true,
+      "extension_activation_matches_phase": true,
+      "extension_version_if_installed": true
+    },
+    "technicalChecksPassed": true,
+    "manualAclReviewRequired": true,
+    "installationAuthorized": false
+  },
+  "authorizationGrantedByHuman": true,
+  "beforeState": {
+    "projectCount": 14,
+    "editorialHash": "c38acd1690f173488f075443d03a80c96b6b483a5bd407040cbbd40a7ff462af",
+    "otherUserCapabilitiesHash": "24d175d2800d420a587ce569cf0e474d77ccb18a5f758ff918679c3f14d820ef",
+    "subscriberRoleHash": "75126edcb55e58eff4c074fa99c39d7190a90f4b506566e8a8037e0576b7e2c7",
+    "otherActivePluginsHash": "4bd0693f83c57ffab962810d9ef4cb0a028192e4ff335b28c188c6d53b31398f",
+    "scopeDirectlyGranted": false,
+    "pluginPhpSha256": null,
+    "pluginReadmeSha256": null
+  },
+  "afterState": {
+    "projectCount": 14,
+    "editorialHash": "c38acd1690f173488f075443d03a80c96b6b483a5bd407040cbbd40a7ff462af",
+    "otherUserCapabilitiesHash": "24d175d2800d420a587ce569cf0e474d77ccb18a5f758ff918679c3f14d820ef",
+    "subscriberRoleHash": "75126edcb55e58eff4c074fa99c39d7190a90f4b506566e8a8037e0576b7e2c7",
+    "otherActivePluginsHash": "4bd0693f83c57ffab962810d9ef4cb0a028192e4ff335b28c188c6d53b31398f",
+    "scopeDirectlyGranted": true,
+    "pluginPhpSha256": "9e4def28919b5dc896037fa13dddf62b4f63e4a725095fe12b3e0d8419f22619",
+    "pluginReadmeSha256": "53e02012f3edc4d7a968d4ced9bda51298a49d824e83f181662d0e4c10586f77"
+  },
+  "unchangedFingerprints": [
+    "projectCount",
+    "editorialHash",
+    "otherUserCapabilitiesHash",
+    "subscriberRoleHash",
+    "otherActivePluginsHash"
+  ],
+  "nativeConnectorVerified": true,
+  "abilities": [
+    "core/get-site-info",
+    "core/get-user-info",
+    "core/get-environment-info",
+    "alexcuadra/list-public-projects",
+    "alexcuadra/get-public-project"
+  ],
+  "nativeMetaToolCount": 3,
+  "scopeRequiredBeforeGrantVerified": true,
+  "registeredContracts": [
+    {
+      "name": "alexcuadra/list-public-projects",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "locale"
+        ],
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "es"
+            ]
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "per_page": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20
+          },
+          "search": {
+            "type": "string",
+            "maxLength": 100
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "next_page"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "slug": {
+                  "type": "string"
+                },
+                "locale": {
+                  "type": "string",
+                  "enum": [
+                    "en",
+                    "es"
+                  ]
+                },
+                "translations": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "slug": {
+                        "type": "string"
+                      },
+                      "locale": {
+                        "type": "string",
+                        "enum": [
+                          "en",
+                          "es"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "slug",
+                      "locale"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "slug",
+                "locale",
+                "translations"
+              ]
+            }
+          },
+          "next_page": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        }
+      },
+      "meta": {
+        "annotations": {
+          "readonly": true,
+          "destructive": false,
+          "idempotent": true
+        },
+        "public": false,
+        "show_in_rest": false,
+        "mcp": {
+          "public": true,
+          "type": "tool"
+        }
+      }
+    },
+    {
+      "name": "alexcuadra/get-public-project",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "locale",
+          "id"
+        ],
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "es"
+            ]
+          },
+          "id": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "es"
+            ]
+          },
+          "translations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "slug": {
+                  "type": "string"
+                },
+                "locale": {
+                  "type": "string",
+                  "enum": [
+                    "en",
+                    "es"
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "slug",
+                "locale"
+              ]
+            }
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "slug",
+          "locale",
+          "translations"
+        ]
+      },
+      "meta": {
+        "annotations": {
+          "readonly": true,
+          "destructive": false,
+          "idempotent": true
+        },
+        "public": false,
+        "show_in_rest": false,
+        "mcp": {
+          "public": true,
+          "type": "tool"
+        }
+      }
+    }
+  ],
+  "pagination": [
+    {
+      "locale": "en",
+      "page": 1,
+      "items": [
+        {
+          "id": 42,
+          "title": "norceca.info",
+          "slug": "norceca-info",
+          "locale": "en",
+          "translations": [
+            {
+              "id": 198,
+              "slug": "norceca-info-2",
+              "locale": "es"
+            }
+          ]
+        },
+        {
+          "id": 43,
+          "title": "valexweb.com",
+          "slug": "valexweb-com",
+          "locale": "en",
+          "translations": [
+            {
+              "id": 197,
+              "slug": "valexweb-com-2",
+              "locale": "es"
+            }
+          ]
+        },
+        {
+          "id": 50,
+          "title": "alexcuadra.dev",
+          "slug": "alexcuadra-dev",
+          "locale": "en",
+          "translations": [
+            {
+              "id": 195,
+              "slug": "alexcuadra-dev-2",
+              "locale": "es"
+            }
+          ]
+        }
+      ],
+      "next_page": 2
+    },
+    {
+      "locale": "en",
+      "page": 2,
+      "items": [
+        {
+          "id": 137,
+          "title": "makersunite.eu",
+          "slug": "makersunite-eu",
+          "locale": "en",
+          "translations": [
+            {
+              "id": 199,
+              "slug": "makersunite-eu-2",
+              "locale": "es"
+            }
+          ]
+        },
+        {
+          "id": 144,
+          "title": "alextecuenta.com",
+          "slug": "alextecuenta-com",
+          "locale": "en",
+          "translations": [
+            {
+              "id": 200,
+              "slug": "alextecuenta-com-2",
+              "locale": "es"
+            }
+          ]
+        },
+        {
+          "id": 146,
+          "title": "christianitytoday.com",
+          "slug": "christianitytoday-com",
+          "locale": "en",
+          "translations": [
+            {
+              "id": 196,
+              "slug": "christianitytoday-com-2",
+              "locale": "es"
+            }
+          ]
+        }
+      ],
+      "next_page": null
+    },
+    {
+      "locale": "es",
+      "page": 1,
+      "items": [
+        {
+          "id": 195,
+          "title": "alexcuadra.dev",
+          "slug": "alexcuadra-dev-2",
+          "locale": "es",
+          "translations": [
+            {
+              "id": 50,
+              "slug": "alexcuadra-dev",
+              "locale": "en"
+            }
+          ]
+        },
+        {
+          "id": 196,
+          "title": "christianitytoday.com",
+          "slug": "christianitytoday-com-2",
+          "locale": "es",
+          "translations": [
+            {
+              "id": 146,
+              "slug": "christianitytoday-com",
+              "locale": "en"
+            }
+          ]
+        },
+        {
+          "id": 197,
+          "title": "valexweb.com",
+          "slug": "valexweb-com-2",
+          "locale": "es",
+          "translations": [
+            {
+              "id": 43,
+              "slug": "valexweb-com",
+              "locale": "en"
+            }
+          ]
+        }
+      ],
+      "next_page": 2
+    },
+    {
+      "locale": "es",
+      "page": 2,
+      "items": [
+        {
+          "id": 198,
+          "title": "norceca.info",
+          "slug": "norceca-info-2",
+          "locale": "es",
+          "translations": [
+            {
+              "id": 42,
+              "slug": "norceca-info",
+              "locale": "en"
+            }
+          ]
+        },
+        {
+          "id": 199,
+          "title": "makersunite.eu",
+          "slug": "makersunite-eu-2",
+          "locale": "es",
+          "translations": [
+            {
+              "id": 137,
+              "slug": "makersunite-eu",
+              "locale": "en"
+            }
+          ]
+        },
+        {
+          "id": 200,
+          "title": "alextecuenta.com",
+          "slug": "alextecuenta-com-2",
+          "locale": "es",
+          "translations": [
+            {
+              "id": 144,
+              "slug": "alextecuenta-com",
+              "locale": "en"
+            }
+          ]
+        }
+      ],
+      "next_page": null
+    }
+  ],
+  "publicProjectsPerLocale": {
+    "en": 6,
+    "es": 6
+  },
+  "sampleProjects": {
+    "en": {
+      "id": 146,
+      "title": "christianitytoday.com",
+      "slug": "christianitytoday-com",
+      "locale": "en",
+      "translations": [
+        {
+          "id": 196,
+          "slug": "christianitytoday-com-2",
+          "locale": "es"
+        }
+      ]
+    },
+    "es": {
+      "id": 196,
+      "title": "christianitytoday.com",
+      "slug": "christianitytoday-com-2",
+      "locale": "es",
+      "translations": [
+        {
+          "id": 146,
+          "slug": "christianitytoday-com",
+          "locale": "en"
+        }
+      ]
+    }
+  },
+  "titleSearch": {
+    "query": "christianitytoday",
+    "ids": [
+      146
+    ],
+    "next_page": null
+  },
+  "rejections": [
+    {
+      "name": "wrong_language",
+      "rejected": true,
+      "message": "Public project not found in this language."
+    },
+    {
+      "name": "draft_project",
+      "rejected": true,
+      "message": "Public project not found in this language."
+    },
+    {
+      "name": "arbitrary_fields",
+      "rejected": true,
+      "message": "Ability \"alexcuadra/get-public-project\" has invalid input. Reason: fields is not a valid property of Object."
+    },
+    {
+      "name": "unbounded_pagination",
+      "rejected": true,
+      "message": "Ability \"alexcuadra/list-public-projects\" has invalid input. Reason: input[per_page] must be between 1 (inclusive) and 20 (inclusive)"
+    }
+  ],
+  "temporaryPackageRemoved": true,
+  "editorialContentIntentionallyModified": false,
+  "applicationPasswordsChanged": false,
+  "workerDeployed": false,
+  "contactEnabled": false,
+  "emailSent": false,
+  "browserUsed": false,
+  "installHookObservation": "WP-CLI installation reported a successful cache purge; other active plugin list fingerprint unchanged.",
+  "limitations": [
+    "Targeted review and acceptance, not a complete audit of all plugins/request contexts.",
+    "No live credential revocation or post-install removal of the granted capability; prior denial was tested before grant.",
+    "Packaged README/manifest retain their preparation-time state; this record states the current installation."
+  ],
+  "nextIncrement": "Prepare a local restricted project-edit contract and isolated permission/concurrency tests; no new live capabilities or editorial writes authorized by this installation."
+}
