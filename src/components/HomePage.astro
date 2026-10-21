@@ -1,0 +1,163 @@
+---
+interface Props { page: any; locale: 'en' | 'es'; alternate: boolean; }
+const { page, locale, alternate } = Astro.props;
+const spanish = locale === 'es';
+const alternates: {locale: 'en' | 'es'; path: string}[] = alternate ? [{locale:'en',path:'/'},{locale:'es',path:'/es/'}] : [];
+import { getProjectsInfo } from '../data/client';
+import { getReferenceCategoryCards } from '../data/reference-categories.js';
+import CountBadge from '../components/CountBadge.astro';
+
+// Home currently promotes English case studies; translated editions have their own archive.
+const projectsData = await getProjectsInfo('en');
+
+// Layout import — provides basic page elements: <head>, <nav>, <footer> etc.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { sortProjectsByModified } from '../data/projects.js';
+
+// Component Imports
+import CallToAction from '../components/CallToAction.astro';
+import Grid from '../components/Grid.astro';
+import Icon from '../components/Icon.astro';
+import Pill from '../components/Pill.astro';
+import PortfolioPreview from '../components/PortfolioPreview.astro';
+
+// Page section components
+import ContactCTA from '../components/ContactCTA.astro';
+import Skills from '../components/Skills.astro';
+
+// Content Fetching: List four most recent work projects
+const projects = sortProjectsByModified(projectsData)
+	.slice(0, 4);
+
+const data = [page]
+
+const categories = await getReferenceCategoryCards();
+
+---
+
+<BaseLayout title="Alex Cuadra" description={page.homePageFields.tagLine_field || undefined} locale={locale} alternates={alternates}>
+	<div class="stack home-flow">
+		<main id="main-content" tabindex="-1" class="stack home-main">
+      <div class="wrapper stack intro">
+			{alternate && <nav aria-label={spanish ? 'Idioma de la página' : 'Page language'}><a href={spanish ? '/' : '/es/'} lang={spanish ? 'en' : 'es'}>{spanish ? 'English' : 'Español'}</a></nav>}
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">{data[0].homePageFields.role1_field}</p>
+          <h1><span>{spanish ? 'Hola, soy' : "Hello, I'm"}</span><strong>{data[0].homePageFields.name_field || 'Alex Cuadra'}</strong></h1>
+          <p class="lead">{data[0].homePageFields.tagLine_field}</p>
+          <div class="roles">
+            {[data[0].homePageFields.role1_field, data[0].homePageFields.role2_field, data[0].homePageFields.role3_field].filter(Boolean).map(role => <Pill>{role}</Pill>)}
+          </div>
+          <div class="hero-actions">
+            <CallToAction href="#selected-work">{spanish ? 'Explorar proyectos' : 'Explore projects'}<Icon icon="arrow-right" size="1.2em" /></CallToAction>
+            <a class="secondary-link" href={spanish ? '/es/sobre-mi/' : '/about/'}>{spanish ? 'Sobre mí' : 'About me'} <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        {page.homePageFields.photo_field?.node?.sourceUrl && <figure class="portrait">
+          <img alt={spanish ? 'Alex Cuadra' : 'Alex Cuadra'} width="480" height="620" src={data[0].homePageFields.photo_field.node.sourceUrl} />
+          <figcaption>{data[0].homePageFields.name_field}<span>{data[0].homePageFields.role3_field}</span></figcaption>
+        </figure>}
+      </header>
+      <section class="disciplines" aria-labelledby="disciplines-title">
+        <h2 id="disciplines-title">{spanish ? 'Especialidades' : 'Core disciplines'}</h2>
+
+			<Skills skills={page.homePageFields.skills} />
+      </section>
+		</div>
+
+		<div class="wrapper stack home-sections">
+			<section id="selected-work" class="section with-cta">
+				<header class="section-header stack gap-2 lg:gap-4">
+					<h2>{spanish ? 'Proyectos destacados' : 'Selected Work'}</h2>
+					<p>{spanish ? 'Algunos de mis proyectos destacados para clientes de los últimos años. Fichas disponibles en inglés.' : 'Take a look below at some of my featured work for clients from the past few years.'}</p>
+				</header>
+
+				<div class="gallery">
+					<Grid>
+						{
+							projects.map((project:any) => (
+								<li>
+									<PortfolioPreview project={project} displayLocale={locale} />
+								</li>
+							))
+						}
+					</Grid>
+				</div>
+
+				<div class="cta">
+					<CallToAction href="/work/">
+						{spanish ? 'Ver todos (EN)' : 'View All'}
+						<Icon icon="arrow-right" size="1.2em" />
+					</CallToAction>
+				</div>
+			</section>
+
+			<section class="section"  id="articles">
+				<header class="section-header stack gap-2 lg:gap-4">
+					<h2>{spanish ? 'Artículos y menciones' : 'Articles & Mentions'}</h2>
+					<p>
+						{spanish ? 'He escrito y creado contenido para la comunidad.' : 'I have been writing and creating content for the community.'}
+					</p>
+				</header>
+
+				<div class="gallery">
+					<Grid variant="small">
+						{
+							categories.map((category:any) => (
+								<li class="mention-card">
+									<a
+										href={`/articles/category/${category.slug}`}>{category.name}
+										<CountBadge count={category.count} />
+									</a>
+								</li>
+							))
+						}
+					</Grid>
+				</div>
+			</section>
+		</div>
+    </main>
+
+		<ContactCTA locale={locale} />
+	</div>
+</BaseLayout>
+
+<style>
+  .home-main { gap: 5rem; }
+  .home-flow { gap: 5rem; padding-top: 2rem; }
+  .intro { gap: 4rem; }
+  nav a { color: var(--gray-300); font-size: .875rem; text-underline-offset: .3em; }
+  .hero { display: grid; gap: 2.5rem; align-items: center; }
+  .eyebrow { color: var(--link-color); text-transform: uppercase; letter-spacing: .14em; font-size: .75rem; font-weight: 700; margin-bottom: 1rem; }
+  h1 { color: var(--gray-0); font-size: clamp(2.35rem, 5vw, 4.5rem); line-height: 1.1; letter-spacing: -.04em; overflow-wrap: anywhere; }
+  h1 span, h1 strong { display: block; }
+  h1 strong { color: var(--link-color); font-weight: 800; }
+  .lead { color: var(--gray-200); font-size: clamp(1.05rem, 2vw, 1.25rem); max-width: 42ch; margin-top: 1.5rem; line-height: 1.7; }
+  .roles { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: 1.5rem; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; margin-top: 2rem; }
+  .secondary-link { color: var(--gray-0); font-weight: 600; text-underline-offset: .3em; }
+  .portrait { background: var(--gray-900); border: 1px solid var(--gray-800); border-radius: 1.25rem; overflow: hidden; margin: 0; }
+  .portrait img { display: block; width: 100%; aspect-ratio: 1.15; object-fit: cover; object-position: center 25%; }
+  figcaption { padding: 1.2rem 1.5rem; color: var(--gray-0); font-weight: 700; }
+  figcaption span { display: block; color: var(--gray-400); font-weight: 400; font-size: .875rem; margin-top: .25rem; }
+  .disciplines h2 { margin-bottom: 1.5rem; }
+  h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); color: var(--gray-0); letter-spacing: -.035em; line-height: 1.2; }
+  .home-sections { gap: 5rem; }
+  .section { display: grid; gap: 2rem; min-width: 0; }
+  .section-header { align-items: start; max-width: 58ch; color: var(--gray-300); }
+  .section-header p { line-height: 1.7; }
+  .gallery :global(.grid) { gap: 1.5rem; }
+  .mention-card { border: 1px solid var(--gray-800); border-radius: 1rem; background: var(--gray-900); }
+  .mention-card a { min-height: 7rem; padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; color: var(--gray-0); font-weight: 700; text-decoration: none; overflow-wrap: anywhere; }
+  .mention-card a:hover { color: var(--link-color); }
+  @media (min-width: 50em) {
+    .home-main { gap: 6rem; }
+    .home-flow { padding-top: 3rem; gap: 6rem; }
+    .intro { gap: 5rem; }
+    .hero { grid-template-columns: 1.3fr 1fr; gap: 4rem; }
+    .portrait img { aspect-ratio: 1; }
+    .section.with-cta { grid-template-columns: 1fr auto; }
+    .with-cta .gallery { grid-column: 1 / -1; grid-row: 2; }
+    .with-cta .cta { grid-column: 2; grid-row: 1; align-self: center; }
+  }
+</style>

@@ -1,10 +1,12 @@
 ---
 import Icon from './Icon.astro';
+interface Props { locale?: 'en' | 'es'; }
+const { locale = 'en' } = Astro.props;
 ---
 
 <theme-toggle>
 	<button>
-		<span class="sr-only">Dark theme</span>
+		<span class="sr-only">{locale === 'es' ? 'Tema oscuro' : 'Dark theme'}</span>
 		<span class="icon light"><Icon icon="sun" /></span>
 		<span class="icon dark"><Icon icon="moon-stars" /></span>
 	</button>
@@ -29,7 +31,7 @@ import Icon from './Icon.astro';
 		width: 2rem;
 		height: 2rem;
 		font-size: 1rem;
-		color: var(--accent-overlay);
+		color: var(--gray-400);
 	}
 
 	.icon.light::before {

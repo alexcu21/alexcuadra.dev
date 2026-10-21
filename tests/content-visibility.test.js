@@ -10,9 +10,9 @@ const cmsConfig = { WPGRAPHQL_AUTH_ENABLED: 'true', WPGRAPHQL_USERNAME: 'reader'
 const operations = [
   ['getHomeInfo', undefined, node => ({ viewer: { databaseId: 1 }, pages: { nodes: [node] } })],
   ['getAboutFields', undefined, node => ({ pages: { edges: [{ node }] } })],
-  ['getArticlesByCategory', 'medium', node => ({ articles: { nodes: [node] } })],
+  ['getArticlesByCategory', 'medium', node => ({ articles: { nodes: [node], pageInfo: { hasNextPage: false, endCursor: null } } })],
   ['getArticleBySlug', 'public', node => ({ article: node })],
-  ['getAllArticleSlugs', undefined, node => ({ articles: { nodes: [node] } })],
+  ['getAllArticleSlugs', undefined, node => ({ articles: { nodes: [node], pageInfo: { hasNextPage: false, endCursor: null } } })],
 ];
 for (const [method, argument, payload] of operations) {
   test(`${method} accepts published content and rejects private/protected/missing visibility`, async t => {

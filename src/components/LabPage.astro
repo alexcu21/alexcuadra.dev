@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WordPressContent from './WordPressContent.astro';
+import { contentPath, routeBase } from '../data/site-routes.js';
+import { blogSummary, blogDate } from '../data/blog-content.js';
+interface Props { locale: 'en' | 'es'; projects?: any[]; project?: any; archiveAlternate?: boolean; }
+const { locale, projects = [], project, archiveAlternate = false } = Astro.props;
+const es = locale === 'es';
+const base = routeBase('lab', locale);
+const targetLocale = es ? 'en' : 'es';
+const alternate = project?.translations?.find((item: any) => item.locale === targetLocale);
+const alternatePath = project ? alternate && contentPath('lab', targetLocale, alternate.slug)
+  : archiveAlternate && routeBase('lab', targetLocale);
+const selfPath = project ? contentPath('lab', locale, project.slug) : base;
+const alternates: { locale: 'en' | 'es'; path: string }[] = alternatePath
+  ? [{ locale, path: selfPath }, { locale: targetLocale, path: alternatePath }] : [];
+const review = project?.lastReviewedAt && /^\d{4}-\d{2}-\d{2}$/.test(project.lastReviewedAt)
+  ? blogDate(`${project.lastReviewedAt}T00:00:00`, locale) : null;
+const sections = project ? [
+  { key: 'learning-goals', title: es ? 'Objetivos de aprendizaje' : 'Learning goals', content: project.learningGoals, plain: true },
+  { key: 'technical-approach', title: es ? 'Enfoque técnico' : 'Technical approach', content: project.technicalApproach },
+  { key: 'quality-strategy', title: es ? 'Estrategia de calidad' : 'Quality strategy', content: project.qualityStrategy },
+  { key: 'devops', title: es ? 'Despliegue y DevOps' : 'Deployment and DevOps', content: project.devopsNotes },
+].filter(section => section.content?.trim()) : [];
+const editorialSections = project ? [
+  { key: 'body', html: project.content },
+  ...sections.map(section => ({ key: section.key, title: section.title,
+    ...(section.plain ? { text: section.content } : { html: section.content }) })),
+] : [];
+---
+<BaseLayout title={project ? `${project.title} | LAB | Alex Cuadra` : 'LAB | Alex Cuadra'}
+  description={project ? blogSummary(project.excerpt) || project.purpose || project.title : (es ? 'Proyectos personales y aprendizaje en desarrollo.' : 'Personal projects and learning in progress.')}
+  locale={locale} alternates={alternates} image={project?.image}>
+  <main id="main-content" tabindex="-1" class:list={['wrapper lab', { reading: !!project }]}>
+    <nav aria-label={es ? 'Navegación de LAB' : 'LAB navigation'}>
+      {project && <a href={base}>← LAB</a>}
+      {alternatePath && <a class="language" href={alternatePath} lang={targetLocale} hreflang={targetLocale}>{es ? 'English' : 'Español'}</a>}
+    </nav>
+    {project ? <>
+      <header>
+        <p class="eyebrow">LAB</p><h1>{project.title}</h1>
+        {project.state && <span class="state">{project.state.label}</span>}
+        {project.purpose && <p class="intro">{project.purpose}</p>}
+        {review && <p class="review">{es ? 'Última revisión:' : 'Last reviewed:'} <time datetime={project.lastReviewedAt}>{review.label}</time></p>}
+        {(project.repositoryUrl || project.demoUrl) && <div class="project-links">
+          {project.repositoryUrl && <a href={project.repositoryUrl}>{es ? 'Repositorio' : 'Repository'} ↗</a>}
+          {project.demoUrl && <a href={project.demoUrl}>Demo ↗</a>}
+        </div>}
+      </header>
+      {project.image && <img class="cover" src={project.image} alt="" decoding="async" />}
+      <WordPressContent sections={editorialSections} scope="lab" toc locale={locale} />
+    </> : <>
+      <header><p class="eyebrow">{es ? 'Proyectos personales' : 'Personal projects'}</p><h1>LAB</h1></header>
+      <ul class="projects">
+        {projects.map(item => <li><a class="project-card" href={contentPath('lab', locale, item.slug)}>
+          {item.image && <img class="preview" src={item.image} alt="" loading="lazy" decoding="async" />}
+          {item.state && <span class="state">{item.state.label}</span>}
+          <h2>{item.title}</h2>
+          {(item.purpose || item.excerpt) && <p>{item.purpose || blogSummary(item.excerpt)}</p>}
+          <span class="read">{es ? 'Explorar proyecto' : 'Explore project'} →</span>
+        </a></li>)}
+      </ul>
+    </>}
+  </main>
+</BaseLayout>
+<style>
+  .lab { padding-block: 2rem 4rem; min-width: 0; }
+  .reading { max-width: 58rem; }
+  nav { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2.5rem; }
+  nav a { color: var(--gray-300); text-underline-offset: .3em; }
+  .language { margin-left: auto; }
+  header { margin-bottom: 2.5rem; }
+  h1 { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.1; letter-spacing: -.04em; overflow-wrap: anywhere; }
+  h2 { font-size: 1.5rem; line-height: 1.35; }
+  .eyebrow { color: var(--link-color); font-weight: 700; font-size: .8rem; letter-spacing: .12em; margin-bottom: 1rem; }
+  .state { display: inline-block; width: fit-content; color: var(--link-color); background: var(--accent-subtle-overlay); border: 1px solid var(--gray-700); border-radius: 2rem; padding: .35rem .8rem; font-size: .8rem; }
+  header .state { margin-top: 1.5rem; }
+  .intro { font-size: 1.2rem; line-height: 1.7; margin-top: 1.5rem; color: var(--gray-300); }
+  .review { margin-top: 1.5rem; font-size: .875rem; color: var(--gray-400); }
+  .project-links { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 1.5rem; }
+  .cover, .preview { display: block; width: 100%; height: auto; border-radius: 1rem; }
+  .cover { margin-bottom: 2rem; }
+  .projects { display: grid; gap: 1.5rem; list-style: none; padding: 0; }
+  .project-card { display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; height: 100%; padding: 1.5rem; border: 1px solid var(--gray-800); border-radius: 1.25rem; background: var(--gray-900); color: var(--gray-0); text-decoration: none; overflow-wrap: anywhere; }
+  .project-card:hover { border-color: var(--accent-regular); }
+  .project-card p { color: var(--gray-300); line-height: 1.7; }
+  .read { color: var(--link-color); font-weight: 600; margin-top: auto; }
+  @media (min-width: 50em) { .lab { padding-block: 3rem 5rem; } .projects { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>

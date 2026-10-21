@@ -1,0 +1,8 @@
+---
+import { env } from 'cloudflare:workers';
+import { getPrivacyPage } from '../../data/privacy-page.js';
+import PrivacyPage from '../../components/PrivacyPage.astro';
+const page = await getPrivacyPage(env.CONTACT_PRIVACY_ES_PAGE_ID, 'es');
+if (!page) return new Response('No encontrado', { status: 404, headers: { 'X-Robots-Tag': 'noindex', 'Cache-Control': 'no-store' } });
+---
+<PrivacyPage page={page} locale="es" alternate={await getPrivacyPage(env.CONTACT_PRIVACY_PAGE_ID)} />

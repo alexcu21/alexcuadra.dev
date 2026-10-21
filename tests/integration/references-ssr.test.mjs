@@ -1,0 +1,167 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { spawn } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+import { setTimeout } from 'node:timers/promises';
+
+test('actual reference templates preserve HTTP, content and pagination contracts', { timeout: 60000 }, async t => {
+  const root = fileURLToPath(new URL('../../', import.meta.url));
+  const server = spawn(process.execPath, ['node_modules/astro/bin/astro.mjs', 'dev', '--root',
+    'tests/fixtures/references', '--host', '127.0.0.1', '--port', '4398', '--ignore-lock'],
+  { cwd: root, stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, ASTRO_TELEMETRY_DISABLED: '1' } });
+  let output = '';
+  for (const stream of [server.stdout, server.stderr]) stream.on('data', chunk => { output += chunk; });
+  t.after(async () => {
+    if (server.exitCode !== null) return;
+    const exited = new Promise(resolve => server.once('exit', resolve));
+    server.kill('SIGTERM');
+    await exited;
+  });
+  const base = 'http://127.0.0.1:4398';
+  let ready = false;
+  for (let attempt = 0; attempt < 200; attempt++) {
+    if (server.exitCode !== null) throw Error(`Fixture startup failed: ${output.slice(-3000)}`);
+    try {
+      const response = await fetch(base, { signal: AbortSignal.timeout(1000) });
+      if (response.status === 200) { await response.text(); ready = true; break; }
+    } catch { /* Wait for isolated Astro startup. */ }
+    await setTimeout(100);
+  }
+  assert.ok(ready, output.slice(-3000));
+  const get = async path => {
+    const response = await fetch(base + path);
+    return { response, html: await response.text() };
+  };
+  for (const [path, expected] of [
+    ['/articles/', /Medium/],
+    ['/articles/category/medium', /Second synthetic reference/],
+    ['/articles/category/empty', /No references published/],
+    ['/articles/category/medium/reference', /Synthetic quote/],
+    ['/articles/category/medium/minimal', /Confirmed synthetic body/],
+    ['/articles/category/medium/paginated', /Confirmed synthetic body/],
+  ]) {
+    const { response, html } = await get(path);
+    assert.equal(response.status, 200, `${path}: ${output.slice(-3000)}`);
+    assert.match(html, expected);
+    assert.equal((html.match(/<h1(?:\s|>)/g) || []).length, 1);
+    assert.match(html, /<main/);
+    assert.match(html, /href="#main-content"/);
+    assert.match(html, /<main[^>]*id="main-content"[^>]*tabindex="-1"/);
+    assert.doesNotMatch(html, /PRIVATE_SCRIPT|turnstile\/v0\/api/);
+    assert.match(html, new RegExp(`rel="canonical" href="https://alexcuadra.dev${path.replace(/\/$/, '')}/?"`));
+  }
+  const detailed = await get('/articles/category/medium/reference');
+  assert.match(detailed.html, /class="reference-image"[^>]*src="https:\/\/example.test\/reference.png"/);
+  assert.match(detailed.html, /property="og:image" content="https:\/\/example.test\/reference.png"/);
+  const schema = JSON.parse(detailed.html.match(/<script[^>]*type="application\/ld\+json"[^>]*>(.*?)<\/script>/s)[1]);
+  assert.equal(schema['@type'], 'BreadcrumbList');
+  assert.equal(schema.itemListElement[2].name, 'Synthetic reference');
+  const minimal = await get('/articles/category/medium/minimal');
+  assert.doesNotMatch(minimal.html, /class="reference-image"|<blockquote/);
+  for (const path of ['/articles/category/missing', '/articles/category/medium/missing', '/articles/category/other/reference']) {
+    const { response, html } = await get(path);
+    assert.equal(response.status, 404, path);
+    assert.equal(response.headers.get('cache-control'), 'no-store');
+    assert.equal(response.headers.get('x-robots-tag'), 'noindex');
+    assert.doesNotMatch(html, /Confirmed synthetic body/);
+  }
+  for (const path of ['/articles/?mode=outage', '/articles/?mode=late-outage',
+    '/articles/category/medium?mode=late-articles', '/articles/category/medium/reference?mode=layout-outage', '/articles/category/medium/paginated?mode=nested-outage']) {
+    const { response, html } = await get(path);
+    assert.equal(response.status, 503, `${path}: ${output.slice(-3000)}`);
+    assert.equal(response.headers.get('cache-control'), 'no-store');
+    assert.equal(response.headers.get('x-robots-tag'), 'noindex');
+    assert.equal(response.headers.get('retry-after'), '120');
+    assert.doesNotMatch(html, /PRIVATE|Synthetic reference|Confirmed synthetic body|graphql|stack/);
+  }
+  for (const path of ['/blog/', '/es/blog/', '/blog/native-post', '/es/blog/entrada']) {
+    const { response, html } = await get(path);
+    assert.equal(response.status, 200, `${path}: ${output.slice(-2000)}`);
+    assert.match(html, /Native blog fixture/);
+    assert.doesNotMatch(html, /PRIVATE_SCRIPT|Synthetic quote/);
+    assert.equal((html.match(/<h1(?:\s|>)/g) || []).length, 1);
+    assert.match(html, path.startsWith('/es/') ? /<html lang="es"/ : /<html lang="en"/);
+    assert.match(html, path.startsWith('/es/') ? /aria-current="page"[^>]*href="\/es\/blog\/"/ : /aria-current="page"[^>]*href="\/blog\/"/);
+  }
+  const archive = await get('/blog/');
+  assert.match(archive.html, /hreflang="es"[^>]*href="https:\/\/alexcuadra.dev\/es\/blog\/"/);
+  const localizedNavigation = await get('/es/blog/?mode=nav-es');
+  assert.equal(localizedNavigation.response.status, 200);
+  assert.match(localizedNavigation.html, /href="\/es\/sobre-mi\/"/);
+  assert.match(localizedNavigation.html, /href="\/es\/"/);
+  assert.doesNotMatch(localizedNavigation.html, /Inicio \(EN\)|Sobre mí \(EN\)/);
+  const withoutBlog = await get('/articles/?mode=blog-empty');
+  assert.equal(withoutBlog.response.status, 200);
+  assert.doesNotMatch(withoutBlog.html, /href="\/blog\/"/);
+  const native = await get('/blog/native-post');
+  assert.match(native.html, /hreflang="es"[^>]*href="https:\/\/alexcuadra.dev\/es\/blog\/entrada"/);
+  assert.doesNotMatch(native.html, /class="editorial-toc"/);
+  for (const [path, label] of [['/blog/native-post?mode=outline', 'On this page'], ['/es/blog/entrada?mode=outline', 'En esta página'],
+    ['/lab/training-lab?mode=outline', 'On this page'], ['/es/laboratorio/laboratorio?mode=outline', 'En esta página']]) {
+    const { response, html } = await get(path);
+    assert.equal(response.status, 200, path);
+    assert.match(html, /<details[^>]*class="editorial-toc"[^>]*open/);
+    assert.ok(html.includes(`<summary>${label}</summary>`));
+    assert.ok(html.includes(`aria-label="${label}"`));
+    const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]);
+    assert.equal(ids.length, new Set(ids).size, `${path}: all document IDs unique`);
+    const toc = html.match(/<details[^>]*class="editorial-toc"[^>]*>[\s\S]*?<\/details>/)?.[0];
+    const destinations = [...toc.matchAll(/href="#([^"]+)"/g)].map(m => decodeURIComponent(m[1]));
+    assert.ok(destinations.length >= 3);
+    for (const id of destinations) assert.ok(ids.includes(id), `${path}: TOC target exists: ${id}`);
+    assert.equal((html.match(/<h1(?:\s|>)/g) || []).length, 1);
+    assert.doesNotMatch(html, /PRIVATE_SCRIPT|<check>|<script[^>]*>PRIVATE/);
+    if (path.includes('blog')) {
+      assert.match(html, /href="#wp-content-blog-body-main-content"/);
+      assert.match(html, /<a href="#wp-content-blog-body-run-check">Run &lt;check&gt;<\/a>/);
+    } else {
+      assert.match(html, /<h2 id="wp-content-lab-learning-goals" tabindex="-1"/);
+      assert.match(html, /<h3 id="wp-content-lab-technical-approach-setup" tabindex="-1"/);
+      assert.match(html, /href="#wp-content-lab-technical-approach-setup"/);
+    }
+  }
+  for (const path of ['/blog/?mode=blog-empty', '/es/blog/?mode=blog-empty', '/blog/missing', '/blog/entrada']) {
+    const { response } = await get(path);
+    assert.equal(response.status, 404, path);
+    assert.equal(response.headers.get('x-robots-tag'), 'noindex');
+  }
+  for (const path of ['/blog/?mode=blog-late', '/blog/native-post?mode=blog-private', '/blog/?mode=outage',
+    '/articles/?mode=blog-availability-outage', '/es/blog/?mode=nav-outage']) {
+    const { response, html } = await get(path);
+    assert.equal(response.status, 503, path);
+    assert.equal(response.headers.get('cache-control'), 'no-store');
+    assert.doesNotMatch(html, /Native post body|PRIVATE/);
+  }
+
+  for (const path of ['/lab/', '/es/laboratorio/', '/lab/training-lab', '/es/laboratorio/laboratorio']) {
+    const { response, html } = await get(path);
+    assert.equal(response.status, 200, `${path}: ${output.slice(-2000)}`);
+    assert.match(html, /Personal lab fixture/);
+    assert.match(html, path.startsWith('/es/') ? /En desarrollo/ : /In progress/);
+    assert.equal((html.match(/<h1(?:\s|>)/g) || []).length, 1);
+    assert.match(html, path.startsWith('/es/') ? /<html lang="es"/ : /<html lang="en"/);
+    assert.doesNotMatch(html, /PRIVATE_SCRIPT|javascript:|turnstile\/v0\/api|Synthetic quote/);
+  }
+  const lab = await get('/es/laboratorio/laboratorio');
+  for (const expected of [/Objetivos de aprendizaje/, /Technical details/, /Quality details/, /Deployment details/,
+    /19 de octubre de 2026/, /hreflang="en"[^>]*href="https:\/\/alexcuadra.dev\/lab\/training-lab"/]) assert.match(lab.html, expected);
+  const minimalLab = await get('/lab/minimal');
+  assert.equal(minimalLab.response.status, 200);
+  assert.doesNotMatch(minimalLab.html, /Learning goals|Quality strategy|Last reviewed:|class="cover"/);
+  const withoutLab = await get('/articles/?mode=lab-empty');
+  assert.equal(withoutLab.response.status, 200);
+  assert.doesNotMatch(withoutLab.html, /href="\/lab\/"/);
+  for (const path of ['/lab/?mode=lab-empty', '/es/laboratorio/?mode=lab-empty', '/lab/missing', '/lab/laboratorio']) {
+    const { response } = await get(path);
+    assert.equal(response.status, 404, path);
+    assert.equal(response.headers.get('x-robots-tag'), 'noindex');
+  }
+  for (const path of ['/lab/?mode=lab-late', '/lab/training-lab?mode=lab-private', '/lab/?mode=outage',
+    '/articles/?mode=lab-availability-outage']) {
+    const { response, html } = await get(path);
+    assert.equal(response.status, 503, path);
+    assert.equal(response.headers.get('cache-control'), 'no-store');
+    assert.doesNotMatch(html, /Personal project body|PRIVATE/);
+  }
+
+});

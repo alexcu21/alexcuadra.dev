@@ -16,9 +16,9 @@ function respond(t, payload, inspect = () => {}, status = 200) {
 for (const [method, operation, payload, expected] of [
   ['getHomeInfo', 'getHomeFields', { pages: { nodes: [{ homePageFields: { name_field: 'Alex' } }] } }, [{ homePageFields: { name_field: 'Alex' } }]],
   ['getProjectsInfo', 'getProjectFields', { projects: { nodes: [{ slug: 'project' }] } }, [{ slug: 'project' }]],
-  ['getArticlesCategories', 'getArticleCategories', { categories: { nodes: [{ slug: 'talks', count: 2 }] } }, [{ slug: 'talks', count: 2 }]],
+  ['getArticlesCategories', 'getArticleCategories', { categories: { nodes: [{ slug: 'talks', count: 2 }], pageInfo: { hasNextPage: false, endCursor: null } } }, [{ slug: 'talks', count: 2 }]],
   ['getAboutFields', 'getAboutFields', { pages: { edges: [{ node: { content: 'About' } }] } }, { content: 'About' }],
-  ['getAllArticleSlugs', 'AllArticles', { articles: { nodes: [{ slug: 'one' }, { slug: 'two' }] } }, ['one', 'two']],
+  ['getAllArticleSlugs', 'AllArticles', { articles: { nodes: [{ slug: 'one' }, { slug: 'two' }], pageInfo: { hasNextPage: false, endCursor: null } } }, ['one', 'two']],
 ]) {
   test(`${method} reads its WordPress response`, async t => {
     respond(t, { data: payload }, body => assert.match(body.query, new RegExp(`query ${operation}`)));
@@ -28,8 +28,8 @@ for (const [method, operation, payload, expected] of [
 
 test('category slug is sent as a variable, never interpolated into the query', async t => {
   const slug = 'talks-"-test';
-  respond(t, { data: { articles: { nodes: [] } } }, body => {
-    assert.deepEqual(body.variables, { slug });
+  respond(t, { data: { articles: { nodes: [], pageInfo: { hasNextPage: false, endCursor: null } } } }, body => {
+    assert.deepEqual(body.variables, { slug, after: null });
     assert.ok(!body.query.includes(slug));
   });
   assert.deepEqual(await api.getArticlesByCategory(slug), []);

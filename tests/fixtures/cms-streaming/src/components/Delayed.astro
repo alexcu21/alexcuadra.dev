@@ -1,0 +1,10 @@
+---
+import { cmsFailure } from '../../../../../src/data/cms-request.js';
+const mode = Astro.url.searchParams.get('mode');
+await new Promise(resolve => setTimeout(resolve, 10));
+if (mode === 'failure') throw cmsFailure('CMS_HTTP', 'SyntheticLateComponent', 429, { retryAfter: 120 });
+if (mode === 'caught') {
+  try { throw cmsFailure('CMS_HTTP', 'SyntheticCaughtComponent', 429); } catch { /* Simulate a renderer catching the error. */ }
+}
+---
+<p>Completed nested component</p>

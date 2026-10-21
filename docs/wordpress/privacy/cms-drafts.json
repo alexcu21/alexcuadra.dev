@@ -1,0 +1,33 @@
+{
+  "verifiedDate": "2026-10-18",
+  "status": "publish",
+  "published": true,
+  "pages": [
+    {
+      "locale": "en",
+      "databaseId": 180,
+      "title": "Contact form privacy",
+      "translationId": 182,
+      "editorUrl": "https://content.alexcuadra.dev/wp-admin/post.php?post=180&action=edit"
+    },
+    {
+      "locale": "es",
+      "databaseId": 182,
+      "title": "Privacidad del formulario de contacto",
+      "translationId": 180,
+      "editorUrl": "https://content.alexcuadra.dev/wp-admin/post.php?post=182&action=edit"
+    }
+  ],
+  "pending": [],
+  "frontendSourceConfigured": true,
+  "homePrivacyLinkChanged": true,
+  "technicalRetentionText": "Cloudflare Workers Logs: 3 days Free / 7 days Paid; SQLite recovery up to 30 days; account plan and permissions not certified",
+  "inboxRetentionOperation": "Daily manual review confirmed by Alex",
+  "frontendEnvironment": "staging",
+  "productionSourceConfigured": true,
+  "frontendEnvironments": [
+    "staging",
+    "production"
+  ],
+  "homePrivacyUrl": "https://alexcuadra.dev/privacy/"
+}

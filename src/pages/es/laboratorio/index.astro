@@ -1,0 +1,8 @@
+---
+import LabPage from '../../../components/LabPage.astro';
+import { getLabProjects, hasLabProjects } from '../../../data/lab-content.js';
+const projects = await getLabProjects('es');
+if (!projects.length) return new Response('Not found', { status: 404, headers: { 'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex' } });
+const archiveAlternate = await hasLabProjects('en');
+---
+<LabPage locale="es" projects={projects} archiveAlternate={archiveAlternate} />

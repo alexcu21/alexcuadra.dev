@@ -1,29 +1,12 @@
 ---
-interface Props {
-	href: string;
-    text: string;
-}
-
+import Icon from './Icon.astro';
+interface Props { href: string; text: string; }
 const { href, text } = Astro.props;
-
 ---
-
-<!-- Pill -->
-
-<a
-  class="group inline-block rounded-full bg-linear-to-r from-navy via-blue to-skyblue p-[2px] hover:text-white focus:outline-hidden focus:ring-3 active:text-opacity-75"
-  href={href}
-  target="_blank"
->
-  <span
-    class="block rounded-full bg-white px-8 py-3 text-sm font-medium group-hover:bg-transparent"
-  >
-    {text}
-  </span>
+<a href={href} target="_blank" rel="noopener noreferrer">
+  {text}<span aria-hidden="true"><Icon icon="arrow-right" size="1.1em" /></span>
 </a>
-
- <style>
-    a {
-		text-decoration: none!important;
-	}
+<style>
+  a { display: inline-flex; align-items: center; justify-content: center; gap: .75rem; min-height: 2.75rem; padding: .75rem 1.25rem; border: 1px solid var(--gray-700); border-radius: 999rem; color: var(--link-color); background: var(--gray-900); text-decoration: none; font-size: .875rem; font-weight: 700; overflow-wrap: anywhere; }
+  a:hover { border-color: var(--accent-regular); }
 </style>

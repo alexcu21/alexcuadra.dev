@@ -1,22 +1,55 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "alexcuadra-dev-staging",
-  "main": "@astrojs/cloudflare/entrypoints/server",
+  "main": "src/worker.js",
   "compatibility_date": "2026-10-17",
   "compatibility_flags": [
     "nodejs_compat"
   ],
   "workers_dev": true,
+  "durable_objects": {
+    "bindings": [{ "name": "CONTACT_COORDINATOR", "class_name": "ContactCoordinator" }]
+  },
+  "exports": {
+    "ContactCoordinator": { "type": "durable-object", "storage": "sqlite" }
+  },
   "keep_vars": true,
+  "vars": {
+    "TURNSTILE_SITE_KEY": "0x4AAAAAAFax8LJ1rzWgJsb8",
+    "WPGRAPHQL_AUTH_ENABLED": "true",
+    "WPGRAPHQL_USERNAME": "AlexSuscriptor",
+    "CONTACT_FORM_ENABLED": "false",
+    "CONTACT_PRIVACY_PAGE_ID": "180",
+    "CONTACT_PRIVACY_ES_PAGE_ID": "182",
+    "CONTACT_ORIGIN": "https://alexcuadra-dev-staging.alexcu21.workers.dev",
+    "CONTACT_FROM_EMAIL": "contact@forms.alexcuadra.dev"
+  },
+  "send_email": [
+    {
+      "name": "CONTACT_EMAIL",
+      "allowed_sender_addresses": ["contact@forms.alexcuadra.dev"]
+    }
+  ],
+  "ratelimits": [
+    {
+      "name": "CONTACT_RATE_LIMITER",
+      "namespace_id": "2026101801",
+      "simple": { "limit": 5, "period": 60 }
+    }
+  ],
   "env": {
     "production": {
       "name": "alexcuadra-dev",
+      "main": "@astrojs/cloudflare/entrypoints/server",
+      "exports": {},
       "workers_dev": true,
       "routes": [
         { "pattern": "alexcuadra.dev", "custom_domain": true }
       ],
       "vars": {
-        "WPGRAPHQL_AUTH_ENABLED": "true"
+        "WPGRAPHQL_AUTH_ENABLED": "true",
+        "CONTACT_FORM_ENABLED": "false",
+        "CONTACT_PRIVACY_PAGE_ID": "180"
       }
     }
   },

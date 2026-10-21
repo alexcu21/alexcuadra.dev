@@ -23,7 +23,9 @@ const { href } = Astro.props;
 		overflow: hidden;
 		background: var(--gradient-accent-orange);
 		box-shadow: var(--shadow-md);
-		white-space: nowrap;
+		white-space: normal;
+    align-items: center;
+    font-weight: 700;
 	}
 
 	@media (min-width: 20em) {
@@ -49,8 +51,8 @@ const { href } = Astro.props;
 
 	@media (min-width: 50em) {
 		a {
-			padding: 1.125rem 2.5rem;
-			font-size: var(--text-xl);
+			padding: .9rem 1.5rem;
+			font-size: var(--text-base);
 		}
 	}
 </style>

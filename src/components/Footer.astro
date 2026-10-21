@@ -1,16 +1,17 @@
 ---
 import { getHomeInfo } from '../data/client';
 import Icon from './Icon.astro';
+interface Props { locale?: 'en' | 'es'; }
+const { locale = 'en' } = Astro.props;
 const currentYear = new Date().getFullYear();
 
-const data = await getHomeInfo();
+const data = await getHomeInfo('en');
 ---
 
 <footer>
 	<div class="group">
 		<p>
-			Designed & Developed in Central Amercia with <a href="https://astro.build/">Astro</a>
-			<Icon icon="rocket-launch" size="1.2em" />
+			{locale === 'es' ? 'Diseñado y desarrollado en Centroamérica con' : 'Designed & Developed in Central America with'} <span class="astro-credit"><a href="https://astro.build/">Astro</a><Icon icon="rocket-launch" size="1.2em" /></span>
 		</p>
 		<p>&copy; {currentYear} {data[0].homePageFields.name_field}</p>
 	</div>
@@ -47,6 +48,14 @@ const data = await getHomeInfo();
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
+	}
+
+	.astro-credit {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.25em;
+		white-space: nowrap;
+		vertical-align: middle;
 	}
 
 	.socials {

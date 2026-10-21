@@ -6,6 +6,7 @@ import { isWordPressRestProbe } from './data/request-policy.js';
 
 export const onRequest = defineMiddleware(async (context, next) => {
   const requestId = crypto.randomUUID();
+  context.locals.requestId = requestId;
   if (isWordPressRestProbe(context.url)) {
     return new Response('Not found', { status: 404, headers: {
       'Content-Type': 'text/plain; charset=utf-8', 'X-Robots-Tag': 'noindex',
@@ -17,7 +18,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
     try { edgeCache = await caches.open('alexcuadra-public-cms'); } catch { /* Cache is optional. */ }
   }
   const response = await withCmsRequest(next, { requestId, edgeCache, cacheOrigin: context.url.origin,
-    cmsConfig: env });
+    cmsConfig: env, bufferHtml: true });
   const headers = new Headers(response.headers);
   headers.set('X-Request-ID', requestId);
   // Staging uses workers.dev; this is an indexing policy, not access control.

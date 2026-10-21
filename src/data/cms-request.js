@@ -128,6 +128,15 @@ export function withCmsRequest(next, options = {}) {
     let response;
     try {
       response = await next();
+      // Astro can resolve next() before nested components finish streaming.
+      // Finish HTML inside this scope so a late CMS failure cannot commit a
+      // successful status with a partial (or empty) document.
+      if (options.bufferHtml === true && response.body
+        && /^text\/html(?:\s*;|$)/i.test(response.headers.get('content-type') || '')) {
+        const body = await response.arrayBuffer();
+        response = new Response(body, { status: response.status, statusText: response.statusText,
+          headers: response.headers });
+      }
     } catch (error) {
       if (!(error instanceof CmsError) && !scope.failure) throw error;
     }

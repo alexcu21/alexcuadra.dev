@@ -1,0 +1,56 @@
+/* Scoped to CMS content; no changes to the editor or global navigation. */
+.wordpress-content { line-height: 1.75; overflow-wrap: anywhere; min-width: 0; }
+.wordpress-content > * + * { margin-block-start: 1.25rem; }
+.wordpress-content :where(h2,h3,h4,h5,h6) { font-weight: 700; line-height: 1.25; margin-block: 2rem 1rem; }
+.wordpress-content :where(h2,h3,h4,h5,h6)[id] { scroll-margin-block-start: 2rem; }
+.wordpress-content :where(h2,h3,h4,h5,h6):is(:target,:focus-visible) { outline: 2px solid var(--link-color); outline-offset: .35rem; border-radius: .15rem; }
+.wordpress-content .wordpress-section { padding-block-start: 2rem; margin-block-start: 2rem; border-block-start: 1px solid var(--gray-800); }
+.wordpress-content .wordpress-section > h2 { margin-block: 0 1.25rem; }
+.wordpress-content .wordpress-section > * + * { margin-block-start: 1.25rem; }
+.wordpress-content .editorial-plain { white-space: pre-line; line-height: 1.8; color: var(--gray-300); }
+.wordpress-content h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+.wordpress-content h3 { font-size: 1.4rem; }
+.wordpress-content :where(h4,h5,h6) { font-size: 1.15rem; }
+.wordpress-content :where(ul,ol) { padding-inline-start: 1.75rem; }
+.wordpress-content ul { list-style: disc; }
+.wordpress-content ol { list-style: decimal; }
+.wordpress-content li + li { margin-block-start: .5rem; }
+.wordpress-content a { color: var(--link-color); text-decoration: underline; text-underline-offset: .2em; }
+.wordpress-content a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.wordpress-content img { display: block; max-width: 100%; height: auto; }
+.wordpress-content :where(figure,blockquote) { margin-inline: 0; }
+.wordpress-content :where(figcaption,caption,cite) { font-size: .9em; }
+.wordpress-content figcaption { margin-block-start: .5rem; text-align: center; }
+.wordpress-content :where(blockquote,.wp-block-pullquote) { padding: 1rem 1.5rem; border-inline-start: .25rem solid var(--accent-regular); }
+.wordpress-content blockquote > * + * { margin-block-start: .75rem; }
+.wordpress-content :where(pre,.wp-block-table) { overflow-x: auto; max-width: 100%; }
+.wordpress-content pre { padding: 1rem; background: var(--gray-900); border: 1px solid var(--gray-800); border-radius: .5rem; white-space: pre; }
+.wordpress-content :where(code,kbd,samp) { font-family: ui-monospace, monospace; font-size: .9em; }
+.wordpress-content table { width: 100%; border-collapse: collapse; }
+.wordpress-content :where(th,td) { padding: .65rem; border: 1px solid var(--gray-800); text-align: start; }
+.wordpress-content th { font-weight: 700; }
+.wordpress-content .is-style-stripes tbody tr:nth-child(odd) { background: var(--gray-900); }
+.wordpress-content .wp-block-columns { display: flex; flex-direction: column; gap: 1.5rem; }
+.wordpress-content .wp-block-column { flex: 1 1 0; min-width: 0; }
+.wordpress-content .wp-block-column > * + * { margin-block-start: 1rem; }
+.wordpress-content .wp-block-gallery { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,12rem),1fr)); gap: 1rem; }
+.wordpress-content :where(.aligncenter,.alignwide,.alignfull) { margin-inline: auto; max-width: 100%; }
+.wordpress-content .has-text-align-left { text-align: left; }
+.wordpress-content .has-text-align-center { text-align: center; }
+.wordpress-content .has-text-align-right { text-align: right; }
+.wordpress-content .has-small-font-size { font-size: .875rem; }
+.wordpress-content .has-medium-font-size { font-size: 1.125rem; }
+.wordpress-content .has-large-font-size { font-size: 1.5rem; }
+.wordpress-content .has-x-large-font-size { font-size: 2rem; }
+.wordpress-content hr { margin-block: 2rem; border: 0; border-block-start: 1px solid var(--gray-800); }
+.editorial-toc { min-width: 0; margin-block-end: 2rem; padding: 1rem 1.25rem; border: 1px solid var(--gray-800); border-radius: 1rem; background: var(--gray-900); overflow-wrap: anywhere; }
+.editorial-toc summary { cursor: pointer; color: var(--gray-0); font-weight: 700; padding-block: .4rem; }
+.editorial-toc nav { margin-block-start: .75rem; }
+.editorial-toc ol { list-style: none; padding: 0; margin: 0; }
+.editorial-toc ol ol { padding-inline-start: 1rem; border-inline-start: 1px solid var(--gray-800); margin-inline-start: .4rem; }
+.editorial-toc a { display: block; width: fit-content; max-width: 100%; padding-block: .5rem; color: var(--link-color); line-height: 1.5; text-decoration: underline; text-underline-offset: .2em; }
+.editorial-toc :is(a,summary):focus-visible { outline: 2px solid var(--link-color); outline-offset: 3px; border-radius: .2rem; }
+@media (min-width: 48rem) {
+  .wordpress-content .wp-block-columns { flex-direction: row; }
+  .wordpress-content .wp-block-column[style*="flex-basis"] { flex-grow: 0; }
+}

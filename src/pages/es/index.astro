@@ -1,0 +1,8 @@
+---
+import HomePage from '../../components/HomePage.astro';
+import { localizedPage } from '../../data/localized-pages.js';
+const page = await localizedPage('home', 'es', 19);
+if (!page) return new Response('No encontrado', { status: 404, headers: { 'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex' } });
+const alternate = await localizedPage('home', 'en', 19);
+---
+<HomePage page={page} locale="es" alternate={!!alternate} />

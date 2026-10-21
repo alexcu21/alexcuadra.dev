@@ -1,0 +1,20 @@
+{
+  "source": "docs/CONTACT_PRIVACY_DRAFT.md",
+  "status": "draft",
+  "pages": [
+    {
+      "locale": "en",
+      "title": "Contact form privacy",
+      "file": "en.gutenberg.html",
+      "sha256": "776e94de3a0655614cbb01a28932b28c3a318f2e617de3397e791c28f1861246",
+      "unresolvedNotes": []
+    },
+    {
+      "locale": "es",
+      "title": "Privacidad del formulario de contacto",
+      "file": "es.gutenberg.html",
+      "sha256": "a0b6d32bbc5085706ea1b6daac73e84994ffb8927616bcf4b66b447e7bd85ad9",
+      "unresolvedNotes": []
+    }
+  ]
+}

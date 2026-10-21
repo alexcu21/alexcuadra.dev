@@ -1,24 +1,37 @@
 ---
 import { getHomeInfo } from '../data/client';
+import { publicTranslationLinks } from '../data/content-language.js';
+import { hasPageTranslation } from '../data/page-navigation.js';
+import { hasBlogPosts } from '../data/blog-content.js';
+import { hasLabProjects } from '../data/lab-content.js';
 import Icon from './Icon.astro';
 import ThemeToggle from './ThemeToggle.astro';
 import type { iconPaths } from './IconPaths';
 
-const data = await getHomeInfo();
+interface Props { locale?: 'en' | 'es'; }
+const { locale = 'en' } = Astro.props;
+const spanish = locale === 'es';
+const data = await getHomeInfo('en');
+const spanishHome = spanish && publicTranslationLinks(data[0]).some((target: { locale: 'en' | 'es' }) => target.locale === 'es');
+const spanishAbout = spanish && await hasPageTranslation(68, 'es');
+const showBlog = await hasBlogPosts(locale);
+const showLab = await hasLabProjects(locale);
 /** Main menu items */
 const textLinks: { label: string; href: string }[] = [
-	{ label: 'Home', href: '/' },
-	{ label: 'Work', href: '/work/' },
-	{ label: 'About', href: '/about/' },
-	{ label: 'Articles & Mentions', href:'/articles/'}
+	{ label: spanishHome ? 'Inicio' : spanish ? 'Inicio (EN)' : 'Home', href: spanishHome ? '/es/' : '/' },
+	{ label: spanish ? 'Proyectos' : 'Work', href: spanish ? '/es/proyectos/' : '/work/' },
+	{ label: spanishAbout ? 'Sobre mí' : spanish ? 'Sobre mí (EN)' : 'About', href: spanishAbout ? '/es/sobre-mi/' : '/about/' },
+	{ label: spanish ? 'Artículos (EN)' : 'Articles & Mentions', href:'/articles/'}
 ];
+if (showBlog) textLinks.push({ label: 'Blog', href: spanish ? '/es/blog/' : '/blog/' });
+if (showLab) textLinks.push({ label: 'LAB', href: spanish ? '/es/laboratorio/' : '/lab/' });
 
 /** Icon links to social media — edit these with links to your profiles! */
 const iconLinks: { label: string; href: string; icon: keyof typeof iconPaths }[] = [
 	{ label: 'Twitter', href: data[0].homePageFields.twitterUrl, icon: 'twitter-logo' },
 	{ label: 'GitHub', href: data[0].homePageFields.githubUrl, icon: 'github-logo' },
 	{ label: 'YouTube', href: data[0].homePageFields.youtubeUrl, icon: 'youtube-logo' },
-	{ label: 'YouTube', href: data[0].homePageFields.linkedinUrl, icon: 'linkedin-logo' },
+	{ label: 'LinkedIn', href: data[0].homePageFields.linkedinUrl, icon: 'linkedin-logo' },
 ];
 
 /** Test if a link is pointing to the current page. */
@@ -26,20 +39,20 @@ const isCurrentPage = (href: string) => {
 	let pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, '');
 	if (pathname.at(0) !== '/') pathname = '/' + pathname;
 	if (pathname.at(-1) !== '/') pathname += '/';
-	return pathname === href || (href !== '/' && pathname.startsWith(href));
+	return pathname === href || (href !== '/' && href !== '/es/' && pathname.startsWith(href));
 };
 ---
 
-<nav>
+<nav aria-label={spanish ? 'Navegación principal' : 'Main navigation'}>
 	<div class="menu-header">
-		<a href="/" class="site-title">
+		<a href={spanishHome ? '/es/' : '/'} class="site-title">
 			<Icon icon="code-logo" color="var(--accent-regular)" size="1.6em" gradient />
 			Alex Cuadra
 		</a>
 		<menu-button>
 			<template>
-				<button class="menu-button" aria-expanded="false">
-					<span class="sr-only">Menu</span>
+				<button class="menu-button" aria-expanded="false" aria-controls="menu-content">
+					<span class="sr-only">{spanish ? 'Menú' : 'Menu'}</span>
 					<Icon icon="list" />
 				</button>
 			</template>
@@ -50,7 +63,7 @@ const isCurrentPage = (href: string) => {
 			{
 				textLinks.map(({ label, href }) => (
 					<li>
-						<a aria-current={isCurrentPage(href) ? 'page' : null} class="link" href={href}>
+						<a aria-current={isCurrentPage(href) ? 'page' : null} class="link" href={href} hreflang={href.startsWith('/es/') ? 'es' : 'en'}>
 							{label}
 						</a>
 					</li>
@@ -77,7 +90,7 @@ const isCurrentPage = (href: string) => {
 			{
 				textLinks.map(({ label, href }) => (
 					<li>
-						<a aria-current={isCurrentPage(href) ? 'page' : null} class="link" href={href}>
+						<a aria-current={isCurrentPage(href) ? 'page' : null} class="link" href={href} hreflang={href.startsWith('/es/') ? 'es' : 'en'}>
 							{label}
 						</a>
 					</li>
@@ -97,7 +110,7 @@ const isCurrentPage = (href: string) => {
 			</div>
 
 			<div class="theme-toggle">
-				<ThemeToggle />
+				<ThemeToggle locale={locale} />
 			</div>
 		</div>
 	</div>
@@ -127,12 +140,19 @@ const isCurrentPage = (href: string) => {
 			// Toggle menu visibility when the menu button is clicked.
 			btn.addEventListener('click', () => setExpanded(menu.hidden));
 
+			btn.addEventListener('keydown', event => {
+				if (event.key === 'Escape' && !btn.hidden) { setExpanded(false); btn.focus(); }
+			});
+			menu.addEventListener('keydown', event => {
+				if (event.key === 'Escape' && !btn.hidden) { setExpanded(false); btn.focus(); }
+			});
+
 			// Hide menu button for large screens.
 			const handleViewports = (e: MediaQueryList | MediaQueryListEvent) => {
 				setExpanded(e.matches);
 				btn.hidden = e.matches;
 			};
-			const mediaQueries = window.matchMedia('(min-width: 50em)');
+			const mediaQueries = window.matchMedia('(min-width: 64em)');
 			handleViewports(mediaQueries);
 			mediaQueries.addEventListener('change', handleViewports);
 		}
@@ -146,7 +166,8 @@ const isCurrentPage = (href: string) => {
 		position: relative;
 		font-family: var(--font-brand);
 		font-weight: 500;
-		margin-bottom: 3.5rem;
+		margin-bottom: 0;
+    border-bottom: 1px solid var(--gray-800);
 	}
 
 	.menu-header {
@@ -173,8 +194,8 @@ const isCurrentPage = (href: string) => {
 		padding: 0.5rem;
 		font-size: 1.5rem;
 		color: var(--gray-300);
-		background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
-		box-shadow: var(--shadow-md);
+		background: var(--gray-900);
+		box-shadow: none;
 	}
 
 	.menu-button[aria-expanded='true'] {
@@ -235,7 +256,7 @@ const isCurrentPage = (href: string) => {
 		padding: 1.5rem 2rem 1.5rem 1.5rem;
 		background-color: var(--gray-999);
 		border-radius: 0 0 0.75rem 0.75rem;
-		box-shadow: var(--shadow-lg);
+		box-shadow: var(--shadow-sm);
 	}
 
 	.socials {
@@ -255,7 +276,7 @@ const isCurrentPage = (href: string) => {
 
 	.social:hover,
 	.social:focus {
-		color: var(--accent-text-over);
+		color: var(--link-color);
 	}
 
 	.theme-toggle {
@@ -264,12 +285,14 @@ const isCurrentPage = (href: string) => {
 		height: calc(var(--icon-size) + 2 * var(--icon-padding));
 	}
 
-	@media (min-width: 50em) {
+	@media (min-width: 64em) {
 		nav {
 			display: grid;
-			grid-template-columns: 1fr auto 1fr;
+			grid-template-columns: auto 1fr auto;
 			align-items: center;
-			padding: 2.5rem 5rem;
+			padding: 1.25rem 2rem;
+      width: min(100%, 90rem);
+      margin-inline: auto;
 			gap: 1rem;
 		}
 
@@ -289,11 +312,12 @@ const isCurrentPage = (href: string) => {
 			position: relative;
 			flex-direction: row;
 			font-size: var(--text-sm);
+      justify-self: center;
 			border-radius: 999rem;
 			border: 0;
 			padding: 0.5rem 0.5625rem;
-			background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
-			box-shadow: var(--shadow-md);
+			background: var(--gray-900);
+			box-shadow: none;
 		}
 
 		.nav-items::before {
@@ -339,7 +363,7 @@ const isCurrentPage = (href: string) => {
 		}
 	}
 
-	@media (min-width: 60em) {
+	@media (min-width: 78em) {
 		.socials {
 			display: flex;
 			justify-content: flex-end;

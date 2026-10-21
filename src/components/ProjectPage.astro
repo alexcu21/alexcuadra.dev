@@ -1,0 +1,75 @@
+---
+import WordPressContent from './WordPressContent.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LinksToProject from './LinksToProjects.astro';
+import ContactCTA from './ContactCTA.astro';
+import Icon from './Icon.astro';
+import Pill from './Pill.astro';
+import { routeBase, contentPath } from '../data/site-routes.js';
+import { publicTranslationLinks } from '../data/content-language.js';
+interface Props { project: any; locale: 'en' | 'es'; }
+const { project, locale } = Astro.props;
+const { title, content } = project;
+const { githuburl, projectTagline, websiteurl } = project.projects || {};
+const tags = project.tags?.nodes || [];
+const img = project.featuredImage?.node?.sourceUrl;
+const hasBody = typeof content === 'string' && content.trim().length > 0;
+const targetLocale = locale === 'en' ? 'es' : 'en';
+const alternate = publicTranslationLinks(project).find((target: {locale: string; slug: string}) => target.locale === targetLocale);
+const alternates: {locale: 'en' | 'es'; path: string}[] = alternate ? [{locale, path:contentPath('projects',locale,project.slug)},
+  {locale:targetLocale, path:contentPath('projects',alternate.locale,alternate.slug)}] : [];
+---
+<BaseLayout title={title} description={projectTagline || undefined} locale={locale} alternates={alternates}>
+  <main id="main-content" tabindex="-1" class="project wrapper">
+    <nav class="project-nav" aria-label={locale === 'es' ? 'Navegación del proyecto' : 'Project navigation'}>
+      <a class="back-link" href={routeBase('projects', locale)}><Icon icon="arrow-left" /> {locale === 'es' ? 'Todos los proyectos' : 'All projects'}</a>
+      {alternate && <a href={contentPath('projects', alternate.locale, alternate.slug)} lang={alternate.locale} hreflang={alternate.locale}>{alternate.locale === 'es' ? 'Español' : 'English'}</a>}
+    </nav>
+    <header class="project-header">
+      <p class="eyebrow">{locale === 'es' ? 'Proyecto' : 'Project'}</p>
+      <h1>{title}</h1>
+      {projectTagline && <p class="description">{projectTagline}</p>}
+      {tags.length > 0 && <ul class="tags" aria-label={locale === 'es' ? 'Etiquetas del proyecto' : 'Project tags'}>
+        {(tags as { name: string }[]).map(tag => <li><Pill>{tag.name}</Pill></li>)}
+      </ul>}
+      {(githuburl || websiteurl) && <div class="links-to-project">
+        {websiteurl && <LinksToProject href={websiteurl} text={locale === 'es' ? 'Sitio web' : 'Website'} />}
+        {githuburl && <LinksToProject href={githuburl} text="GitHub" />}
+      </div>}
+    </header>
+    {img && <figure class="project-image"><img src={img} alt="" decoding="async" /></figure>}
+    {hasBody && <section class="project-story" aria-labelledby="project-story-title">
+      <h2 id="project-story-title">{locale === 'es' ? 'Sobre el proyecto' : 'About the project'}</h2>
+      <div class="story-content"><WordPressContent html={content} /></div>
+    </section>}
+    <nav class="project-end" aria-label={locale === 'es' ? 'Más proyectos' : 'More projects'}>
+      <a class="back-link" href={routeBase('projects', locale)}><Icon icon="arrow-left" /> {locale === 'es' ? 'Volver a proyectos' : 'Back to projects'}</a>
+    </nav>
+  </main>
+  <ContactCTA locale={locale} />
+</BaseLayout>
+
+<style>
+  .project { padding-block: 2rem 4rem; min-width: 0; }
+  .project-nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 3rem; font-size: .875rem; }
+  nav a { color: var(--gray-300); text-underline-offset: .3em; }
+  .back-link { display: inline-flex; align-items: center; gap: .5rem; }
+  .project-header { max-width: 64rem; padding-bottom: 2.5rem; }
+  .eyebrow { color: var(--link-color); text-transform: uppercase; letter-spacing: .14em; font-size: .75rem; font-weight: 700; margin-bottom: 1rem; }
+  h1 { font-size: clamp(2.25rem, 6vw, 5rem); letter-spacing: -.04em; line-height: 1.1; overflow-wrap: anywhere; }
+  .description { color: var(--gray-300); font-size: clamp(1.1rem, 2vw, 1.5rem); line-height: 1.6; max-width: 54ch; margin-top: 1.5rem; }
+  .tags { display: flex; flex-wrap: wrap; gap: .5rem; list-style: none; padding: 0; margin-top: 1.5rem; }
+  .links-to-project { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
+  .project-image { border: 1px solid var(--gray-800); background: var(--gray-900); border-radius: 1.25rem; overflow: hidden; }
+  .project-image img { display: block; width: 100%; height: auto; }
+  .project-story { display: grid; gap: 1.5rem; padding-block: 3rem; border-bottom: 1px solid var(--gray-800); min-width: 0; }
+  h2 { font-size: 1.25rem; line-height: 1.4; }
+  .story-content { min-width: 0; max-width: 70ch; font-size: 1.0625rem; }
+  .project-end { padding-top: 2.5rem; }
+  @media (min-width: 50em) {
+    .project { padding-block: 3rem 5rem; }
+    .project-nav { margin-bottom: 4rem; }
+    .project-header { padding-bottom: 3.5rem; }
+    .project-story { grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: 3rem; padding-block: 4rem; }
+  }
+</style>

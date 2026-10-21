@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { sortProjectsByModified } from '../data/projects.js';
+import ContactCTA from '../components/ContactCTA.astro';
+import PortfolioPreview from '../components/PortfolioPreview.astro';
+import Grid from '../components/Grid.astro';
+
+import { getProjectsInfo } from '../data/client';
+
+interface Props { locale: 'en' | 'es'; }
+const { locale } = Astro.props;
+const spanish = locale === 'es';
+const projectsData = await getProjectsInfo(locale);
+const alternates: {locale: 'en' | 'es'; path: string}[] = [{locale:'en',path:'/work/'},{locale:'es',path:'/es/proyectos/'}];
+
+const projects = sortProjectsByModified(projectsData);
+
+---
+
+<BaseLayout
+	title={`${spanish ? 'Proyectos' : 'My Work'} | Alex Cuadra`}
+	description={spanish ? 'Proyectos de Alex Cuadra' : "Learn about Alex Cuadra's most recent projects"} locale={locale} alternates={alternates}
+>
+	<div class="stack projects-flow">
+		<main id="main-content" tabindex="-1" class="wrapper stack projects-archive">
+			<nav aria-label={spanish ? 'Idioma de la página' : 'Page language'}><a href={spanish ? '/work/' : '/es/proyectos/'} lang={spanish ? 'en' : 'es'}>{spanish ? 'English' : 'Español'}</a></nav>
+      <header class="archive-header">
+        <h1>{spanish ? 'Proyectos' : 'My Work'}</h1>
+        <p>{spanish ? 'Explora mis proyectos y experiencia.' : 'See my most recent projects below to get an idea of my past experience.'}</p>
+      </header>
+			{projects.length === 0 && <section class="empty">
+        <p>{spanish ? 'Todavía no hay proyectos publicados en español.' : 'There are no published projects yet.'}</p>
+        {spanish && <a href="/work/" hreflang="en">Ver proyectos en inglés</a>}
+      </section>}
+      <Grid>
+				{
+					projects.map((project:any) => (
+						<li>
+							<PortfolioPreview project={project} locale={locale} headingLevel="h2" />
+						</li>
+					))
+				}
+			</Grid>
+		</main>
+		<ContactCTA locale={locale} />
+	</div>
+</BaseLayout>
+
+<style>
+  .projects-flow { gap: 4rem; }
+  .projects-archive { padding-top: 2rem; gap: 2.5rem; }
+  nav a, .empty { color: var(--gray-300); text-underline-offset: .3em; }
+  .archive-header { max-width: 54ch; }
+  h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); letter-spacing: -.04em; overflow-wrap: anywhere; }
+  .archive-header p { color: var(--gray-300); font-size: 1.125rem; line-height: 1.7; margin-top: 1.25rem; }
+  .projects-archive :global(.grid) { gap: 1.5rem; grid-auto-rows: auto; grid-template-columns: minmax(0, 1fr); }
+  .projects-archive :global(.grid > li) { min-width: 0; }
+  .empty { padding: 2rem; border: 1px solid var(--gray-800); border-radius: 1rem; background: var(--gray-900); }
+  .empty a { display: inline-block; margin-top: 1rem; }
+  @media (min-width: 50em) {
+    .projects-flow { gap: 5rem; }
+    .projects-archive { padding-top: 3rem; gap: 3rem; }
+    .projects-archive :global(.grid) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+</style>

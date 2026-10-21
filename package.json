@@ -10,24 +10,35 @@
     "preview": "astro preview",
     "astro": "astro",
     "test": "node --test tests/*.test.js",
+    "test:contact-coordinator": "node --test tests/integration/contact-coordinator.test.mjs",
+    "test:contact-runtime": "node --test tests/integration/contact-runtime.test.mjs",
+    "contact:readiness": "node scripts/contact-readiness.mjs",
+    "privacy:export": "node scripts/contact-privacy-export.mjs",
+    "dev:contact-qa": "astro dev --root tests/fixtures/contact --ignore-lock",
+    "build:contact-qa": "astro build --root tests/fixtures/contact",
     "check": "astro check",
     "deploy:staging": "npm run build && wrangler deploy",
     "test:smoke": "node scripts/smoke.mjs",
+    "staging:recovery": "node scripts/staging-recovery.mjs",
     "cms:inventory": "node scripts/cms-inventory.mjs",
     "cms:baseline": "node scripts/cms-baseline.mjs",
     "cms:languages": "node scripts/cms-languages.mjs",
     "test:cms-security": "sh tests/integration/wordpress-polylang/run.sh",
-    "prebuild": "node scripts/build-info.mjs"
+    "prebuild": "node scripts/build-info.mjs",
+    "test:cms-streaming": "node --test tests/integration/cms-streaming.test.mjs",
+    "test:references-ssr": "node --test tests/integration/references-ssr.test.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/cloudflare": "^14.4.0",
+    "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.4.0",
     "dotenv": "^16.4.7",
     "graphql-request": "^7.1.2",
+    "htmlparser2": "12.0.0",
+    "sanitize-html": "2.18.1",
     "tailwindcss": "^4.3.3",
-    "typescript": "^5.7.2",
-    "@tailwindcss/vite": "^4.3.3"
+    "typescript": "^5.7.2"
   },
   "devDependencies": {
     "@types/node": "^22.10.3",

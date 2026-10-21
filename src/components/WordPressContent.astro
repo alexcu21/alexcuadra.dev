@@ -1,0 +1,20 @@
+---
+import { prepareWordPressDocument } from '../data/wordpress-html.js';
+import TableOfContentsList from './TableOfContentsList.astro';
+import '../styles/wordpress-content.css';
+interface Section { key: string; title?: string; html?: string | null; text?: string | null; }
+interface Props { html?: string | null; sections?: Section[]; scope?: string; toc?: boolean; locale?: 'en' | 'es'; }
+const { html, sections, scope = 'body', toc = false, locale = 'en' } = Astro.props;
+const document = prepareWordPressDocument(sections ?? [{ key: 'body', html }], scope);
+const tocLabel = locale === 'es' ? 'En esta página' : 'On this page';
+---
+{toc && document.headings.length >= 2 && <details class="editorial-toc" open>
+  <summary>{tocLabel}</summary>
+  <nav aria-label={tocLabel}><TableOfContentsList items={document.outline} /></nav>
+</details>}
+<div class="wordpress-content">
+  {document.sections.map(section => section.title ? <section class="wordpress-section">
+    <h2 id={section.id} tabindex="-1">{section.title}</h2>
+    {section.text != null ? <p class="editorial-plain">{section.text}</p> : <Fragment set:html={section.html} />}
+  </section> : <Fragment set:html={section.html} />)}
+</div>

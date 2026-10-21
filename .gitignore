@@ -31,3 +31,6 @@ pnpm-debug.log*
 .dev.vars.*
 .env.*
 !.env.example
+
+# Local editor launch configuration, preserved on disk
+/src/pages/.claude/

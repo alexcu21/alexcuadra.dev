@@ -1,0 +1,44 @@
+---
+import ContactFormFields from '../../../../../src/components/ContactFormFields.astro';
+import '../../../../../src/styles/global.css';
+export function getStaticPaths() { return [{ params: { variant: undefined } }, { params: { variant: 'es-mobile-dark' } }]; }
+const es = Astro.url.pathname.includes('es-mobile-dark');
+const copy = {
+  heading: es ? 'Contacto de prueba' : 'Test contact',
+  introduction: es ? 'Prueba local. No envía correo.' : 'Local test. No email is sent.',
+  name_label: es ? 'Nombre' : 'Name', email_label: 'Email', message_label: es ? 'Mensaje' : 'Message',
+  submit_label: es ? 'Enviar' : 'Send', sending_message: es ? 'Enviando…' : 'Sending…',
+  success_message: es ? 'Solicitud aceptada.' : 'Request accepted.',
+  validation_message: es ? 'Revisa los campos.' : 'Check the fields.',
+  challenge_message: es ? 'Completa la verificación.' : 'Complete verification.',
+  rate_limit_message: es ? 'Demasiados intentos.' : 'Too many attempts.',
+  unavailable_message: es ? 'Servicio no disponible. Usa el contacto alternativo.' : 'Service unavailable. Use the alternative contact.',
+  unknown_delivery_message: es ? 'Entrega incierta. No reenvíes el mensaje.' : 'Delivery uncertain. Do not resend.',
+  privacy_text: es ? 'Aviso ficticio para esta prueba.' : 'Fictional notice for this test.',
+  privacy_link_label: es ? 'Privacidad' : 'Privacy', privacy_url: '#fixture-privacy',
+  alternative_label: es ? 'Contacto alternativo' : 'Alternative contact',
+};
+---
+<html lang={es ? 'es' : 'en'} class={es ? 'theme-dark' : ''}>
+  <head><meta charset="utf-8" /><meta name="viewport" content="width=device-width" /><meta name="robots" content="noindex" /><title>Contact fixture — local only</title></head>
+  <body>
+    <main style={es ? 'max-width:320px;margin:auto' : undefined}>
+      <h1>Contact QA</h1>
+      <nav aria-label="Test controls"><a href="/">EN</a> <a href="/es-mobile-dark">ES / 320px / dark</a></nav>
+      <fieldset><legend>Local simulation</legend>
+        <button id="verify">Verify mock challenge</button><button id="expire">Expire mock challenge</button>
+        <button id="challenge-error">Fail mock challenge</button>
+        <label for="outcome">Response</label><select id="outcome"><option value="accepted">Accepted</option><option value="limited">Rate limited</option><option value="unknown">Delivery unknown</option><option value="unavailable">Unavailable</option><option value="network">Network error</option></select>
+        <output id="attempts">0 local attempts</output>
+      </fieldset>
+      <ContactFormFields copy={copy} locale={es ? 'es' : 'en'} email="fixture@example.test" sitekey="test-only" />
+      <p id="fixture-privacy">Fictional fixture. Never deployed. No remote challenge, CMS or email.</p>
+    </main>
+    <script is:inline src="/fixture.js"></script>
+  </body>
+</html>
+<style is:global>
+  body { background: var(--gray-999); color: var(--gray-0); }
+  fieldset { display: flex; flex-wrap: wrap; gap: .5rem; padding: 1rem; border: 1px solid; }
+  fieldset button, select { border: 1px solid; padding: .5rem; background: var(--gray-999); color: var(--gray-0); }
+</style>

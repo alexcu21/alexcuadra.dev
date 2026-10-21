@@ -2,17 +2,22 @@
 import { getHomeInfo } from '../data/client';
 import CallToAction from './CallToAction.astro';
 import Icon from './Icon.astro';
+import ContactForm from './ContactForm.astro';
+import { env } from 'cloudflare:workers';
 
-const data = await getHomeInfo();
+interface Props { locale?: 'en' | 'es'; }
+const { locale = 'en' } = Astro.props;
+const data = await getHomeInfo('en');
 ---
 
 <aside>
-	<h2>Interested in working together?</h2>
+	<h2>{locale === 'es' ? '¿Te interesa trabajar conmigo?' : 'Interested in working together?'}</h2>
 	<CallToAction href={`mailto:${data[0].homePageFields.email}`}>
-		Send Me a Message
+		{locale === 'es' ? 'Envíame un mensaje' : 'Send Me a Message'}
 		<Icon icon="paper-plane-tilt" size="1.2em" />
 	</CallToAction>
 </aside>
+{locale === 'en' && env.CONTACT_FORM_ENABLED === 'true' && env.TURNSTILE_SITE_KEY && <ContactForm sitekey={env.TURNSTILE_SITE_KEY} email={data[0].homePageFields.email} />}
 
 <style>
 	aside {

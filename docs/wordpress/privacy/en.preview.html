@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Contact form privacy — draft</title>
+<style>body{font:18px/1.65 system-ui,sans-serif;max-width:48rem;margin:3rem auto;padding:0 1rem;color:#172033;background:#fff}h1,h2{line-height:1.2}h2{margin-top:2rem}a{color:#123f9d}aside{border:2px solid #8a5200;padding:1rem;background:#fff5dc}p{overflow-wrap:anywhere}</style></head>
+<body><aside>DRAFT — not published. Resolve bracketed notes before publishing.</aside><main><h1>Contact form privacy</h1><!-- wp:paragraph -->
+<p>Last updated: October 18, 2026</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>This notice explains how Alex Cuadra handles information sent through the contact form on alexcuadra.dev. For questions about this notice or your information, contact <a href="mailto:alex@alexcuadra.dev">alex@alexcuadra.dev</a>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Information you send</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The form asks for your name, email address and message. We use this information to read and respond to your enquiry. Your email address is included as the reply address so we can respond directly. Please avoid including sensitive information that is unnecessary for your enquiry. The form does not accept attachments and does not subscribe you to marketing emails.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Processing and service providers</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Cloudflare hosts the form backend, provides the Turnstile bot check and sends the message to our private contact inbox. Turnstile may process technical information about your browser to check for abuse. The backend also uses the connection IP address for rate limiting; the application does not put it in the email or application result logs. The form backend does not pass that IP address to Turnstile Siteverify as an additional verification field.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The application does not save your message in WordPress or in a message queue. Cloudflare processes information to operate the form services, and Google provides the Gmail inbox where messages are received. These providers may process information in other countries under their own policies: <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare privacy</a>, <a href="https://www.cloudflare.com/turnstile-privacy-policy/">Turnstile privacy</a> and <a href="https://policies.google.com/privacy">Google privacy</a>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Duplicate prevention and technical records</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>To prevent repeated sends and limit abuse, the application stores a keyed fingerprint derived from the form fields, together with the time of the send attempt. It does not store the name, email, message, IP address or Turnstile token in that record. The fingerprint is not presented as anonymous data. Duplicate records stop being used after 24 hours and are removed by application cleanup and scheduled alarms. Cleanup can be delayed, and the provider's backup/recovery retention is separate.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Application result logs contain a request identifier, result category, status and duration. The application deliberately excludes the message, name, email, IP address, Turnstile token and secrets from these result logs. Cloudflare documents Workers Logs retention of 3 days on its Free plan and 7 days on its Paid plan. Platform invocation logs may also include request and response metadata, separate from our application result logs. SQLite recovery history can retain earlier fingerprint records for up to 30 days. Access is managed through Cloudflare account permissions. These provider retention periods are separate from the 24-hour application cleanup and the inbox policy below.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">How long messages are kept</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Enquiry messages are kept in the inbox for 30 days from receipt and then deleted as part of inbox management. The 24-hour duplicate-prevention window does not delete messages from the inbox or override service-provider retention.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Questions and requests</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>You can contact <a href="mailto:alex@alexcuadra.dev">alex@alexcuadra.dev</a> with questions or requests about information you sent.</p>
+<!-- /wp:paragraph -->
+</main></body></html>
