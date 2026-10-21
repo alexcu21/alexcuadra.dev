@@ -1,0 +1,10 @@
+name: alexcuadra-editorial-change-lab
+services:
+  wordpress:
+    volumes:
+      - ../wordpress-mcp-changes:/changes-lab:ro
+      - ../../../wordpress/plugins/alexcuadra-editorial-changes:/changes-plugin:ro
+  cli:
+    volumes:
+      - ../wordpress-mcp-changes:/changes-lab:ro
+      - ../../../wordpress/plugins/alexcuadra-editorial-changes:/changes-plugin:ro

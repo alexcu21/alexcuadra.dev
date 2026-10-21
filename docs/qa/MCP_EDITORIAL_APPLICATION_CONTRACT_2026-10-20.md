@@ -1,0 +1,13 @@
+# Revisión del contrato de aplicación — 20 octubre 2026
+
+Entregado [contrato local](../WORDPRESS_MCP_SOURCE_APPLICATION.md) y [JSON de cinco schemas previstos](../wordpress/editorial-source-application-contract.json). **Diseño, no implementación ni nuevas abilities.** Ninguna operación de aplicación/recuperación de fuentes se ejecutó. Editorial Changes conserva0.3-lab y sus seis abilities; la última aceptación runtime sigue siendo290 en el stack aislado, no repetida en este incremento documental.
+
+Decisión importante: actualizar un Project publicado produce un efecto público inmediato. Se exige revisión/diff congelado, aprobación de efecto público por operador distinto y capacidades separadas de preparar/aplicar/recuperar. No se finge edición invisible porque el Worker sea staging. Los nombres de capacidades son propuestas; no se concedieron a nadie.
+
+Schemas cerrados de prepare/get/apply/prepare-recovery/recover, sin body/meta/estado/ID destino arbitrarios en commit. Contrato define snapshots exactos/ACF key, caducidad y consumo de aprobación, idempotencia, estados que sustituyan el draft/applied=false fijo0.3, transacción/CAS entre dueños y recuperación condicionada a la huella posterior. Reserva capacidad de recuperación antes de aplicar; no prometer undo si alguien editó después o si se revocó permiso. Incluye matriz de pruebas, migración/privacidad y límites de hooks/efectos fuera de la DB.
+
+Validación documental: JSON parsea, cinco operaciones previstas, todas las propiedades adicionales prohibidas, entradas requeridas completas y request_id en cada mutación. SHA256 de ambos PHP del prototipo y fuente/ZIP de lectura coinciden con el resultado290 anterior. `git diff --check` correcto. No se escribieron ni ejecutaron tests runtime nuevos para un contrato sin código; no se encendió Docker ni se repitieron build/SSR/smoke, porque no cambió el frontend ni se preparó todavía un despliegue.
+
+Sin CMS/consultas/instalaciones/permisos/credenciales reales, Workers/contacto/envíos/navegador ni datos locales descartados. Dev conservado. No se actualizó staging en este incremento.
+
+Alex preguntó cuándo se modifica CMS y staging. [Entrega frontend siguiente](../STAGING_NEXT_RELEASE.md) separada de MCP: delta local TOC/anchors, verificación técnica/artefacto/configuración, deploy solo staging y smoke espaciado, con QA visual aún explícito y bloqueo respetado. No hace falta terminar MCP para prepararla. El CMS cambia después de implementación/ensayo/paquete/reconciliación y aprobación del diff/efecto público concretos; no por aprobar un contrato ni por un continúa genérico. TOC visual/429/contacto aplazado siguen abiertos.

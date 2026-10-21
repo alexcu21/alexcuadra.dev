@@ -1,0 +1,317 @@
+{
+  "status": "implemented_isolated_lab_not_released",
+  "currentRuntime": "0.5.0-lab",
+  "proposedContractVersion": "source-application-0.1",
+  "allowedEnvironment": {
+    "wpEnvironment": "local",
+    "homeUrl": "http://wordpress"
+  },
+  "sourcePolicy": {
+    "postType": "project",
+    "status": "publish",
+    "passwordAllowed": false,
+    "locales": [
+      "en",
+      "es"
+    ],
+    "publicEffectRequiresIndependentApproval": true,
+    "createSourceAllowed": false,
+    "changeStatusOrTranslationsAllowed": false
+  },
+  "fieldMapping": {
+    "body_html": {
+      "target": "post_content"
+    },
+    "tagline": {
+      "target": "project_tagline",
+      "acfKey": "field_676dcb2aec8d4",
+      "acfType": "textarea",
+      "acfGroup": "group_676d40f7bb646",
+      "referenceMeta": "_project_tagline"
+    }
+  },
+  "plannedCapabilities": {
+    "apply": "alexcuadra_apply_project_changes",
+    "recover": "alexcuadra_recover_project_changes",
+    "humanApproval": "alexcuadra_approve_public_project_changes"
+  },
+  "approvalPolicy": {
+    "outsideServiceMcpInventory": true,
+    "differentReviewerAndExecutor": true,
+    "maxLifetimeSeconds": 600,
+    "singleUse": true,
+    "boundTo": [
+      "review_hash",
+      "review_id",
+      "executor_id",
+      "project_id",
+      "locale",
+      "operation",
+      "source_version",
+      "schema_version"
+    ],
+    "clientApprovalBooleanAllowed": false
+  },
+  "operations": {
+    "prepare-project-application": {
+      "plannedAbility": "alexcuadra/prepare-project-application",
+      "readonly": false,
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "proposal_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "es"
+            ]
+          },
+          "expected_proposal_version": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "expected_base_version": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "request_id": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{32}$"
+          }
+        },
+        "required": [
+          "proposal_id",
+          "locale",
+          "expected_proposal_version",
+          "expected_base_version",
+          "request_id"
+        ]
+      },
+      "implementedInLab": true
+    },
+    "get-project-application": {
+      "plannedAbility": "alexcuadra/get-project-application",
+      "readonly": true,
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "review_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "es"
+            ]
+          }
+        },
+        "required": [
+          "review_id",
+          "locale"
+        ]
+      },
+      "implementedInLab": true
+    },
+    "apply-project-change": {
+      "plannedAbility": "alexcuadra/apply-project-change",
+      "readonly": false,
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "review_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "es"
+            ]
+          },
+          "expected_review_hash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "approval_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "request_id": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{32}$"
+          }
+        },
+        "required": [
+          "review_id",
+          "locale",
+          "expected_review_hash",
+          "approval_id",
+          "request_id"
+        ]
+      },
+      "implementedInLab": true
+    },
+    "prepare-project-recovery": {
+      "plannedAbility": "alexcuadra/prepare-project-recovery",
+      "readonly": false,
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "application_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "es"
+            ]
+          },
+          "expected_source_version": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "request_id": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{32}$"
+          }
+        },
+        "required": [
+          "application_id",
+          "locale",
+          "expected_source_version",
+          "request_id"
+        ]
+      },
+      "implementedInLab": true
+    },
+    "recover-project-change": {
+      "plannedAbility": "alexcuadra/recover-project-change",
+      "readonly": false,
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "review_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "es"
+            ]
+          },
+          "expected_review_hash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "approval_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "request_id": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{32}$"
+          }
+        },
+        "required": [
+          "review_id",
+          "locale",
+          "expected_review_hash",
+          "approval_id",
+          "request_id"
+        ]
+      },
+      "implementedInLab": true
+    }
+  },
+  "lifecycle": {
+    "review": [
+      "prepared",
+      "approved",
+      "consumed",
+      "expired"
+    ],
+    "application": [
+      "prepared",
+      "applied",
+      "recovered"
+    ]
+  },
+  "transactionPolicy": {
+    "lockOrder": [
+      "owner_admission",
+      "proposal_review_approval",
+      "source_post",
+      "source_meta"
+    ],
+    "revalidateAfterLock": true,
+    "commitTogether": [
+      "source_fields",
+      "proposal_state",
+      "application_event_and_snapshots",
+      "approval_consumption",
+      "idempotency_receipt",
+      "quota_and_recovery_reservation"
+    ],
+    "recoverOnlyIfCurrentSourceMatchesAppliedAfterVersion": true,
+    "externalEffectsTransactional": false
+  },
+  "proposedLimits": {
+    "ownerProposals": 8,
+    "ownerSuccessfulRequestsIncludingReservations": 128,
+    "ownerLogicalBytesIncludingSnapshotsAndReservations": 8388608,
+    "ownerRetainedApplicationAndRecoveryReviewsIncludingReservations": 8,
+    "proposalRevisions": 32,
+    "proposalEncodedBytes": 2097152,
+    "reserveRecoveryCapacityBeforeApply": true,
+    "automaticPruning": false
+  },
+  "acceptanceGroups": [
+    "permission_and_owner_isolation",
+    "independent_exact_approval",
+    "whitelisted_field_application",
+    "cross_owner_source_concurrency_and_replays",
+    "storage_hook_commit_and_cache_failures",
+    "conditional_recovery_with_reserved_capacity",
+    "graphql_rest_privacy_and_03_migration",
+    "site_schema_reconciliation_and_release_decision"
+  ],
+  "implementedInLab": {
+    "abilities": [
+      "alexcuadra/prepare-project-application",
+      "alexcuadra/get-project-application",
+      "alexcuadra/apply-project-change",
+      "alexcuadra/prepare-project-recovery",
+      "alexcuadra/recover-project-change"
+    ],
+    "operatorApproval": "WP-CLI function only; not an MCP ability",
+    "sourceApplication": true,
+    "sourceRecovery": true,
+    "approvalConsumption": true,
+    "recoveryReservation": true,
+    "qa": "docs/qa/MCP_EDITORIAL_APPLICATIONS_RESULT_2026-10-20.json"
+  },
+  "recoveryReservation": {
+    "firstRecoveryReview": 1,
+    "successfulRequests": 2,
+    "bytes": 2113536,
+    "byteAdmissionHeadroom": 8192,
+    "expiredReviewReplacement": "new_review_and_approval_with_fresh_capacity_no_pruning",
+    "releaseOnConfirmedRecovery": true
+  }
+}

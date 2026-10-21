@@ -27,9 +27,13 @@
     "test:mcp-read": "sh tests/integration/wordpress-mcp-read/run.sh",
     "test:mcp-http": "sh tests/integration/wordpress-mcp-read/run.sh --http-only",
     "test:mcp-site-stack": "sh tests/integration/wordpress-mcp-read/run.sh --site-stack",
+    "test:mcp-changes": "sh tests/integration/wordpress-mcp-changes/run.sh",
+    "test:mcp-changes-http": "sh tests/integration/wordpress-mcp-changes/run.sh --http-only",
+    "test:mcp-changes-stack": "sh tests/integration/wordpress-mcp-changes/run.sh --graphql-stack",
     "prebuild": "node scripts/build-info.mjs",
     "test:cms-streaming": "node --test tests/integration/cms-streaming.test.mjs",
-    "test:references-ssr": "node --test tests/integration/references-ssr.test.mjs"
+    "test:references-ssr": "node --test tests/integration/references-ssr.test.mjs",
+    "test:mcp-applications": "sh tests/integration/wordpress-mcp-changes/run.sh --application-stack"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

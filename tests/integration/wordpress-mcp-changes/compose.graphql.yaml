@@ -1,0 +1,9 @@
+# Independent stack: no host ports, no CMS data or credentials.
+name: alexcuadra-editorial-graphql-lab
+services:
+  wordpress:
+    volumes:
+      - ../../../docs/wordpress/acf-current-2026-10-18.json:/project-field-export.json:ro
+  cli:
+    volumes:
+      - ../../../docs/wordpress/acf-current-2026-10-18.json:/project-field-export.json:ro
