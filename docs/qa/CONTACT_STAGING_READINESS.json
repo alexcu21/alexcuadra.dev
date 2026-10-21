@@ -1,0 +1,61 @@
+{
+  "checkedAt": "2026-10-19T16:32:58.942Z",
+  "worker": "alexcuadra-dev-staging",
+  "readOnly": true,
+  "emailSent": false,
+  "deploymentChanged": false,
+  "runtimeVerified": false,
+  "activationReady": false,
+  "remote": {
+    "status": "inspected",
+    "versions": [
+      {
+        "trafficPercentage": 100,
+        "checks": {
+          "CONTACT_EMAIL": true,
+          "CONTACT_RATE_LIMITER": true,
+          "CONTACT_COORDINATOR": true,
+          "CONTACT_TO_EMAIL": true,
+          "TURNSTILE_SECRET_KEY": true,
+          "CONTACT_DEDUP_SECRET": true,
+          "CONTACT_FORM_ENABLED": true,
+          "CONTACT_ORIGIN": true,
+          "CONTACT_FROM_EMAIL": true,
+          "TURNSTILE_SITE_KEY": true,
+          "CONTACT_PRIVACY_PAGE_ID": true,
+          "senderRestriction": true,
+          "localCoordinatorClass": true
+        },
+        "configurationReady": true
+      }
+    ],
+    "configurationReady": true
+  },
+  "privacy": {
+    "status": 200,
+    "accessible": true,
+    "html": true,
+    "redirected": false,
+    "editorialLinkMatchesPortfolio": true,
+    "editorialReview": "manual"
+  },
+  "endpoint": {
+    "status": 404,
+    "disabledContract": true,
+    "noStore": true
+  },
+  "productionPrivacy": {
+    "status": 200,
+    "publishedPolicy": true,
+    "noindex": false
+  },
+  "frontendPrivacy": {
+    "status": 200,
+    "publishedPolicy": true,
+    "noindex": true
+  },
+  "nextChecks": [
+    "Verify runtime bindings and real challenge in staging",
+    "Authorize and verify a real delivery"
+  ]
+}

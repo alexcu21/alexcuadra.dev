@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-18",
+  "worker": "alexcuadra-dev-staging",
+  "versionId": "8851255a-6072-4cf7-943b-23f5c783ed49",
+  "url": "https://alexcuadra-dev-staging.alexcu21.workers.dev/privacy/",
+  "contactFormEnabled": false,
+  "privacyPageId": 180,
+  "previousDeployment": {
+    "worker": "alexcuadra-dev-staging",
+    "deploymentId": "57757f22-8115-4009-922d-c540974083af",
+    "createdOn": "2026-10-19T01:47:53.453173Z",
+    "versions": [
+      {
+        "version_id": "8b4f9ce7-7f41-4133-a0ab-8d2540547727",
+        "percentage": 100
+      }
+    ]
+  },
+  "checks": {
+    "unitTests": 133,
+    "build": "passed",
+    "dryRun": "passed",
+    "localSmokePages": 8,
+    "remoteSmokePages": 8,
+    "cmsAuth": "verified",
+    "seo": "passed",
+    "csp": "passed",
+    "editorialRenderer": "passed",
+    "disabledEndpoint": "passed",
+    "browserRender": "verified"
+  },
+  "pending": [
+    "CONTACT_DEDUP_SECRET",
+    "Real challenge and authorized email delivery",
+    "Production privacy route and Home privacy URL update"
+  ],
+  "productionDeployed": false,
+  "emailSent": false,
+  "rollbackRehearsed": false
+}

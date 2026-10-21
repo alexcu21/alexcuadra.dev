@@ -1,0 +1,103 @@
+{
+  "checkedAt": "2026-10-20T18:52:08.464Z",
+  "worker": "alexcuadra-dev-staging",
+  "executed": true,
+  "cmsModified": false,
+  "productionModified": false,
+  "contactEnabled": false,
+  "storageRestorationTested": false,
+  "preflight": {
+    "worker": "alexcuadra-dev-staging",
+    "current": "bbb91792-89ba-4fac-88fb-6b67d1eb7b6c",
+    "target": "8783d505-39d8-4287-8779-7b3423044dc1",
+    "checks": {
+      "currentContactDisabled": true,
+      "currentCmsAuthEnabled": true,
+      "currentCoordinatorPresent": true,
+      "targetContactDisabled": true,
+      "targetCmsAuthEnabled": true,
+      "targetCoordinatorPresent": true,
+      "bindingsIdentical": true,
+      "runtimePresent": true,
+      "runtimeIdentical": true,
+      "namedHandlersIdentical": true
+    },
+    "metadataCompatible": true
+  },
+  "rehearsal": {
+    "rollbackAttempted": true,
+    "rollbackVerified": true,
+    "restored": true,
+    "phases": [
+      {
+        "phase": "baseline",
+        "version": "bbb91792-89ba-4fac-88fb-6b67d1eb7b6c",
+        "checks": {
+          "homeStatus": 200,
+          "cmsIdentityVerified": true,
+          "noindex": true,
+          "publicFormAbsent": true,
+          "assetStatus": 200,
+          "contactStatus": 404,
+          "contactDisabledContract": true,
+          "noStore": true
+        }
+      },
+      {
+        "phase": "rollback",
+        "version": "8783d505-39d8-4287-8779-7b3423044dc1",
+        "checks": {
+          "homeStatus": 200,
+          "cmsIdentityVerified": true,
+          "noindex": true,
+          "publicFormAbsent": true,
+          "assetStatus": 200,
+          "contactStatus": 404,
+          "contactDisabledContract": true,
+          "noStore": true
+        }
+      },
+      {
+        "phase": "restored",
+        "version": "bbb91792-89ba-4fac-88fb-6b67d1eb7b6c",
+        "checks": {
+          "homeStatus": 200,
+          "cmsIdentityVerified": true,
+          "noindex": true,
+          "publicFormAbsent": true,
+          "assetStatus": 200,
+          "contactStatus": 404,
+          "contactDisabledContract": true,
+          "noStore": true
+        }
+      }
+    ],
+    "complete": true
+  },
+  "finishedAt": "2026-10-20T18:53:12.595Z",
+  "deploymentAudit": {
+    "finalActiveVersion": "bbb91792-89ba-4fac-88fb-6b67d1eb7b6c",
+    "changes": [
+      {
+        "id": "2192c384-d1b0-4cfc-8f69-e82b634c417a",
+        "createdOn": "2026-10-20T18:52:19.43131Z",
+        "versions": [
+          {
+            "id": "8783d505-39d8-4287-8779-7b3423044dc1",
+            "percentage": 100
+          }
+        ]
+      },
+      {
+        "id": "8a1ca668-17a7-4740-823f-163fe660a738",
+        "createdOn": "2026-10-20T18:52:45.828354Z",
+        "versions": [
+          {
+            "id": "bbb91792-89ba-4fac-88fb-6b67d1eb7b6c",
+            "percentage": 100
+          }
+        ]
+      }
+    ]
+  }
+}

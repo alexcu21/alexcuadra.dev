@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-20",
+  "environment": "staging",
+  "version": "bbb91792-89ba-4fac-88fb-6b67d1eb7b6c",
+  "previousVersion": "8783d505-39d8-4287-8779-7b3423044dc1",
+  "local": { "unitTests": 211, "ssrSuitePassed": true, "buildPassed": true, "buildFiles": 151, "astroErrors": 0, "astroWarnings": 0, "astroHints": 0 },
+  "remote": {
+    "complete": false,
+    "smokeExitCode": 1,
+    "requestGapMs": 10000,
+    "sitemapUrls": 43,
+    "passed": ["technical-routes", "robots-staging", "home-service-identity", "seo-csp", "contact-disabled", "blog-archive-en", "blog-archive-es", "blog-detail-en", "blog-detail-es", "spanish-navigation-links"],
+    "failure": { "path": "/blog/__missing_entry__", "expectedStatus": 404, "actualStatus": 503, "operation": "BlogPost", "code": "CMS_HTTP", "upstreamStatus": 429 },
+    "pageNavigationCache": [ { "cache": "MISS", "attempt": 1 }, { "cache": "HIT", "attempt": 0 } ],
+    "notReached": ["blog-wrong-language", "lab-checks"],
+    "retries": 0
+  },
+  "browser": { "visualVerified": false, "reason": "policy-protocol-rejection", "workaroundAttempted": false },
+  "contactEnabled": false,
+  "cmsModified": false,
+  "productionModified": false,
+  "localChangesPreserved": true
+}

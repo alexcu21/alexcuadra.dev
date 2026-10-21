@@ -1,6 +1,115 @@
 # Plan de rediseño de alexcuadra.dev
 
-Fecha: 17 de octubre de 2026. Estado: propuesta técnica y editorial; la interfaz aún no se ha rediseñado.
+Actualización de contacto: Turnstile staging guardado según Alex; bindings de envío y límite inicial (5 intentos/minuto por IP y ubicación) preparados en Wrangler local. Formulario desactivado; destinatario privado, despliegue, interfaz y prueba real pendientes. Ver `docs/CONTACT_FORM_PLAN.md`.
+
+Creado: 17 de octubre de 2026. Actualizado: 18 de octubre de 2026. Estado: ejecución por fases; infraestructura y autenticación operativas, modelado/bilingüismo en curso, interfaz nueva pendiente.
+
+## Estado actual y seguimiento
+
+20 octubre, actualización frontend staging completada para revisión:1b12660e (deploymentbf288cd4-3920-4183-bacf-49b9cea04c02),100% activo. TOC/anchors Blog/LAB EN/ES antes locales ya publicados;237 unitarias/suite SSR/build/dry-run y cuatro fichas200 con índice/destinos/CSS/SEO/CSP/identidad/contactfalse correctos. [QA vigente](qa/EDITORIAL_OUTLINE_STAGING_2026-10-20.md). Rollback compatiblebbb conservado; sin CMS/permisos/MCP/producción/envíos/navegador, dev/cambios preservados. QA visual/zoom/lector y causa429 pendientes; no promover a producción. Siguiente trabajo técnico independiente: implementación del contrato MCP en laboratorio, no instalación real.
+
+20 octubre, contrato local de aplicación/recuperación definido, sin código nuevo: cinco schemas previstos, aprobación exacta por operador distinto, efecto público de editar Project publicado reconocido, permisos separados y recuperación con control de versiones/reserva. [Contrato](WORDPRESS_MCP_SOURCE_APPLICATION.md), [QA documental](qa/MCP_EDITORIAL_APPLICATION_CONTRACT_2026-10-20.md). Runtime0.3/lectura intactos, último290 no repetido; sin CMS/Workers/contacto/envíos/navegador. Próxima entrega frontend prioritaria: preparar [actualización staging TOC/anchors](STAGING_NEXT_RELEASE.md) sin esperar a terminar MCP; QA visual/429 siguen abiertos, sin promover a producción. Siguiente incremento de código MCP: implementar el contrato en laboratorio antes de paquete/permisos/diff real aprobados.
+
+20 octubre, integración ACF/Polylang/WPGraphQL aislada completada:290 checks correctos (236 base+54 integración), campos originales/EN/ES y privacidad GraphQL de propuestas verificados, fuentes intactas; prepare no concede edición de Projects. [QA](qa/MCP_EDITORIAL_GRAPHQL_STACK_2026-10-20.md). Prototipo0.3/lectura0.1.0 intactos; sin CMS/permisos reales/Workers/contacto/envíos/navegador, solo nuevo lab detenido. Próximo: contrato local separado de aplicación/recuperación de fuentes; no instalar escritura ni crear Editor por este resultado. Reconciliación CMS antes de apply, TOC visual/429 y política ACF de fuentes con contraseña siguen abiertos.
+
+20 octubre, idempotencia y cuotas MCP completadas solo en laboratorio0.3: request_id obligatorio y recibos por propietario, transacción de admisión/cambio/historial/recibo,8 propuestas/128 escrituras/8MiB lógicos.236 checks correctos, seis carreras HTTP verifican versiones, duplicados y último cupo; fuentes intactas, fallos sin efectos parciales. [QA](qa/MCP_EDITORIAL_IDEMPOTENCY_2026-10-20.md). Sin CMS/permisos reales/Workers/contacto/envíos/navegador, lectura0.1.0 intacta; no hace falta Editor. Próximo: ACF/Polylang/WPGraphQL aislados y privacidad de propuestas; aplicación/publicación de fuentes separadas. TOC visual/429 pendientes.
+
+20 octubre, historial y recuperación MCP completados solo en laboratorio0.2: snapshots y cabeza en CAS único, recuperación como versión nueva sin editar fuentes, misma autorización; límites32/2MiB sin poda, baseline legacy sin pasado inventado.181 checks correctos, incluidas carreras HTTP update/update y update/restore con un ganador/un conflicto y una sola revisión nueva. [QA](qa/MCP_EDITORIAL_HISTORY_2026-10-20.md). Sin CMS/permisos reales/Workers/contacto/envíos/navegador, lectura0.1.0 intacta; no hace falta Editor. Próximo: idempotencia/cuotas por propietario en laboratorio; integración real y apply separados. TOC visual/429 pendientes.
+
+20 octubre, transporte HTTP de propuestas completado en laboratorio:48 checks nuevos y117 en runner combinado; dos carreras entre procesos independientes confirman un ganador/un conflicto por ronda, sin pérdida de campos. Sesiones/usuarios/revocación/edición REST denegada y hashes fuentes verificados. [QA](qa/MCP_EDITORIAL_CHANGES_HTTP_2026-10-20.md). Prototipo y lectura0.1.0 intactos; sin CMS/permisos reales/Workers/contacto/envíos/navegador. No hace falta Editor; lab propio detenido, cambios locales preservados. Próximo: historial durable y recuperación de propuestas propias en laboratorio, después idempotencia/cuotas/apply separado; WPGraphQL real/TOC visual/429 pendientes. HTTP del prototipo ya está probado.
+
+20 octubre, siguiente tramo MCP preparado localmente: propuestas privadas de cuerpo/subtítulo, sin aplicar/publicar fuentes, prototipo bloqueado fuera de laboratorio.67 pruebas WP/meta-tools+2 guards correctos; dueño/scopes/versiones/CAS y hashes fuentes verificados. **No hace falta usuario Editor** para preparar estas propuestas; suscriptor con capacidad específica basta, sin concederla al usuario real. [QA](qa/MCP_EDITORIAL_CHANGES_LAB_2026-10-20.md). Próximo: HTTP/sesiones y concurrencia por peticiones independientes en Docker. Lectura instalada0.1.0 intacta, sin CMS/Workers/contacto/envíos/navegador; TOC visual/429 siguen pendientes.
+
+20 octubre, MCP de lectura instalado tras autorización de Alex: Editorial Read0.1.0 y scope solo usuario2/subscriber, sin edición/admin ni rol global ampliado. Conector real descubre2 abilities propias además de3 core; paginación/búsqueda/146↔196/rechazos verificados. Huellas14 proyectos, otros permisos, rol y otros plugins activos intactas. [QA actual](qa/MCP_EDITORIAL_INSTALLED_2026-10-20.md). CMS cambia plugin/capacidad, contenido no; sin despliegues/contacto/envíos/navegador. Siguiente: contrato local de edición acotada y pruebas aisladas, sin ampliar acceso real; lectura ya completada. TOC visual/429 siguen pendientes.
+
+20 octubre, revisión SSH real acotada completada: cuenta2/subscriber/read sin scope ni edición/admin comprobados; preflight final exit0. Inventario y filtros relevantes revisados, sin override adicional identificado en esa superficie; no auditoría completa de cada contexto. Perfil real WP7.1.3/PHP8.2.34/Polylang3.9.0/Adapter0.7.1 reproducido en laboratorio separado:91 framework/HTTP+5 escenarios correctos. [QA](qa/MCP_EDITORIAL_PREFLIGHT_2026-10-20.md). Propuesta de instalación0.1.0/capacidad individual/rollback lista para decisión expresa; **no instalada ni permisos reales cambiados**. Contacto/Workers/navegador intactos; TOC visual/429 siguen abiertos.
+
+20 octubre, revisión de permisos visible por MCP: usuario2/subscriber y3 core confirmados, capacidades no expuestas y versiones denegadas. Diagnóstico WP-CLI read-only y [propuesta instalación/reversión](WORDPRESS_MCP_READ_INSTALL.md) preparados;5 escenarios aislados correctos y sin escrituras del diagnóstico. [QA/límites](qa/MCP_EDITORIAL_PREFLIGHT_2026-10-20.md). Alex tiene SSH; falta conexión concreta/salida para completar ACL real antes de decidir instalación. No instalado ni ampliado acceso real; contacto/Workers intactos.
+
+20 octubre, transporte HTTP MCP de lectura completado en Docker aislado:36 HTTP +55 framework correctos, subscriber/Application Password y capacidad específica sin admin, aislamiento/revocación y ausencia de cambios editoriales comprobados. [QA](qa/MCP_EDITORIAL_HTTP_2026-10-20.md). Paquete0.1.0 intacto, sin instalación/permisos reales/CMS/Workers/contacto/envíos. Siguiente: revisar ACL y presentar instalación/asignación mínima para decisión expresa antes de aplicarlas al sitio; escritura/ACF/cuerpos separados. TOC visual/429 siguen pendientes y navegador no reintentado/eludido.
+
+20 octubre, etapa independiente MCP: contrato y extensión de lectura0.1.0 preparados,55 checks con WordPress/adaptador oficiales en Docker aislado, ZIP verificable. Sin instalación/permisos reales/CMS/contacto/Workers. [QA](qa/MCP_EDITORIAL_READ_LAB_2026-10-20.md). Falta transporte HTTP MCP y revisión antes de instalar/asignar permisos; no confundir pruebas PHP del adaptador con conexión final del cliente. TOC visual y429 siguen pendientes.
+
+20 octubre, recuperación del Worker staging ensayada: rollback a versión anterior compatible y restauración original con Home autenticada/asset/contacto false verificados en tres fases.237 unitarias pasan; herramientas operativas añadidas, sin subir código nuevo ni CMS/producción alterados. [QA/alcance](qa/STAGING_RECOVERY_2026-10-20.md). Este par de versiones de código/configuración ya tiene ensayo; no equivale a restauración de datos o ensayo producción. TOC y aceptación visual siguen pendientes; alternativa independiente: MCP de lectura en laboratorio.
+
+20 octubre, anchors/TOC compartidos preparados en local: Blog/LAB EN/ES, documento único con campos ACF, IDs seguros/únicos y details sin scripts.228 unitarias/suite SSR ampliada/build correctos, sin CMS/deploy/contacto. [QA](qa/EDITORIAL_OUTLINE_LOCAL_2026-10-20.md). Falta aceptación visual/teclado/fragmentos/zoom y despliegue de este componente; no cerrar esa parte por aprobar HTML SSR. Próximo trabajo independiente si el navegador sigue bloqueado: ensayo de recuperación staging.
+
+20 octubre, QA remoto editorial completado por tramos en staging existente: Blog404 y archivos/fichas LAB EN/ES+referencias correctos con identidad/SEO/CSP/idiomas/404. Añadida reanudación del smoke y corregido temporizador que consumía el timeout durante la espera entre peticiones.218 pruebas pasan, sin deploy/CMS/producción/contacto. No resuelve la causa del429 histórico ni cierra QA visual/zoom/lector/recuperación. [QA y continuación](qa/EDITORIAL_FOLLOWUP_2026-10-20.md). Próximo incremento local: anchors/TOC del renderer compartido; MCP editorial permanece separado.
+
+19 octubre, continuidad local: lectores legacy de referencias/categorías/slugs paginados y contratos de rutas centralizados,160 pruebas y build correctos. Sin cambios de idiomas/URLs/CMS ni deploy; runtime SSR integral y QA visual siguen pendientes. [QA](qa/REFERENCES_PAGINATION_LOCAL.md). Incorporada etapa técnica independiente [MCP editorial con permisos acotados](WORDPRESS_MCP_EDITORIAL_PLAN.md), todavía sin implementación ni ampliación de acceso.
+
+19 octubre, primera entrega visual publicada para revisión en staging tras confirmación de Alex: Home, tokens Obsidian Flow claros/oscuros, tipografía y tarjetas compartidas. Corregida caché Vite para mantener dev abierto durante build;145 pruebas/build/smoke correctos. QA visual completo aún pendiente por permiso de observación del navegador; no se declara cerrado el sistema visual. [Detalle](qa/HOME_VISUAL_STAGING.md).
+
+19 octubre: primera entrega visual Home/sistema compartido preparada localmente según Obsidian Flow. Pruebas y build pasan; falta revisión visual móvil/escritorio y ambos temas por bloqueo del origen local del navegador. NO desplegada. [Detalle](qa/HOME_VISUAL_LOCAL.md).
+
+19 octubre, SEO técnico: sitemap SSR desde inventario CMS y robots por entorno desplegados en staging,34 URLs/8ES verificadas,145 pruebas pasan. No se han publicado todavía estos endpoints en producción ni enviado sitemap a Search Console. Pendientes SEO editorial, clasificación de referencias, QA integral y rediseño visual. [QA](qa/SITEMAP_BILINGUAL_STAGING.md).
+
+19 octubre, recuperación de errores: HTML se completa antes de enviar respuesta para convertir fallos CMS tardíos en503 íntegro en vez de200 parcial. Regresión reproducida en Astro SSR y 139 pruebas pasan; staging actualizado. Home mantiene fichasEN válidas tras nuevas traducciones. No se declara resuelto el límite upstream429. [QA](qa/CMS_STREAMING_RECOVERY.md).
+
+19 octubre: Valexweb y Norceca traducidos/publicados, cuatro proyectos ES reales en staging. Fichas y alternates comprobados; persiste incidencia intermitente de carga CMS/frontend, sin solución permanente confirmada. Quedan textos de tres proyectos y rediseño/QA integral. [QA](qa/VALEXWEB_NORCECA_ES.md).
+
+19 octubre: Christianity Today146EN completado con información de Alex y traducción196ES publicada/vinculada; tarjeta y fichas con metadatos recíprocos verificadas. Corregido título largo en móvil. Quedan otras traducciones y el rediseño de caso de estudio completo; no se considera cerrado el template visual final. [QA](qa/CHRISTIANITY_TODAY_PUBLISHED.md).
+
+19 octubre: primera ficha ES real publicada, alexcuadra.dev195↔50EN; tarjeta y detalle operativos en staging con slug editorial `alexcuadra-dev-2`, selector y hreflang recíprocos. Smoke y navegador pasan. Christianity Today sin texto en CMS; datos editoriales solicitados a Alex. No se declara completa la traducción de proyectos. [QA](qa/FIRST_PROJECT_ES_PUBLISHED.md).
+
+19 octubre, proyectos: templates de archivo/detalle EN/ES y menú español integrados en staging. CMS tiene cero proyectos ES; estado vacío explícito y fichas sin traducción404. Lectura EN paginada y por idioma, sin alterar contenido/categorías. Falta traducir proyectos reales y validar sus fichas españolas. [QA](qa/PROJECTS_LOCALIZED_STAGING.md).
+
+19 octubre, Home ES: publicada traducción Inicio 193↔Home19 y template `/es/` en staging, campos, selector y navegación localizados. Proyectos y referencias conservan destinos actuales; no implica traducción de colecciones ni rediseño visual final. 134 pruebas, build y smoke de dos portadas pasan. [QA](qa/HOME_ES_PUBLISHED.md).
+
+19 octubre, traducción About: Sobre mí 191 publicada y relacionada con 68 en Polylang; campos traducidos, regla ACF ampliada solo a la nueva página. Ruta ES y menú conectados en staging con selector/hreflang recíprocos. [QA](qa/ABOUT_ES_PUBLISHED.md). Siguiente bloque: traducción real de Home y su template; Projects/Articles y fases visuales siguen pendientes.
+
+19 octubre, template About: EN usa lector localizado y descripción CMS; renderer compartido y ruta `/es/sobre-mi/` implementados en staging. Traducción ES ausente en CMS: 404 explícito y ningún enlace/hreflang ficticio. Preparación técnica completada, publicación editorial española pendiente. [QA](qa/ABOUT_LOCALIZED_STAGING.md).
+
+19 octubre, siguiente incremento: menú, control de tema y footer reciben locale; textos ES y destinos EN explícitos en privacidad española, sin rutas inexistentes. Mejora de Escape/foco en menú móvil. Ver [QA](qa/NAVIGATION_BILINGUAL_STAGING.md). Navegación localizada no implica que Home/Projects/About/Articles estén traducidos.
+
+19 octubre: primer tramo ES desplegado en staging, `/es/privacidad/` desde página 182, junto a EN 180, con enlaces de idioma y hreflang recíprocos condicionados a fuentes publicadas. 134 pruebas, build y smoke bilingüe correctos. Producción, menús ES y demás templates pendientes. Contacto sigue desactivado y su prueba de entrega aplazada. Ver [evidencia](qa/PRIVACY_BILINGUAL_STAGING.md).
+
+Esta lista refleja lo verificado hasta el 18 de octubre. `[x]` indica un entregable completado dentro del alcance descrito; `[ ]` indica trabajo pendiente. Una fase con pendientes no se considera cerrada. El [registro de ejecución](EXECUTION_STATUS.md) conserva las evidencias y el historial; las anotaciones antiguas no sustituyen este estado vigente.
+
+### Completado
+
+- [x] Analizar mockups y acordar que Christianity Today define el template individual reutilizable de todos los proyectos.
+- [x] Definir posicionamiento senior con calidad, automatización y DevOps, CMS como fuente editorial y prohibición de cifras ficticias del mockup.
+- [x] Distinguir Articles (publicaciones externas/menciones), Posts (blog propio) y LAB (proyectos personales).
+- [x] Actualizar la base a Astro 7.4.0, adapter Cloudflare 14.4.0, Tailwind 4.3.3 y Wrangler 4.151.1; validar pruebas y builds locales.
+- [x] Preparar CI con instalación reproducible, pruebas y builds de staging/producción, sin secretos del CMS.
+- [x] Migrar producción y staging a Workers; dominio alexcuadra.dev operativo y comprobaciones HTTP autenticadas correctas.
+- [x] Implementar autenticación de servicio en servidor y activar en WordPress la restricción de GraphQL a solicitudes autenticadas; comprobar local y ambos Workers.
+- [x] Centralizar errores de CMS, timeout, deduplicación por petición, 503 controlado y logs sin respuestas/credenciales.
+- [x] Evitar consultas al CMS en 404, favicon y sondas rest_route; incorporar caché pública limitada a contratos explícitos.
+- [x] Inspeccionar el plugin custom y sustituir el registro de project/articles por ACF conservando claves, IDs y slugs, sin copiar entradas; revisar exports y lectura publicada.
+- [x] Confirmar backup reciente de base de datos/archivos y autorización para trabajar directamente en el CMS de producción.
+- [x] Configurar Polylang 3.8.11 con EN/ES e inglés predeterminado; probar el conector 0.7.1 en laboratorio y activarlo en el CMS.
+- [x] Habilitar Projects/Articles como traducibles y verificar idioma, traducciones y filtros en Page, Post, Project, Article y Category.
+- [x] Asignar EN a los siete Projects publicados; verificar hashes editoriales, campos ACF, imágenes y relaciones tras el cambio. Home/About ya están en EN.
+- [x] Identificar con Alex las nueve referencias externas cuyo texto local está en español; asignación en WordPress todavía pendiente.
+- [x] Auditar uso de categorías en proyectos/posts/referencias publicados; Alex confirma ausencia de otros consumidores ingleses de podcast/valexweb/wordpress-tv. Decisión posterior de Alex: conservar esas categorías en EN; cambio a ES descartado por ahora.
+- [x] Implementar cliente EN/ES opcional, paginación, DTOs públicos y relaciones de Home/About sin IDs españoles supuestos; mantener las rutas actuales compatibles.
+- [x] Validar 92 pruebas unitarias, 13 comprobaciones del cliente contra WordPress aislado y compilación Astro/Cloudflare. La matriz de seguridad mantiene cuatro fallos conocidos de política ACF protegida, reproducibles sin el conector; no se declaran resueltos.
+- [x] Guardar planes/guías en docs y actualizar README como entrada al proyecto.
+- [x] Preparar mapa técnico de rutas EN/ES y SEO base del layout: canonical estable, locale explícito, imágenes sociales opcionales y eliminación de duplicados. Rutas ES/hreflang/sitemap siguen pendientes.
+- [x] Comprobar SEO base en HTML local de siete páginas con autenticación CMS; build correcto y vista previa actualizada. Despliegue de estos cambios pendiente.
+- [x] Centralizar HTML editorial en WordPressContent con sanitización de servidor y estilos core acotados en About, proyectos y referencias; 98 pruebas unitarias y smoke local de contenido/SEO correctos. Despliegue y revisión visual completa pendientes.
+
+- [x] Incorporar al MVP el formulario con Turnstile y definir su contrato; validación y Siteverify preparados con pruebas simuladas. Endpoint local conectado a un adaptador de envío Cloudflare simulado, desactivado por defecto; interfaz/bindings/configuración reales pendientes.
+- [x] Configurar Email Sending de forms.alexcuadra.dev: Enabled reportado por Alex y DNS autoritativo confirmado, conservando la recepción del dominio principal. Destinatario Verified confirmado por Alex; integración local preparada, binding y entrega real pendientes.
+
+### Pendiente antes de cerrar las fases en curso
+
+- [ ] Resolver el modelo de relaciones de Articles respetando la decisión de mantener sus categorías EN; la clasificación de las fichas queda diferida hasta entonces.
+- [ ] Crear y revisar las traducciones reales; ampliar las reglas ACF de Home/About a los IDs españoles que se creen.
+- [ ] Completar los nuevos fields/CPT con ACF gratuito; LAB y qa-training-lab EN/ES ya creados/publicados (19 octubre), otros modelos del plan siguen pendientes.
+- [ ] Completar contenido y evidencias reales del posicionamiento senior, calidad, automatización y DevOps.
+- [ ] Implementar formulario EN/ES accesible: fields CMS, widget, endpoint Workers, validación, límites distribuidos y entrega controlada. Confirmar destinatario/proveedor antes de configurar envíos; seguir CONTACT_FORM_PLAN.md.
+- [ ] Conectar las rutas/templates EN/ES, selector de traducciones reales y política de URLs legacy; el nuevo cliente localizado todavía no está desplegado.
+- [ ] Implementar el sistema visual y rediseñar Home, proyectos, referencias, blog, About y LAB.
+- [ ] Completar revisión visual/accesibilidad de Gutenberg, anchors/TOC y componentes especiales. Sanitización y estilos básicos core ya implementados localmente; embeds/custom blocks aún no soportados.
+- [ ] Completar SEO: metadatos, lang, canonical/hreflang, sitemap, robots y datos estructurados.
+- [ ] Completar 404 de detalles inexistentes, estados vacíos y contratos de datos opcionales.
+- [ ] Completar cabeceras/CSP, revisión de exposición de HTML/enlaces y seguridad del rediseño.
+- [ ] Validar caché/SSR bilingüe en Workers, E2E, accesibilidad, revisión visual móvil/escritorio y recuperación/rollback ensayado.
+- [ ] Mantener seguimiento de 429/503 de Hostinger; los smoke correctos no prueban eliminación del limitador.
+
 
 ## 1. Objetivo y alcance
 
@@ -51,11 +160,11 @@ La tabla siguiente describe las rutas inglesas existentes. Las equivalentes espa
 | `/work/[slug]` | Caso de estudio: contexto, rol, alcance, problema, decisiones, entregables y resultados verificables |
 | `/about/` | Trayectoria, contribuciones, experiencia y formas de colaborar; ampliar la página actual |
 | `/articles/` | Archivo de referencias externas y menciones, desde el CPT articles; indicar plataforma y distinguir publicación de Alex de mención de terceros |
-| `/blog/` y `/blog/[slug]` | Archivo y lectura de publicaciones propias del sitio, desde el tipo nativo post. /blog/ existe como placeholder; su implementación y el detalle son parte del rediseño |
+| `/blog/` y `/blog/[slug]` | Archivo y lectura desde post nativo implementados localmente, con variantes ES, menú/sitemap y ejemplo202↔204 publicado. QA: docs/qa/BLOG_BILINGUAL_LOCAL.md; despliegue frontend pendiente |
 | `/articles/category/[slug]` | Conservar archivos actuales de plataformas como páginas indexables; no cambiar slugs existentes |
 | `/articles/category/[categorySlug]/[articleSlug]` | Conservar URLs de artículos; validar la relación categoría/artículo y devolver 404 si no existe |
-| `/#contact` | CTA por email y perfiles reales, sin formulario ni proveedor de newsletter en primera fase |
-| `/lab/` y `/lab/[slug]` | Nueva sección y detalle de proyectos personales en desarrollo, con CPT propio `lab_project`; primer candidato: qa-training-lab. Datos reales desde WordPress, sin ejecutar aplicaciones ni CI desde el portfolio |
+| `/#contact` | Formulario con Turnstile, validación servidor y entrega real; email/perfiles como alternativa. Newsletter fuera del MVP |
+| `/lab/` y `/lab/[slug]` | Implementados localmente con variantes `/es/laboratorio/`, CPT `lab_project` y qa-training-lab219↔221 publicado. QA: docs/qa/LAB_BILINGUAL_LOCAL.md. Datos CMS reales, sin ejecutar aplicaciones ni CI desde el portfolio |
 
 La navegación del rediseño debe distinguir Blog de las publicaciones externas/menciones, además de Work, About, Lab y Contact; Home desde el logotipo. Ajustar etiquetas y menú móvil con contenido administrado en WordPress. Home puede mostrar ambos en una sección de novedades solo si cada tarjeta identifica claramente su origen y destino. El avatar de cuenta de las propuestas no aporta un flujo al portfolio público y se omite. No lanzar RSS, newsletter, búsqueda remota o telemetría sin definir su fuente y funcionamiento.
 
@@ -93,7 +202,7 @@ Campos nativos: título, slug, extracto, cuerpo Gutenberg, imagen destacada, fec
 
 Archivo `/lab/` y detalle `/lab/[slug]`, con equivalentes `/es/laboratorio/` y `/es/laboratorio/[slug-es]`. Incluir selector de idioma, SEO y estados editoriales como el resto del sitio. Puede reutilizar componentes del template individual de proyectos, con variante para objetivos, avances, aprendizajes y próximos pasos; no exigir cliente, impacto comercial ni métricas de producción.
 
-Primera entrada prevista: `qa-training-lab`, una aplicación personal de Alex en desarrollo. Antes de redactarla, revisar con Alex su propósito, funciones, stack, repositorio público/privado, demo y estado real. El nombre no permite inferir funciones ni métricas. No inspeccionar ni modificar su repositorio como parte de esta actualización del plan. Todo su contenido de presentación se carga en content.alexcuadra.dev; la aplicación vive y se ejecuta en su entorno propio.
+Primera entrada `qa-training-lab` publicada EN219↔ES221 el19 de octubre con autorización de Alex y datos verificados del README. Repo/demo sin enlazar hasta verificar visibilidad pública; no añadir métricas ni información operativa privada. No modificar ni ejecutar su repositorio desde el portfolio. Todo su contenido de presentación se carga en content.alexcuadra.dev; la aplicación vive y se ejecuta en su entorno propio. Ver docs/qa/LAB_BILINGUAL_LOCAL.md.
 
 ### CPT de métricas condicionado a necesidad editorial
 
@@ -103,7 +212,7 @@ Gestionar los registros de CPT/taxonomías y los grupos de campos desde ACF y ex
 
 ## 5. GraphQL solo autenticado
 
-La opción de WPGraphQL bloqueará las consultas anónimas que hace hoy `src/data/client.js`. Activarla sin desplegar primero el cliente autenticado rompería el sitio. El visitante seguirá entrando sin login: la autenticación ocurre entre Astro SSR y WordPress.
+**Completado:** transporte autenticado desplegado y restricción de WPGraphQL activa; acceso anónimo rechazado e identidad de servicio verificada en local, staging y producción. El visitante entra sin login: la autenticación ocurre entre Astro SSR y WordPress. Los pasos siguientes se conservan como contrato operativo y de recuperación, no como configuraciones todavía pendientes. Volver al Pages legacy anónimo requeriría coordinar también la restricción del CMS.
 
 Flujo: navegador → Astro/Cloudflare → WPGraphQL con credencial de servicio → normalización de contenido publicado → HTML público. No añadir un proxy genérico que permita al visitante ejecutar queries arbitrarias con la credencial.
 
@@ -122,25 +231,25 @@ Este transporte todavía NO está implementado ni probado contra WordPress: requ
 
 Corregidos en esta revisión: fechas ISO restadas como números al ordenar proyectos; consulta redundante en cada PortfolioPreview; `<style>` dentro de otro `<style>` en el archivo de categorías.
 
-Pendientes prioritarios: `getHomeInfo`/proyectos/categorías capturan errores y devuelven arrays vacíos, luego Nav/Home/Footer acceden a `[0]` sin validación; falta política común de errores. Detalles inexistentes lanzan excepciones en lugar de devolver 404. El artículo consulta `featuredImage.node.sourceUrl` pero intenta renderizar `article.imageUrl`. Varias relaciones ACF/imágenes se desestructuran asumiendo que nunca son null. Las listas GraphQL no implementan paginación por cursores: el límite por defecto puede ocultar registros; `getAllArticleSlugs` se limita a 100.
+Resuelto durante la ejecución: transporte común con errores tipados, timeout, validación de Home y 503 controlado; se eliminó el fallback de arrays vacíos ante fallo del CMS. Pendientes prioritarios del código legacy: Detalles inexistentes lanzan excepciones en lugar de devolver 404. El artículo consulta `featuredImage.node.sourceUrl` pero intenta renderizar `article.imageUrl`. Varias relaciones ACF/imágenes se desestructuran asumiendo que nunca son null. Las listas legacy aún no tienen paginación completa y `getAllArticleSlugs` se limita a 100; el nuevo cliente localizado sí pagina por cursores, pendiente de conectar a las rutas.
 
 MainHead tiene viewport/descripciones duplicados, imágenes OG/Twitter vacías, idioma OG español frente a sitio inglés y referencias a manifest/iconos que no existen en `public`. About usa una descripción Lorem Ipsum. El enlace LinkedIn está rotulado YouTube. Corregirlos durante la base del rediseño; añadir imagen social real, metadata por contenido y canonical de producción. Añadir sitemap y robots con exclusión de páginas técnicas; JSON-LD Person, Article y breadcrumbs únicamente con datos reales. No eliminar URLs legacy durante el cambio visual.
 
 ## 7. GitHub y despliegue
 
-Inspección local e historial: no hay `.github/workflows` previo. API de GitHub para `alexcu21/alexcuadra.dev`: `total_count: 0` y sin ejecuciones de Actions. Por tanto no existe un workflow remoto que pueda estar fallando. Esto no descarta compilación automática conectada directamente desde Cloudflare; no se ha inspeccionado su dashboard, configuración ni logs.
+Hallazgo inicial (ya atendido): no había `.github/workflows` previo. API de GitHub para `alexcu21/alexcuadra.dev`: `total_count: 0` y sin ejecuciones de Actions. Por tanto no existe un workflow remoto que pueda estar fallando. Esto no descarta compilación automática conectada directamente desde Cloudflare; no se ha inspeccionado su dashboard, configuración ni logs.
 
 Añadido `.github/workflows/ci.yml`: PRs, push a main y ejecución manual; checkout, Node 22, instalación por lockfile, pruebas y `astro check && astro build`; permisos de lectura, cancelación de ejecuciones obsoletas y timeout. No usa CMS real ni secretos. Acciones oficiales verificadas en GitHub: checkout v7.0.1 y setup-node v7.1.0, con credenciales de checkout no persistentes. Se usan tags de versión; fijarlas a SHA y automatizar su actualización puede añadirse con la política del repositorio.
 
 El build SSR actual no visita las páginas, así que compilar NO confirma que GraphQL esté accesible ni que el HTML renderice bien. No incluir secretos en builds de forks. Una futura prueba de integración autenticada debe ejecutarse solo en un entorno confiable y sin imprimir respuestas privadas.
 
-Antes de activar despliegues: confirmar si el hosting es Cloudflare Pages o Workers, rama de producción, comando `npm run build`, directorio `dist`, compatibilidad de runtime y secretos por entorno. Conservar el adapter instalado en esta etapa; no sustituir el despliegue por un comando Wrangler de otra versión. No añadir un segundo despliegue de Actions si Cloudflare ya despliega por push. Configurar CI obligatorio en protección de main cuando el workflow esté publicado y haya ejecutado correctamente; la creación local no activa esta protección.
+Estado actual: Workers de producción y staging operativos, build por entorno y secretos runtime configurados; Pages anterior queda como respaldo con sus builds automáticos desactivados. La migración de adapter/runtime ya se ejecutó y validó. Queda ensayar recuperación y revisar visualmente el rediseño. No añadir un segundo despliegue de Actions si Cloudflare ya despliega por push. Configurar CI obligatorio en protección de main cuando el workflow esté publicado y haya ejecutado correctamente; la creación local no activa esta protección.
 
 ## 8. Pruebas y criterios de aceptación
 
-### Añadidas ahora
+### Pruebas incorporadas y evolución
 
-`npm test` usa `node:test` sin dependencias nuevas ni CMS externo. Contratos de respuesta del cliente para Home, About, proyectos, categorías, artículo y slugs; variables GraphQL separadas; artículo ausente; errores GraphQL con HTTP 200; HTTP 403 y fallo de red. Pruebas de orden de fechas reales y colecciones vacías. Los mocks comprueban la lógica del cliente, no la existencia del esquema de WordPress. `npm run build` aporta validación Astro/TypeScript y compilación para Cloudflare. Resultado local de esta revisión: 14/14 pruebas pasan; build correcto sin errores de tipos ni la anterior advertencia de CSS anidado. Persisten avisos de compatibilidad sharp/Cloudflare, Browserslist antiguo y sugerencias por símbolos sin uso. YAML de CI parseado y validado localmente; todavía no ejecutado en GitHub.
+`npm test` usa `node:test` sin dependencias nuevas ni CMS externo. Contratos de respuesta del cliente para Home, About, proyectos, categorías, artículo y slugs; variables GraphQL separadas; artículo ausente; errores GraphQL con HTTP 200; HTTP 403 y fallo de red. Pruebas de orden de fechas reales y colecciones vacías. Los mocks comprueban la lógica del cliente, no la existencia del esquema de WordPress. `npm run build` aporta validación Astro/TypeScript y compilación para Cloudflare. Baseline inicial: 14/14 pruebas pasaban; build correcto sin errores de tipos ni la anterior advertencia de CSS anidado. Persisten avisos de compatibilidad sharp/Cloudflare, Browserslist antiguo y sugerencias por símbolos sin uso. Ese párrafo describe la revisión inicial. Estado local vigente: 87 pruebas unitarias y build pasan; 13 comprobaciones adicionales del cliente contra WordPress aislado pasan. CI incluye también build:production. El laboratorio de seguridad conserva sus cuatro fallos documentados y no forma parte de CI normal.
 
 ### Durante la implementación
 
@@ -156,23 +265,25 @@ No afirmar cobertura 100%, cero defectos o métricas de CI en UI a partir de est
 
 ## 9. Fases y entregables
 
-| Fase | Entregable | Criterio de salida |
-| --- | --- | --- |
-| 0. Base, esta revisión | Plan, contratos de pruebas, CI local y correcciones pequeñas verificadas | Tests y compilación pasan; sin cambios de WordPress o deploy |
-| 0.1. Actualización y compatibilidad | Matriz de versiones verificadas, migraciones por lotes, lockfile reproducible y validación del runtime Cloudflare | Sin conflictos de peers/engines; pruebas, build y smoke SSR pasan; staging y rollback verificados |
-| 1. Contenido, transición CPT y esquema | Inspección del plugin custom y transición de sus CPT a ACF; guía asistida de campos/CPT e idiomas, inventario/export ACF, textos EN/ES y evidencias de desarrollo senior, calidad, automatización y DevOps; carga completa en content.alexcuadra.dev; tabla legacy→nuevo y usuario de servicio | Datos publicables completos en WordPress, sin cifras de mockup; queries validadas en staging; respaldos y rollback disponibles |
-| 2. Datos y autenticación | Transporte servidor, DTOs por idioma, relaciones de traducción, rutas EN/ES, paginación, globales por petición, estados 404/503 y secretos runtime | Anónimo rechazado y SSR autenticado operativo; sin secretos en cliente/logs |
-| 3. Sistema visual y Home | Tokens unificados, temas, navegación y componentes Astro responsive; Home con contenido real | Revisión visual desktop/móvil y pruebas de teclado; sin enlaces de maqueta |
-| 4. Proyectos y LAB | Archivo y template individual reutilizable para proyectos; CPT, archivo y detalle LAB con qa-training-lab como primera entrada prevista | Datos reales en CMS, variantes EN/ES, un proyecto y una entrada LAB completos; rutas antiguas conservadas |
-| 5. Editorial y About | Archivo, filtros/paginación, artículo, TOC, perfiles y contacto | Destinos internos/externos correctos y contenido legible/accesible |
-| 6. QA y salida | E2E EN/ES, axe, capturas, SEO técnico/editorial bilingüe, revisión Cloudflare, autenticación y monitoreo | CI verde, staging aprobado, canonical/hreflang/sitemap validados, 404/503 correctos y rollback ensayado |
-| 7. Opcional | Telemetría real o suscripción | Fuente de datos/proveedor definido y contenido suficiente |
+| Fase | Estado al 18 octubre | Entregable | Criterio de salida |
+| --- | --- | --- | --- |
+| 0. Base, esta revisión | Completada: revisión inicial entregada | Plan, contratos de pruebas, CI local y correcciones pequeñas verificadas | Tests y compilación pasan; sin cambios de WordPress o deploy |
+| 0.1. Actualización y compatibilidad | Avanzada; revisión visual y rollback pendientes | Matriz de versiones verificadas, migraciones por lotes, lockfile reproducible y validación del runtime Cloudflare | Sin conflictos de peers/engines; pruebas, build y smoke SSR pasan; staging y rollback verificados |
+| 1. Contenido, transición CPT y esquema | En curso: registro CPT listo; carga editorial/idiomas pendientes | Inspección del plugin custom y transición de sus CPT a ACF; guía asistida de campos/CPT e idiomas, inventario/export ACF, textos EN/ES y evidencias de desarrollo senior, calidad, automatización y DevOps; carga completa en content.alexcuadra.dev; tabla legacy→nuevo y usuario de servicio | Datos publicables completos en WordPress, sin cifras de mockup; queries validadas en staging; respaldos y rollback disponibles |
+| 2. Datos y autenticación | En curso: auth lista; cliente EN/ES probado; rutas pendientes | Transporte servidor, DTOs por idioma, relaciones de traducción, rutas EN/ES, paginación, globales por petición, estados 404/503 y secretos runtime | Anónimo rechazado y SSR autenticado operativo; sin secretos en cliente/logs |
+| 3. Sistema visual y Home | Pendiente | Tokens unificados, temas, navegación y componentes Astro responsive; Home con contenido real | Revisión visual desktop/móvil y pruebas de teclado; sin enlaces de maqueta |
+| 4. Proyectos y LAB | Pendiente: modelo LAB aún sin crear | Archivo y template individual reutilizable para proyectos; CPT, archivo y detalle LAB con qa-training-lab como primera entrada prevista | Datos reales en CMS, variantes EN/ES, un proyecto y una entrada LAB completos; rutas antiguas conservadas |
+| 5. Editorial y About | Pendiente; contrato y validadores de contacto preparados | Archivo, filtros/paginación, artículo, TOC, perfiles y formulario Turnstile con backend de correo | Contenido accesible; challenge/límites válidos y entrega de contacto comprobada |
+| 6. QA y salida | Pendiente: existen pruebas de base, no aceptación final | E2E EN/ES, axe, capturas, SEO técnico/editorial bilingüe, revisión Cloudflare, autenticación y monitoreo | CI verde, staging aprobado, canonical/hreflang/sitemap validados, 404/503 correctos y rollback ensayado |
+| 7. Opcional | Opcional, sin iniciar | Telemetría real o suscripción | Fuente de datos/proveedor definido y contenido suficiente |
 
-Orden recomendado: completar la fase 0.1 antes de implementar autenticación y componentes nuevos; cerrar contenido y esquema antes de construir pantallas que requieran datos inexistentes. Aplicar migración aditiva: crear campos, poblar y validar, desplegar queries compatibles y retirar legacy en una entrega posterior. Backup de base de datos y configuración antes de cambios; rollback del frontend a último deploy compatible y restauración del esquema si fuera necesario.
+Secuencia vigente: base actualizada y autenticación ya operativas; continuar modelado e idiomas antes de construir pantallas que requieran datos inexistentes. Mantener abiertos los criterios de revisión visual y recuperación de la fase 0.1 hasta verificarlos. Aplicar migración aditiva: crear campos, poblar y validar, desplegar queries compatibles y retirar legacy en una entrega posterior. Backup de base de datos y configuración antes de cambios; rollback del frontend a último deploy compatible y restauración del esquema si fuera necesario.
 
 ## 10. Decisiones abiertas
 
-Recopilar evidencia de desarrollo web senior, calidad, automatización y DevOps; disponibilidad y CTA principal; mantener tema claro; qué casos tienen permiso para mostrar resultados; tipo de hosting Cloudflare y acceso al staging; versiones/plugins de autenticación; si artículos se escriben en WordPress o son mayoritariamente enlaces; contenido y estado real de qa-training-lab para su entrada LAB. Estas decisiones no bloquean acordar tokens y componentes base, pero sí el contenido final y la activación de autenticación.
+Pendientes: evidencia de desarrollo web senior, calidad, automatización y DevOps; disponibilidad y CTA principal; mantener tema claro; permisos para mostrar resultados de clientes; contenido y estado real de qa-training-lab.
+
+Resuelto: Workers con producción y staging, autenticación por Application Password de usuario de servicio y GraphQL restringido; Articles son referencias externas/menciones y Posts son el blog propio; ACF gratuito mantiene el registro de los CPT; Polylang/conector probados y activos. No volver a solicitar estas decisiones ya confirmadas.
 
 Los documentos resultantes de planificación, seguimiento y guías se guardan en `docs/`. Los documentos se versionan en Git; las propuestas de referencia bajo `docs/design-proposal/` permanecen locales. Los documentos nuevos también deben guardarse en `docs/`. README.md permanece en la raíz como entrada del proyecto.
 
@@ -186,7 +297,7 @@ Los documentos resultantes de planificación, seguimiento y guías se guardan en
 
 ## 11. Seguridad: requisitos del rediseño
 
-Esta sección es parte del alcance y de los criterios de salida. Son medidas pendientes de implementar, salvo las protecciones de CI ya indicadas. La revisión del código identifica superficies de riesgo; no demuestra que el sitio haya sufrido un ataque ni sustituye una auditoría del servidor de WordPress.
+Esta sección es parte del alcance y de los criterios de salida. Autenticación servidor, restricción de WPGraphQL, controles de contenido publicado, errores/logs redactados y protecciones de CI ya están implementados dentro del alcance del estado inicial. Sanitización básica del HTML editorial ya implementada localmente; CSP/cabeceras completas, controles del nuevo diseño y aceptación final siguen pendientes; la checklist de estado distingue ambos grupos. La revisión del código identifica superficies de riesgo; no demuestra que el sitio haya sufrido un ataque ni sustituye una auditoría del servidor de WordPress.
 
 ### Prioridad y responsables
 
@@ -251,7 +362,7 @@ Backups separados de base de datos, medios y registros ACF/CPT; verificar restau
 3. **SSRF y secretos:** URL de CMS manipulada y redirección a otro host rechazadas; sin Authorization en HTML, bundles, mensajes al visitante, logs ni llamadas del navegador.
 4. **Cabeceras:** CSP y cabeceras presentes en 200/404/503 sobre staging SSR; tema, estilos, imágenes y embeds autorizados funcionan; framing externo denegado. Validar separadamente assets estáticos y desarrollo.
 5. **Caché y abuso:** preview/borrador nunca compartidos; paginación y profundidad acotadas; timeout/reintento limitados y 503 genérico. Pruebas de límites en staging controlado, sin prueba de carga sobre producción.
-6. **Futuras escrituras:** si se añade formulario, validar cuerpo, longitud, email, destino fijo, rate limit y antispam; CSRF/Origin cuando existan cookies/sesiones. Para webhooks, firma/HMAC, expiración y protección contra replay. Un formulario sin backend no se considera entregado.
+6. **Contacto confirmado como requisito:** formulario con Turnstile validado en servidor, texto plano/escaping, cuerpo y campos acotados, email validado, destinatario fijo, rate limit distribuido, origen permitido e idempotencia de envío. No es ya una función hipotética ni solo un mailto. Para webhooks, firma/HMAC, expiración y protección contra replay. Un formulario sin backend y prueba de entrega no se considera entregado. Contrato y guía: [CONTACT_FORM_PLAN.md](CONTACT_FORM_PLAN.md).
 
 No se añaden hoy tests ficticios de controles que aún no existen: cada control se entrega con sus pruebas en la fase de implementación correspondiente. Los criterios P0 y P1 se incorporan a las fases 2 y 6 y bloquean la salida de producción hasta verificarse.
 
@@ -265,13 +376,13 @@ No se añaden hoy tests ficticios de controles que aún no existen: cada control
 
 ## 12. Fase 0.1: actualización de paquetes y verificación de compatibilidad
 
-Objetivo: establecer una base actualizada, soportada y reproducible antes de desarrollar el rediseño y la autenticación. Mantener las tecnologías del stack; una actualización mayor puede requerir migrar configuración o integración sin cambiar de framework. Fase en ejecución: baseline verificado, lote intermedio completado y migración local a Astro 7/Tailwind 4/Workers aprobada por Alex. Pruebas y build pasan; instalación limpia reporta 0 avisos conocidos. Falta staging real y revisión visual. El estado y las evidencias de ejecución se registran en EXECUTION_STATUS.md.
+Objetivo: establecer una base actualizada, soportada y reproducible antes de desarrollar el rediseño y la autenticación. Mantener las tecnologías del stack; una actualización mayor puede requerir migrar configuración o integración sin cambiar de framework. Base técnica actualizada y Workers validados tanto en staging como en producción. Pruebas y build pasan; la instalación limpia anterior reportó 0 avisos conocidos. Quedan revisión visual y ensayo documentado de rollback para cerrar todos los criterios de esta fase. El estado y las evidencias de ejecución se registran en EXECUTION_STATUS.md.
 
-### Inventario confirmado y restricciones iniciales
+### Inventario inicial y restricciones históricas
 
-Versiones obtenidas del `package-lock.json` actual, no solo de los rangos declarados en `package.json`:
+La tabla conserva las versiones del lockfile inicial, anteriores a la migración; no describe el lockfile vigente. Base actual verificada: Astro 7.4.0, @astrojs/cloudflare 14.4.0, Tailwind 4.3.3 y Wrangler 4.151.1. CMS confirmado: WordPress 7.1.3, PHP 8.5.11, ACF gratuito 6.8.10, WPGraphQL 2.24.2, WPGraphQL for ACF 3.0.0, Polylang 3.8.11 y conector 0.7.1.
 
-| Paquete / entorno | Base actual | Compatibilidad que hay que comprobar para el objetivo |
+| Paquete / entorno | Base inicial histórica | Compatibilidad considerada para el objetivo |
 | --- | --- | --- |
 | Astro | 5.1.1 | Versión soportada, engines de Node, cambios mayores y APIs de contenido/SSR |
 | @astrojs/cloudflare | 12.1.0 | Declara peer Astro `^5.0.0`; no conservar este adapter al actualizar Astro a otro major sin comprobar un adapter compatible |
@@ -369,6 +480,8 @@ Criterios: `lang="en"`/`lang="es"`, formatos de fechas/números con Intl, equiva
 
 ## 14. Ejecución guiada: creación de campos y carga editorial
 
+Estado: inventario, exports y sustitución de registros CPT completados; nuevos fields del rediseño y LAB pendientes. Las menciones de staging en este procedimiento se aplican al frontend y, cuando exista, al entorno de pruebas. Para el CMS Alex decidió trabajar en producción con backup reciente y acepta interrupciones; esa decisión ya está autorizada y no debe solicitarse de nuevo.
+
 Durante la fase 1, el asistente debe guiar a Alex paso a paso en WordPress; no limitarse a entregar nombres de campos ni asumir que ya existen. Las instrucciones se basarán en la versión e interfaz reales de ACF gratuito y de los plugins instalados. No se han creado campos ni instalado plugins como parte de esta propuesta.
 
 Secuencia de trabajo por bloques pequeños:
@@ -426,11 +539,13 @@ Fuentes oficiales para la propuesta bilingüe y SEO:
 
 ## 16. Transición de CPT del plugin custom a ACF
 
+**Registro y lectura publicada completados:** Alex sustituyó el proveedor conservando project/articles y nombres GraphQL; export final revisado y baseline de siete proyectos/diez referencias validado sin copiar entradas. ACF conserva campos/relaciones consultados y el plugin original permanece desactivado como respaldo. No se declara auditado todo el contenido no publicado ni toda la edición administrativa. La investigación y rutas siguientes describen el procedimiento acordado y alternativas, no una migración todavía por ejecutar. Alex autorizó trabajar directamente en el CMS de producción con backup; no se exige crear staging WordPress para repetir este paso. El staging del frontend sí está disponible.
+
 ### Aclaración y primera hipótesis que investigar
 
 Los CPT actuales de proyectos y artículos se registran mediante un plugin personalizado de WordPress. El objetivo acordado es sustituir ese registro por la interfaz de CPT de ACF gratuito, para facilitar mantenimiento. Los nombres GraphQL `projects` y `articles` usados en el frontend no prueban cuáles son las claves internas `post_type` de WordPress: hay que obtenerlas del código del plugin y del servidor.
 
-**Puede que no sea necesaria una migración de contenido.** Si ACF registra exactamente las mismas claves internas, se trataría de cambiar quién registra los CPT; los registros existentes pueden continuar asociados al mismo tipo. Esto es una hipótesis a validar en staging, no una garantía ni una migración ya realizada. Cambiar una etiqueta visible o el proveedor de registro no obliga por sí mismo a copiar las entradas.
+**Puede que no sea necesaria una migración de contenido.** Si ACF registra exactamente las mismas claves internas, se trataría de cambiar quién registra los CPT; los registros existentes pueden continuar asociados al mismo tipo. La hipótesis inicial se verificó para el registro y lectura publicada de este proyecto; el alcance de cierre se detalla arriba. Cambiar una etiqueta visible o el proveedor de registro no obliga por sí mismo a copiar las entradas.
 
 La importación documentada por ACF desde CPT UI no implica una importación automática desde cualquier plugin custom. Inspeccionar su código primero y, si no existe importador apropiado, recrear las definiciones equivalentes en ACF siguiendo la guía asistida de la sección 14.
 
@@ -467,6 +582,8 @@ Fuentes oficiales para validar el procedimiento:
 - [ACF: post types, taxonomías e importación desde CPT UI](https://www.advancedcustomfields.com/resources/post-types-and-taxonomies/)
 
 ## 17. Compatibilidad editorial con Gutenberg y estilos básicos
+
+**Base local completada:** componente compartido WordPressContent, sanitización con allowlist mediante sanitize-html 2.18.1 y CSS editorial acotado para headings, listas, imágenes/captions, columnas, citas, tablas, galería core y código. Conectado a los tres puntos anteriores de HTML del CMS. Decisión inicial aplicada: CSS propio (alternativa A), sin importar todo el CSS de WordPress ni usar funciones ACF PRO. Las columnas apilan en móvil y el contenido editorial H1 pasa a H2. Políticas y límites en [WORDPRESS_CONTENT.md](WORDPRESS_CONTENT.md). 98 pruebas pasan; build y smoke SSR local con el renderer compartido correctos. No se declaran terminados los bloques especiales, anchors/TOC, revisión visual móvil/escritorio o despliegue.
 
 Evaluar e implementar soporte de contenido creado con los bloques nativos de WordPress en artículos, casos de estudio, About y LAB. No exigir convertir headings, imágenes, columnas o citas en campos ACF: el cuerpo editorial vive en Gutenberg; ACF conserva los datos estructurados del template.
 
@@ -507,3 +624,17 @@ Alex confirmó que articles es exclusivamente el archivo de referencias a otras 
 - QA: demostrar que /blog consume post y /articles consume articles, que no hay registros cruzados por usar categorías compartidas, que funcionan ambos templates y enlaces externos, y que se conservan URLs legacy. Los filtros de formato no sustituyen la separación de modelos.
 
 Este cambio actualiza el plan; todavía no implementa el blog, los nuevos fields ni el rediseño editorial.
+
+## 19. Formulario de contacto con Turnstile
+
+Requisito del MVP confirmado por Alex. Alcance, seguridad, fields editoriales, decisiones de envío y pasos guiados en [CONTACT_FORM_PLAN.md](CONTACT_FORM_PLAN.md). Implementar en fase 5 y validar integralmente en fase 6; no activar un formulario que solo muestre el widget o acepte mensajes sin entrega. Los textos EN/ES se cargarán en el CMS con ACF gratuito, los secretos/configuración técnica permanecen en Workers. El backend no consulta WordPress en cada POST.
+
+Avance de contacto: campos ACF importados y completos EN, esquema GraphQL verificado; interfaz local conectada a CMS y Turnstile, aún desactivada. Pruebas unitarias 115 y build correctos. Pendientes validación de navegador, límites globales/idempotencia, despliegue y entrega.
+
+## 20. Última etapa: mejorar el conector Astro–WordPress
+
+Añadida por Alex el20 octubre2026 y **aplazada al final del plan**, después de los incrementos editoriales/MCP, aceptación y entregas pendientes. Esta etapa corresponde a la capa de datos del portfolio (`src/data/client.js`, solicitudes CMS y WPGraphQL), independiente del adaptador MCP de herramientas editoriales. No adelantar su implementación por un continúa genérico mientras queden etapas anteriores.
+
+Primero medir consultas, latencia, errores y consumo real sin exponer credenciales. Después evaluar mejoras de caché/invalidation, deduplicación, paginación, tiempos de espera, manejo de indisponibilidad y respuestas429, manteniendo autenticación de servidor, visibilidad pública e idioma exacto. Decidir cambios a partir de esa evidencia, sin introducir reintentos que aumenten la carga del CMS. Conservar URLs, IDs, field keys y relaciones Polylang; los secretos permanecen fuera del cliente.
+
+Entrega por incrementos: diagnóstico y contrato de datos → implementación local con fixtures y regresiones de SSR/seguridad/bilingüismo → revisión en staging con solicitudes espaciadas y rollback → promoción expresamente autorizada. Aceptación: paridad de contenido/rutas/SEO EN/ES, ningún contenido privado expuesto, menor carga o latencia medible y comportamiento claro ante fallos. Esta anotación no cambia el conector ni despliega nada; contacto sigue desactivado por decisión vigente de Alex.

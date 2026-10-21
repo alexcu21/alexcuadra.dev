@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-20",
+  "environment": "staging",
+  "version": "bbb91792-89ba-4fac-88fb-6b67d1eb7b6c",
+  "newDeployment": false,
+  "local": { "unitTests": 218, "passed": true, "newTests": 7, "buildRepeated": false, "reason": "Only QA scripts, tests and documentation changed" },
+  "blogPending404": {
+    "passed": true,
+    "paths": ["/blog/__missing_entry__", "/es/blog/example-post-structuring-a-test-case"],
+    "status": 404,
+    "cacheControl": "no-store",
+    "noindex": true
+  },
+  "initialInterruption": { "stage": "lab", "error": "TimeoutError", "cause": "Smoke timeout created before pacing delay", "fixedInTool": true, "attributedToCms429": false },
+  "isolatedDiagnostic": { "path": "/lab/", "status": 200, "durationMs": 1207, "cmsIdentityVerified": true, "noindex": true },
+  "labAndReferencesRun": {
+    "exitCode": 0,
+    "requestGapMs": 30000,
+    "retries": 0,
+    "publicPaths": ["/lab/", "/es/laboratorio/", "/lab/qa-training-lab", "/es/laboratorio/qa-training-lab-2", "/articles/"],
+    "notFoundPaths": ["/lab/__missing_entry__", "/es/laboratorio/qa-training-lab"],
+    "passed": ["service-identity", "seo", "csp-and-script-hashes", "environment-noindex", "lab-real-reciprocal-translations", "lab-single-h1", "lab-focusable-main", "lab-detail-editorial-renderer", "lab-no-contact-form-or-widget", "404-no-store-noindex", "references-no-blog-only-categories"],
+    "skipped": ["technical-routes", "home", "sitemap-endpoint", "contact-endpoint", "blog-archives-and-public-details"]
+  },
+  "savedSitemap": { "urls": 43, "labPublicPathsPresent": 4, "newRequests": 0 },
+  "cmsFailuresObservedInCapture": 0,
+  "pendingEditorialCasesCoveredAcrossRuns": true,
+  "singleFullSmokePassed": false,
+  "hosting429RootCauseResolved": false,
+  "visualQaCompleted": false,
+  "browserRetried": false,
+  "contactEnabled": false,
+  "cmsModified": false,
+  "productionModified": false,
+  "localChangesPreserved": true
+}

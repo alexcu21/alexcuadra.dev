@@ -1,0 +1,156 @@
+{
+  "worker": "alexcuadra-dev-staging",
+  "before": "bbb91792-89ba-4fac-88fb-6b67d1eb7b6c",
+  "after": "1b12660e-22b5-4e0d-8120-cf89c4ab60e5",
+  "deployment": {
+    "id": "bf288cd4-3920-4183-bacf-49b9cea04c02",
+    "createdAt": "2026-10-21T02:30:14.874244Z",
+    "version": "1b12660e-22b5-4e0d-8120-cf89c4ab60e5",
+    "trafficPercent": 100
+  },
+  "preflight": {
+    "contactDisabled": true,
+    "cmsAuth": true,
+    "cmsCredentialPresent": true,
+    "cmsIdentityPresent": true,
+    "coordinatorLocal": true
+  },
+  "postflight": {
+    "contactDisabled": true,
+    "cmsAuth": true,
+    "cmsCredentialPresent": true,
+    "cmsIdentityPresent": true,
+    "coordinatorLocal": true
+  },
+  "artifact": {
+    "entrySha256": "cf68a3ce8f533580080aa366162bfe621d24e08c57161cc5b1e96714d5b39dae",
+    "outlineMarkersPresent": true,
+    "publicAssetsChecked": 4,
+    "serverBindingsAbsentFromClient": true,
+    "artifactSha256": "0ea9a6df74423ee4fffdd2af5c5f1841ef60a479eb3d6dfc7f258f12e97e2cdd"
+  },
+  "dryRunPassed": true,
+  "rollbackCompatibility": {
+    "worker": "alexcuadra-dev-staging",
+    "current": "1b12660e-22b5-4e0d-8120-cf89c4ab60e5",
+    "target": "bbb91792-89ba-4fac-88fb-6b67d1eb7b6c",
+    "checks": {
+      "currentContactDisabled": true,
+      "currentCmsAuthEnabled": true,
+      "currentCoordinatorPresent": true,
+      "targetContactDisabled": true,
+      "targetCmsAuthEnabled": true,
+      "targetCoordinatorPresent": true,
+      "bindingsIdentical": true,
+      "runtimePresent": true,
+      "runtimeIdentical": true,
+      "namedHandlersIdentical": true
+    },
+    "metadataCompatible": true
+  },
+  "finalActiveVerified": true,
+  "unitTests": {
+    "passed": 237,
+    "failed": 0
+  },
+  "ssrSuite": {
+    "passed": true,
+    "syntheticFixtures": true
+  },
+  "build": {
+    "astroFilesChecked": 160,
+    "errors": 0,
+    "warnings": 0,
+    "hints": 0
+  },
+  "smoke": {
+    "origin": "https://alexcuadra-dev-staging.alexcu21.workers.dev",
+    "browserUsed": false,
+    "cmsModified": false,
+    "contactEnabled": false,
+    "emailSent": false,
+    "checks": [
+      {
+        "phase": "baseline",
+        "path": "/",
+        "status": 200,
+        "cmsIdentityVerified": true,
+        "noindex": true,
+        "contactDisabled": true,
+        "assetStatus": 200
+      },
+      {
+        "phase": "outline",
+        "path": "/blog/example-post-structuring-a-test-case",
+        "status": 200,
+        "locale": "en",
+        "headings": 3,
+        "tocPresent": true,
+        "anchors": 3,
+        "cmsIdentityVerified": true,
+        "noindex": true,
+        "cspVerified": true,
+        "contactFormAbsent": true
+      },
+      {
+        "phase": "outline",
+        "path": "/es/blog/publicacion-de-ejemplo-como-estructurar-un-caso-de-prueba",
+        "status": 200,
+        "locale": "es",
+        "headings": 3,
+        "tocPresent": true,
+        "anchors": 3,
+        "cmsIdentityVerified": true,
+        "noindex": true,
+        "cspVerified": true,
+        "contactFormAbsent": true
+      },
+      {
+        "phase": "outline",
+        "path": "/lab/qa-training-lab",
+        "status": 200,
+        "locale": "en",
+        "headings": 6,
+        "tocPresent": true,
+        "anchors": 6,
+        "cmsIdentityVerified": true,
+        "noindex": true,
+        "cspVerified": true,
+        "contactFormAbsent": true
+      },
+      {
+        "phase": "outline",
+        "path": "/es/laboratorio/qa-training-lab-2",
+        "status": 200,
+        "locale": "es",
+        "headings": 6,
+        "tocPresent": true,
+        "anchors": 6,
+        "cmsIdentityVerified": true,
+        "noindex": true,
+        "cspVerified": true,
+        "contactFormAbsent": true
+      }
+    ],
+    "lastOriginRequestAt": 1792550302256,
+    "lastHttp": {
+      "path": "/es/laboratorio/qa-training-lab-2",
+      "status": 200,
+      "requestId": "e2c7f943-3bbc-4845-967f-7eaed2c95e74"
+    },
+    "baselinePassed": true,
+    "finishedAt": "2026-10-21T02:38:23.321Z",
+    "editorialCssVerified": true,
+    "contactDisabledAfter": true,
+    "outlinePassed": true
+  },
+  "cmsEditorialModified": false,
+  "productionWorkerModified": false,
+  "contactEnabled": false,
+  "emailSent": false,
+  "browserUsed": false,
+  "visualQaComplete": false,
+  "cms429RootCauseResolved": false,
+  "sourceChangesDiscarded": false,
+  "localDevPidPreserved": 6326
+}

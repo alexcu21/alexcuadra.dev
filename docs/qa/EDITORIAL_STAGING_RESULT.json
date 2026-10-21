@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-19",
+  "status": "deployed_qa_partial",
+  "worker": "alexcuadra-dev-staging",
+  "version": "8783d505-39d8-4287-8779-7b3423044dc1",
+  "previousVersion": "36744d8c-bd3f-47f5-8162-e85ddc54f094",
+  "sourceWorkingTreeDirty": true,
+  "unitTestsPassed": 201,
+  "ssrSuitePassed": true,
+  "buildPassed": true,
+  "astroDiagnostics": {
+    "files": 149,
+    "errors": 0,
+    "warnings": 0,
+    "hints": 0
+  },
+  "dryRunPassed": true,
+  "localEditorialSmokePassed": true,
+  "remoteEditorialSmokePassed": false,
+  "remoteSitemapUrlCount": 43,
+  "requestGapMs": 10000,
+  "failure": {
+    "frontendStatus": 503,
+    "cmsStatus": 429,
+    "cmsOperation": "BlogPost",
+    "path": "/es/blog/publicacion-de-ejemplo-como-estructurar-un-caso-de-prueba",
+    "laterBrowserRenderSucceeded": true
+  },
+  "availabilityCacheHitObserved": true,
+  "contactDisabledVerified": true,
+  "productionDeployed": false,
+  "cmsChanged": false,
+  "zoom200Certified": false
+}
