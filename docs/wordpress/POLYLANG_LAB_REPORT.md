@@ -40,12 +40,19 @@ No se reprodujo un bypass de permisos atribuible al conector en las comprobacion
 
 Esto permite mantener el conector como candidato para un piloto controlado, sin certificar su seguridad general. Primero preparar filtros y DTOs públicos por idioma, comprobar la versión real de Polylang instalada y preservar las URLs de las nueve referencias españolas legacy. Después activar coordinadamente y probar el CMS real antes de habilitar idiomas en los CPT o crear traducciones nuevas. No cambiar a un puente propio por defecto sin una razón adicional y pruebas equivalentes.
 
-No cubierto: todas las combinaciones de roles/plugins, medios, previews editoriales, ACF PRO/Options Pages, ataques de carga, auditoría completa de dependencias, todas las rutas de mutación, seguridad de infraestructura ni caché EN/ES en el frontend (todavía no implementada). Compatibilidad funcional no equivale a seguridad certificada.
+No cubierto: todas las combinaciones de roles/plugins, medios, previews editoriales, ACF PRO/Options Pages, ataques de carga, auditoría completa de dependencias, todas las rutas de mutación, seguridad de infraestructura ni caché EN/ES desplegada en Workers. Compatibilidad funcional no equivale a seguridad certificada.
+
+## Ampliación: cliente real del portfolio
+
+El cliente localizado pasó 13/13 comprobaciones adicionales contra este WordPress aislado: proyectos, categorías y referencias externas EN/ES con fields ACF, Home/About por relación de traducción real, reutilización de caché pública proyectada y ausencia de contenido sustituto cuando la traducción española es borrador, privada, futura o protegida. El transporte de pruebas redirige únicamente la URL fija del CMS a localhost y utiliza credenciales sintéticas; no se leyó ni modificó el CMS de producción. Resultado en [POLYLANG_CLIENT_RESULTS.json](POLYLANG_CLIENT_RESULTS.json).
+
+Al ensayar ACF directamente dentro de una relación singular privada se observaron errores de ejecución GraphQL. La implementación final primero valida los metadatos públicos de las relaciones y luego solicita los fields del destino permitido. La caché de estas pruebas implementa la interfaz Cache API en memoria; no demuestra comportamiento distribuido en Cloudflare. Los CPT sintéticos ahora incluyen thumbnails y taxonomías como los reales; se cargan las definiciones ACF legacy en modo local, ampliando únicamente las reglas por ID de las páginas de prueba.
 
 ## Evidencia y reproducción
 
 - [Matriz ejecutada](POLYLANG_LAB_RESULTS.json)
 - [Control con conector activo/inactivo](POLYLANG_PASSWORD_CONTROL_RESULTS.json)
+- [Consultas del cliente real](POLYLANG_CLIENT_RESULTS.json)
 - [Laboratorio reproducible](../../tests/integration/wordpress-polylang/README.md)
 
-Ejecutar desde la raíz `sh tests/integration/wordpress-polylang/run.sh`. Requiere Docker y red para instalar paquetes. No forma parte de CI normal ni sustituye pruebas de integración de la aplicación. El directorio .wrangler contiene únicamente el manifiesto/credenciales ficticias del laboratorio, ignorado por Git; se elimina al cerrar la prueba.
+Ejecutar desde la raíz `sh tests/integration/wordpress-polylang/run.sh`. Requiere Docker y red para instalar paquetes. No forma parte de CI normal ni sustituye pruebas del despliegue real. Incluye el cliente de aplicación y después la matriz de seguridad; sigue terminando con código distinto de cero por los cuatro fallos conocidos de política ACF. El directorio .wrangler contiene el manifiesto/credenciales ficticias del laboratorio, ignorado por Git; se elimina al cerrar la prueba.

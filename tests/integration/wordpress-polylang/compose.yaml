@@ -28,7 +28,7 @@ services:
         define('WP_DEBUG_LOG', true);
         define('WP_DEBUG_DISPLAY', false);
         define('DISABLE_WP_CRON', true);
-    volumes: ["wp-data:/var/www/html", "./:/lab:ro"]
+    volumes: ["wp-data:/var/www/html", "./:/lab:ro", "../../../docs/wordpress/acf-legacy-2026-10-18.json:/acf-fields.json:ro"]
     tmpfs: ["/tmp:size=128m"]
     depends_on:
       db: { condition: service_healthy }
@@ -42,7 +42,7 @@ services:
     entrypoint: ["wp"]
     user: "33:33"
     environment: *wp-env
-    volumes: ["wp-data:/var/www/html", "./:/lab:ro"]
+    volumes: ["wp-data:/var/www/html", "./:/lab:ro", "../../../docs/wordpress/acf-legacy-2026-10-18.json:/acf-fields.json:ro"]
     tmpfs: ["/tmp:size=256m"]
     depends_on: [wordpress]
     profiles: [tools]

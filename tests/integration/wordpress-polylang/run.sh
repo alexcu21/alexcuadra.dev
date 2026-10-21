@@ -17,5 +17,6 @@ node tests/integration/wordpress-polylang/password-control.mjs
 docker compose -f "$compose_file" run --rm --no-deps cli plugin deactivate wp-graphql-polylang
 node tests/integration/wordpress-polylang/password-control.mjs
 docker compose -f "$compose_file" run --rm --no-deps cli plugin activate wp-graphql-polylang
+node tests/integration/wordpress-polylang/content-client.mjs
 # Deliberately exits nonzero for unresolved policy failures; never hide them.
 node tests/integration/wordpress-polylang/check.mjs

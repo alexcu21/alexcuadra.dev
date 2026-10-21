@@ -12,4 +12,5 @@ wp rewrite structure '/%postname%/'
 wp eval-file /lab/setup.php
 wp eval-file /lab/seed.php
 wp eval-file /lab/seed-terms.php
+wp eval-file /lab/seed-content.php
 wp plugin activate wp-graphql-polylang

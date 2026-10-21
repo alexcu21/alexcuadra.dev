@@ -1,0 +1,95 @@
+{
+  "capturedAt": "2026-10-18T23:23:51.974Z",
+  "scope": "Published, non-password-protected content visible to the service account; not a database backup. Language transition comparison excludes only modified and uri.",
+  "records": {
+    "projects": [
+      {
+        "id": 42,
+        "slug": "norceca-info",
+        "hash": "323b2d322eec6c4ec3ec5d79fbf02463f22a8996070fb90a4c9502725c9316fd"
+      },
+      {
+        "id": 43,
+        "slug": "valexweb-com",
+        "hash": "7435378d0c66b6f38e69c1c86f6d4acc017cbbcaa7ab92d88b47eb66867ddaa8"
+      },
+      {
+        "id": 50,
+        "slug": "alexcuadra-dev",
+        "hash": "9e54294a4f367dc38dca5ea2344975a96cddc38923b8499f9af50b03bcbde616"
+      },
+      {
+        "id": 137,
+        "slug": "makersunite-eu",
+        "hash": "508c90bdcab787bde6db47b2411336bb1e2a47dd02d0aa4814a6787e2204ae6e"
+      },
+      {
+        "id": 143,
+        "slug": "playyellow",
+        "hash": "585aeb4dc363c2867a84013f7ee5f4f712d713485d697a4ba90074fb2af2dd31"
+      },
+      {
+        "id": 144,
+        "slug": "alextecuenta-com",
+        "hash": "75d36d5d92e6726d3cd1a13c97ea25de82585eab160f43477ec69ec32c4424b8"
+      },
+      {
+        "id": 146,
+        "slug": "christianitytoday-com",
+        "hash": "0a168fc0bc2104034eceb94dc017c6183aef23c5fd68451d697c7549e9dd52bd"
+      }
+    ],
+    "articles": [
+      {
+        "id": 75,
+        "slug": "how-to-build-a-custom-dynamic-gutenberg-block-step-by-step",
+        "hash": "d504a4e35f32141f154cbdb36ba04c76c00e44e9e19288b741b5b6e23c6dacfc"
+      },
+      {
+        "id": 78,
+        "slug": "como-dar-mantenimiento-a-tus-sitios-wordpress-con-wp-cli",
+        "hash": "ef6dac799d3b002ac7ffcb0e167359eb3fb9d2dda0d0319e96742e2c294fa2a9"
+      },
+      {
+        "id": 80,
+        "slug": "charla-el-camino-del-desarrollador-wordpress",
+        "hash": "3f3ec19a9bbdfb582e8a1ed22a8e89f020044450a92992fede6fbe4468eda24e"
+      },
+      {
+        "id": 82,
+        "slug": "podcast-hablemos-del-2024",
+        "hash": "774f1cb706f2d40c87424d15ceb1592b00f144e303875ef98538ae76760ca604"
+      },
+      {
+        "id": 84,
+        "slug": "podcast-hablemos-de-opensource-y-comunidad",
+        "hash": "b282f36ed92d362e7185962ef16c1c97d99536eaf8ac453ebc4c2d3da09808cf"
+      },
+      {
+        "id": 87,
+        "slug": "talkno-todo-en-wordpress-es-codigo",
+        "hash": "440d7abbdebe1a2603b2b531ce60b0f300519665e5920913d02f0e21ce69fbc8"
+      },
+      {
+        "id": 91,
+        "slug": "talkcreando-un-bloque-de-gutenberg-dinamico-a-partir-de-un-shortcode",
+        "hash": "a957edc6940765c454af834d0b15d5c2dcdb1460e2d20bfc588dd14c01fb3edf"
+      },
+      {
+        "id": 93,
+        "slug": "descubriendo-playground-la-herramienta-para-hacer-demos",
+        "hash": "4262485c15ad9d7f9f01edbdbfec9d4e05727730ac78a7a247b7c3b1ce4ee4c7"
+      },
+      {
+        "id": 95,
+        "slug": "episodio-4-especial-wordcamp-guatemala",
+        "hash": "03d594aea4cdd6e58201bcb9b0e7a3867fdd11d0a8bc91f0becbba897fc01a06"
+      },
+      {
+        "id": 97,
+        "slug": "la-experiencia-valex-en-el-wordcamp-bogota-2024",
+        "hash": "b8b33f6f90e9905be4b0bbaf12c100021f17542be093379a89c0a32e85f525a7"
+      }
+    ]
+  }
+}

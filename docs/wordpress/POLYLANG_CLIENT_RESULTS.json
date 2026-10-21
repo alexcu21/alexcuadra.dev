@@ -1,0 +1,69 @@
+{
+  "environment": "isolated-local-fixtures",
+  "versions": {
+    "wordpress": "7.1.3",
+    "phpCli": "8.5.11",
+    "advanced-custom-fields": "6.8.10",
+    "polylang": "3.8.11",
+    "wp-graphql": "2.24.2",
+    "wpgraphql-acf": "3.0.0",
+    "wp-graphql-polylang": "0.7.1"
+  },
+  "checks": 13,
+  "passed": 13,
+  "failed": 0,
+  "results": [
+    {
+      "name": "actual project client EN, ACF and cache hit",
+      "status": "PASS"
+    },
+    {
+      "name": "actual categories and article clients EN",
+      "status": "PASS"
+    },
+    {
+      "name": "actual home client EN follows page translation",
+      "status": "PASS"
+    },
+    {
+      "name": "actual about client EN follows page translation",
+      "status": "PASS"
+    },
+    {
+      "name": "actual project client ES, ACF and cache hit",
+      "status": "PASS"
+    },
+    {
+      "name": "actual categories and article clients ES",
+      "status": "PASS"
+    },
+    {
+      "name": "actual home client ES follows page translation",
+      "status": "PASS"
+    },
+    {
+      "name": "actual about client ES follows page translation",
+      "status": "PASS"
+    },
+    {
+      "name": "actual project cache stores only the public application projection",
+      "status": "PASS"
+    },
+    {
+      "name": "actual page client does not fall back when Spanish translation is draft",
+      "status": "PASS"
+    },
+    {
+      "name": "actual page client does not fall back when Spanish translation is private",
+      "status": "PASS"
+    },
+    {
+      "name": "actual page client does not fall back when Spanish translation is future",
+      "status": "PASS"
+    },
+    {
+      "name": "actual page client rejects password-protected translated ACF",
+      "status": "PASS"
+    }
+  ]
+}

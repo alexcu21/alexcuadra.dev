@@ -30,6 +30,40 @@ async function main() {
     && ['en', 'es'].every(code => languages?.languages?.some(language => language.code.toLowerCase() === code));
   const result = { checkedAt: new Date().toISOString(), rootReady, metadata, languages: languages || null,
     schemaReady: ready, note: 'Schema checks only; translation/ACF isolation, auth and routing still require a paired-content test.' };
+  if (process.argv.includes('--audit-content')) {
+    if (!ready) throw new Error('SCHEMA_NOT_READY');
+    const inventory = await run(`query PublishedLanguageInventory {
+      projects(first: 100, where: {language: ALL, status: PUBLISH, hasPassword: false}) {
+        pageInfo { hasNextPage } nodes { databaseId slug language { code }
+          categories { nodes { databaseId slug language { code } } }
+          tags { nodes { databaseId slug language { code } } }
+        }
+      }
+      posts(first: 100, where: {language: ALL, status: PUBLISH, hasPassword: false}) {
+        pageInfo { hasNextPage } nodes { databaseId slug language { code }
+          categories { nodes { databaseId slug language { code } } }
+          tags { nodes { databaseId slug language { code } } }
+        }
+      }
+      categories(first: 100, where: {language: ALL, hideEmpty: false}) {
+        pageInfo { hasNextPage } nodes { databaseId slug count language { code }
+          translations { databaseId slug count language { code } }
+        }
+      }
+      articles(first: 100, where: {language: ALL, status: PUBLISH, hasPassword: false}) {
+        pageInfo { hasNextPage } nodes { databaseId slug language { code }
+          categories { nodes { databaseId slug language { code } } }
+          tags { nodes { databaseId slug language { code } } }
+        }
+      }
+      home: page(id: "19", idType: DATABASE_ID) { databaseId language { code } }
+      about: page(id: "68", idType: DATABASE_ID) { databaseId language { code } }
+    }`);
+    if (['projects', 'articles', 'posts', 'categories'].some(type => !Array.isArray(inventory[type]?.nodes) || inventory[type].pageInfo?.hasNextPage !== false)) {
+      throw new Error('INCOMPLETE_LANGUAGE_INVENTORY');
+    }
+    result.publishedInventory = inventory;
+  }
   await writeFile(new URL('../docs/wordpress/LANGUAGE_SCHEMA_STATUS.md', import.meta.url),
     '# Estado del esquema de idiomas\n\nComprobación autenticada de solo lectura; sin contenidos ni credenciales.\n\n```json\n'
     + JSON.stringify(result, null, 2) + '\n```\n');

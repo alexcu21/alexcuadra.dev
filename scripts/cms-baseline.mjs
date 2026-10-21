@@ -4,7 +4,9 @@ import dotenv from 'dotenv';
 import { request } from 'graphql-request';
 import { cmsAuthHeaders } from '../src/data/cms-auth.js';
 
-const target = new URL('../docs/wordpress/content-baseline.json', import.meta.url);
+const languageTransition = process.argv.includes('--language-transition');
+const target = new URL(languageTransition ? '../docs/wordpress/content-language-baseline.json'
+  : '../docs/wordpress/content-baseline.json', import.meta.url);
 async function main() {
   const headers = cmsAuthHeaders(dotenv.parse(await readFile(new URL('../.dev.vars', import.meta.url))));
   if (!headers.has('authorization')) throw new Error('AUTH_REQUIRED');
@@ -30,8 +32,13 @@ async function main() {
   const records = {};
   for (const kind of ['projects', 'articles']) {
     if (!Array.isArray(data[kind]?.nodes) || data[kind].pageInfo.hasNextPage) throw new Error('INCOMPLETE_BASELINE');
-    records[kind] = data[kind].nodes.map(node => ({ id: node.databaseId, slug: node.slug,
-      hash: createHash('sha256').update(JSON.stringify(node)).digest('hex') })).sort((a, b) => a.id - b.id);
+    records[kind] = data[kind].nodes.map(node => {
+      // Language assignment may change the CMS URI and modification time; all editorial fields,
+      // ACF values, terms and image references must still be compared.
+      const { modified, uri, ...editorial } = node;
+      return { id: node.databaseId, slug: node.slug,
+        hash: createHash('sha256').update(JSON.stringify(languageTransition ? editorial : node)).digest('hex') };
+    }).sort((a, b) => a.id - b.id);
   }
   if (process.argv.includes('--verify')) {
     const baseline = JSON.parse(await readFile(target, 'utf8'));
@@ -42,7 +49,8 @@ async function main() {
     return;
   }
   await writeFile(target, JSON.stringify({ capturedAt: new Date().toISOString(),
-    scope: 'Published, non-password-protected content visible to the service account; not a database backup.', records }, null, 2) + '\n', { flag: 'wx' });
+    scope: 'Published, non-password-protected content visible to the service account; not a database backup.'
+      + (languageTransition ? ' Language transition comparison excludes only modified and uri.' : ''), records }, null, 2) + '\n', { flag: 'wx' });
   console.log(`Baseline saved: ${records.projects.length} projects, ${records.articles.length} articles. No editorial bodies stored.`);
 }
 main().catch(error => {
