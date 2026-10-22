@@ -1,0 +1,7 @@
+services:
+  wordpress:
+    environment:
+      AC_PROPOSALS_TRANSPORT: synthetic-http-v1
+  cli:
+    environment:
+      AC_PROPOSALS_TRANSPORT: synthetic-http-v1

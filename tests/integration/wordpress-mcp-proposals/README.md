@@ -1,5 +1,7 @@
 # Aceptación CLI y archivo sintéticos del candidato
 
+Actualización de transporte: [140 comprobaciones nuevas HTTP/MCP/GraphQL y seis carreras](../../../docs/qa/MCP_PROPOSALS_TRANSPORT_2026-10-22.md) pasaron con `run.py --transport`, proyecto separado `alexcuadra-editorial-proposals-transport-v2` y overlay `compose.transport.yaml`. HTTP solo dentro de Docker; contexto de terminación HTTPS simulado por fixture, sin TLS real. Guard y ZIP intactos, contenedores detenidos. Ruta REST de contexto y barrera son exclusivamente instrumentación. No repetir sobre recursos existentes; `--transport --resume` exige identidad DB coincidente si persiste, pero ese modo no fue parte de la ejecución aprobada. Mantener separados los165 CLI y140 de transporte; instalación aún HOLD.
+
 **165 comprobaciones correctas con Polylang3.9.1; instalación real HOLD.** [QA y límites](../../../docs/qa/MCP_PROPOSALS_SYNTHETIC_ACCEPTANCE_2026-10-22.md). Este arnés usa datos ficticios, no SSH ni el CMS compartido. No crea bypass en el candidato.
 
 ## Dependencias verificadas y espacio

@@ -2,6 +2,8 @@
 
 **0.1.0-rc.1 preparado para revisión; instalación en HOLD.** Seis abilities de propuestas existentes, sin ejecutar aplicación/recuperación de fuentes. No es la versión0.5-lab con un guard retirado: namespace, CPT, meta, tablas y opción propios, únicamente dos PHP. El laboratorio y Editorial Read se conservan sin modificar.
 
+Último22oct: [HTTP/MCP/GraphQL y seis carreras aceptados](qa/MCP_PROPOSALS_TRANSPORT_2026-10-22.md),140 nuevas comprobaciones correctas sin modificar candidato/ZIP. HTTPSsimulado sobre HTTPinterno, noTLSreal. Persisten puertas de esquema exhaustivo/perfil completo y backup privado real/restauración; [destino/retención elegidos y próximo preflight](WORDPRESS_MCP_PRIVATE_BACKUP_PLAN.md). Las entradas inferiores son históricas y no invalidan el resultado actual.
+
 Actualización posterior22oct: [aceptación CLI/SQL y restauración sintética completadas](qa/MCP_PROPOSALS_SYNTHETIC_ACCEPTANCE_2026-10-22.md), **165 comprobaciones correctas** con Polylang3.9.1 confirmado por Alex. Caché pública verificada, sin CMS; ZIP candidato intacto. HTTP/GraphQL/carreras/perfil completo y backup real restaurado/retención siguen pendientes antes de instalar. La entrada inferior sobre bloqueo404 describe el intento previo, superado para el nuevo perfil3.9.1; no reescribe la evidencia3.9.0.
 
 Actualización22oct: [aceptación aislada preparada e intentada](qa/MCP_PROPOSALS_ACCEPTANCE_PREPARATION_2026-10-22.md), detenida antes de instalar por seed tmpfs vacío y artefacto público Polylang3.9.0 no disponible (404). Código de archivo/restauración sintéticos listo, no ejecutado. Sigue HOLD; candidato/hash sin cambios. Alex confirmará metadata instalada mediante el comando del QA; no reemplazar silenciosamente versiones.
