@@ -1,0 +1,95 @@
+{
+  "format": "editorial-proposals-candidate-qa-v1",
+  "date": "2026-10-22",
+  "decision": "hold",
+  "standaloneBoundaryChecks": 95,
+  "scenarios": [
+    {
+      "scenario": "enabled",
+      "checks": 30,
+      "passed": true
+    },
+    {
+      "scenario": "no-optin",
+      "checks": 1,
+      "passed": true
+    },
+    {
+      "scenario": "wrong-optin",
+      "checks": 1,
+      "passed": true
+    },
+    {
+      "scenario": "wrong-home",
+      "checks": 1,
+      "passed": true
+    },
+    {
+      "scenario": "wrong-site",
+      "checks": 1,
+      "passed": true
+    },
+    {
+      "scenario": "multisite",
+      "checks": 1,
+      "passed": true
+    },
+    {
+      "scenario": "lab-active",
+      "checks": 1,
+      "passed": true
+    },
+    {
+      "scenario": "no-storage",
+      "checks": 28,
+      "passed": true
+    },
+    {
+      "scenario": "no-cli",
+      "checks": 31,
+      "passed": true
+    }
+  ],
+  "phpLint": [
+    "wordpress/plugins/alexcuadra-editorial-proposals/alexcuadra-editorial-proposals.php",
+    "wordpress/plugins/alexcuadra-editorial-proposals/storage.php",
+    "tests/operations/editorial-proposals-candidate.php"
+  ],
+  "shellLint": "wordpress/operations/editorial-storage-preflight.sh",
+  "deterministicZipVerified": true,
+  "artifact": "artifacts/wordpress/alexcuadra-editorial-proposals-0.1.0-rc.1.zip",
+  "artifactSha256": "cd990139d7915567d76012e53060def452e8f2b43796918415d5b1f82da38e14",
+  "artifactBytes": 10199,
+  "unchangedBaseSourcePins": [
+    {
+      "path": "wordpress/plugins/alexcuadra-editorial-changes/alexcuadra-editorial-changes.php",
+      "sha256": "9fcfe807c725797ad705b455bdd7a17fb327c798f33deb8fe4ce205e89a2bec4"
+    },
+    {
+      "path": "wordpress/plugins/alexcuadra-editorial-changes/applications.php",
+      "sha256": "a32d8d9030c2fcb189fb4f3efe6b338f4d067284eb30227377a3766246767f03"
+    },
+    {
+      "path": "wordpress/plugins/alexcuadra-editorial-changes/reviews.php",
+      "sha256": "22a4c7b877e08d08a4e5a128aaef45c7d9c21523809f0e12c58b725b82ebaf4a"
+    },
+    {
+      "path": "wordpress/plugins/alexcuadra-editorial-changes/storage.php",
+      "sha256": "a36773794ad61f4c10d0ea037349a35edbdb6bc828af101f12d2654093ebe4ea"
+    },
+    {
+      "path": "wordpress/plugins/alexcuadra-editorial-read/alexcuadra-editorial-read.php",
+      "sha256": "9e4def28919b5dc896037fa13dddf62b4f63e4a725095fe12b3e0d8419f22619"
+    }
+  ],
+  "execution": {
+    "sshByAgent": false,
+    "dockerStarted": false,
+    "cmsModified": false,
+    "scopesChanged": false,
+    "backupDownloaded": false,
+    "wordpressRuntimeAcceptance": false,
+    "databaseMigrationTested": false,
+    "privateArchiveRestoreTested": false
+  }
+}

@@ -1,5 +1,7 @@
 # Etapa técnica: MCP editorial con permisos acotados
 
+Actualización22oct: [candidato de propuestas privadas0.1.0-rc.1](WORDPRESS_MCP_PROPOSALS_CANDIDATE.md) preparado en ZIP+manifiesto deterministas, seis abilities sin ejecutores de fuente y opt-in cerrado. Nuevo almacenamiento independiente; Read y lab intactos.95 comprobaciones de frontera con stubs, no aceptación WordPress/DB/HTTP/GraphQL. Instalación HOLD hasta ensayo aislado, respaldo/archivo restaurados y retención acordada; después aprobación concreta del paquete/scope. No SSH por el agente, Docker, instalación ni cambios CMS en este incremento.
+
 Estado20 octubre2026: **Editorial Read0.1.0 instalado y verificado mediante el MCP real**, tras autorización expresa de Alex. Usuario2 conserva subscriber y recibe únicamente `alexcuadra_read_public_projects`; rol global y otros permisos intactos. Dos abilities propias disponibles a través de los tres meta-tools existentes. Lectura mínima completada; escritura/ACF/cuerpos siguen pendientes. Etapa separada del trabajo visual/editorial del portfolio.
 
 ## Punto de partida
