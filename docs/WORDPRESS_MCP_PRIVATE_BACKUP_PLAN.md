@@ -2,30 +2,37 @@
 
 Destino elegido por Alex: **disco externo o carpeta privada de su equipo**. Conservar hasta validar instalación y restauración; luego decidir. No TTL, tarea de eliminación ni30 días heredados de contacto. El agente sigue sin ejecutar SSH; Alex ejecuta comandos revisables y comparte únicamente metadata/resultados saneados, nunca dumps, credenciales o contenido privado.
 
-## Propuesta concreta de almacenamiento
+## Estado actual: coordinador preparado, respaldo real pendiente
 
-Carpeta por defecto para el futuro coordinador local: `~/PrivateBackups/alexcuadra.dev/`, fuera del repositorio y de Documents/Desktop sincronizados por defecto. Se podrá sustituir por una ruta absoluta en disco externo elegida por Alex. Todavía no se ha creado la carpeta ni se asume su cifrado o política del dispositivo. Al crearla: directorios0700, archivo SQL/bundle y manifiesto privado0600, nombres únicos, sin sobrescribir respaldos anteriores. Rechazar destino dentro del repositorio/webroot o symlinks inesperados; comprobar espacio del volumen de destino en ese momento, no reutilizar los42GiB del volumen actual para un disco externo.
+Alex completó el preflight a23:12:18UTC del22oct: cliente MariaDB11.8.9, servidor11.8.9-MariaDB-log y37 tablas InnoDB. Triggers/rutinas/eventos visibles0, sin certificar privilegios/objetos ocultos. [Captura saneada](qa/MCP_BACKUP_PROFILE_2026-10-22.json). También hay deriva frente a21oct: PHP8.2.34→8.5.11, Hostinger3.0.79→3.0.80, Polylang3.9.0→3.9.1, WPGraphQL2.24.2→2.25.0 y GraphQL IDE5.6.0→5.7.0. Los ensayos previos conservan su alcance histórico; no se atribuyen al perfil nuevo. Hay que revalidarlo antes de instalar/aplicar.
 
-Último tamaño observado del CMS≈690,5MiB de archivos+DB física; no es tamaño prometido del SQL/archivo comprimido ni del respaldo restaurado. Reservar margen para bundle, extracción y copia restaurada además de Docker. El ensayo sintético anterior usó SQL12,25MiB, no extrapolar su tamaño al dump real. La caché pública56MiB no es parte del respaldo y puede desaparecer de tmp.
+Implementado `scripts/editorial-private-backup.py` y helpers en `wordpress/operations/editorial-private-backup.{sh,php}`.21 pruebas locales correctas con transporte simulado y fixtures privados, lint PHP/bash y payload renderizado. El agente solo ejecutó tests y dry-run; no SSH ni backup real. [QA y límites](qa/MCP_PRIVATE_BACKUP_COORDINATOR_2026-10-22.md).
 
-## Siguiente paso: prerrequisitos de hosting, sin respaldo aún
+### Comando que Alex ejecuta en su terminal
 
-WP-CLI db query falló por proc_open/proc_close deshabilitadas. Un cliente mysqldump/mariadb-dump invocado por el shell puede funcionar sin esas funciones PHP; hay que comprobar disponibilidad/versión y motores antes de diseñar la exportación exacta. No habilitar proc_open ni improvisar un exportador SQL parcial.
-
-Alex ejecuta:
+Este comando **sí crea y descarga un respaldo privado**. No instala el candidato ni modifica roles/permisos:
 
 ```sh
-ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=10 -p 65002 u776991923@194.164.64.104 'sh -s' < /Users/Alex/Desktop/AlexC/alexcuadra.dev/wordpress/operations/editorial-backup-readiness.sh
+python3 /Users/Alex/Desktop/AlexC/alexcuadra.dev/scripts/editorial-private-backup.py
 ```
 
-El script consulta herramientas locales/versiones, motores y tipos agregados de tablas, objetos DB visibles y metadata de plugins; no exporta filas, secretos, nombres de DB/usuarios/host ni crea archivos. MYSQL visibilidad0 no certifica privilegios ni ausencia de objetos ocultos. Se omiten plugins normales/temas al bootstrap WP-CLI, pero MU/drop-ins siguen cargándose: no es una certificación exhaustiva de efectos de terceros. Revisar prefijo y marcador final, errores y JSON, sin leer configuración privada al chat.
+Destino por defecto `~/PrivateBackups/alexcuadra.dev/FECHA_UTC-ID/`. Para disco externo, sustituir el destino con una ruta absoluta real:
 
-## Coordinador de respaldo que se preparará con esos resultados
+```sh
+python3 /Users/Alex/Desktop/AlexC/alexcuadra.dev/scripts/editorial-private-backup.py --destination "/Volumes/NOMBRE_REAL/PrivateBackups/alexcuadra.dev"
+```
 
-Transferencia SSH ejecutada **por Alex** hacia carpeta local privada; si se usa staging temporal remoto será privado, fuera de public_html, con cleanup de credenciales efímeras y fallo explícito. Nunca contraseña en argumentos/URL/salida; no solicitar DB_PASSWORD al usuario ni guardar config en Git. Si un cliente externo necesita credenciales, diseñar archivo de opciones temporal0600 dentro de directorio0700 y cleanup acotado, sin modificar configuración WordPress. No asumir todavía soporte de host/socket/opciones de cliente: depende del diagnóstico.
+No ejecutar literalmente NOMBRE_REAL. El programa exige volumen montado, destino fuera del repo y soporte de permisos privados. `--dry-run` muestra el plan sin SSH/creación. No fija ni cambia permisos de carpetas públicas existentes: rechaza un destino preexistente que no sea privado/propio.
 
-Exportar DB coherente con motores/privilegios admitidos, archivo de plugins/MU/temas/medios y configuración ACF/CPT necesaria; decidir explícitamente tratamiento protegido de wp-config y otros secretos para restaurar sin activar servicios reales. Detectar fallos del cliente y del compresor con pipefail, guardar descargas incompletas como tales, verificar tamaño/hash e integridad de archivo y no afirmar éxito solo por gzip válido. DB transaccional no vuelve atómica una copia de archivos concurrente; coordinar ventana sin despliegues/cambios de esquema y registrar huellas/versiones.
+Compartir **solo** la línea `EDITORIAL_PRIVATE_BACKUP_RESULT=...`; nunca el archivo, SQL, wp-config ni `transfer.stderr.log`. Si falla conserva `.incomplete` y log privado, sin declararlo respaldo válido; se puede compartir la etapa genérica `EDITORIAL_BACKUP_FAILED_STAGE` del log, sin su contenido restante. No borrarlo ni limpiar directorios amplios para reintentar. Cada ejecución crea una carpeta nueva y no sobreescribe respaldos previos.
 
-Preparar destino aislado de restauración con correo/webhooks/cron/actualizaciones/red externa bloqueados **antes del primer bootstrap**; nunca reemplazar el CMS compartido para ensayar. No copiar credenciales de producción a una app conectada a Internet. Comparar esquema/filas/perfil/relaciones/ACF y permisos tras restaurar. Conservar manifest privado con versiones/fecha/hashes, rutas/identificadores internos separados de cualquier evidencia pública saneada. Dump real puede incluir usuarios, hashes y opciones privadas: no se añade al repo/chat ni al resultado QA.
+### Contrato y límites del coordinador
 
-Este documento fija decisiones y controles del procedimiento; **no es una implementación del coordinador ni un backup/restauración realizados**. Una vez resueltos prerrequisitos se entrega comando concreto y revisable de creación para Alex. Instalar/conceder scope sigue siendo otra puerta posterior con paquete/hash/scopes precisos y aprobación concreta.
+- Directorios nuevos0700 y archivos0600, comprobados antes de SSH. Umbral8GiB en volumen de destino; límite2GiB comprimidos/3GiB expandidos, fuente seleccionada≤2GiB y SQL≤512MiB. La captura local42GiB no certifica capacidad de un disco externo. Rechaza symlinks, dispositivos/enlaces en el tar, miembros repetidos/rutas inseguras y bits especiales. No extrae ni ejecuta PHP del respaldo al verificar.
+- SSH solo cuando Alex ejecuta modo de creación; hostkey estricta y autenticación existente, no contraseñas en argv. Payload fija el perfil observado: si cambian PHP/plugins/motores/tablas/esquema se detiene en lugar de exportar silenciosamente otro perfil. WP-CLI omite plugins normales y temas, aunque MU/drop-ins continúan en bootstrap; no certifica todos los efectos de terceros.
+- Cliente mysqldump desde shell evita proc_open de PHP. Opciones de conexión solo en archivo temporal0600 dentro de directorio0700 fuera de public_html. Dump con single-transaction/quick/hex-blob y solicitud explícita de rutinas/eventos/triggers; falta de privilegios/fallo del cliente aborta. Visibilidad0 por sí sola sigue sin certificar objetos ocultos. Temporal remoto limitado a SQL/metadatos, no duplica plugins/medios. Trap borra solo su directorio nuevo al terminar/error/señales capturables; SIGKILL o caída del host pueden dejarlo, identificado en el log privado para revisión puntual.
+- Copia archivos raíz de WordPress (incluido **wp-config con secretos**), core wp-admin/wp-includes, plugins/MU/temas/medios/idiomas y archivos regulares de wp-content salvo debug.log. Excluye otros directorios raíz y directorios no seleccionados de wp-content, como caches/backups/upgrades. No es snapshot de todo el hosting ni preserva ACL/propiedad/hardlinks como identidad: hardlinks se guardan como archivos regulares. El archivo contiene datos privados; permisos no equivalen a cifrado añadido por el programa.
+- Huellas de archivos antes/después de exportar/transmitir y esquema normalizado antes/después del dump. No bloquea ediciones ni despliegues del CMS; coordinar ejecución sin cambios de archivos/DDL. La transacción SQL no hace atómica la copia global de archivos+DB. Cambios detectados o error de tar mantienen el archivo incompleto.
+- Verifica gzip completo/CRC, contenido/tamaño/SHA256 de todos los miembros, SQL y manifiesto, marcador remoto final y exit0. Renombra a wordpress.tar.gz solo después. Es evidencia de transferencia/integridad, **no restauración verificada**. Guarda verification.json privado; sin expiración/borrado automático.
+
+El preflight ya se completó; no hace falta repetirlo sin cambios. Próximo: Alex ejecuta la creación y devuelve solo el resumen; luego se diseña/restaura en entorno aislado sin arrancar configuración/servicios reales, además de aceptar PHP8.5/WPGraphQL2.25/perfil de hooks actualizado. Instalación continúa HOLD.

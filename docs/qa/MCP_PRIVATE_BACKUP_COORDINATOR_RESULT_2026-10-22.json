@@ -1,0 +1,65 @@
+{
+  "format": "private-backup-coordinator-preparation-v1",
+  "date": "2026-10-22",
+  "localTests": {
+    "passed": 21,
+    "failed": 0,
+    "transport": "mocked",
+    "wordpressProfile": "synthetic for PHP prepare test",
+    "actualShellDumpClientExercised": false
+  },
+  "syntaxChecks": [
+    "Python AST",
+    "PHP helper",
+    "bash template",
+    "rendered bash payload"
+  ],
+  "dryRun": {
+    "sshExecuted": false,
+    "filesCreated": false,
+    "destination": "/Users/Alex/PrivateBackups/alexcuadra.dev",
+    "compressedBudgetBytes": 2147483648,
+    "expandedBudgetBytes": 3221225472
+  },
+  "realExecution": {
+    "sshByAgent": false,
+    "backupCreated": false,
+    "restorationVerified": false,
+    "cmsChangedByOperator": false,
+    "installationApproved": false
+  },
+  "liveProfileSource": "User-executed preflight observedAtUtc 2026-10-22T23:12:18Z",
+  "requiresUpdatedRuntimeAcceptance": {
+    "php": "8.5.11",
+    "wpGraphql": "2.25.0",
+    "hostinger": "3.0.80",
+    "wpGraphqlIde": "5.7.0"
+  },
+  "files": [
+    {
+      "path": "scripts/editorial-private-backup.py",
+      "sha256": "5eee39d4c0953765f244e93f427362485a53268257ddd4fc76b3dd8ee71a3137",
+      "bytes": 9729
+    },
+    {
+      "path": "wordpress/operations/editorial-private-backup.php",
+      "sha256": "1b77ec408010ace928473ab462be1ac8b9a5a1fef1cb8ba80d5982b39770f18d",
+      "bytes": 8921
+    },
+    {
+      "path": "wordpress/operations/editorial-private-backup.sh",
+      "sha256": "597f72977edd11e56d38f503df5a9e26fa43925389276972fadda5634133afb4",
+      "bytes": 1924
+    },
+    {
+      "path": "tests/backup/test_private_backup.py",
+      "sha256": "855453ac57cc03c12573b6cc58571f825b238230a3eb9f1e0a05cda478441b97",
+      "bytes": 15088
+    },
+    {
+      "path": "docs/qa/MCP_BACKUP_PROFILE_2026-10-22.json",
+      "sha256": "948836f7f81aca9881bbf1a5f00b07665c9c4643fcc5df498d480ef013de68cf",
+      "bytes": 2706
+    }
+  ]
+}
