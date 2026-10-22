@@ -1,0 +1,127 @@
+{
+  "format": "proposals-synthetic-acceptance-reviewed-summary-v1",
+  "date": "2026-10-22",
+  "evidenceSource": "Observed PROPOSALS_ACCEPTANCE_RESULT output and successful runner exit; sanitized post-run summary, not a second test run",
+  "exitCode": 0,
+  "candidateSha256": "cd990139d7915567d76012e53060def452e8f2b43796918415d5b1f82da38e14",
+  "runtime": {
+    "wordpress": "7.1.3",
+    "php": "8.2.34",
+    "polylang": "3.9.1"
+  },
+  "profileOrigin": {
+    "polylangVersionConfirmedByUser": "3.9.1",
+    "otherPluginVersionsAreSyntheticPins": true
+  },
+  "publicPluginCache": {
+    "format": "public-plugin-cache-v1",
+    "plugins": [
+      {
+        "slug": "polylang",
+        "version": "3.9.1",
+        "url": "https://downloads.wordpress.org/plugin/polylang.3.9.1.zip",
+        "zipBytes": 754597,
+        "sha256": "b09aa8b3d92a882b1d5e24ca2c729981e8ac07d4403f78d4a6853899b20f9266"
+      },
+      {
+        "slug": "mcp-adapter",
+        "version": "0.7.1",
+        "url": "https://downloads.wordpress.org/plugin/mcp-adapter.0.7.1.zip",
+        "zipBytes": 450211,
+        "sha256": "719d81aa1250615acfd8256f0acc8c13f1712f1ae398c3d5883c8b166024fe9b"
+      },
+      {
+        "slug": "wp-graphql",
+        "version": "2.24.2",
+        "url": "https://downloads.wordpress.org/plugin/wp-graphql.2.24.2.zip",
+        "zipBytes": 1788630,
+        "sha256": "d1b02a3cdeb1c977bd7e73542122510545b8bdd404a3b1fcfdfa5daa55271ee3"
+      },
+      {
+        "slug": "advanced-custom-fields",
+        "version": "6.8.10",
+        "url": "https://downloads.wordpress.org/plugin/advanced-custom-fields.6.8.10.zip",
+        "zipBytes": 9488938,
+        "sha256": "92d51a8f1d839f60aee4efb6a9cd269b37d1599a9fb44d03f792352dfe34c744"
+      },
+      {
+        "slug": "wpgraphql-acf",
+        "version": "3.0.0",
+        "url": "https://downloads.wordpress.org/plugin/wpgraphql-acf.3.0.0.zip",
+        "zipBytes": 151939,
+        "sha256": "a9f9ddaf892c691745a6ac38a12a4c81ded89ba91f04069cf228bb6554ee580b"
+      },
+      {
+        "slug": "wp-graphql-polylang",
+        "version": "0.7.1",
+        "url": "https://codeload.github.com/valu-digital/wp-graphql-polylang/zip/refs/tags/v0.7.1",
+        "zipBytes": 93513,
+        "sha256": "0288c87e99ec27c2cdbe20988be3812317cff73d9f33d470d864695c00c60f67"
+      }
+    ],
+    "downloadedBytes": 12727828,
+    "extractedBytes": 39843103
+  },
+  "groups": {
+    "framework": 67,
+    "history": 44,
+    "quotasAndSqlFailures": 37,
+    "archiveBefore": 7,
+    "restoreAfter": 10
+  },
+  "passed": 165,
+  "failed": 0,
+  "syntheticArchive": {
+    "bytes": 12845477,
+    "sha256": "e37976c2e9cd24f746b93d7074eda806162fd3f4de190b76678d26cc6851659a",
+    "sourceDatabase": "wordpress",
+    "restoredDatabase": "wordpress_restore",
+    "rowAndSchemaDigestEqual": true,
+    "createUpdateReplayEqual": true,
+    "replayQuotaAndRowsUnchanged": true,
+    "durableRetentionVerified": false
+  },
+  "freeBeforeBytes": 33166946304,
+  "freeAfterBytes": 33167093760,
+  "scope": {
+    "syntheticOnly": true,
+    "sshExecutedByAgent": false,
+    "cmsModified": false,
+    "realBackupVerified": false,
+    "httpVerified": false,
+    "graphqlVerified": false,
+    "processRacesVerified": false,
+    "installationApproved": false
+  },
+  "runnerRevisionNote": "After the successful run, result-file persistence was added without rerunning suites",
+  "files": [
+    {
+      "path": "tests/integration/wordpress-mcp-proposals/run.py",
+      "sha256": "4714759499a239f2afbdd8a3e50207a3e135decccfe7cee4b1be70d6b63b6ade"
+    },
+    {
+      "path": "tests/integration/wordpress-mcp-proposals/restore.php",
+      "sha256": "fb80b83409374094fc0ddf39810a73d928f26e79fe24025ba7f14256d70368b3"
+    },
+    {
+      "path": "tests/integration/wordpress-mcp-proposals/adapt-tests.php",
+      "sha256": "4e6f2468aba7a76bedfd909bcb72dc3643b8f2b446b8fc384b3219c00fea28a6"
+    },
+    {
+      "path": "tests/integration/wordpress-mcp-proposals/seed.sh",
+      "sha256": "fc46dd2eff0e1142dde2ff122401e16e51a7b1612f38a94c4875c22eeccb9eb4"
+    },
+    {
+      "path": "tests/integration/wordpress-mcp-proposals/fixture.php",
+      "sha256": "33481639ae2bcf997485667d167631d76ad28f33bbdb60c61e4aa3e6750acc0e"
+    },
+    {
+      "path": "tests/integration/wordpress-mcp-proposals/compose.yaml",
+      "sha256": "93d229acde5fb88b13cdcb164b99f1b2b9f5a3014a0c199399f958b7408cc4b0"
+    },
+    {
+      "path": "tests/integration/wordpress-mcp-proposals/compose.public-cache.yaml",
+      "sha256": "c2996fd76049794ae003a5bce7ac36d82201885141e2272e14e991a28696a70a"
+    }
+  ]
+}

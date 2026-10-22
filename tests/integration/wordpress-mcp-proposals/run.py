@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Offline synthetic CLI acceptance. Requires cached images and a retained synthetic seed."""
+"""Offline synthetic CLI acceptance with verified pinned public plugin cache."""
 import hashlib
 import json
 import os
@@ -10,9 +10,9 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[3]
 HERE = Path(__file__).resolve().parent
-PROJECT = 'alexcuadra-editorial-proposals-acceptance'
-COMPOSE = ['docker', 'compose', '-f', str(HERE / 'compose.yaml'), '--profile', 'tools']
-SEEDS = {name + '_wp-data': name for name in ['alexcuadra-editorial-application-lab', 'alexcuadra-editorial-graphql-lab']}
+PROJECT = 'alexcuadra-editorial-proposals-acceptance-v2'
+COMPOSE = ['docker', 'compose', '-p', PROJECT, '-f', str(HERE / 'compose.yaml'), '-f', str(HERE / 'compose.public-cache.yaml'), '--profile', 'tools']
+CACHE = Path('/private/tmp/alexcuadra-proposals-public-plugins-v2')
 
 
 def run(args, **kwargs):
@@ -56,16 +56,29 @@ def main():
     free = shutil.disk_usage(ROOT).free
     if free < 8 * 1024**3:
         raise RuntimeError('AT_LEAST_8_GIB_LOCAL_FREE_REQUIRED')
-    seed = os.environ.get('EDITORIAL_PROPOSALS_SEED_VOLUME', next(iter(SEEDS)))
-    if seed not in SEEDS:
-        raise RuntimeError('KNOWN_SYNTHETIC_SEED_REQUIRED')
-    volume = json.loads(run(['docker', 'volume', 'inspect', seed]))[0]
-    if (volume.get('Labels') or {}).get('com.docker.compose.project') != SEEDS[seed]:
-        raise RuntimeError('SYNTHETIC_SEED_LABEL_MISMATCH')
-    # Inspect retained tmpfs contents before allocating the acceptance project.
-    seed_image = 'wordpress:7.1.3-php8.2-apache@sha256:7cb0b86fdd78760c741db2fde3ed7a10084029164009e2c41b09de32f54607e8'
-    seed_check = 'for p in polylang mcp-adapter wp-graphql advanced-custom-fields wpgraphql-acf wp-graphql-polylang; do test -d "/seed/wp-content/plugins/$p" || { echo "MISSING_SYNTHETIC_SEED_PLUGIN:$p" >&2; exit 1; }; done'
-    run(['docker', 'run', '--rm', '--pull', 'never', '--network', 'none', '--mount', 'type=volume,src=' + seed + ',dst=/seed,readonly', seed_image, 'sh', '-c', seed_check])
+    cache_manifest = json.loads((CACHE / 'manifest.json').read_text())
+    expected = {'polylang': '3.9.1', 'mcp-adapter': '0.7.1', 'wp-graphql': '2.24.2',
+                'advanced-custom-fields': '6.8.10', 'wpgraphql-acf': '3.0.0', 'wp-graphql-polylang': '0.7.1'}
+    if {p['slug']: p['version'] for p in cache_manifest['plugins']} != expected:
+        raise RuntimeError('CACHE_PROFILE_MISMATCH')
+    for plugin in cache_manifest['plugins']:
+        slug = plugin['slug']
+        archive = CACHE / (slug + '.zip')
+        if hashlib.sha256(archive.read_bytes()).hexdigest() != plugin['sha256']:
+            raise RuntimeError('PUBLIC_PACKAGE_HASH_MISMATCH')
+        expected_files = set()
+        with zipfile.ZipFile(archive) as package:
+            for item in package.infolist():
+                if item.is_dir():
+                    continue
+                relative = Path(*Path(item.filename).parts[1:])
+                source = CACHE / 'plugins' / slug / relative
+                if source.is_symlink() or source.read_bytes() != package.read(item):
+                    raise RuntimeError('PUBLIC_EXTRACTED_BYTES_MISMATCH')
+                expected_files.add(relative.as_posix())
+        actual = {p.relative_to(CACHE / 'plugins' / slug).as_posix() for p in (CACHE / 'plugins' / slug).rglob('*') if p.is_file()}
+        if actual != expected_files:
+            raise RuntimeError('UNEXPECTED_PUBLIC_CACHE_FILE')
     # Require a fresh acceptance project; never reset/reuse another test's data.
     old = run(['docker', 'ps', '-aq', '--filter', 'label=com.docker.compose.project=' + PROJECT]).strip()
     if old:
@@ -93,7 +106,7 @@ def main():
             if package.read(entry['path']) != content or hashlib.sha256(content).hexdigest() != entry['sha256']:
                 raise RuntimeError('SOURCE_ZIP_BYTES_MISMATCH')
     report = {'format': 'proposals-synthetic-cli-acceptance-v1', 'candidateSha256': manifest['sha256'],
-              'localFreeBeforeBytes': free, 'seedVolume': seed, 'results': [],
+              'localFreeBeforeBytes': free, 'publicPluginCache': cache_manifest, 'results': [],
               'realCmsBackupVerified': False, 'httpAcceptance': False, 'graphqlAcceptance': False}
     started = False
     try:
@@ -102,7 +115,7 @@ def main():
         compose('run', '--rm', '--no-deps', '--pull', 'never', 'seed')
         cli('core', 'install', '--url=https://content.alexcuadra.dev', '--title=SyntheticProposalsAcceptance',
             '--admin_user=acceptance_admin', '--admin_password=synthetic-acceptance-only', '--admin_email=admin@example.test', '--skip-email')
-        versions = {'polylang': '3.9.0', 'mcp-adapter': '0.7.1', 'wp-graphql': '2.24.2',
+        versions = {'polylang': '3.9.1', 'mcp-adapter': '0.7.1', 'wp-graphql': '2.24.2',
                     'advanced-custom-fields': '6.8.10', 'wpgraphql-acf': '3.0.0', 'wp-graphql-polylang': '0.7.1'}
         for plugin, version in versions.items():
             if cli('plugin', 'get', plugin, '--field=version').strip() != version:
@@ -126,6 +139,7 @@ mariadb -uroot -p"$MARIADB_ROOT_PASSWORD" wordpress_restore < /archive/proposals
         cli('eval', '$u=get_user_by("login","archive_owner"); $u->remove_cap("alexcuadra_prepare_project_changes"); $u->remove_cap("alexcuadra_read_public_projects");')
         report['passed'] = sum(item['passed'] for item in report['results'])
         report['localFreeAfterBytes'] = shutil.disk_usage(ROOT).free
+        (Path('/private/tmp') / (PROJECT + '-result.json')).write_text(json.dumps(report, indent=2) + '\n')
         print('PROPOSALS_ACCEPTANCE_RESULT=' + json.dumps(report), flush=True)
     finally:
         if started:

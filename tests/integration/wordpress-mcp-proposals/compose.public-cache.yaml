@@ -1,0 +1,12 @@
+# Public, version-pinned source cache; no old lab volume is consumed.
+services:
+  seed:
+    environment:
+      ACCEPTANCE_SEED_LAYOUT: public-cache-v1
+    volumes:
+      - type: bind
+        source: /private/tmp/alexcuadra-proposals-public-plugins-v2
+        target: /seed
+        read_only: true
+        bind:
+          create_host_path: false

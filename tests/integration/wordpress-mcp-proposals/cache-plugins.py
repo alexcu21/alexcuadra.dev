@@ -9,9 +9,9 @@ import ssl
 import urllib.request
 import zipfile
 
-CACHE = Path('/private/tmp/alexcuadra-proposals-public-plugins-v1')
+CACHE = Path('/private/tmp/alexcuadra-proposals-public-plugins-v2')
 PLUGINS = {
-    'polylang': ('3.9.0', 'https://downloads.wordpress.org/plugin/polylang.3.9.0.zip'),
+    'polylang': ('3.9.1', 'https://downloads.wordpress.org/plugin/polylang.3.9.1.zip'),
     'mcp-adapter': ('0.7.1', 'https://downloads.wordpress.org/plugin/mcp-adapter.0.7.1.zip'),
     'wp-graphql': ('2.24.2', 'https://downloads.wordpress.org/plugin/wp-graphql.2.24.2.zip'),
     'advanced-custom-fields': ('6.8.10', 'https://downloads.wordpress.org/plugin/advanced-custom-fields.6.8.10.zip'),
