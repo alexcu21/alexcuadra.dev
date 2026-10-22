@@ -2,6 +2,8 @@
 
 **0.1.0-rc.1 preparado para revisión; instalación en HOLD.** Seis abilities de propuestas existentes, sin ejecutar aplicación/recuperación de fuentes. No es la versión0.5-lab con un guard retirado: namespace, CPT, meta, tablas y opción propios, únicamente dos PHP. El laboratorio y Editorial Read se conservan sin modificar.
 
+Actualización22oct: [aceptación aislada preparada e intentada](qa/MCP_PROPOSALS_ACCEPTANCE_PREPARATION_2026-10-22.md), detenida antes de instalar por seed tmpfs vacío y artefacto público Polylang3.9.0 no disponible (404). Código de archivo/restauración sintéticos listo, no ejecutado. Sigue HOLD; candidato/hash sin cambios. Alex confirmará metadata instalada mediante el comando del QA; no reemplazar silenciosamente versiones.
+
 ## Alcance revisable
 
 Fuentes en `wordpress/plugins/alexcuadra-editorial-proposals`; contrato operativo y límites en su README. Artefactos `artifacts/wordpress/alexcuadra-editorial-proposals-0.1.0-rc.1.zip` y manifiesto adjunto con SHA256 de ZIP y cada entrada. Se genera con `python3 scripts/package-editorial-proposals.py`, sin dependencias, red, CMS ni Docker; el ZIP solo contiene dos PHP y README de una allowlist fija. Sin credenciales/configuración/medios/dumps. Es candidato de revisión, no permiso de instalación.
