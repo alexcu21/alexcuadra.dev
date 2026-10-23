@@ -8,7 +8,7 @@ function fail($code) { throw new \RuntimeException($code); }
 
 function validate_fields($fields) {
     if (!is_array($fields) || !$fields || array_diff(array_keys($fields), ['body_html', 'tagline'])) { fail('invalid_fields'); }
-    if (array_key_exists('body_html', $fields) && (!is_string($fields['body_html']) || strlen($fields['body_html']) > 40000)) { fail('invalid_body'); }
+    if (array_key_exists('body_html', $fields) && (!is_string($fields['body_html']) || strlen($fields['body_html']) > 160000 || !preg_match('//u',$fields['body_html']) || preg_match_all('/./us',$fields['body_html']) > 40000)) { fail('invalid_body'); }
     if (array_key_exists('tagline', $fields)) {
         $meta = $fields['tagline'];
         if (!is_array($meta) || count($meta) !== 2 || !isset($meta['project_tagline'], $meta['_project_tagline'])) { fail('invalid_tagline'); }

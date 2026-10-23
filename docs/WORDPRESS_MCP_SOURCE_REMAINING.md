@@ -14,12 +14,14 @@ Límite: se reprodujo código completo y sync vacío observado, no opciones priv
 
 ## Trabajo pendiente para edición operativa
 
+Aplicación/revisión/aprobación CLI independiente ya integradas sobre rc.2:52 controles nuevos+132 regresiones, con cuotas propias, reservas y recibos v1 separados del estado del efecto. [Contrato actual](WORDPRESS_MCP_OPERATING_CONTRACT.md). No hay paquete ni scopes reales nuevos. Falta el executor de recuperación consumible y el cierre de esquema/candidato.
+
 | Entrega pendiente | Iteraciones estimadas | Resultado verificable |
 | --- | --- | --- |
-| Contrato operativo, integración y candidato | 2–3 | Enlace con propuestas existentes sin cambiar recibos rc.2; aprobación independiente consumible; scopes mínimos; cuotas/archivo/retención del journal; DTO versionado para separar contenido y efecto; ZIP/manifiesto probado con este perfil, preflight de configuración y reversión concreta |
+| Recuperación, formalización y candidato | 1–2 | Recuperación con nueva aprobación y source_after exacto; protección y prueba de pérdida/reconexión DB (bloqueante), migración/decoder estrictos, schema/transporte MCP, export privado y ZIP/manifiesto probado con este perfil, preflight de configuración y reversión concreta |
 | Instalación y aceptación autorizadas | 1 | Paquete/permisos/diff revisables y aprobados; Alex ejecuta SSH por fases; verificación real dentro del alcance autorizado |
 
-**Estimación vigente restante:3–4 incrementos de trabajo.** Son entregas, no un número garantizado de mensajes o comandos. Esperas de resultados/aprobación o un fallo nuevo pueden aumentar las vueltas. Si cambia la estimación, registrar el bloqueo y el trabajo concreto adicional antes de sumar otra fase. No volver a presentar el perfil completo como pendiente.
+**Estimación vigente restante:2–3 incrementos de trabajo.** Son entregas, no un número garantizado de mensajes o comandos. Esperas de resultados/aprobación o un fallo nuevo pueden aumentar las vueltas. Si cambia la estimación, registrar el bloqueo y el trabajo concreto adicional antes de sumar otra fase. No volver a presentar el perfil completo como pendiente.
 
 Una edición pública requiere su diff concreto aprobado; no se programa ahora ni se considera autorizada por «continúa». No pedir autorización antes de tener candidato/plan concretos y revisables. Los fixtures REST de manage_options no son el autorizador operativo final.
 

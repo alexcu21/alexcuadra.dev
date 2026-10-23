@@ -65,6 +65,9 @@ function denied($d,$code) { try {execute($d);} catch(RuntimeException $e) {check
 $d=setup();$result=execute($d);check($result['before']===$d['after'],'tagline persisted raw');check(!in_array('body',array_column($calls,0),true),'tagline skips body');check($state['post']['post_modified']==='old','metadata keeps timestamp');check($cleared===1,'cache cleared');
 $d=setup(['body_html']);$result=execute($d);check($result['before']===$d['after'],'body raw');check(array_column($calls,0)===['body'],'body only no ACF');
 $d=setup(['body_html','tagline']);execute($d);check(count(array_filter($calls,fn($c)=>$c[0]==='body'))===1,'combined one body call');check($cleared===1,'combined one cleanup');
+$d=setup(['body_html']);$d['after']['body_html']=str_repeat('é',25000);$result=execute($d);check($result['before']===$d['after'],'UTF8 body follows character limit not byte limit');check(count($calls)===1,'Unicode body one API call');
+$d=setup(['body_html']);$d['after']['body_html']=chr(255);denied($d,'invalid_body');check($calls===[],'invalid UTF8 rejected before API');
+$d=setup(['body_html']);$d['after']['body_html']=str_repeat('é',40001);denied($d,'invalid_body');check($calls===[],'over character limit rejected before API');
 $d=setup();$d['locale']='es';execute($d);check(!in_array('body',array_column($calls,0),true),'ES tagline also skips body');
 $d=setup();$d['after']['tagline']=meta('',true);execute($d);check(array_values(array_filter($state['meta'],fn($r)=>$r['meta_key']==='project_tagline'))[0]['meta_value']==='', 'empty string is retained, not absence');
 $d=setup();$d['operation']='recover';$d['after']['tagline']=meta(null,false);execute($d);check(count($state['meta'])===1,'recover absence keeps unrelated');

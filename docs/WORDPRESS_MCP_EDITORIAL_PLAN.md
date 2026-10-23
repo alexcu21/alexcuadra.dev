@@ -18,6 +18,8 @@ Inventario actual: `core/get-site-info`, `core/get-user-info`, `core/get-environ
 
 ## Incrementos de esta etapa
 
+Actualización23 octubre posterior: [contrato operativo de aplicación integrado](WORDPRESS_MCP_OPERATING_CONTRACT.md),52 checks nuevos+132 regresiones; revisión/aprobación CLI/consumo/recibos y presupuesto independiente con reserva. No abilities/paquete/scopes reales. Próximo: recuperación operativa y formalización estricta/MCP/export/candidato; luego despliegue autorizado. Estimación2–3 incrementos restantes, sujeto a resultados/aprobación.
+
 Actualización23 octubre posterior: [perfil completo local cerrado](qa/MCP_SOURCE_EFFECTS_FULL_PROFILE_2026-10-23.md),132 checks58CLI/50HTTP/24EN–ES. Código13activos+5inactivos+rc.2,2MU/tema íntegros; SQL/config privadas no importados. Próximo: contrato operativo/autorizaciones/cuotas/DTO y candidato con preflight/reversión; no ampliar lab salvo fallo concreto. Estimación3–4 incrementos restantes para edición instalada/validada, condicionados a resultados y aprobación específica.
 
 Actualización23 octubre posterior: [HTTP/MariaDB real](qa/MCP_SOURCE_EFFECTS_HTTP_2026-10-23.md) pasa46 checks y58 CLI,4 SIGKILL y cabecera nativa sin escrituras por retry. [Cierre y estimación](WORDPRESS_MCP_SOURCE_REMAINING.md): perfil completo/bilingüe pendiente,1–2 iteraciones para adaptador; contrato operativo/candidato/instalación autorizada4–6 en total. No scopes o escritura reales implícitos.

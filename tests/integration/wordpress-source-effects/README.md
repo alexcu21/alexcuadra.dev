@@ -31,3 +31,13 @@ La configuración reproducida no es toda la del proveedor: se fijan post_types=p
 Resultado58 CLI+50 HTTP+24 bilingües. La suite bilingüe protege cuerpo/meta/relaciones de la traducción y los vínculos, detecta cambios de otro editor y revierte un callback que toca el vinculado. Verifica también caché de metadata tras rollback, idioma erróneo y deriva sync/filtros. El reader coteja la API Polylang con filas SQL bloqueadas. El MU preview provoca un rechazo controlado y no deja cambios; la petición normal posterior recupera el contexto. El primer intento bilingüe comparaba mapas por orden de claves: se normalizaron por clave y se conservó la igualdad estricta de valores.
 
 La base y ficheros del CMS real no se importan. Los archivos copiados son código de plugins/tema/MU verificado, no SQL/uploads/wp-config. Se detiene solo el proyecto nuevo; sin prune/down-v/borrados de respaldos. La validación local del adaptador se cierra con este perfil; paquete operativo y configuración admitida del destino siguen separados, como indica el plan de cierre.
+
+## Contrato operativo
+
+El modo completo ejecuta también operating.php:52 checks nuevos sobre propuestas rc.2 auténticas, con usuarios sintéticos, separado de los132 del adaptador. Revisión/inspección/hash/CLI independiente; prepare-only/admin sin scopes, dueño/idioma incorrectos, diff/versiones desfasadas, expiración DB, scope revocado, transacción externa y claves reutilizadas rechazados. Se comprueban Unicode25000 caracteres, no-op con aprobación ya consumida, conservación literal de recibos/payloads rc.2 y ES, y efecto mutable sin cambiar recibo.
+
+Fallo tardío: una conexión de fixture inserta una intención huérfana conflictiva durante save_post; al insertar la intención final se revierte fuente/aprobación/app/reserva/recibo. La huérfana no puede ejecutarse sin evento confirmado. No se añaden triggers ni fault injection al código operativo.
+
+Límites independientes:8reviews/64requests/8MiB operativos, reserva previa1review/2requests/560KiB; las quotas rc.2 siguen aparte. Fixtures agotan cada contador por separado; el caso de bytes usa reserva SQL sintética para comprobar el límite sin escribir8MiB de padding. Se prueba que aprobar no permite aplicar si falta capacidad para recuperación. La recuperación operativa todavía no está implementada, aunque el writer esté probado y la capacidad quede reservada.
+
+No registra abilities del contrato, no crea una ruta de aprobación y no cambia permisos de usuarios reales. El esquema nuevo es experimental InnoDB; la migración estricta y la aceptación MCP del contrato son parte del candidato pendiente.
