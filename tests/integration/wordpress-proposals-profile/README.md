@@ -1,5 +1,15 @@
 # Exact source-plugin profile with synthetic data
 
+Extended mode: `python3 tests/integration/wordpress-proposals-profile/run.py --hosting` also
+verifies/copies the original MU plugins and themes. A separate networkless SQL-only container
+imports the verified dump to select only stylesheet/template; no source SQL enters the
+application database, no source wp-config executes. Metadata container has no host mounts
+and stops before the application starts. Active theme is Twenty Twenty-Four1.6, two Hostinger
+MU plugins, no source drop-ins. The theme and every MU main file must be included and match
+before/after the suites. This mode passed303 checks (288+15), with41 local unit tests.
+See docs/qa/MCP_PROPOSALS_HOSTING_COMPONENTS_2026-10-22.md. Statements below about excluding
+themes/MU and source SQL describe the original default mode only.
+
 Run `python3 tests/integration/wordpress-proposals-profile/run.py` only with the verified
 private restoration retained at the path recorded in the runner. This does not run SSH.
 Do not copy private plugin files, logs or the backup manifest into Git or chat.

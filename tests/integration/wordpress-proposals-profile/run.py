@@ -23,8 +23,12 @@ def verify_plugins(source, manifest, profile):
     expected_profile = {p['file']: {'version': p['version'], 'active': p['active']} for p in profile['plugins']}
     if manifest['profile']['plugins'] != expected_profile:
         raise ValueError('SOURCE_PLUGIN_PROFILE_DRIFT')
-    expected = {name.removeprefix('wp-content/plugins/'): entry for name, entry in manifest['files'].items()
-                if name.startswith('wp-content/plugins/') and entry['type'] == 'file'}
+    return verify_component(source, manifest, 'wp-content/plugins/')
+
+
+def verify_component(source, manifest, prefix):
+    expected = {name.removeprefix(prefix): entry for name, entry in manifest['files'].items()
+                if name.startswith(prefix) and entry['type'] == 'file'}
     actual = set()
     for path in source.rglob('*'):
         if path.is_symlink():
@@ -45,6 +49,9 @@ def verify_plugins(source, manifest, profile):
 
 
 def main():
+    hosting = sys.argv[1:] == ['--hosting']
+    if sys.argv[1:] not in [[], ['--hosting']]:
+        raise ValueError('INVALID_ARGUMENTS')
     os.umask(0o077)
     free = shutil.disk_usage('/private/tmp').free
     if free < 8 * 1024**3 or os.environ.get('DOCKER_HOST'):
@@ -80,6 +87,17 @@ def main():
     endpoint = json.loads(run(['docker', 'context', 'inspect']))[0]['Endpoints']['docker']['Host']
     if not endpoint.startswith('unix://'):
         raise ValueError('LOCAL_DOCKER_REQUIRED')
+    hosting_profile = None
+    if hosting:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('hosting_components', HERE / 'hosting.py')
+        components = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(components)
+        verify_component(SOURCE / 'wp-content/mu-plugins', manifest, 'wp-content/mu-plugins/')
+        verify_component(SOURCE / 'wp-content/themes', manifest, 'wp-content/themes/')
+        stage = 'derive-theme-profile'
+        hosting_profile = components.derive(SOURCE, manifest, run, work)
+        (work / 'hosting-profile.json').write_text(json.dumps(hosting_profile))
     settings = json.loads(run(['docker', 'compose', '-f', str(BASE / 'compose.yaml'), '--profile', 'tools', 'config', '--format', 'json']))
     settings.pop('name', None)
     settings['volumes'].pop('seed-data')
@@ -99,10 +117,17 @@ def main():
         if name in ['wordpress', 'cli']:
             service['environment'].update(AC_PROPOSALS_TRANSPORT='synthetic-http-v1', AC_PROPOSALS_PROFILE='backup-2026-10-22')
             service['volumes'].append({'type': 'bind', 'source': str(ROOT / 'docs/qa/MCP_BACKUP_PROFILE_2026-10-22.json'), 'target': '/recorded-profile.json', 'read_only': True})
+            if hosting:
+                service['environment']['AC_PROPOSALS_HOSTING_COMPONENTS'] = 'verified-v1'
     seed = settings['services']['seed']
     seed['volumes'] = [v for v in seed['volumes'] if v['target'] != '/seed']
     seed['volumes'].append({'type': 'bind', 'source': str(SOURCE / 'wp-content/plugins'), 'target': '/source-plugins', 'read_only': True})
     seed['entrypoint'] = ['sh', '/profile/seed.sh']
+    if hosting:
+        seed.setdefault('environment', {})['AC_PROPOSALS_HOSTING_COMPONENTS'] = 'verified-v1'
+        seed['volumes'].append({'type': 'bind', 'source': str(work / 'hosting-profile.json'), 'target': '/source-hosting-profile.json', 'read_only': True})
+        for directory in ['mu-plugins', 'themes']:
+            seed['volumes'].append({'type': 'bind', 'source': str(SOURCE / 'wp-content' / directory), 'target': '/source-' + directory, 'read_only': True})
     config = work / 'compose.json'
     config.write_text(json.dumps(settings))
     project = work.name.replace('_', '-')
@@ -126,6 +151,9 @@ def main():
         run(compose + ['run', '--rm', '--no-deps', '--pull', 'never', 'seed'])
         stage = 'core-install'
         cli('core', 'install', '--url=https://content.alexcuadra.dev', '--title=SyntheticSourcePlugins', '--admin_user=acceptance_admin', '--admin_password=synthetic-profile-only', '--admin_email=admin@example.invalid', '--skip-email')
+        if hosting:
+            stage = 'activate-source-theme'
+            cli('theme', 'activate', hosting_profile['stylesheet'])
         for plugin in profile['plugins']:
             if plugin['active']:
                 stage = 'activate-' + plugin['file'].split('/')[0]
@@ -150,10 +178,15 @@ def main():
         final_profile = record(cli('eval-file', '/profile/assert-profile.php'), 'PROPOSALS_PROFILE_RESULT=')
         if actual != final_profile:
             raise ValueError('PLUGIN_PROFILE_CHANGED_DURING_TESTS')
+        hosting_checks = None
+        if hosting:
+            stage = 'hosting-checks'
+            hosting_checks = record(cli('eval-file', '/profile/check-hosting.php'), 'PROPOSALS_HOSTING_RESULT=')
         if not results[-2].get('independentHttpConcurrencyVerified') or not results[-1].get('graphqlPrivacyVerified'):
             raise ValueError('TRANSPORT_ACCEPTANCE_INCOMPLETE')
         allowed = {'passed', 'failed', 'cases', 'environment', 'wordpress', 'php', 'polylang', 'versions',
-                   'httpTransportVerified', 'independentHttpConcurrencyVerified', 'raceProofs', 'graphqlPrivacyVerified', 'sourceSnapshotPreserved'}
+                   'httpTransportVerified', 'independentHttpConcurrencyVerified', 'raceProofs', 'admissionProofs',
+                   'syntheticCredentialsRevoked', 'syntheticScopesRemoved', 'graphqlPrivacyVerified', 'sourceSnapshotPreserved'}
         report = {'format': 'proposals-source-plugin-profile-v1', 'candidateSha256': package_manifest['sha256'],
             'sourceArchiveSha256': ARCHIVE_SHA, 'verifiedPluginFiles': count, 'verifiedPluginBytes': size,
             'profile': actual, 'results': [{k: v for k, v in item.items() if k in allowed} for item in results],
@@ -162,6 +195,12 @@ def main():
             'sourceMuThemesDropinsExecuted': False, 'fullHostingEnvironmentAccepted': False,
             'sshExecuted': False, 'newImagesDownloaded': False, 'liveCmsChanged': False,
             'localFreeBeforeBytes': free, 'localFreeAfterBytes': shutil.disk_usage(ROOT).free}
+        if hosting:
+            report.pop('sourceMuThemesDropinsExecuted')
+            report.update(format='proposals-hosting-components-v1', hostingComponents=hosting_profile, hostingChecks=hosting_checks,
+                          sourceMuExecuted=True, sourceThemeExecuted=True, sourceDropinsExecuted=False, sourceDropinsPresent=False,
+                          sourceDatabaseImported=True, sourceDatabaseImportedForMetadata=True, sourceDatabaseImportedIntoApplication=False,
+                          totalChecksIncludingHosting=sum(item['passed'] for item in results) + hosting_checks['passed'])
         (work / 'result.json').write_text(json.dumps(report, indent=2) + '\n')
     finally:
         if started:
