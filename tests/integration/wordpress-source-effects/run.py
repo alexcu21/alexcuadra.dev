@@ -158,7 +158,7 @@ def main():
         http_results=[json.loads(line[len(http_marker):]) for line in http_output.splitlines() if line.startswith(http_marker)]
         if len(http_results)!=1 or http_results[0].get('passed') is not True or http_results[0].get('checks',0)<30:
             raise ValueError('MISSING_HTTP_RESULT')
-        bilingual=None;operating=None
+        bilingual=None;operating=None;operating_mcp=None
         if full:
             bilingual_output=cli('eval-file','/integration/bilingual.php')
             bilingual_marker='SOURCE_EFFECTS_BILINGUAL_RESULT='
@@ -170,11 +170,15 @@ def main():
             operating_results=[json.loads(line[len(operating_marker):]) for line in operating_output.splitlines() if line.startswith(operating_marker)]
             if len(operating_results)!=1 or not operating_results[0].get('passed') or operating_results[0].get('checks',0)<144: raise ValueError('MISSING_OPERATING_RESULT')
             operating=operating_results[0]
+            mcp_output=cli('eval-file','/integration/operating-mcp.php')
+            mcp_values=[json.loads(line.split('=',1)[1]) for line in mcp_output.splitlines() if line.startswith('SOURCE_OPERATING_MCP_RESULT=')]
+            if len(mcp_values)!=1 or not mcp_values[0].get('passed') or mcp_values[0].get('checks',0)<68: raise ValueError('OPERATING_MCP_FAILED')
+            operating_mcp=mcp_values[0]
             profile_after=read_profile()
             if profile_before!=profile_after: raise ValueError('PROFILE_CHANGED_DURING_TESTS')
             # Read-only source mounts must still match the private manifest.
             profile.verify_plugins(SOURCE/'wp-content/plugins',manifest,recorded)
-        report={'jointMigration':joint_migration,'operatingContract':operating,'sourceProfileBefore':profile_before,'sourceProfileAfter':profile_after,'fullSourceProfile':full,'bilingual':bilingual,'httpAndProcessDeath':http_results[0],'format':'editorial-source-effects-mariadb-v1','result':results[0],'verifiedSourcePlugins':verified,'hostPorts':False,'externalNetwork':False,'sshExecuted':False,'sourceDatabaseImported':False,'reusedInternalNetwork':reuse is not None}
+        report={'operatingMcp':operating_mcp,'jointMigration':joint_migration,'operatingContract':operating,'sourceProfileBefore':profile_before,'sourceProfileAfter':profile_after,'fullSourceProfile':full,'bilingual':bilingual,'httpAndProcessDeath':http_results[0],'format':'editorial-source-effects-mariadb-v1','result':results[0],'verifiedSourcePlugins':verified,'hostPorts':False,'externalNetwork':False,'sshExecuted':False,'sourceDatabaseImported':False,'reusedInternalNetwork':reuse is not None}
         (work/'result.json').write_text(json.dumps(report,indent=2)+'\n')
         print(json.dumps(report,sort_keys=True),flush=True)
     finally:

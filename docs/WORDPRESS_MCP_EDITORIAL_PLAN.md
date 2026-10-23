@@ -1,5 +1,8 @@
 # Etapa técnica: MCP editorial con permisos acotados
 
+**23 octubre — seis abilities conectadas por MCP HTTP local:**68 checks MCP+326 previos,394 integraciones correctas. Schemas cerrados, scopes por operación, descubrimiento autenticado y apply/recover con aprobaciones CLI independientes; sesiones ajenas, revocación y fallo interno saneado verificados. No aprobación/auditoría/migración/aceptación/consumidor por MCP. Registro solo en fixture; fuente no auto-registra hooks/abilities. [QA/límites](qa/MCP_OPERATING_TRANSPORT_2026-10-23.md). Próximo: export privado y paquete/admisión para destino/manifiesto/preflight/reversión; después autorización de instalación/scopes/diff. Sin SSH/CMS/grants/pulls/backups nuevos; laboratorio detenido;32GiB libres al inicio.
+
+
 **23 octubre — aceptación global con snapshot de solo lectura:**50 comprobaciones iniciales+144 contrato+132 regresiones,326 integraciones correctas;9 casos nuevos. acceptStorage CLI con snapshot global InnoDB y máximo100 propietarios, conteos sin habilitación persistente; barrera cooperativa de transacciones/migración/consumidor, READ ONLY probado por MariaDB1792. Escritores externos requieren pausa declarada por operador: no están bloqueados/certificados por la barrera. [QA/límites](qa/MCP_STORAGE_ACCEPTANCE_2026-10-23.md). Próximo: MCP/export/empaquetado/admisión para destino/preflight/reversión y aprobación. Sin SSH/CMS/grants/pulls/backups nuevos; laboratorio detenido;32GiB libres al inicio.
 
 

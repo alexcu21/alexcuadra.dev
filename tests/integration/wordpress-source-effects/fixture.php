@@ -18,3 +18,10 @@ add_action('acf/init',static function(){
 if(getenv('AC_SOURCE_EFFECTS_HTTP')==='synthetic-v1'){require_once '/integration/http-fixture.php';}
 
 if(getenv('AC_SOURCE_EFFECTS_FULL')==='verified-backup-v1'){add_action('save_post_project',static function($id){if(function_exists('pll_get_post_language')&&!pll_get_post_language($id)&&in_array('en',pll_languages_list(),true)){pll_set_post_language($id,'en');}},100);}
+
+// Local-only operating MCP surface; the source modules register nothing on load.
+if(getenv('AC_SOURCE_EFFECTS_FULL')==='verified-backup-v1'){
+ require_once '/experiment/operating-contract.php';require_once '/experiment/operating-abilities.php';
+ add_action('wp_abilities_api_categories_init',static function(){wp_register_ability_category('alexcuadra-operating',['label'=>'Owned editorial operations','description'=>'Local operating transport acceptance.']);});
+ add_action('wp_abilities_api_init',static function(){AlexCuadra\EditorialSourceExperiment\register_operating_abilities(static function(){global $wpdb;if(($_SERVER['HTTP_X_OPERATING_TEST_FAILURE']??'')==='1'){throw new RuntimeException('SYNTHETIC_PRIVATE_FAILURE SQL /private/path');}return new AlexCuadra\EditorialSourceExperiment\OperatingContract($wpdb,source_operation($wpdb),'snapshot','field_schema','cache_clear');});});
+}
