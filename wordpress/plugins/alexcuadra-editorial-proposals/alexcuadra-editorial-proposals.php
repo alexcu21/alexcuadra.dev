@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Alex Cuadra Editorial Proposals
  * Description: Private project proposals only. No source application or recovery.
- * Version: 0.1.0-rc.1
+ * Version: 0.1.0-rc.2
  * Requires at least: 6.9
  * Requires PHP: 8.0
  */

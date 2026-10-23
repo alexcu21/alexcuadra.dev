@@ -1,5 +1,7 @@
 # Candidato de propuestas privadas — 22 octubre 2026
 
+**Estado vigente: 0.1.0-rc.2, instalación HOLD.** [Esquema y regresión verificados](qa/MCP_PROPOSALS_SCHEMA_2026-10-22.md):208 SQL,95 fronteras,165 CLI con PHP8.5.11. Paquete nuevo c31e6814864be0692035de7b46322fc2fc0159d2104e0b4d25404c3b15859f07; rc.1 y su evidencia se conservan como históricos. [Respaldo real restaurado](qa/MCP_PRIVATE_RESTORATION_2026-10-22.md), destino/retención ya acordados. Pendientes: perfil completo actualizado y transporte/GraphQL/carreras de rc.2. El script de empaquetado genera rc.2. Las menciones inferiores a falta de backup o destino describen la preparación histórica y están superadas.
+
 **0.1.0-rc.1 preparado para revisión; instalación en HOLD.** Seis abilities de propuestas existentes, sin ejecutar aplicación/recuperación de fuentes. No es la versión0.5-lab con un guard retirado: namespace, CPT, meta, tablas y opción propios, únicamente dos PHP. El laboratorio y Editorial Read se conservan sin modificar.
 
 Último22oct: [HTTP/MCP/GraphQL y seis carreras aceptados](qa/MCP_PROPOSALS_TRANSPORT_2026-10-22.md),140 nuevas comprobaciones correctas sin modificar candidato/ZIP. HTTPSsimulado sobre HTTPinterno, noTLSreal. Persisten puertas de esquema exhaustivo/perfil completo y backup privado real/restauración; [destino/retención elegidos y próximo preflight](WORDPRESS_MCP_PRIVATE_BACKUP_PLAN.md). Las entradas inferiores son históricas y no invalidan el resultado actual.

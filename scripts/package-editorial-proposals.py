@@ -8,7 +8,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 SLUG = 'alexcuadra-editorial-proposals'
-VERSION = '0.1.0-rc.1'
+VERSION = '0.1.0-rc.2'
 SOURCE = ROOT / 'wordpress/plugins' / SLUG
 OUTPUT = ROOT / 'artifacts/wordpress'
 FILES = ['alexcuadra-editorial-proposals.php', 'storage.php', 'README.md']

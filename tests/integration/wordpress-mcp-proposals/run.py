@@ -15,7 +15,7 @@ TRANSPORT = '--transport' in sys.argv[1:]
 RESUME = sys.argv[1:] == ['--transport', '--resume']
 if sys.argv[1:] not in [[], ['--transport'], ['--transport', '--resume']]:
     raise SystemExit('Usage: run.py [--transport [--resume]]')
-PROJECT = 'alexcuadra-editorial-proposals-transport-v2' if TRANSPORT else 'alexcuadra-editorial-proposals-acceptance-v2'
+PROJECT = 'alexcuadra-editorial-proposals-transport-v3' if TRANSPORT else 'alexcuadra-editorial-proposals-acceptance-v3'
 COMPOSE = ['docker', 'compose', '-p', PROJECT, '-f', str(HERE / 'compose.yaml'), '-f', str(HERE / 'compose.public-cache.yaml'), '--profile', 'tools']
 if TRANSPORT:
     COMPOSE += ['-f', str(HERE / 'compose.transport.yaml')]
@@ -103,7 +103,7 @@ def main():
         if service.get('ports'):
             raise RuntimeError('HOST_PORTS_FORBIDDEN')
         run(['docker', 'image', 'inspect', service['image']])
-    archive = ROOT / 'artifacts/wordpress/alexcuadra-editorial-proposals-0.1.0-rc.1.zip'
+    archive = ROOT / 'artifacts/wordpress/alexcuadra-editorial-proposals-0.1.0-rc.2.zip'
     manifest = json.loads(archive.with_suffix('.manifest.json').read_text())
     if hashlib.sha256(archive.read_bytes()).hexdigest() != manifest['sha256']:
         raise RuntimeError('ZIP_HASH_MISMATCH')

@@ -70,7 +70,8 @@ def compose(control):
             'MARIADB_USER': 'restore_user', 'MARIADB_PASSWORD': 'local-restore-only'},
             'command': ['--skip-networking', '--socket=/socket/mysql.sock', '--pid-file=/socket/mysql.pid'],
             'volumes': ['database:/var/lib/mysql', 'socket:/socket'],
-            'healthcheck': {'test': ['CMD', 'mariadb-admin', '--socket=/socket/mysql.sock', '-uroot', '-plocal-private-restore-root', 'ping'], 'interval': '2s', 'timeout': '2s', 'retries': 60}},
+            # Do not mistake the entrypoint's temporary initialization server for the final daemon.
+            'healthcheck': {'test': ['CMD-SHELL', 'test "$(cat /socket/mysql.pid 2>/dev/null)" = 1 && mariadb-admin --socket=/socket/mysql.sock -uroot -plocal-private-restore-root ping'], 'interval': '2s', 'timeout': '2s', 'retries': 60}},
         'seed': {**common, 'image': IMAGES['seed'], 'entrypoint': ['/bin/sh', '-ec'],
             'command': ['cp -a /usr/src/wordpress/. /var/www/html/; cp /control/wp-config.php /var/www/html/wp-config.php; mkdir -p /var/www/html/wp-content/mu-plugins; cp /checks/guard.php /var/www/html/wp-content/mu-plugins/private-restore-guard.php'],
             'volumes': ['runtime:/var/www/html', str(control) + ':/control:ro', str(CHECKS) + ':/checks:ro']},

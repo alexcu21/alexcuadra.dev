@@ -1,5 +1,7 @@
 # Aceptación CLI y archivo sintéticos del candidato
 
+Estado vigente: runner/Compose apuntan a rc.2 y proyectos v3 nuevos, PHP8.5.11. La regresión CLI165 pasó; resultados en docs/qa/MCP_PROPOSALS_RC2_CLI_RESULT_2026-10-22.json. Caché de seis plugins conservada, incluido WPGraphQL2.24.2: no es el perfil completo actualizado del hosting. Transporte v3 no ejecutado. Las referencias v2/rc.1 inferiores documentan ejecuciones históricas. Conservar los recursos v3; no repetir sin revisar su identidad.
+
 Actualización de transporte: [140 comprobaciones nuevas HTTP/MCP/GraphQL y seis carreras](../../../docs/qa/MCP_PROPOSALS_TRANSPORT_2026-10-22.md) pasaron con `run.py --transport`, proyecto separado `alexcuadra-editorial-proposals-transport-v2` y overlay `compose.transport.yaml`. HTTP solo dentro de Docker; contexto de terminación HTTPS simulado por fixture, sin TLS real. Guard y ZIP intactos, contenedores detenidos. Ruta REST de contexto y barrera son exclusivamente instrumentación. No repetir sobre recursos existentes; `--transport --resume` exige identidad DB coincidente si persiste, pero ese modo no fue parte de la ejecución aprobada. Mantener separados los165 CLI y140 de transporte; instalación aún HOLD.
 
 **165 comprobaciones correctas con Polylang3.9.1; instalación real HOLD.** [QA y límites](../../../docs/qa/MCP_PROPOSALS_SYNTHETIC_ACCEPTANCE_2026-10-22.md). Este arnés usa datos ficticios, no SSH ni el CMS compartido. No crea bypass en el candidato.

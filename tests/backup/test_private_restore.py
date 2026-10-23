@@ -21,6 +21,7 @@ class PrivateRestoreTests(unittest.TestCase):
             self.assertNotIn('ports', service)
             self.assertFalse(any('/source' in mount for mount in service['volumes']))
         self.assertIn('--skip-networking', config['services']['db']['command'])
+        self.assertIn('mysql.pid', config['services']['db']['healthcheck']['test'][1])
         self.assertTrue(all(v['driver_opts']['type'] == 'tmpfs' for v in config['volumes'].values()))
 
     def test_control_and_checks_are_read_only(self):

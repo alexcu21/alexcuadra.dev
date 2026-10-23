@@ -1,0 +1,27 @@
+{
+  "format": "editorial-proposals-review-candidate-v1",
+  "version": "0.1.0-rc.2",
+  "targetSite": "https://content.alexcuadra.dev",
+  "decision": "hold",
+  "installationApproved": false,
+  "sourceWritesIncluded": false,
+  "zipBytes": 11369,
+  "sha256": "c31e6814864be0692035de7b46322fc2fc0159d2104e0b4d25404c3b15859f07",
+  "files": [
+    {
+      "path": "alexcuadra-editorial-proposals/alexcuadra-editorial-proposals.php",
+      "bytes": 20013,
+      "sha256": "a9a1b498ab18472a30966cfcd160ef91d35aa62420911e31ca30e7ec3452949e"
+    },
+    {
+      "path": "alexcuadra-editorial-proposals/storage.php",
+      "bytes": 11024,
+      "sha256": "074f96126397e91b68f407feb3989cc147d9b81aeffb6790766486b9433639af"
+    },
+    {
+      "path": "alexcuadra-editorial-proposals/README.md",
+      "bytes": 4578,
+      "sha256": "52de66e733a0ba4a41f004a24c8804c15102187578e7e45e0a3f3c8d99eea617"
+    }
+  ]
+}

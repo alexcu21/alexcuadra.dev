@@ -8,24 +8,70 @@ const MAX_OWNER_PROPOSALS = 8;
 const MAX_OWNER_REQUESTS = 128;
 const MAX_OWNER_BYTES = 8388608;
 
+// Compare semantic schema, not server-specific SHOW CREATE formatting.
+function storage_schema_valid($allow_missing = false) {
+    global $wpdb;
+    $contracts = [
+        $wpdb->prefix . 'ac_proposal_owners' => ['owner_id' => ['bigint unsigned', null]],
+        $wpdb->prefix . 'ac_proposal_requests' => [
+            'owner_id' => ['bigint unsigned', null], 'request_id' => ['varbinary(32)', null],
+            'request_hash' => ['varbinary(64)', null], 'proposal_id' => ['bigint unsigned', null],
+            'response' => ['longtext', 'utf8mb4_bin']],
+    ];
+    foreach ($contracts as $table => $columns) {
+        $status = $wpdb->get_row($wpdb->prepare('SELECT ENGINE,TABLE_TYPE FROM information_schema.TABLES WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME=%s', $table), ARRAY_A);
+        if ($wpdb->last_error) { return false; }
+        if (!$status) { if ($allow_missing) { continue; } return false; }
+        if ($status['ENGINE'] !== 'InnoDB' || $status['TABLE_TYPE'] !== 'BASE TABLE') { return false; }
+        $quoted = '`' . str_replace('`', '``', $table) . '`';
+        $actual = $wpdb->get_results("SHOW FULL COLUMNS FROM $quoted", ARRAY_A);
+        if ($wpdb->last_error || !is_array($actual) || array_column($actual, 'Field') !== array_keys($columns)) { return false; }
+        foreach ($actual as $column) {
+            [$type, $collation] = $columns[$column['Field']];
+            $observed = preg_replace('/^bigint\\([0-9]+\\)/', 'bigint', strtolower($column['Type']));
+            if ($observed !== $type || $column['Collation'] !== $collation || $column['Null'] !== 'NO'
+                || $column['Default'] !== null || $column['Extra'] !== '' || $column['Comment'] !== '') { return false; }
+        }
+        $keys = array_key_exists('request_id', $columns) ? ['owner_id', 'request_id'] : ['owner_id'];
+        $indexes = $wpdb->get_results("SHOW INDEX FROM $quoted", ARRAY_A);
+        if ($wpdb->last_error || !is_array($indexes) || count($indexes) !== count($keys)) { return false; }
+        usort($indexes, static function ($a, $b) { return (int) $a['Seq_in_index'] <=> (int) $b['Seq_in_index']; });
+        foreach ($indexes as $i => $index) {
+            if ($index['Key_name'] !== 'PRIMARY' || (int) $index['Non_unique'] !== 0
+                || (int) $index['Seq_in_index'] !== $i + 1 || $index['Column_name'] !== $keys[$i]
+                || $index['Sub_part'] !== null || $index['Index_type'] !== 'BTREE' || $index['Collation'] !== 'A'
+                || ($index['Ignored'] ?? 'NO') !== 'NO' || ($index['Visible'] ?? 'YES') !== 'YES') { return false; }
+        }
+        $constraints = $wpdb->get_results($wpdb->prepare('SELECT CONSTRAINT_NAME,CONSTRAINT_TYPE FROM information_schema.TABLE_CONSTRAINTS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME=%s', $table), ARRAY_A);
+        if ($wpdb->last_error || $constraints !== [['CONSTRAINT_NAME' => 'PRIMARY', 'CONSTRAINT_TYPE' => 'PRIMARY KEY']]) { return false; }
+        $triggers = $wpdb->get_var($wpdb->prepare('SELECT COUNT(*) FROM information_schema.TRIGGERS WHERE TRIGGER_SCHEMA=DATABASE() AND EVENT_OBJECT_TABLE=%s', $table));
+        if ($wpdb->last_error || $triggers === null || (int) $triggers !== 0) { return false; }
+        $partitions = $wpdb->get_results($wpdb->prepare('SELECT PARTITION_NAME FROM information_schema.PARTITIONS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME=%s', $table), ARRAY_A);
+        if ($wpdb->last_error || $partitions !== [['PARTITION_NAME' => null]]) { return false; }
+    }
+    return true;
+}
 function install_storage() {
     if (!defined('WP_CLI') || !WP_CLI || !current_user_can('manage_options')) { return error('forbidden', 403); }
-    if (get_option('ac_proposals_storage_version') === '0.1') { return; }
     global $wpdb;
+    $transaction = $wpdb->get_var('SELECT @@in_transaction');
+    if ($transaction === null || $wpdb->last_error || (int) $transaction !== 0) { return error('transaction_busy', 503); }
+    $fail = static function () {
+        // A stale marker must not admit operations after a failed explicit revalidation.
+        delete_option('ac_proposals_storage_version');
+        return error('storage_unavailable', 503);
+    };
+    // Inspect existing objects before DDL; never ALTER or repair incompatible user data.
+    if (!storage_schema_valid(true)) { return $fail(); }
     $owners = $wpdb->prefix . 'ac_proposal_owners'; $requests = $wpdb->prefix . 'ac_proposal_requests';
     $a = $wpdb->query("CREATE TABLE IF NOT EXISTS $owners (owner_id BIGINT UNSIGNED NOT NULL PRIMARY KEY) ENGINE=InnoDB");
     $b = $wpdb->query("CREATE TABLE IF NOT EXISTS $requests (owner_id BIGINT UNSIGNED NOT NULL, request_id VARBINARY(32) NOT NULL,
-        request_hash VARBINARY(64) NOT NULL, proposal_id BIGINT UNSIGNED NOT NULL, response LONGTEXT NOT NULL,
+        request_hash VARBINARY(64) NOT NULL, proposal_id BIGINT UNSIGNED NOT NULL,
+        response LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
         PRIMARY KEY(owner_id,request_id)) ENGINE=InnoDB");
-    if ($a === false || $b === false) { return error('storage_unavailable', 503); }
-    // Refuse pre-existing incompatible tables; CREATE IF NOT EXISTS does not validate their schema.
-    foreach ([$owners => ['owner_id'], $requests => ['owner_id', 'request_id', 'request_hash', 'proposal_id', 'response']] as $table => $columns) {
-        if ($wpdb->get_col("SHOW COLUMNS FROM $table") !== $columns || $wpdb->last_error) { return error('storage_unavailable', 503); }
-    }
-    $engines = $wpdb->get_results($wpdb->prepare('SELECT ENGINE FROM information_schema.TABLES WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME IN (%s,%s)', $owners, $requests), ARRAY_A);
-    if (count($engines ?? []) !== 2 || array_filter($engines, static function ($r) { return $r['ENGINE'] !== 'InnoDB'; })) { return error('storage_unavailable', 503); }
+    if ($a === false || $b === false || !storage_schema_valid()) { return $fail(); }
     update_option('ac_proposals_storage_version', '0.1', false);
-    return get_option('ac_proposals_storage_version') === '0.1' ? true : error('storage_unavailable', 503);
+    return get_option('ac_proposals_storage_version') === '0.1' ? true : $fail();
 }
 function canonical($value) {
     if (!is_array($value)) { return $value; }
