@@ -1,6 +1,6 @@
 <?php
 require_once '/integration/support.php';
-require_once '/experiment/operating-contract.php';
+require_once (getenv('AC_SOURCE_EFFECTS_PACKAGE')==='local-rc1'?'/operating-package/includes/':'/experiment/').'operating-contract.php';
 use AlexCuadra\EditorialSourceExperiment\OperatingContract as C;
 use AlexCuadra\EditorialProposals as P;
 $GLOBALS['operating_checks']=0;

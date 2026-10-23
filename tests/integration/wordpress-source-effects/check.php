@@ -1,6 +1,6 @@
 <?php
-require_once '/experiment/source-writer.php';
-require_once '/experiment/mariadb-operation.php';
+require_once (getenv('AC_SOURCE_EFFECTS_PACKAGE')==='local-rc1'?'/operating-package/includes/':'/experiment/').'source-writer.php';
+require_once (getenv('AC_SOURCE_EFFECTS_PACKAGE')==='local-rc1'?'/operating-package/includes/':'/experiment/').'mariadb-operation.php';
 use AlexCuadra\EditorialSourceExperiment\MariaDbOperation;
 use function AlexCuadra\EditorialSourceExperiment\write_source;
 use function AlexCuadra\EditorialSourceExperiment\deferred_publish;

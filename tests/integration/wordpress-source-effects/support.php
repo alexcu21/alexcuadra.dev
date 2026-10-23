@@ -1,7 +1,7 @@
 <?php
-require_once '/experiment/source-writer.php';
-require_once '/experiment/mariadb-operation.php';
-if(getenv('AC_SOURCE_EFFECTS_FULL')==='verified-backup-v1'){require_once '/experiment/polylang-source.php';}
+require_once (getenv('AC_SOURCE_EFFECTS_PACKAGE')==='local-rc1'?'/operating-package/includes/':'/experiment/').'source-writer.php';
+require_once (getenv('AC_SOURCE_EFFECTS_PACKAGE')==='local-rc1'?'/operating-package/includes/':'/experiment/').'mariadb-operation.php';
+if(getenv('AC_SOURCE_EFFECTS_FULL')==='verified-backup-v1'){require_once (getenv('AC_SOURCE_EFFECTS_PACKAGE')==='local-rc1'?'/operating-package/includes/':'/experiment/').'polylang-source.php';}
 function source_operation($db){$op=new AlexCuadra\EditorialSourceExperiment\MariaDbOperation($db,getenv('AC_SOURCE_EFFECTS_FULL')==='verified-backup-v1'?'AlexCuadra\\EditorialSourceExperiment\\clear_polylang_source_cache':null);if(getenv('AC_SOURCE_EFFECTS_FULL')==='verified-backup-v1'){require_once '/integration/profile-admission.php';full_source_profile_admission();}return $op;}
 function tags(){return (new ReflectionProperty(LiteSpeed\Purge::class,'_pub_purge'))->getValue(LiteSpeed\Purge::cls());}
 function clear_tags(){(new ReflectionProperty(LiteSpeed\Purge::class,'_pub_purge'))->setValue(LiteSpeed\Purge::cls(),[]);}

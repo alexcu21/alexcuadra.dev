@@ -1,5 +1,8 @@
 # Traspaso de sesión — 21 octubre 2026
 
+**23 octubre — ZIP operativo rc.1 local reproducible:**413 comprobaciones (405 contra módulos extraídos+8 de bootstrap desactivado), hash ba76d9f36c020f069544af068beb09c999a570b2a912ad86f67d695dc4e0c13f,32207B. Bootstrap desactivado por defecto; opt-in solo local; factory propia usada por MCP. [Paquete/plan](WORDPRESS_MCP_OPERATING_PACKAGE.md), [QA y límites](qa/MCP_LOCAL_PACKAGE_2026-10-23.md). No productionReady ni instalador/activación normal certificados: falta admisión de destino, preflight y reversión ensayados antes de pedir aprobación. Sin SSH/CMS/grants/pulls/backups reales nuevos; laboratorio detenido;32GiB libres antes/después.
+
+
 **23 octubre — exportación privada por propietario:**11 casos nuevos;155 contrato+50 migración/aceptación+68 MCP+132 regresiones,405 integraciones correctas. CLI operador, snapshot READ ONLY/barrera/auditoría; carpeta0700 fuera de WordPress, archivo0600 exclusivo, NDJSON/conteos/digest, verificación independiente y publicación sin overwrite. No borra registros ni libera cuotas; no exporta SQL/config/credenciales ni es restauración. [QA/límites](qa/MCP_PRIVATE_EXPORT_2026-10-23.md). Solo archivos sintéticos dentro de contenedor, sin export real. Próximo: paquete/manifiesto/admisión para destino/preflight/reversión y aprobación de instalación/scopes/diff. Sin SSH/CMS/grants/pulls/backups reales nuevos; laboratorio detenido;32GiB libres al inicio.
 
 

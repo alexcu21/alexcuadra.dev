@@ -1,0 +1,80 @@
+{
+  "format": "editorial-operating-package-v1",
+  "version": "0.1.0-rc.1",
+  "productionReady": false,
+  "localOptinOnly": true,
+  "bytes": 32207,
+  "sha256": "ba76d9f36c020f069544af068beb09c999a570b2a912ad86f67d695dc4e0c13f",
+  "files": [
+    {
+      "path": "alexcuadra-editorial-operating/README.md",
+      "bytes": 826,
+      "sha256": "f02990d5a43455814512391d740c230d07a14b6bb196b699694d68dc4828eb9b"
+    },
+    {
+      "path": "alexcuadra-editorial-operating/alexcuadra-editorial-operating.php",
+      "bytes": 1947,
+      "sha256": "b23c14da9bb06451e8eba0ccc1f56ca80a5daa7078b42d2d871402a6420e13aa"
+    },
+    {
+      "path": "alexcuadra-editorial-operating/files.json",
+      "bytes": 2677,
+      "sha256": "0bacf0fa19228676e7926a87009b7e6c90e75e77040aa9303deeec8319ef082f"
+    },
+    {
+      "path": "alexcuadra-editorial-operating/includes/journal-records.php",
+      "bytes": 2049,
+      "sha256": "777661d86cfe9606442d9564e22640b10077e9440f34f598367e9bab2e9dbe76"
+    },
+    {
+      "path": "alexcuadra-editorial-operating/includes/mariadb-operation.php",
+      "bytes": 17459,
+      "sha256": "20a084f23581dc6fda73478c14cfc2788ff21adda4f2a992a92b745920285923"
+    },
+    {
+      "path": "alexcuadra-editorial-operating/includes/operating-abilities.php",
+      "bytes": 6077,
+      "sha256": "b477451d092715d8728b6799603fb6d3b5010d1d9dcf2051599638b9549d0d37"
+    },
+    {
+      "path": "alexcuadra-editorial-operating/includes/operating-audit.php",
+      "bytes": 5992,
+      "sha256": "174871a23be28c6c0668664dfb469d20fb925534a9c1dceb26927ede8e5d7a3f"
+    },
+    {
+      "path": "alexcuadra-editorial-operating/includes/operating-contract.php",
+      "bytes": 32766,
+      "sha256": "7c91e7e2c76f6b6a2fb60ad48473628179a2c9632f65867eea421f4c9f74ed84"
+    },
+    {
+      "path": "alexcuadra-editorial-operating/includes/operating-export.php",
+      "bytes": 6145,
+      "sha256": "f4232705025452da75374862a0ade2724200282e699d0df9656521b8667753ab"
+    },
+    {
+      "path": "alexcuadra-editorial-operating/includes/operating-migration.php",
+      "bytes": 6510,
+      "sha256": "b1883c3fce564210191dd1256c3cc99dd5bd6fa90121928010a2311ee5e8ed72"
+    },
+    {
+      "path": "alexcuadra-editorial-operating/includes/operating-storage.php",
+      "bytes": 9313,
+      "sha256": "7b671b656e5c66fcf4d8a450af36430626e80e022969718fff0b224d7e49224f"
+    },
+    {
+      "path": "alexcuadra-editorial-operating/includes/polylang-source.php",
+      "bytes": 5926,
+      "sha256": "12d35ab703d8ad911302be7764bd5b29ca99dcc472af4a944354e3421f8a3c61"
+    },
+    {
+      "path": "alexcuadra-editorial-operating/includes/source-writer.php",
+      "bytes": 5202,
+      "sha256": "b3d3abf545e5233163ab2f4974acacb5642f8eaf3387f86f68991e5a022cb85c"
+    },
+    {
+      "path": "alexcuadra-editorial-operating/includes/storage-barrier.php",
+      "bytes": 1218,
+      "sha256": "db14c339368631753b75d5ebeebb3f8b918cdd4c1ef4f0f17877d63f21e42338"
+    }
+  ]
+}

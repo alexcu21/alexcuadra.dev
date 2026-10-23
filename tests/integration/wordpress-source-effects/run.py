@@ -61,6 +61,22 @@ def main():
                 if archive.read(entry['path'])!=content or hashlib.sha256(content).hexdigest()!=entry['sha256']: raise ValueError('CANDIDATE_FILE_DRIFT')
     work = Path(tempfile.mkdtemp(prefix='ac-source-effects-',dir='/private/tmp'))
     print('PRIVATE_EFFECTS_WORK='+str(work),flush=True)
+    package_dir=None
+    if os.environ.get('AC_SOURCE_EFFECTS_PACKAGE'):
+        if not full or os.environ['AC_SOURCE_EFFECTS_PACKAGE']!='local-rc1': raise ValueError('INVALID_PACKAGE_MODE')
+        archive_path=ROOT/'artifacts/wordpress/alexcuadra-editorial-operating-0.1.0-rc.1.zip'
+        package_manifest=json.loads(archive_path.with_suffix('.manifest.json').read_text())
+        if package_manifest.get('productionReady') is not False or hashlib.sha256(archive_path.read_bytes()).hexdigest()!=package_manifest['sha256']: raise ValueError('PACKAGE_HASH_DRIFT')
+        package_dir=work/'package';package_dir.mkdir()
+        with zipfile.ZipFile(archive_path) as z:
+            if set(z.namelist())!={f['path'] for f in package_manifest['files']}: raise ValueError('PACKAGE_CONTENT_DRIFT')
+            for entry in package_manifest['files']:
+                relative=Path(entry['path'])
+                if relative.is_absolute() or '..' in relative.parts or relative.parts[0]!='alexcuadra-editorial-operating': raise ValueError('UNSAFE_PACKAGE_PATH')
+                blob=z.read(entry['path'])
+                if len(blob)!=entry['bytes'] or hashlib.sha256(blob).hexdigest()!=entry['sha256']: raise ValueError('PACKAGE_FILE_DRIFT')
+                target=package_dir/relative;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(blob)
+        package_dir=package_dir/'alexcuadra-editorial-operating'
     log = (work/'private-process.log').open('wb')
     def run(args):
         result = subprocess.run(args,cwd=ROOT,stdout=subprocess.PIPE,stderr=log)
@@ -88,7 +104,7 @@ def main():
            'WORDPRESS_CONFIG_EXTRA': "define('WP_ENVIRONMENT_TYPE','local');define('WP_HOME','http://wordpress');define('WP_SITEURL','http://wordpress');define('AC_EDITORIAL_SOURCE_EXPERIMENT',true);define('DISABLE_WP_CRON',true);define('WP_HTTP_BLOCK_EXTERNAL',true);define('WP_ACCESSIBLE_HOSTS','wordpress');define('AUTOMATIC_UPDATER_DISABLED',true);define('DISALLOW_FILE_MODS',true);"}
     mounts = [{'type':'volume','source':'wp-data','target':'/var/www/html'},
               {'type':'bind','source':str(HERE),'target':'/integration','read_only':True},
-              {'type':'bind','source':str(ROOT/'wordpress/experimental/editorial-source-adapter'),'target':'/experiment','read_only':True},
+              {'type':'bind','source':str(package_dir/'includes' if package_dir else ROOT/'wordpress/experimental/editorial-source-adapter'),'target':'/experiment','read_only':True},
               {'type':'bind','source':str(ROOT/'docs/wordpress/acf-current-2026-10-18.json'),'target':'/fields.json','read_only':True}]
     for name, service in settings['services'].items():
         if service.get('ports'): raise ValueError('HOST_PORTS_FORBIDDEN')
@@ -112,10 +128,17 @@ def main():
         settings['services']['cli']['volumes']=[v for v in settings['services']['cli']['volumes'] if not v['target'].startswith('/verified-')]
         for component in ['plugins','mu-plugins','themes']:
             settings['services']['cli']['volumes'].append({'type':'bind','source':str(SOURCE/'wp-content'/component),'target':'/verified-'+component,'read_only':True})
+    package_disabled_config=env['WORDPRESS_CONFIG_EXTRA']
+    if package_dir:
+        env['WORDPRESS_CONFIG_EXTRA']+="define('AC_EDITORIAL_OPERATING_LOCAL',true);"
+        env['AC_SOURCE_EFFECTS_PACKAGE']='local-rc1'
+        for service in ['wordpress','cli']:
+            settings['services'][service]['volumes'].append({'type':'bind','source':str(package_dir),'target':'/operating-package','read_only':True})
     config = work/'compose.json';config.write_text(json.dumps(settings))
     compose=['docker','compose','-p',work.name.replace('_','-'),'-f',str(config),'--profile','tools']
-    def cli(*args, shell=False):
+    def cli(*args, shell=False, disabled=False):
         command=compose+['run','--rm','--no-deps','--pull','never']
+        if disabled: command+=['-e','WORDPRESS_CONFIG_EXTRA='+package_disabled_config]
         if shell: command+=['--entrypoint','sh']
         return run(command+['cli',*args])
     profile_before=profile_after=None
@@ -143,6 +166,12 @@ def main():
             cli('--user=effects_admin','eval','$r=AlexCuadra\\EditorialProposals\\install_storage();if($r!==true){WP_CLI::error("CANDIDATE_STORAGE_FAILED");}')
             cli('eval-file','/integration/full-setup.php')
             profile_before=read_profile()
+        package_check=None
+        if package_dir:
+            disabled_out=cli('eval-file','/integration/package-disabled.php',disabled=True)
+            disabled_values=[json.loads(line.split('=',1)[1]) for line in disabled_out.splitlines() if line.startswith('SOURCE_PACKAGE_DISABLED_RESULT=')]
+            if len(disabled_values)!=1 or not disabled_values[0].get('passed'): raise ValueError('DISABLED_PACKAGE_FAILED')
+            package_check={'sha256':package_manifest['sha256'],'disabled':disabled_values[0],'testedExtractedArchive':True,'productionReady':False}
         joint_migration=None
         if full:
             joint_output=cli('eval-file','/integration/migration.php')
@@ -178,7 +207,7 @@ def main():
             if profile_before!=profile_after: raise ValueError('PROFILE_CHANGED_DURING_TESTS')
             # Read-only source mounts must still match the private manifest.
             profile.verify_plugins(SOURCE/'wp-content/plugins',manifest,recorded)
-        report={'operatingMcp':operating_mcp,'jointMigration':joint_migration,'operatingContract':operating,'sourceProfileBefore':profile_before,'sourceProfileAfter':profile_after,'fullSourceProfile':full,'bilingual':bilingual,'httpAndProcessDeath':http_results[0],'format':'editorial-source-effects-mariadb-v1','result':results[0],'verifiedSourcePlugins':verified,'hostPorts':False,'externalNetwork':False,'sshExecuted':False,'sourceDatabaseImported':False,'reusedInternalNetwork':reuse is not None}
+        report={'packageCandidate':package_check,'operatingMcp':operating_mcp,'jointMigration':joint_migration,'operatingContract':operating,'sourceProfileBefore':profile_before,'sourceProfileAfter':profile_after,'fullSourceProfile':full,'bilingual':bilingual,'httpAndProcessDeath':http_results[0],'format':'editorial-source-effects-mariadb-v1','result':results[0],'verifiedSourcePlugins':verified,'hostPorts':False,'externalNetwork':False,'sshExecuted':False,'sourceDatabaseImported':False,'reusedInternalNetwork':reuse is not None}
         (work/'result.json').write_text(json.dumps(report,indent=2)+'\n')
         print(json.dumps(report,sort_keys=True),flush=True)
     finally:

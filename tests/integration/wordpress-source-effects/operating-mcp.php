@@ -1,5 +1,5 @@
 <?php
-require_once '/integration/support.php';require_once '/experiment/operating-contract.php';require_once '/experiment/operating-abilities.php';
+require_once '/integration/support.php';require_once (getenv('AC_SOURCE_EFFECTS_PACKAGE')==='local-rc1'?'/operating-package/includes/':'/experiment/').'operating-contract.php';require_once (getenv('AC_SOURCE_EFFECTS_PACKAGE')==='local-rc1'?'/operating-package/includes/':'/experiment/').'operating-abilities.php';
 use AlexCuadra\EditorialSourceExperiment as X;
 global $wpdb;$GLOBALS['mcp_checks']=0;$GLOBALS['mcp_seq']=0;
 function mcp_check($ok,$label){$GLOBALS['mcp_checks']++;if(!$ok){throw new RuntimeException('OPERATING_MCP: '.$label);}}
