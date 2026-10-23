@@ -1,0 +1,18 @@
+{
+  "format": "editorial-proposals-scope-granted-v1",
+  "userId": 2,
+  "role": "subscriber",
+  "scope": "alexcuadra_prepare_project_changes",
+  "prepareScopeGranted": true,
+  "onlyExpectedDirectCapabilityAdded": true,
+  "subscriberRoleUnchanged": true,
+  "otherActivePluginsUnchanged": true,
+  "sourcesUnchanged": true,
+  "projectCount": 14,
+  "sourceHash": "c38acd1690f173488f075443d03a80c96b6b483a5bd407040cbbd40a7ff462af",
+  "publicReadVerifiedEnEs": true,
+  "sourceEditAdminDenied": true,
+  "proposalCreated": false,
+  "reportedBy": "Alex terminal",
+  "endMarkerReceived": true
+}
