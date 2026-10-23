@@ -29,7 +29,8 @@ function validate_fields($fields) {
  */
 function write_source(array $document, callable $read, callable $schema, callable $cache) {
     if (!defined('AC_EDITORIAL_SOURCE_EXPERIMENT') || AC_EDITORIAL_SOURCE_EXPERIMENT !== true
-        || wp_get_environment_type() !== 'local' || home_url() !== 'http://wordpress') { fail('local_experiment_only'); }
+        || wp_get_environment_type() !== 'local' || (home_url() !== 'http://wordpress'
+            && (!function_exists(__NAMESPACE__.'\\local_origin_admitted') || !local_origin_admitted()))) { fail('local_experiment_only'); }
     if (!isset($document['project_id'], $document['locale'], $document['source_version'], $document['schema_version'], $document['before'], $document['after'])
         || !is_int($document['project_id']) || $document['project_id'] < 1 || !in_array($document['locale'], ['en','es'], true)
         || !in_array($document['operation'] ?? null, ['apply','recover'], true)) { fail('invalid_document'); }

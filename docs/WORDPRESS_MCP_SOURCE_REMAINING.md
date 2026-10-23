@@ -2,28 +2,27 @@
 
 Estado23 octubre2026. Proposals rc.2 ya está instalado y validado: no reinstalar, repetir grant o recrear propuesta227. La autorización existente no incluye aplicar cambios a Projects reales. El trabajo nuevo sigue separado en `wordpress/experimental/editorial-source-adapter`.
 
-## Incremento actual: adaptador de fuente y efectos
+## Adaptador: validación local cerrada
 
-Completado:39 checks sintéticos de frontera,54 del protocolo SQLite,58 de integración CLI WP/MariaDB/ACF/LiteSpeed y46 HTTP Apache. Las suites son alcances distintos; no sumar las repeticiones del runner como cobertura nueva. HTTP usa Application Passwords sintéticas, cuatro checkpoints SIGKILL y verifica la cabecera nativa de purga. Se prueba rollback antes de COMMIT, persistencia tras COMMIT y repetición de invalidación sin nueva escritura tras perder confirmación. [Evidencia HTTP/MariaDB](qa/MCP_SOURCE_EFFECTS_HTTP_2026-10-23.json).
+Perfil completo del código verificado:18 plugins originales,13 activos/5 inactivos, Proposals rc.2 adicional,2 MU y Twenty Twenty-Four1.6. Pasan58 checks CLI+50 HTTP+24 bilingües,132 en este perfil. [Resultado y límites](qa/MCP_SOURCE_EFFECTS_FULL_PROFILE_2026-10-23.md).
 
-**Falta para cerrar este incremento:** repetir la integración con el perfil completo verificado del sitio: plugins activos/inactivos, MU, tema y configuración relevante observada; comprobar Polylang/EN–ES, traducciones vinculadas y callbacks ajenos con los mismos fallos y postcondiciones. El lector de snapshot actual es una fixture EN, no el autorizador/lector bilingüe final. Corregir únicamente fallos que revele ese perfil. La prueba de dos plugins no certifica los demás contextos.
+Cuerpo/tagline/ambos y recuperación preservan las filas EN/ES vinculadas. Idioma, sync/filtros y conflictos se validan antes de escribir; una mutación ajena dentro de la operación fuerza rollback de ambos Projects y limpia cachés. Se conservaron vínculos, IDs y referencias ACF. Cuatro SIGKILL prueban rollback/persistencia/reanudación y cero nueva ejecución del writer al reintentar. La cabecera nativa de purga se comprobó desde el consumidor después del COMMIT. Preview Hostinger cierra la operación sin cambios; la petición normal posterior recupera el contexto. Versiones/activación/MU/tema se mantienen iguales antes/después.
 
-Criterio de cierre: guard de perfil y esquema; cuerpo/tagline/ambos y recuperación en CLI/HTTP; idioma/IDs/filas ajenas preservados; aprobación/recibo/intención confirmados juntos; rollback sin purga objetivo; recuperación tras cortes de proceso; callbacks restaurados y operaciones ajenas conservadas. Un perfil no admitido debe quedar cerrado y reportar un bloqueo concreto, no ampliar el laboratorio indefinidamente. No añadir nuevas funcionalidades para cumplir esta etapa.
+39 tests sintéticos de frontera y54 del protocolo SQLite también pasan, sin sumarlos como integración WP real ni sumar runners repetidos. No repetir esta etapa ni añadir funcionalidades al laboratorio sin fallo nuevo concreto.
 
-Estimación después de esta entrega: **1 iteración para perfil completo; una segunda solo si aparecen fallos que corregir.** No incluye habilitar edición real.
+Límite: se reprodujo código completo y sync vacío observado, no opciones privadas/configuración completa del proveedor. HTTP interno simula terminación TLS. El preflight del candidato debe comprobar la configuración admitida en destino; la entrega real de caché del hosting se informa aparte de la llamada a su API. El cierre local no autoriza instalación ni edición pública.
 
-## Para tener edición real instalable y validada
+## Trabajo pendiente para edición operativa
 
 | Entrega pendiente | Iteraciones estimadas | Resultado verificable |
 | --- | --- | --- |
-| Perfil completo y correcciones acotadas | 1–2 | Cierre del adaptador anterior |
-| Integración del contrato operativo y candidato | 2–3 | Enlace con propuestas existentes, aprobación independiente consumible y validación antes/después; scopes mínimos; cuotas/archivo/retención del journal; DTO versionado para separar contenido y efecto; ZIP/manifiesto y pruebas, preflight y reversión concreta |
-| Instalación y aceptación autorizadas | 1 | Paquete/permisos/diff revisables y aprobados; Alex ejecuta SSH por fases, verificación real sin ampliar permisos implícitamente |
+| Contrato operativo, integración y candidato | 2–3 | Enlace con propuestas existentes sin cambiar recibos rc.2; aprobación independiente consumible; scopes mínimos; cuotas/archivo/retención del journal; DTO versionado para separar contenido y efecto; ZIP/manifiesto probado con este perfil, preflight de configuración y reversión concreta |
+| Instalación y aceptación autorizadas | 1 | Paquete/permisos/diff revisables y aprobados; Alex ejecuta SSH por fases; verificación real dentro del alcance autorizado |
 
-**Total estimado restante:4–6 incrementos de trabajo, incluyendo el perfil completo.** Son entregas de trabajo, no un número garantizado de mensajes o comandos. Esperas de resultados/aprobación o un fallo nuevo pueden aumentar las vueltas. Si cambia la estimación, registrar el bloqueo y el trabajo concreto adicional antes de sumar otra fase.
+**Estimación vigente restante:3–4 incrementos de trabajo.** Son entregas, no un número garantizado de mensajes o comandos. Esperas de resultados/aprobación o un fallo nuevo pueden aumentar las vueltas. Si cambia la estimación, registrar el bloqueo y el trabajo concreto adicional antes de sumar otra fase. No volver a presentar el perfil completo como pendiente.
 
-La entrega de invalidación en el hosting no se demuestra con Apache: sigue separada de la invocación correcta de la API y debe informarse como tal en la aceptación real. Una edición pública requiere su diff concreto aprobado; no se programa ahora ni se considera autorizada por «continúa».
+Una edición pública requiere su diff concreto aprobado; no se programa ahora ni se considera autorizada por «continúa». No pedir autorización antes de tener candidato/plan concretos y revisables. Los fixtures REST de manage_options no son el autorizador operativo final.
 
-## Almacenamiento y límites que se conservan
+## Almacenamiento y límites conservados
 
-36GiB libres al inicio de la prueba HTTP. Imágenes cacheadas, red interna sin puertos, tmpfs512+768MiB por proyecto nuevo; RAM/swap posible. Contenedores detenidos al finalizar. Sin descargas de respaldos, SQL/config real, dependencias nuevas, SSH del agente, borrados de laboratorios/respaldo, cambios Workers o contacto. Las credenciales HTTP son de usuarios sintéticos y se mantienen dentro del laboratorio; no se piden ni copian credenciales reales.
+36GiB libres al inicio y después de la prueba completa. Imágenes cacheadas, red interna sin puertos, tmpfs512+768MiB por proyecto nuevo; RAM/swap posible. Contenedores detenidos al finalizar. Sin descargas de respaldos, SQL/config real, dependencias nuevas, SSH del agente, borrados de laboratorios/respaldo, cambios Workers o contacto. Credenciales HTTP solo sintéticas dentro del laboratorio; no se piden ni copian credenciales reales.

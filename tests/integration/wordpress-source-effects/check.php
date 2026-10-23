@@ -15,8 +15,8 @@ $id=wp_insert_post(['post_type'=>'project','post_status'=>'publish','post_title'
 $other=wp_insert_post(['post_type'=>'project','post_status'=>'publish','post_title'=>'Synthetic unrelated'],true);
 update_field('field_676dcb2aec8d4','Before tagline',$id);update_post_meta($id,'unrelated','keep');
 check(is_int($id)&&$id>0,'fixture created');
-$j=new MariaDbOperation($wpdb);$j->install();$j->schema();
-$observer=new wpdb(DB_USER,DB_PASSWORD,DB_NAME,DB_HOST);$observer->set_prefix($wpdb->prefix);$k=new MariaDbOperation($observer);
+$j=source_operation($wpdb);$j->install();$j->schema();
+$observer=new wpdb(DB_USER,DB_PASSWORD,DB_NAME,DB_HOST);$observer->set_prefix($wpdb->prefix);$k=source_operation($observer);
 failure(fn()=>$k->record(event_for(99,$id),fn()=>[]),'source_connection_mismatch');
 $approval=$wpdb->prefix.'ac_exp_approval_fixture';$wpdb->query("CREATE TABLE $approval (id INT PRIMARY KEY,consumed INT NOT NULL) ENGINE=InnoDB");$wpdb->query("INSERT INTO $approval VALUES (1,0)");
 $bodyCalls=0;$watch=static function($new,$old,$post)use($id,&$bodyCalls){if((int)$post->ID===$id){$bodyCalls++;}};
@@ -83,8 +83,8 @@ $sourceBefore=get_post_meta($id,'project_tagline',true);
 for($attempt=0;$attempt<8;$attempt++){$state=$k->consume(event_for(9,$id)['event_id'],fn()=>'retry');$wpdb->query($wpdb->prepare("UPDATE $effects SET available_at=UNIX_TIMESTAMP()-1 WHERE event_id=%s",event_for(9,$id)['event_id']));}
 check($state==='attention','MariaDB retry limit needs attention');check($j->consume(event_for(9,$id)['event_id'],fn()=>'requested')==='not_claimed','attention not automatically retried');check(get_post_meta($id,'project_tagline',true)===$sourceBefore,'retries preserve source');
 $originalVersion=$GLOBALS['wp_version'];$GLOBALS['wp_version']='7.2-unsupported';
-try{failure(fn()=>new MariaDbOperation($wpdb),'local_wp_experiment_only');}finally{$GLOBALS['wp_version']=$originalVersion;}
+try{failure(fn()=>source_operation($wpdb),'local_wp_experiment_only');}finally{$GLOBALS['wp_version']=$originalVersion;}
 $originalCache=$GLOBALS['_wp_using_ext_object_cache']??null;$GLOBALS['_wp_using_ext_object_cache']=true;
-try{failure(fn()=>new MariaDbOperation($wpdb),'local_wp_experiment_only');}finally{$GLOBALS['_wp_using_ext_object_cache']=$originalCache;}
+try{failure(fn()=>source_operation($wpdb),'local_wp_experiment_only');}finally{$GLOBALS['_wp_using_ext_object_cache']=$originalCache;}
 check(callback_state()===$baseline,'final exact hook state');remove_action('transition_post_status',$watch,9);
 echo 'SOURCE_EFFECTS_MARIADB_RESULT='.wp_json_encode(['checks'=>$GLOBALS['source_effect_checks'],'passed'=>true,'wordpress'=>get_bloginfo('version'),'mariadb'=>$wpdb->get_var('SELECT VERSION()'),'acf'=>acf_get_setting('version'),'litespeed'=>LSCWP_V,'sameConnectionAtomicity'=>true,'nativePurgeApiInvoked'=>true,'hostingCacheDeliveryVerified'=>false,'httpContextVerified'=>false]).PHP_EOL;

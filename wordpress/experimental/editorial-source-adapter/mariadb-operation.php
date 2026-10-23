@@ -2,10 +2,16 @@
 /** Experimental WP/MariaDB operation. Never registered as an ability. */
 namespace AlexCuadra\EditorialSourceExperiment;
 
+function local_origin_admitted() {
+    if(home_url()==='http://wordpress'){return true;}
+    return getenv('AC_SOURCE_EFFECTS_FULL')==='verified-backup-v1' && getenv('AC_SOURCE_EFFECTS_NETWORK')==='internal-only'
+        && defined('DB_HOST') && DB_HOST==='db' && defined('DB_NAME') && DB_NAME==='wordpress'
+        && home_url()==='https://content.alexcuadra.dev' && site_url()===home_url();
+}
 function local_wp_guard() {
     global $wp_object_cache;
     if (!defined('AC_EDITORIAL_SOURCE_EXPERIMENT') || AC_EDITORIAL_SOURCE_EXPERIMENT !== true
-        || wp_get_environment_type() !== 'local' || home_url() !== 'http://wordpress' || get_bloginfo('version') !== '7.1.3'
+        || wp_get_environment_type() !== 'local' || !local_origin_admitted() || get_bloginfo('version') !== '7.1.3'
         || !in_array(wp_using_ext_object_cache(), [false,null], true)
         || file_exists(WP_CONTENT_DIR.'/object-cache.php') || !is_object($wp_object_cache)
         || get_class($wp_object_cache)!=='WP_Object_Cache'
@@ -51,8 +57,9 @@ final class MariaDbOperation {
     private $db;
     private $events;
     private $effects;
-    public function __construct($db) {
-        local_wp_guard(); $this->db=$db;
+    private $invalidate;
+    public function __construct($db, ?callable $invalidate=null) {
+        local_wp_guard(); $this->db=$db; $this->invalidate=$invalidate;
         $this->events=$db->prefix.'ac_exp_source_events'; $this->effects=$db->prefix.'ac_exp_source_effects';
         if (!preg_match('/^[a-zA-Z0-9_]+$/D',$db->prefix)) { throw new \RuntimeException('invalid_prefix'); }
     }
@@ -121,6 +128,7 @@ final class MariaDbOperation {
             if(!$committed){$this->db->query('ROLLBACK');}
             clean_post_cache($id); wp_cache_delete($id,'post_meta');
             if(function_exists('acf_flush_value_cache')){acf_flush_value_cache($id,'project_tagline');}
+            if($this->invalidate!==null){($this->invalidate)($id);}
         }
     }
     public function effect($eventId) {

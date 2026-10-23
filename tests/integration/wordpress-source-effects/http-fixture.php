@@ -22,8 +22,8 @@ function source_http_route($request){
   return new WP_Error('invalid_fixture','INVALID_FIXTURE',['status'=>400]);
  }
  $id=$cases[$case];$event=source_http_event($case,$id);
- $j=new AlexCuadra\EditorialSourceExperiment\MariaDbOperation($wpdb);
  try{
+  $j=source_operation($wpdb);
   if(in_array($phase,['consume','crash_before_api','crash_after_api'],true)){
    $state=$j->consume($event['event_id'],static function($target)use($case,$phase){
     if($phase==='crash_before_api'){source_http_kill($case,'before-api');}

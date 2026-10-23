@@ -3,8 +3,8 @@ require_once '/integration/support.php';
 if(!function_exists('posix_kill')){throw new RuntimeException('POSIX_SIGKILL_REQUIRED');}
 $GLOBALS['source_http_checks']=0;
 function http_check($ok,$label){$GLOBALS['source_http_checks']++;if(!$ok){throw new RuntimeException('HTTP_CHECK: '.$label);}}
-function http_call($case,$phase,$auth){
- $args=['headers'=>['Content-Type'=>'application/json'],'body'=>wp_json_encode(['case'=>$case,'phase'=>$phase]),'timeout'=>12,'redirection'=>0];
+function http_call($case,$phase,$auth,$extraHeaders=[]){
+ $args=['headers'=>array_merge(['Content-Type'=>'application/json'],$extraHeaders),'body'=>wp_json_encode(['case'=>$case,'phase'=>$phase]),'timeout'=>12,'redirection'=>0];
  if($auth!==null){$args['headers']['Authorization']='Basic '.base64_encode($auth);}
  return wp_remote_post('http://wordpress/?rest_route=/source-effects-test/v1/run',$args);
 }
@@ -13,7 +13,7 @@ function sql_value($id){global $wpdb;return $wpdb->get_var($wpdb->prepare("SELEC
 function http_source_version($id){return snapshot($id,'en',['body_html'=>'','tagline'=>''],false)['version'];}
 function http_write_count($case){global $wpdb;return (int)$wpdb->get_var($wpdb->prepare("SELECT calls FROM {$wpdb->prefix}ac_exp_http_writes WHERE case_id=%s",$case));}
 function http_mark($case){global $wpdb;return $wpdb->get_row($wpdb->prepare("SELECT * FROM {$wpdb->prefix}ac_exp_http_marks WHERE case_id=%s",$case),ARRAY_A);}
-function http_effect($case,$id){global $wpdb;$j=new AlexCuadra\EditorialSourceExperiment\MariaDbOperation($wpdb);return $j->effect(source_http_event($case,$id)['event_id']);}
+function http_effect($case,$id){global $wpdb;$j=source_operation($wpdb);return $j->effect(source_http_event($case,$id)['event_id']);}
 function http_crash($case,$phase,$expected){
  $response=http_call($case,$phase,$GLOBALS['source_http_auth']);
  http_check(is_wp_error($response),'worker termination closes HTTP transport');
@@ -62,5 +62,13 @@ foreach(['before-api','after-api'] as $case){
  http_check((int)http_mark($case)['api_calls']===($case==='after-api'?2:1),'at least once API count after recovery');
  http_check(http_source_version($cases[$case])===$before&&http_write_count($case)===1,'consumer crash recovery never rewrites complete source');
 }
+if(getenv('AC_SOURCE_EFFECTS_FULL')==='verified-backup-v1'){
+ $beforePreview=http_source_version($cases['rollback']);
+ $preview=http_call('rollback','commit',$auth,['X-Preview-Indicator'=>'1']);
+ http_check(!is_wp_error($preview)&&wp_remote_retrieve_response_code($preview)===500,'MU preview rewritten context closes source operation');
+ http_check(http_source_version($cases['rollback'])===$beforePreview&&http_write_count('rollback')===0&&http_effect('rollback',$cases['rollback'])===null,'preview rejection leaves source and journal intact');
+ $normal=http_json(http_call('normal','commit',$auth));
+ http_check($normal['effectState']==='requested'&&http_write_count('normal')===1,'canonical request recovers after MU preview');
+}
 http_check((int)$wpdb->get_var("SELECT COUNT(*) FROM $marks WHERE case_id IN ('before-commit','after-commit','before-api','after-api') AND pid>0")===4,'four SIGKILL checkpoints reached');
-echo 'SOURCE_EFFECTS_HTTP_RESULT='.wp_json_encode(['checks'=>$GLOBALS['source_http_checks'],'passed'=>true,'transport'=>'internal HTTP Apache','authentication'=>'synthetic Application Passwords','sigkillCheckpoints'=>4,'nativeHttpPurgeHeaderVerified'=>true,'sameMariaDbConnection'=>true,'sourceWritesOnRetry'=>false,'hostingCacheDeliveryVerified'=>false,'fullSiteProfileVerified'=>false]).PHP_EOL;
+echo 'SOURCE_EFFECTS_HTTP_RESULT='.wp_json_encode(['checks'=>$GLOBALS['source_http_checks'],'passed'=>true,'transport'=>'internal HTTP Apache','authentication'=>'synthetic Application Passwords','sigkillCheckpoints'=>4,'nativeHttpPurgeHeaderVerified'=>true,'sameMariaDbConnection'=>true,'sourceWritesOnRetry'=>false,'hostingCacheDeliveryVerified'=>false,'fullSourceCodeProfileVerified'=>getenv('AC_SOURCE_EFFECTS_FULL')==='verified-backup-v1','fullHostingConfigurationVerified'=>false]).PHP_EOL;

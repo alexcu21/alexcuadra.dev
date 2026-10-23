@@ -1,0 +1,15 @@
+# Perfil completo del adaptador — validación local cerrada
+
+**132 checks reales:58 CLI+50 HTTP+24 bilingües.** WP7.1.3/MariaDB11.8.9/Polylang3.9.1/ACF6.8.10/LiteSpeed7.9.2.13 plugins originales activos,5 inactivos, Proposals rc.2 adicional, dos MU y tema Twenty Twenty-Four1.6. Versiones/activación/main hashes/inclusión/tema idénticos antes y después, comprobados también al admitir operaciones.9590 archivos de plugins (160287119B),4044 de temas (46865466B) y2 MU (41044B) verificados contra manifiesto. ZIPrc.2 original intacto.
+
+Se añadió lector experimental bilingüe con API Polylang y filas SQL bloqueadas: Projects/meta/relaciones/taxonomías/términos de todos los vinculados, por IDs ordenados; idioma y mapa recíproco cotejados con SQL. La versión incluye el conjunto, y la postcondición solo permite cambiar los campos del objetivo. Se limpia caché del vinculado tras COMMIT/ROLLBACK mediante callback interno opcional.
+
+EN cuerpo/tagline/ambos preserva todas las filas ES. ES ambos/recuperación preserva EN. Idioma erróneo, sync post_meta, filtros nuevos de copia/sincronización y cambio en la traducción se rechazan. Un save_post que intenta modificar metadata ES durante edición EN fuerza rollback de ambos, sin intención ejecutable ni valor contaminado en caché. El primer intento comparaba mapas por orden; se normalizaron por clave sin relajar igualdad de IDs/valores.
+
+Se repitieron bajo este perfil las pruebas HTTP/SIGKILL: cabecera nativa únicamente desde consumidor, rollback/persistencia por checkpoint, recuperación con invalidación repetible y cero nueva ejecución del writer. Preview Hostinger cambia contexto: rechazo500 controlado, fuente/journal intactos y solicitud normal posterior correcta.39/54 regresiones previas pasan, pero no se suman como WordPress real ni se suman intentos repetidos de las mismas suites.
+
+El origen canónico se admite solo para el fixture local explícito con opt-in, dos flags de laboratorio y DB_HOST=db/DB_NAME=wordpress. Fuera de ese modo se conserva http://wordpress; local/opt-in siguen obligatorios. Red Docker interna y sin puertos, HTTP/mail externos bloqueados, TLS simulado en HTTP interno. Sin SSH, solicitudes al CMS real, permisos reales, Workers, contacto ni edición pública.
+
+**Cierre local del adaptador, no autorización para instalar/aplicar.** Se reproduce código completo y sync vacío observado; no opciones privadas del hosting ni todo su runtime/configuración. La aceptación de configuración destino y entrega real del caché quedan separadas. La capa actual no tiene autorizador operativo/aprobaciones consumibles/cuotas/DTO final; esos contratos, candidato/reversión/preflight y despliegue son los siguientes hitos del plan, sin más funcionalidades de laboratorio salvo fallo concreto.
+
+Almacenamiento:36GiB libres al inicio, imágenes cacheadas, código copiado solo a tmpfs512+768MiB. Sin nuevos archivos de respaldo, SQL o configuración privada; identidad del tema reutilizada de metadatos previos verificados, no reimportada de SQL. Contenedores nuevos detenidos al terminar, respaldos y laboratorios previos conservados.
