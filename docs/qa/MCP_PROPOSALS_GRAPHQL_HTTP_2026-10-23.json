@@ -1,0 +1,18 @@
+{
+  "format": "editorial-graphql-http-privacy-v1",
+  "endpoint": "https://content.alexcuadra.dev/graphql",
+  "identity": "anonymous",
+  "proposalId": 227,
+  "publicControlProjectId": 146,
+  "readOnly": true,
+  "credentialsUsed": false,
+  "redirectsAllowed": false,
+  "collectionComplete": false,
+  "httpStatus": 200,
+  "nodePrivacyVerified": false,
+  "outcome": "anonymous-endpoint-access-denied",
+  "requests": 1,
+  "tlsCertificateVerification": true,
+  "authenticatedHttpVerified": false,
+  "observedDateLocal": "2026-10-23"
+}
