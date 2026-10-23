@@ -1,0 +1,20 @@
+{
+  "format": "editorial-effect-journal-sqlite-v1",
+  "checks": 54,
+  "passed": true,
+  "realSQLite": true,
+  "independentConnections": 2,
+  "concurrentClaimProcesses": 2,
+  "processDeathBeforeAndAfterSimulatedPurgeVerified": true,
+  "wordpressMariaDbAtomicityVerified": false,
+  "liteSpeedPurgeVerified": false,
+  "sourceWriterBoundaryRegressionChecks": 39,
+  "maxAttempts": 8,
+  "leaseSeconds": 30,
+  "externalDelivery": "at-least-once",
+  "cmsModified": false,
+  "sshExecuted": false,
+  "dockerStarted": false,
+  "backupDownloaded": false,
+  "installedCandidateSha256": "c31e6814864be0692035de7b46322fc2fc0159d2104e0b4d25404c3b15859f07"
+}
