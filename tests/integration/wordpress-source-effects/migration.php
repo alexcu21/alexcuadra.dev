@@ -1,5 +1,5 @@
 <?php
-require_once '/integration/support.php';require_once (getenv('AC_SOURCE_EFFECTS_PACKAGE_NORMAL')==='1'?WP_CONTENT_DIR.'/plugins/alexcuadra-editorial-operating/includes/':(getenv('AC_SOURCE_EFFECTS_PACKAGE')==='local-rc1'?'/operating-package/includes/':'/experiment/')).'operating-contract.php';
+require_once '/integration/support.php';require_once (getenv('AC_SOURCE_EFFECTS_PACKAGE_NORMAL')==='1'?WP_CONTENT_DIR.'/plugins/alexcuadra-editorial-operating/includes/':(in_array(getenv('AC_SOURCE_EFFECTS_PACKAGE'),['local-rc1','local-rc3'],true)?'/operating-package/includes/':'/experiment/')).'operating-contract.php';
 use AlexCuadra\EditorialSourceExperiment as X;
 global $wpdb;$GLOBALS['joint_checks']=0;
 function migration_check($ok){$GLOBALS['joint_checks']++;if(!$ok){throw new RuntimeException('joint_migration_check');}}

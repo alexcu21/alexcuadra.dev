@@ -63,8 +63,8 @@ def main():
     print('PRIVATE_EFFECTS_WORK='+str(work),flush=True)
     package_dir=None
     if os.environ.get('AC_SOURCE_EFFECTS_PACKAGE'):
-        if not full or os.environ['AC_SOURCE_EFFECTS_PACKAGE']!='local-rc1': raise ValueError('INVALID_PACKAGE_MODE')
-        archive_path=ROOT/'artifacts/wordpress/alexcuadra-editorial-operating-0.1.0-rc.1.zip'
+        if not full or os.environ['AC_SOURCE_EFFECTS_PACKAGE'] not in ['local-rc1','local-rc3']: raise ValueError('INVALID_PACKAGE_MODE')
+        archive_path=ROOT/('artifacts/wordpress/alexcuadra-editorial-operating-0.1.0-'+os.environ['AC_SOURCE_EFFECTS_PACKAGE'].removeprefix('local-').replace('rc','rc.')+'.zip')
         package_manifest=json.loads(archive_path.with_suffix('.manifest.json').read_text())
         if package_manifest.get('productionReady') is not False or hashlib.sha256(archive_path.read_bytes()).hexdigest()!=package_manifest['sha256']: raise ValueError('PACKAGE_HASH_DRIFT')
         package_dir=work/'package';package_dir.mkdir()
@@ -131,17 +131,25 @@ def main():
     package_disabled_config=env['WORDPRESS_CONFIG_EXTRA']
     if package_dir:
         env['WORDPRESS_CONFIG_EXTRA']+="define('AC_EDITORIAL_OPERATING_LOCAL',true);"
-        env['AC_SOURCE_EFFECTS_PACKAGE']='local-rc1'
+        env['AC_SOURCE_EFFECTS_PACKAGE']=os.environ['AC_SOURCE_EFFECTS_PACKAGE']
         for service in ['wordpress','cli']:
             settings['services'][service]['volumes'].append({'type':'bind','source':str(package_dir),'target':'/operating-package','read_only':True})
             settings['services'][service]['volumes'].append({'type':'bind','source':str(archive_path),'target':'/operating-candidate.zip','read_only':True})
     config = work/'compose.json';config.write_text(json.dumps(settings))
     compose=['docker','compose','-p',work.name.replace('_','-'),'-f',str(config),'--profile','tools']
-    def cli(*args, shell=False, disabled=False, normal=False, phase=None):
+    def cli(*args, shell=False, disabled=False, normal=False, phase=None, production=None):
         command=compose+['run','--rm','--no-deps','--pull','never']
         if normal: command+=['-e','AC_SOURCE_EFFECTS_PACKAGE_NORMAL=1']
         if phase: command+=['-e','AC_PACKAGE_LIFECYCLE_PHASE='+phase]
-        if disabled: command+=['-e','WORDPRESS_CONFIG_EXTRA='+package_disabled_config]
+        if production:
+            prod_config=package_disabled_config.replace("define('WP_ENVIRONMENT_TYPE','local');", "define('WP_ENVIRONMENT_TYPE','production');").replace("define('AC_EDITORIAL_SOURCE_EXPERIMENT',true);",'')
+            site='https://wrong.example.invalid' if production=='wrong-site' else 'https://content.alexcuadra.dev'
+            prod_config+="define('AC_EDITORIAL_OPERATING_SITE','"+site+"');"
+            if production=='ambiguous': prod_config+="define('AC_EDITORIAL_OPERATING_LOCAL',true);"
+            if production=='experiment': prod_config+="define('AC_EDITORIAL_SOURCE_EXPERIMENT',true);"
+            if production=='local-environment': prod_config=prod_config.replace("define('WP_ENVIRONMENT_TYPE','production');", "define('WP_ENVIRONMENT_TYPE','local');")
+            command+=['-e','WORDPRESS_CONFIG_EXTRA='+prod_config,'-e','AC_ADMISSION_PHASE='+production]
+        elif disabled: command+=['-e','WORDPRESS_CONFIG_EXTRA='+package_disabled_config]
         if shell: command+=['--entrypoint','sh']
         return run(command+['cli',*args])
     profile_before=profile_after=None
@@ -158,6 +166,10 @@ def main():
             cli('-c','mkdir -p wp-content/mu-plugins && cp /integration/fixture.php wp-content/mu-plugins/source-effects-fixture.php && cp -R /verified-advanced-custom-fields wp-content/plugins/advanced-custom-fields && cp -R /verified-litespeed-cache wp-content/plugins/litespeed-cache',shell=True)
         else:
             cli('-c','mkdir -p wp-content/mu-plugins && cp -R /verified-plugins/. wp-content/plugins/ && cp -R /verified-mu-plugins/. wp-content/mu-plugins/ && cp -R /verified-themes/. wp-content/themes/ && cp /integration/fixture.php wp-content/mu-plugins/source-effects-fixture.php && cp -R /candidate-source wp-content/plugins/alexcuadra-editorial-proposals',shell=True)
+        if full:
+            # Cached upstream image includes inactive demo plugins absent from the real profile.
+            # Retain their synthetic files outside discovery; never loosen destination admission.
+            cli('-c','mkdir -p wp-content/source-effects-image-defaults && if test -d wp-content/plugins/akismet; then mv wp-content/plugins/akismet wp-content/source-effects-image-defaults/; fi && if test -f wp-content/plugins/hello.php; then mv wp-content/plugins/hello.php wp-content/source-effects-image-defaults/; fi',shell=True)
         cli('core','install','--url='+('https://content.alexcuadra.dev' if full else 'http://wordpress'),'--title=SyntheticSourceEffects','--admin_user=effects_admin','--admin_password=synthetic-effects-only','--admin_email=effects@example.invalid','--skip-email')
         if not full:
             cli('plugin','activate','advanced-custom-fields','litespeed-cache')
@@ -197,7 +209,7 @@ def main():
             bilingual_results=[json.loads(line[len(bilingual_marker):]) for line in bilingual_output.splitlines() if line.startswith(bilingual_marker)]
             if len(bilingual_results)!=1 or not bilingual_results[0].get('passed') or bilingual_results[0].get('checks',0)<15: raise ValueError('MISSING_BILINGUAL_RESULT')
             bilingual=bilingual_results[0]
-            operating_output=(cli('eval-file','/integration/operating.php') if package_dir else
+            operating_output=(cli('eval-file','/integration/operating.php') if os.environ.get('AC_SOURCE_EFFECTS_PACKAGE')=='local-rc1' else
                 cli('-c','exec php -d disable_functions=link "$(command -v wp)" eval-file /integration/operating.php',shell=True))
             operating_marker='SOURCE_OPERATING_CONTRACT_RESULT='
             operating_results=[json.loads(line[len(operating_marker):]) for line in operating_output.splitlines() if line.startswith(operating_marker)]
@@ -211,6 +223,12 @@ def main():
             if profile_before!=profile_after: raise ValueError('PROFILE_CHANGED_DURING_TESTS')
             # Read-only source mounts must still match the private manifest.
             profile.verify_plugins(SOURCE/'wp-content/plugins',manifest,recorded)
+        admission_profile=None;production_admission=None
+        if full and os.environ.get('AC_SOURCE_EFFECTS_PACKAGE')!='local-rc1':
+            admission_out=cli('eval-file','/integration/admission-profile.php')
+            vals=[json.loads(line.split('=',1)[1]) for line in admission_out.splitlines() if line.startswith('SOURCE_ADMISSION_PROFILE_RESULT=')]
+            if len(vals)!=1 or not vals[0].get('passed') or vals[0].get('checks',0)<95: raise ValueError('ADMISSION_PROFILE_FAILED')
+            admission_profile=vals[0]
         lifecycle=None
         if package_dir:
             cli('plugin','install','/operating-candidate.zip',disabled=True)
@@ -226,7 +244,22 @@ def main():
                 if len(values)!=1 or not values[0].get('passed'): raise ValueError('LIFECYCLE_FAILED')
                 vals.append(values[0])
             lifecycle={'phases':vals,'checks':sum(v['checks'] for v in vals),'passed':True,'wordpressInstallerVerified':True,'normalPluginLoading':True}
-        report={'packageLifecycle':lifecycle,'packageCandidate':package_check,'operatingMcp':operating_mcp,'jointMigration':joint_migration,'operatingContract':operating,'sourceProfileBefore':profile_before,'sourceProfileAfter':profile_after,'fullSourceProfile':full,'bilingual':bilingual,'httpAndProcessDeath':http_results[0],'format':'editorial-source-effects-mariadb-v1','result':results[0],'verifiedSourcePlugins':verified,'hostPorts':False,'externalNetwork':False,'sshExecuted':False,'sourceDatabaseImported':False,'reusedInternalNetwork':reuse is not None}
+        if package_dir and os.environ['AC_SOURCE_EFFECTS_PACKAGE'] in ['local-rc3']:
+            cli('plugin','activate','alexcuadra-editorial-operating',normal=True,disabled=True)
+            cli('-c','mv wp-content/mu-plugins/source-effects-fixture.php wp-content/source-effects-fixture-admission.disabled',shell=True)
+            try:
+                prod_results=[]
+                for phase in ['admitted','wrong-site','ambiguous','experiment','local-environment']:
+                    prod_out=cli('-c','exec php -d disable_functions=link "$(command -v wp)" eval-file /integration/production-admission.php',shell=True,normal=True,production=phase)
+                    vals=[json.loads(line.split('=',1)[1]) for line in prod_out.splitlines() if line.startswith('SOURCE_PRODUCTION_ADMISSION_RESULT=')]
+                    if len(vals)!=1 or not vals[0].get('passed') or vals[0].get('checks',0)<10: raise ValueError('PRODUCTION_ADMISSION_FAILED')
+                    prod_results.append(vals[0])
+                production_admission={'phases':prod_results,'checks':sum(v['checks'] for v in prod_results),'passed':True,'actualProductionServerTested':False,'syntheticIsolatedDatabase':True}
+            finally:
+                cli('-c','mv wp-content/source-effects-fixture-admission.disabled wp-content/mu-plugins/source-effects-fixture.php',shell=True)
+                cli('plugin','deactivate','alexcuadra-editorial-operating',normal=True,disabled=True)
+            cli('eval-file','/integration/package-lifecycle.php',normal=True,disabled=True,phase='deactivated')
+        report={'admissionProfile':admission_profile,'productionAdmission':production_admission,'packageLifecycle':lifecycle,'packageCandidate':package_check,'operatingMcp':operating_mcp,'jointMigration':joint_migration,'operatingContract':operating,'sourceProfileBefore':profile_before,'sourceProfileAfter':profile_after,'fullSourceProfile':full,'bilingual':bilingual,'httpAndProcessDeath':http_results[0],'format':'editorial-source-effects-mariadb-v1','result':results[0],'verifiedSourcePlugins':verified,'hostPorts':False,'externalNetwork':False,'sshExecuted':False,'sourceDatabaseImported':False,'reusedInternalNetwork':reuse is not None}
         (work/'result.json').write_text(json.dumps(report,indent=2)+'\n')
         print(json.dumps(report,sort_keys=True),flush=True)
     finally:

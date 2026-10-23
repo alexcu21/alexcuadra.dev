@@ -21,13 +21,13 @@ if(getenv('AC_SOURCE_EFFECTS_FULL')==='verified-backup-v1'){add_action('save_pos
 
 // Local-only operating MCP surface; the source modules register nothing on load.
 if(getenv('AC_SOURCE_EFFECTS_PACKAGE_NORMAL')==='1'){/* Normal plugin loading only. */}
-elseif(getenv('AC_SOURCE_EFFECTS_FULL')==='verified-backup-v1'&&getenv('AC_SOURCE_EFFECTS_PACKAGE')==='local-rc1'){require_once '/operating-package/alexcuadra-editorial-operating.php';}
+elseif(getenv('AC_SOURCE_EFFECTS_FULL')==='verified-backup-v1'&&in_array(getenv('AC_SOURCE_EFFECTS_PACKAGE'),['local-rc1','local-rc3'],true)){require_once '/operating-package/alexcuadra-editorial-operating.php';}
 elseif(getenv('AC_SOURCE_EFFECTS_FULL')==='verified-backup-v1'){
- require_once (getenv('AC_SOURCE_EFFECTS_PACKAGE_NORMAL')==='1'?WP_CONTENT_DIR.'/plugins/alexcuadra-editorial-operating/includes/':(getenv('AC_SOURCE_EFFECTS_PACKAGE')==='local-rc1'?'/operating-package/includes/':'/experiment/')).'operating-contract.php';require_once (getenv('AC_SOURCE_EFFECTS_PACKAGE_NORMAL')==='1'?WP_CONTENT_DIR.'/plugins/alexcuadra-editorial-operating/includes/':(getenv('AC_SOURCE_EFFECTS_PACKAGE')==='local-rc1'?'/operating-package/includes/':'/experiment/')).'operating-abilities.php';
+ require_once (getenv('AC_SOURCE_EFFECTS_PACKAGE_NORMAL')==='1'?WP_CONTENT_DIR.'/plugins/alexcuadra-editorial-operating/includes/':(in_array(getenv('AC_SOURCE_EFFECTS_PACKAGE'),['local-rc1','local-rc3'],true)?'/operating-package/includes/':'/experiment/')).'operating-contract.php';require_once (getenv('AC_SOURCE_EFFECTS_PACKAGE_NORMAL')==='1'?WP_CONTENT_DIR.'/plugins/alexcuadra-editorial-operating/includes/':(in_array(getenv('AC_SOURCE_EFFECTS_PACKAGE'),['local-rc1','local-rc3'],true)?'/operating-package/includes/':'/experiment/')).'operating-abilities.php';
  add_action('wp_abilities_api_categories_init',static function(){wp_register_ability_category('alexcuadra-operating',['label'=>'Owned editorial operations','description'=>'Local operating transport acceptance.']);});
  add_action('wp_abilities_api_init',static function(){AlexCuadra\EditorialSourceExperiment\register_operating_abilities(static function(){global $wpdb;if(($_SERVER['HTTP_X_OPERATING_TEST_FAILURE']??'')==='1'){throw new RuntimeException('SYNTHETIC_PRIVATE_FAILURE SQL /private/path');}return new AlexCuadra\EditorialSourceExperiment\OperatingContract($wpdb,source_operation($wpdb),'snapshot','field_schema','cache_clear');});});
 }
 
-if(getenv('AC_SOURCE_EFFECTS_PACKAGE')==='local-rc1'&&($_SERVER['HTTP_X_OPERATING_TEST_FAILURE']??'')==='1'){
+if(in_array(getenv('AC_SOURCE_EFFECTS_PACKAGE'),['local-rc1','local-rc3'],true)&&($_SERVER['HTTP_X_OPERATING_TEST_FAILURE']??'')==='1'){
  add_filter('query',static function($sql){if(str_contains($sql,'ac_proposal_')){throw new RuntimeException('SYNTHETIC_PRIVATE_FAILURE SQL /private/path');}return $sql;});
 }

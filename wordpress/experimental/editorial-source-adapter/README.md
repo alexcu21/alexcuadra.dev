@@ -1,3 +1,5 @@
+Estado vigente23octubre: el paquete operativo rc.3 añade admisión productiva cerrada con opt-in de destino explícito. Los comentarios/nombres originales de experimento local se conservan como historia del módulo; el control común delega a production_wp_guard si existe AC_EDITORIAL_OPERATING_SITE. El uso directo fuera del plugin instalado se rechaza en producción. No se ha autorizado ni ejecutado instalación o edición en el hosting. [Paquete y límites](../../../docs/WORDPRESS_MCP_OPERATING_PACKAGE.md).
+
 # Adaptador de fuente — experimento local
 
 Primera parte del adaptador de escritura. No es un plugin: no tiene cabecera instalable, hooks, abilities, migración ni paquete. No se incluye desde Read, Proposals o Changes Laboratory. `write_source` rechaza cualquier entorno distinto de local, origen distinto de `http://wordpress` o ausencia del opt-in explícito `AC_EDITORIAL_SOURCE_EXPERIMENT=true`. No se debe quitar este guard para instalarlo.

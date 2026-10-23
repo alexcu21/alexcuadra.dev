@@ -3,6 +3,7 @@
 namespace AlexCuadra\EditorialSourceExperiment;
 require_once __DIR__.'/journal-records.php';
 require_once __DIR__.'/storage-barrier.php';
+require_once __DIR__.'/production-admission.php';
 
 function local_origin_admitted() {
     if(home_url()==='http://wordpress'){return true;}
@@ -11,6 +12,7 @@ function local_origin_admitted() {
         && home_url()==='https://content.alexcuadra.dev' && site_url()===home_url();
 }
 function local_wp_guard() {
+    if(defined('AC_EDITORIAL_OPERATING_SITE')){production_wp_guard();return;}
     global $wp_object_cache;
     if (!defined('AC_EDITORIAL_SOURCE_EXPERIMENT') || AC_EDITORIAL_SOURCE_EXPERIMENT !== true
         || wp_get_environment_type() !== 'local' || !local_origin_admitted() || get_bloginfo('version') !== '7.1.3'

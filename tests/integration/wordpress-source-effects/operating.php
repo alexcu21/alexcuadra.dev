@@ -1,6 +1,6 @@
 <?php
 require_once '/integration/support.php';
-require_once (getenv('AC_SOURCE_EFFECTS_PACKAGE_NORMAL')==='1'?WP_CONTENT_DIR.'/plugins/alexcuadra-editorial-operating/includes/':(getenv('AC_SOURCE_EFFECTS_PACKAGE')==='local-rc1'?'/operating-package/includes/':'/experiment/')).'operating-contract.php';
+require_once (getenv('AC_SOURCE_EFFECTS_PACKAGE_NORMAL')==='1'?WP_CONTENT_DIR.'/plugins/alexcuadra-editorial-operating/includes/':(in_array(getenv('AC_SOURCE_EFFECTS_PACKAGE'),['local-rc1','local-rc3'],true)?'/operating-package/includes/':'/experiment/')).'operating-contract.php';
 use AlexCuadra\EditorialSourceExperiment\OperatingContract as C;
 use AlexCuadra\EditorialProposals as P;
 $GLOBALS['operating_checks']=0;
@@ -247,7 +247,7 @@ $exportRows=op_rows($decodePair['en']);$exportUsage=$c->usage($decodeOwner);$exp
 op_check($exported['verified']&&$exported['records']===7&&$exported['restoration_verified']===false,'owner archive has exact six-table record counts');
 op_check(AlexCuadra\EditorialSourceExperiment\verify_operating_export($exportPath)===$exported,'independent archive verification');op_check((fileperms($exportPath)&0777)===0600,'archive private permissions');
 op_fail(fn()=>$c->exportOwner($decodeOwner,$exportPath,true),'contract_export_exists');
-if(!getenv('AC_SOURCE_EFFECTS_PACKAGE')){
+if(getenv('AC_SOURCE_EFFECTS_PACKAGE')!=='local-rc1'){
     op_check(!function_exists('link'),'export exercised with PHP link disabled as on hosting');
     $collision=$exportDir.'/collision.ndjson';AlexCuadra\EditorialSourceExperiment\operating_export_path($collision);
     file_put_contents($collision,'retain-existing');chmod($collision,0600);

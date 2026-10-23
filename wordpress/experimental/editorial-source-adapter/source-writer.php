@@ -28,7 +28,9 @@ function validate_fields($fields) {
  * MariaDB coordinator is experimental; never register this function as an ability.
  */
 function write_source(array $document, callable $read, callable $schema, callable $cache) {
-    if (!defined('AC_EDITORIAL_SOURCE_EXPERIMENT') || AC_EDITORIAL_SOURCE_EXPERIMENT !== true
+    if(defined('AC_EDITORIAL_OPERATING_SITE')){
+        if(!function_exists(__NAMESPACE__.'\\local_wp_guard')){fail('operating_installed_package_required');}local_wp_guard();
+    }elseif (!defined('AC_EDITORIAL_SOURCE_EXPERIMENT') || AC_EDITORIAL_SOURCE_EXPERIMENT !== true
         || wp_get_environment_type() !== 'local' || (home_url() !== 'http://wordpress'
             && (!function_exists(__NAMESPACE__.'\\local_origin_admitted') || !local_origin_admitted()))) { fail('local_experiment_only'); }
     if (!isset($document['project_id'], $document['locale'], $document['source_version'], $document['schema_version'], $document['before'], $document['after'])
