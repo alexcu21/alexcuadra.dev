@@ -239,5 +239,18 @@ op_check($c->install()===$mi&&op_rows($decodePair['en'])===$migrationSource,'mig
 $migrationLock='ac_op_migrate_'.substr(hash('sha256',DB_NAME.'|'.$wpdb->prefix),0,32);$lockObserver=new wpdb(DB_USER,DB_PASSWORD,DB_NAME,DB_HOST);$lockObserver->get_var("SELECT GET_LOCK('$migrationLock',0)");try{op_fail(fn()=>$c->install(),'contract_migration_busy');}finally{$lockObserver->query("DO RELEASE_LOCK('$migrationLock')");}
 $wpdb->query('START TRANSACTION');try{op_fail(fn()=>$c->install(),'contract_outer_transaction');}finally{$wpdb->query('ROLLBACK');}
 $preparing=json_encode(AlexCuadra\EditorialSourceExperiment\operating_storage_marker($wpdb,'preparing'));$wpdb->query($wpdb->prepare("UPDATE $wpdb->options SET option_value=%s WHERE option_name='ac_exp_operating_storage'",$preparing));try{op_fail(fn()=>$c->install(),'contract_migration_untracked_data');}finally{$wpdb->query($wpdb->prepare("UPDATE $wpdb->options SET option_value=%s WHERE option_name='ac_exp_operating_storage'",$markerBefore));}
+// Private export is a verified archive, never a restore or automatic prune.
+$exportDir='/tmp/editorial-private-'.bin2hex(random_bytes(8));mkdir($exportDir,0700);chmod($exportDir,0700);$exportPath=$exportDir.'/owner.ndjson';
+op_user($decodeOwner);op_fail(fn()=>$c->exportOwner($decodeOwner,$exportPath,true),'contract_operator_required');op_user(1);
+op_fail(fn()=>$c->exportOwner($decodeOwner,$exportPath,false),'contract_quiescence_required');
+$exportRows=op_rows($decodePair['en']);$exportUsage=$c->usage($decodeOwner);$exported=$c->exportOwner($decodeOwner,$exportPath,true);
+op_check($exported['verified']&&$exported['records']===7&&$exported['restoration_verified']===false,'owner archive has exact six-table record counts');
+op_check(AlexCuadra\EditorialSourceExperiment\verify_operating_export($exportPath)===$exported,'independent archive verification');op_check((fileperms($exportPath)&0777)===0600,'archive private permissions');
+op_fail(fn()=>$c->exportOwner($decodeOwner,$exportPath,true),'contract_export_exists');
+$badPath=$exportDir.'/truncated.ndjson';file_put_contents($badPath,substr(file_get_contents($exportPath),0,-20));chmod($badPath,0600);op_fail(fn()=>AlexCuadra\EditorialSourceExperiment\verify_operating_export($badPath),'contract_export_invalid');
+$changedPath=$exportDir.'/changed.ndjson';file_put_contents($changedPath,str_replace('Decoder approved','Decoder tampered',file_get_contents($exportPath)));chmod($changedPath,0600);op_fail(fn()=>AlexCuadra\EditorialSourceExperiment\verify_operating_export($changedPath),'contract_export_invalid');
+chmod($exportDir,0755);try{op_fail(fn()=>$c->exportOwner($decodeOwner,$exportDir.'/public.ndjson',true),'contract_export_path');}finally{chmod($exportDir,0700);}
+symlink($exportPath,$exportDir.'/symlink.ndjson');op_fail(fn()=>AlexCuadra\EditorialSourceExperiment\verify_operating_export($exportDir.'/symlink.ndjson'),'contract_export_invalid');
+op_check(op_rows($decodePair['en'])===$exportRows&&$c->usage($decodeOwner)===$exportUsage,'export never modifies source ledger quotas or retention');
 op_check(get_role('subscriber')->capabilities===$roleBefore,'subscriber global role unchanged');
 echo 'SOURCE_OPERATING_CONTRACT_RESULT='.wp_json_encode(['checks'=>$GLOBALS['operating_checks'],'passed'=>true,'realProposalsRc2'=>true,'independentCliApproval'=>true,'approvalSourceReceiptIntentAtomic'=>true,'proposalReceiptsUnchanged'=>true,'recoveryCapacityReserved'=>true,'recoveryExecutorImplemented'=>true,'dbDisconnectRollbackVerified'=>true,'automaticReconnectInsideTransaction'=>false,'abilitiesRegistered'=>true,'perOwnerOperatingLimits'=>['reviews'=>8,'requests'=>64,'bytes'=>8388608],'rc2BudgetSeparate'=>true]).PHP_EOL;

@@ -5,6 +5,7 @@ use AlexCuadra\EditorialProposals as P;
 require_once __DIR__.'/operating-storage.php';
 require_once __DIR__.'/operating-audit.php';
 require_once __DIR__.'/operating-migration.php';
+require_once __DIR__.'/operating-export.php';
 
 final class OperatingContract {
     const APPLY='alexcuadra_apply_project_changes';
@@ -245,6 +246,12 @@ final class OperatingContract {
                 'content_state'=>'recovered','source_version'=>$after['version'],'effect_state_at_commit'=>'pending'];
             $this->save($owner,$input,$hash,$dto);$this->budget($owner);return $dto;
         });
+    }
+    public function exportOwner($owner,$destination,$externalWritersStopped){
+        local_wp_guard();if(!defined('WP_CLI')||!WP_CLI||!current_user_can('manage_options')||!current_user_can(self::APPROVE)){$this->fail('contract_operator_required');}
+        if(!is_int($owner)||$owner<1||$externalWritersStopped!==true){$this->fail('contract_quiescence_required');}
+        operating_export_path($destination);$this->outside();$this->tables();$this->journal->schema();
+        return owned_transaction($this->db,function()use($owner,$destination){$this->tables();$this->journal->schema();$this->budget($owner);return export_operating_owner($this->db,$owner,$destination);},true);
     }
     public function acceptStorage($externalWritersStopped,$maxOwners=100){
         local_wp_guard();if(!defined('WP_CLI')||!WP_CLI||!current_user_can('manage_options')||!current_user_can(self::APPROVE)){$this->fail('contract_operator_required');}

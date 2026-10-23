@@ -1,6 +1,6 @@
 # Contrato operativo de aplicación — integración local
 
-Estado23 octubre2026: integración ejecutable local, sin instalación ni abilities nuevas en el CMS real. `OperatingContract` enlaza con Proposals0.1.0-rc.2 y el adaptador WP/MariaDB ya verificado. No cambia el plugin instalado, sus recibos, payloads o cuotas.102 controles de contrato pasan junto con132 regresiones del perfil completo. [QA de recuperación y desconexión](qa/MCP_OPERATING_RECOVERY_2026-10-23.md). Las45 pruebas previas del writer cubren también UTF-8.
+Estado23 octubre2026: integración ejecutable local, sin instalación ni abilities nuevas en el CMS real. `OperatingContract` enlaza con Proposals0.1.0-rc.2 y el adaptador WP/MariaDB ya verificado. No cambia el plugin instalado, sus recibos, payloads o cuotas.Resultado vigente:155 contrato+50 migración/aceptación+68 MCP+132 regresiones=405 integraciones. [QA de recuperación y desconexión](qa/MCP_OPERATING_RECOVERY_2026-10-23.md). Las45 pruebas previas del writer cubren también UTF-8.
 
 ## Autoridad y revisión
 
@@ -35,7 +35,7 @@ Conservar todos los registros, respaldo y archivos hasta validar instalación/re
 ## Qué falta y siguiente entrega
 
 1. Formalizar esquema/decodificación/versiones y admisión para candidato. Las cuatro tablas tienen admisión estricta y decoder cerrado de revisiones; Aprobaciones, recibos operativos y aplicaciones ya validan estructura y vínculos al leerse. Journal y efectos se validan al leer/consumir; effectStatus contrasta aplicación/evento/revisión/aprobación/recibo. Auditoría de relaciones disponible por propietario/lotes, sin reparar; el recorrido global exige escritores detenidos y completar cursor. Las seis tablas tienen preparación conjunta reanudable y marcador operating-storage-v2/ready desde cero. acceptStorage valida globalmente en snapshot READ ONLY con barrera cooperativa; la pausa de escritores externos es declarada por operador y se requiere para destino. Falta integración del candidato. [QA de aceptación](qa/MCP_STORAGE_ACCEPTANCE_2026-10-23.md). [QA conjunta](qa/MCP_JOINT_MIGRATION_2026-10-23.md). [QA de migración](qa/MCP_OPERATING_MIGRATION_2026-10-23.md). [QA de auditoría](qa/MCP_OPERATING_AUDIT_2026-10-23.md). [QA del journal](qa/MCP_OPERATING_JOURNAL_2026-10-23.md). [QA de almacenamiento](qa/MCP_OPERATING_STORAGE_2026-10-23.md).
-2. Transporte/schema MCP operativo ya probado localmente; falta export privado, preflight de configuración admitida, reversión y ZIP/manifiesto con guardas para destino. La evidencia MCP local no autoriza el CMS real.
+2. Transporte/schema MCP operativo ya probado localmente; export privado CLI ya probado; faltan preflight de configuración admitida, reversión y ZIP/manifiesto con guardas para destino. La evidencia MCP local no autoriza el CMS real.
 3. Instalación y diff público específicamente autorizados, SSH ejecutado por Alex y aceptación real. Ninguna edición real se autoriza por esta integración.
 
 Estimación restante2–3 incrementos:1–2 para completar lo anterior y el candidato;1 para instalación/aceptación autorizadas. Esperas y fallos nuevos pueden añadir vueltas; registrar la causa. Sin ampliar las funcionalidades del laboratorio fuera de esos entregables.
@@ -44,4 +44,8 @@ Protección de reconexión implementada y verificada en el perfil local admitido
 
 ## Transporte operativo local
 
-Seis abilities registradas explícitamente por fixture y probadas a través del adaptador oficial MCP HTTP: prepare/inspect/apply/prepareRecovery/recover/effectStatus, con schemas cerrados y scopes específicos. Aprobación/aceptación/migración/auditoría no se registran.68 checks MCP correctos; total394. No registro automático desde fuente ni paquete instalable. Pendiente export privado y empaquetado/admisión/manifiesto/preflight/reversión para destino. [QA de transporte](qa/MCP_OPERATING_TRANSPORT_2026-10-23.md).
+Seis abilities registradas explícitamente por fixture y probadas a través del adaptador oficial MCP HTTP: prepare/inspect/apply/prepareRecovery/recover/effectStatus, con schemas cerrados y scopes específicos. Aprobación/aceptación/migración/auditoría no se registran.68 checks MCP correctos; total394. No registro automático desde fuente ni paquete instalable. Export privado CLI ya probado; pendiente empaquetado/admisión/manifiesto/preflight/reversión para destino. [QA de transporte](qa/MCP_OPERATING_TRANSPORT_2026-10-23.md).
+
+## Archivo privado
+
+exportOwner CLI disponible para operador en snapshot validado, carpeta0700 fuera del webroot y archivo0600 NDJSON con digest/verificación independiente. Solo se ensayó con datos sintéticos; no importa/restaura ni borra/libera registros. No se expone por MCP y no cambia retención. Pendiente empaquetado/admisión para destino/preflight/reversión. [QA y alcance exacto](qa/MCP_PRIVATE_EXPORT_2026-10-23.md).

@@ -1,5 +1,8 @@
 # Traspaso de sesión — 21 octubre 2026
 
+**23 octubre — exportación privada por propietario:**11 casos nuevos;155 contrato+50 migración/aceptación+68 MCP+132 regresiones,405 integraciones correctas. CLI operador, snapshot READ ONLY/barrera/auditoría; carpeta0700 fuera de WordPress, archivo0600 exclusivo, NDJSON/conteos/digest, verificación independiente y publicación sin overwrite. No borra registros ni libera cuotas; no exporta SQL/config/credenciales ni es restauración. [QA/límites](qa/MCP_PRIVATE_EXPORT_2026-10-23.md). Solo archivos sintéticos dentro de contenedor, sin export real. Próximo: paquete/manifiesto/admisión para destino/preflight/reversión y aprobación de instalación/scopes/diff. Sin SSH/CMS/grants/pulls/backups reales nuevos; laboratorio detenido;32GiB libres al inicio.
+
+
 **23 octubre — seis abilities conectadas por MCP HTTP local:**68 checks MCP+326 previos,394 integraciones correctas. Schemas cerrados, scopes por operación, descubrimiento autenticado y apply/recover con aprobaciones CLI independientes; sesiones ajenas, revocación y fallo interno saneado verificados. No aprobación/auditoría/migración/aceptación/consumidor por MCP. Registro solo en fixture; fuente no auto-registra hooks/abilities. [QA/límites](qa/MCP_OPERATING_TRANSPORT_2026-10-23.md). Próximo: export privado y paquete/admisión para destino/manifiesto/preflight/reversión; después autorización de instalación/scopes/diff. Sin SSH/CMS/grants/pulls/backups nuevos; laboratorio detenido;32GiB libres al inicio.
 
 
