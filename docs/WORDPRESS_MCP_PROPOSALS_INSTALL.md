@@ -1,12 +1,10 @@
 # Proposals rc.2 — procedimiento revisable de instalación y reversión
 
-Estado: preparado para revisión, **sin autorización de instalación todavía**. Alex ejecuta
-SSH desde su terminal; el agente no lo ejecuta. Primero devolver el preflight de solo lectura.
-No instalar/conceder scopes solo porque las comprobaciones técnicas resulten correctas.
+Estado: **Alex autorizó explícitamente** rc.2, opt-in/dos tablas, scope prepare únicamente a usuario2/subscriber y una propuesta privada de verificación, respondiendo «si procede» después de la revisión. Alex ejecuta SSH desde su terminal; el agente no lo ejecuta. FaseA confirmada por Alex: transferencia y SHA256 correctos en la ruta privada prevista. FaseB1 confirmada por Alex: plugin0.1.0-rc.2 inactivo y PACKAGE_FILES_VERIFIED. La instalación reportó purga de cachés. FaseB2 confirmada por Alex: constante/activación/esquema verificados y tablas vacías.14 Projects con huella c38acd1690f173488f075443d03a80c96b6b483a5bd407040cbbd40a7ff462af, Read EN/ES y permisos/rol intactos. FaseC pendiente; todavía no se afirma grant real. No volver a pedir esta misma autorización.
 
 Actualización: Alex devolvió el preflight de2026-10-23T03:40:56Z, todos los checks y huellas
 correctos, operador CLI observado1. [Salida recibida](qa/MCP_PROPOSALS_FINAL_PREFLIGHT_2026-10-23.json).
-Queda pendiente únicamente la decisión específica para el cambio descrito. No repetir la
+La decisión específica fue aprobada posteriormente por Alex. No repetir la
 comprobación ni los laboratorios salvo demora/cambio/deriva que lo justifique.
 
 ## Paquete y alcance concreto
@@ -97,6 +95,16 @@ Si falla un comando, parar; no sobrescribir ni limpiar rutas existentes.
 
 ### B. Instalar, opt-in y preparar almacenamiento, todavía sin scope
 
+FaseB1 autorizada y pendiente: el wrapper siguiente sustituye los primeros comandos manuales
+hasta PACKAGE_FILES_VERIFIED. No lo repetir si ya completó la instalación.
+
+```sh
+ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=10 -p 65002 u776991923@194.164.64.104 'sh -s' < /Users/Alex/Desktop/AlexC/alexcuadra.dev/wordpress/operations/editorial-proposals-install-inactive.sh
+```
+
+Alex devuelve versión/estado, PACKAGE_FILES_VERIFIED y END_EDITORIAL_PROPOSALS_INSTALL_INACTIVE_V1.
+No continuar a opt-in/activación/migración hasta revisar ese resultado. No scope todavía.
+
 Dentro de una sesión SSH que Alex abra, tras verificar el hash:
 
 ```sh
@@ -115,11 +123,39 @@ wp --path=. plugin activate alexcuadra-editorial-proposals
 wp --path=. --user=1 eval '$r=AlexCuadra\EditorialProposals\install_storage(); if ($r !== true || !AlexCuadra\EditorialProposals\storage_schema_valid()) { WP_CLI::error("PROPOSALS_STORAGE_NOT_READY"); } WP_CLI::line("PROPOSALS_STORAGE_READY");'
 ```
 
+La faseB2 se ejecutará con el wrapper siguiente, que sustituye las tres líneas anteriores:
+
+```sh
+ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=10 -p 65002 u776991923@194.164.64.104 'sh -s' < /Users/Alex/Desktop/AlexC/alexcuadra.dev/wordpress/operations/editorial-proposals-activate-storage.sh
+```
+
+Captura huellas privadas antes, crea un helper/JSON de hashes en carpeta nueva0700/0600 fuera
+del webroot, añade constante/activa/migra como1 y compara todos los Projects/meta/relaciones,
+caps de2, rol subscriber, otros plugins activos y código de Read. Exige tablas vacías,
+esquema exacto, lectura EN/ES y denegación de2 para preparar. No concede el scope. Conserva
+el pequeño scratch de auditoría, sin copiar wp-config/SQL/contenidos. Alex devuelve hasta
+END_EDITORIAL_PROPOSALS_ACTIVATE_STORAGE_V1 antes de faseC. No repetir si activación ya empezó.
+
 Cada fallo detiene la fase; no continuar a la siguiente línea después de error. No se ha
 ensayado DDL con privilegios del hosting; fallo de permisos se diagnostica sin reparación
 automática. Verificar fuentes/Read y denegación de usuario2 sin prepare antes de faseC.
 
 ### C. Scope exacto, solo después de revisar faseB
+
+FaseB completa. El wrapper autorizado sustituye el add-cap manual siguiente y añade
+pre/postflight; no ejecutar ambos ni repetir si ya se concedió el permiso.
+
+```sh
+ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=10 -p 65002 u776991923@194.164.64.104 'sh -s' < /Users/Alex/Desktop/AlexC/alexcuadra.dev/wordpress/operations/editorial-proposals-grant-scope.sh
+```
+
+Exige operador1, esquema listo, cuenta2/subscriber y huella de los14 Projects idéntica aB2.
+Solo añade prepare directamente a2; compara exactamente ese único cambio, rol, dependencias,
+fuentes y Read EN/ES. Ante fallo posterior retira solo el scope que acaba de añadir y muestra
+resultado de reversión; no elimina un grant previo ni cambia roles. No crea propuestas.
+Alex devuelve hasta END_EDITORIAL_PROPOSALS_GRANT_SCOPE_V1; luego smoke real ya aprobado.
+El conector nativo ya descubrió11 abilities/seis nuevas y confirmó forbidden antes del grant,
+con lectura146EN y traducción196ES intactas.
 
 ```sh
 wp --path=. user add-cap 2 alexcuadra_prepare_project_changes

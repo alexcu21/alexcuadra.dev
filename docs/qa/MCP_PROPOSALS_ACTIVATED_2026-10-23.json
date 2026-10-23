@@ -1,0 +1,29 @@
+{
+  "format": "editorial-proposals-activation-evidence-v1",
+  "evidenceSource": "Alex terminal output",
+  "version": "0.1.0-rc.2",
+  "active": true,
+  "storageSchemaVerified": true,
+  "newStorageEmpty": true,
+  "projectCount": 14,
+  "sourceHash": "c38acd1690f173488f075443d03a80c96b6b483a5bd407040cbbd40a7ff462af",
+  "sourcesUnchanged": true,
+  "targetCapabilitiesUnchanged": true,
+  "subscriberRoleUnchanged": true,
+  "otherActivePluginsUnchanged": true,
+  "readVerifiedEnEs": true,
+  "prepareScopeGranted": false,
+  "targetPrepareDenied": true,
+  "endMarkerReceived": true,
+  "nativeConnectorBeforeGrant": {
+    "abilityCount": 11,
+    "newProposalAbilities": 6,
+    "proposalGetDenied": "forbidden",
+    "publicRead146EnSucceeded": true,
+    "reciprocalTranslation196EsPresent": true
+  },
+  "agentExecutedSsh": false,
+  "scopePhasePrepared": true,
+  "localUnitTestsPassed": 51,
+  "scopeControllerTestsUseStubs": true
+}
