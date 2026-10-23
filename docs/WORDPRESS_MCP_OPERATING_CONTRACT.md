@@ -49,3 +49,5 @@ Seis abilities registradas explícitamente por fixture y probadas a través del 
 ## Archivo privado
 
 exportOwner CLI disponible para operador en snapshot validado, carpeta0700 fuera del webroot y archivo0600 NDJSON con digest/verificación independiente. Solo se ensayó con datos sintéticos; no importa/restaura ni borra/libera registros. No se expone por MCP y no cambia retención. Pendiente empaquetado/admisión para destino/preflight/reversión. [QA y alcance exacto](qa/MCP_PRIVATE_EXPORT_2026-10-23.md).
+
+Actualización tras preflight real: PHP link deshabilitado en destino. El código experimental publica por copia exclusiva0600 con verificación independiente, sin sobrescribir ni prometer visibilidad atómica; hasta64MiB temporales por export de32MiB. En fallo conserva rutas; consumidores verifican el archivo tras éxito. rc.1 sellado permanece intacto. [Evidencia y límites](qa/MCP_OPERATING_DESTINATION_PREFLIGHT_2026-10-23.md).

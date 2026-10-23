@@ -247,6 +247,19 @@ $exportRows=op_rows($decodePair['en']);$exportUsage=$c->usage($decodeOwner);$exp
 op_check($exported['verified']&&$exported['records']===7&&$exported['restoration_verified']===false,'owner archive has exact six-table record counts');
 op_check(AlexCuadra\EditorialSourceExperiment\verify_operating_export($exportPath)===$exported,'independent archive verification');op_check((fileperms($exportPath)&0777)===0600,'archive private permissions');
 op_fail(fn()=>$c->exportOwner($decodeOwner,$exportPath,true),'contract_export_exists');
+if(!getenv('AC_SOURCE_EFFECTS_PACKAGE')){
+    op_check(!function_exists('link'),'export exercised with PHP link disabled as on hosting');
+    $collision=$exportDir.'/collision.ndjson';AlexCuadra\EditorialSourceExperiment\operating_export_path($collision);
+    file_put_contents($collision,'retain-existing');chmod($collision,0600);
+    op_fail(fn()=>AlexCuadra\EditorialSourceExperiment\publish_operating_export($exportPath,$collision),'contract_export_exists');
+    op_check(file_get_contents($collision)==='retain-existing','publication preserves competing destination');
+    $copyPath=$exportDir.'/copy.ndjson';
+    op_check(AlexCuadra\EditorialSourceExperiment\publish_operating_export($exportPath,$copyPath)===$exported,'exclusive copy independently verified without hardlinks');
+    op_check(file_exists($exportPath)&&file_get_contents($copyPath)===file_get_contents($exportPath),'publisher retains verified input and identical destination');
+    $copyLink=$exportDir.'/copy-symlink.ndjson';symlink($collision,$copyLink);
+    op_fail(fn()=>AlexCuadra\EditorialSourceExperiment\publish_operating_export($exportPath,$copyLink),'contract_export_exists');
+    op_check(file_get_contents($collision)==='retain-existing','publication never follows destination symlink');
+}
 $badPath=$exportDir.'/truncated.ndjson';file_put_contents($badPath,substr(file_get_contents($exportPath),0,-20));chmod($badPath,0600);op_fail(fn()=>AlexCuadra\EditorialSourceExperiment\verify_operating_export($badPath),'contract_export_invalid');
 $changedPath=$exportDir.'/changed.ndjson';file_put_contents($changedPath,str_replace('Decoder approved','Decoder tampered',file_get_contents($exportPath)));chmod($changedPath,0600);op_fail(fn()=>AlexCuadra\EditorialSourceExperiment\verify_operating_export($changedPath),'contract_export_invalid');
 chmod($exportDir,0755);try{op_fail(fn()=>$c->exportOwner($decodeOwner,$exportDir.'/public.ndjson',true),'contract_export_path');}finally{chmod($exportDir,0700);}

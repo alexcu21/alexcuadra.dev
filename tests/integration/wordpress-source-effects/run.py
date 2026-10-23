@@ -197,7 +197,8 @@ def main():
             bilingual_results=[json.loads(line[len(bilingual_marker):]) for line in bilingual_output.splitlines() if line.startswith(bilingual_marker)]
             if len(bilingual_results)!=1 or not bilingual_results[0].get('passed') or bilingual_results[0].get('checks',0)<15: raise ValueError('MISSING_BILINGUAL_RESULT')
             bilingual=bilingual_results[0]
-            operating_output=cli('eval-file','/integration/operating.php')
+            operating_output=(cli('eval-file','/integration/operating.php') if package_dir else
+                cli('-c','exec php -d disable_functions=link "$(command -v wp)" eval-file /integration/operating.php',shell=True))
             operating_marker='SOURCE_OPERATING_CONTRACT_RESULT='
             operating_results=[json.loads(line[len(operating_marker):]) for line in operating_output.splitlines() if line.startswith(operating_marker)]
             if len(operating_results)!=1 or not operating_results[0].get('passed') or operating_results[0].get('checks',0)<155: raise ValueError('MISSING_OPERATING_RESULT')

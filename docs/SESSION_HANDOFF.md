@@ -1,5 +1,7 @@
 # Traspaso de sesión — 21 octubre 2026
 
+**23 octubre — preflight real revisado y export compatible sin link:**19 plugins y2 MU coinciden en huellas principales; hosting deshabilita link. Código experimental publica por copia exclusiva0600 y verificación independiente; conserva destino/temporales en fallo y no promete visibilidad atómica.412 comprobaciones completas correctas (162 contrato+50 migración+68 MCP+132 regresiones),7 casos nuevos con link realmente deshabilitado. [QA y límites](qa/MCP_OPERATING_DESTINATION_PREFLIGHT_2026-10-23.md). rc.1 sellado intacto; falta admisión/opt-in productivo/nuevo paquete antes de autorización. Sin SSH/CMS/permisos/backup real nuevos;32GiB libres antes/después; laboratorio detenido.
+
 **23 octubre — instalador/activación/reversión normal y preflight listo:**26 controles de ciclo normal+413 previos=439 integraciones correctas. ZIP rc.1 sin cambios instalado por WP-CLI; disabled8/enabled10/deactivated8, factory desde plugin instalado y lectura vía adaptador oficial; fuentes/ledger/roles/caps/otros plugins conservados frente a baseline posterior a instalación. [QA/alcance](qa/MCP_PACKAGE_LIFECYCLE_2026-10-23.md). Preflight metadata solo lectura preparado/sintaxis validada, pendiente de Alex; no SSH ejecutado. rc.1 sigue localOnly/productionReady=false: falta perfil/opt-in para destino y nueva versión/ensayo antes de aprobación.32GiB libres antes/después; laboratorio detenido.
 
 

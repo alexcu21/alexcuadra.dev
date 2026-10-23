@@ -31,6 +31,24 @@ function verify_operating_export($path){
         return ['format'=>'operating-private-export-verification-v1','verified'=>true,'records'=>$records,'bytes'=>$stat['size'],'sha256'=>hash_file('sha256',$path),'counts'=>$counts,'restoration_verified'=>false];
     }finally{fclose($f);}
 }
+function publish_operating_export($temporary,$destination){
+    $verified=verify_operating_export($temporary);operating_export_path($destination);
+    $oldMask=umask(0077);$input=null;$output=null;
+    try{
+        // Exclusive creation also rejects a file/symlink created after path validation.
+        // Readers must verify the footer/digest: visibility of this copy is not atomic.
+        $output=@fopen($destination,'xb');if(!$output){throw new \RuntimeException('contract_export_exists');}
+        $input=fopen($temporary,'rb');if(!$input){throw new \RuntimeException('contract_export_io');}
+        if(stream_copy_to_stream($input,$output,33554433)!==$verified['bytes']||!fflush($output)||!fsync($output)){throw new \RuntimeException('contract_export_io');}
+        fclose($output);$output=null;clearstatcache(true,$destination);
+        $published=verify_operating_export($destination);
+        if($published!==$verified){throw new \RuntimeException('contract_export_inconsistent');}
+        return $published;
+    }finally{
+        if(is_resource($input)){fclose($input);}if(is_resource($output)){fclose($output);}umask($oldMask);
+        // On failure keep both paths for operator inspection; never overwrite/retry them.
+    }
+}
 function export_operating_owner($db,$owner,$destination){
     operating_export_path($destination);$oldMask=umask(0077);$temporary=$destination.'.partial-'.bin2hex(random_bytes(8));$f=null;
     try{
@@ -48,9 +66,8 @@ function export_operating_owner($db,$owner,$destination){
         foreach($queries as $table=>$sql){$rows=$db->get_results($db->prepare($sql,$owner),ARRAY_A);if($db->last_error||count($rows??[])!==$counts[$table]){throw new \RuntimeException('contract_export_inconsistent');}foreach($rows as $row){$write(['table'=>$table,'row'=>$row]);$records++;}}
         $write(['format'=>'operating-private-export-footer-v1','records'=>$records,'data_bytes'=>$bytes,'data_sha256'=>hash_final($hash)],false);
         if(!fflush($f)||!fsync($f)){throw new \RuntimeException('contract_export_io');}fclose($f);$f=null;
-        $verified=verify_operating_export($temporary);
-        if(!link($temporary,$destination)){throw new \RuntimeException('contract_export_exists');}
-        // Only remove the temporary hardlink after publication; retained data is untouched.
+        $verified=publish_operating_export($temporary,$destination);
+        // Remove only our staging copy after independent verification of the destination.
         unlink($temporary);return $verified;
     }finally{if(is_resource($f)){fclose($f);}umask($oldMask);}
 }
