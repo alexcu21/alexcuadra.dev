@@ -1,5 +1,8 @@
 # Traspaso de sesión — 21 octubre 2026
 
+**23 octubre — preparación reanudable de cuatro tablas operativas:**143 controles de contrato+132 regresiones,275 integraciones correctas;12 casos nuevos. Marcador preparing/ready con huella DDL, lock de migración, validación previa, reanudación tras DDL parcial e idempotencia; operaciones bloqueadas sin ready. No ALTER ni adopción de datos/esquemas desconocidos. [QA/alcance](qa/MCP_OPERATING_MIGRATION_2026-10-23.md). Requiere las dos tablas journal ya preparadas: falta preparación conjunta/reanudable del journal, aceptación global en reposo, MCP/export/paquete/preflight/reversión y aceptación autorizada. Sin SSH/CMS/grants/pulls/backups nuevos; laboratorio detenido;32GiB libres al inicio.
+
+
 **23 octubre — auditoría operativa por propietario/lotes:**131 controles de contrato+132 regresiones,263 integraciones correctas;11 casos nuevos. Reconstrucción de inputs/request_hash/event_id, vínculo journal/recibos/aprobaciones/aplicación y recuperación inversa; huérfanos detectados y cursor máximo10 propietarios. Solo CLI operador, sin reparación/export; snapshot por propietario, aceptación global exige escritores detenidos. [QA/límites](qa/MCP_OPERATING_AUDIT_2026-10-23.md). Próximo: migración/admisión final, MCP/export/paquete/preflight/reversión y aceptación autorizada. Sin SSH/CMS/grants/pulls/backups nuevos; laboratorio detenido;32GiB libres al inicio.
 
 

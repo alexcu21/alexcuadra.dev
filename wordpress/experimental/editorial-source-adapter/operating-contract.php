@@ -4,6 +4,7 @@ namespace AlexCuadra\EditorialSourceExperiment;
 use AlexCuadra\EditorialProposals as P;
 require_once __DIR__.'/operating-storage.php';
 require_once __DIR__.'/operating-audit.php';
+require_once __DIR__.'/operating-migration.php';
 
 final class OperatingContract {
     const APPLY='alexcuadra_apply_project_changes';
@@ -54,6 +55,7 @@ final class OperatingContract {
         if(!$row){$this->fail('contract_owner_not_ready');}
     }
     private function tables(){
+        require_operating_storage_ready($this->db);
         operating_storage_schema($this->db);
         foreach([$this->reviews,$this->approvals,$this->requests,$this->apps,$this->db->prefix.'ac_proposal_owners',$this->db->prefix.'ac_proposal_requests'] as $table){
             $engine=$this->db->get_var($this->db->prepare('SELECT ENGINE FROM information_schema.TABLES WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME=%s',$table));
@@ -62,10 +64,7 @@ final class OperatingContract {
     }
     public function install(){
         local_wp_guard();if(!defined('WP_CLI')||!WP_CLI||!current_user_can('manage_options')){$this->fail('contract_operator_required');}$this->outside();
-        $this->sql("CREATE TABLE $this->reviews (review_id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,owner_id BIGINT UNSIGNED NOT NULL,proposal_id BIGINT UNSIGNED NOT NULL,document LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,review_hash VARBINARY(64) NOT NULL,KEY owner_id(owner_id)) ENGINE=InnoDB");
-        $this->sql("CREATE TABLE $this->approvals (review_id BIGINT UNSIGNED PRIMARY KEY,actor_id BIGINT UNSIGNED NOT NULL,document LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,consumed_event VARBINARY(64) NULL) ENGINE=InnoDB");
-        $this->sql("CREATE TABLE $this->requests (owner_id BIGINT UNSIGNED NOT NULL,request_id VARBINARY(32) NOT NULL,request_hash VARBINARY(64) NOT NULL,response LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,PRIMARY KEY(owner_id,request_id)) ENGINE=InnoDB");
-        $this->sql("CREATE TABLE $this->apps (proposal_id BIGINT UNSIGNED PRIMARY KEY,owner_id BIGINT UNSIGNED NOT NULL,review_id BIGINT UNSIGNED NOT NULL,event_id VARBINARY(64) NOT NULL,source_after VARBINARY(64) NOT NULL,reserved_bytes INT UNSIGNED NOT NULL,reserved_reviews INT UNSIGNED NOT NULL,reserved_requests INT UNSIGNED NOT NULL,recovery_review BIGINT UNSIGNED NULL,recovery_event VARBINARY(64) NULL,KEY owner_id(owner_id)) ENGINE=InnoDB");
+        return migrate_operating_storage($this->db,$this->journal);
     }
     private function transaction($owner,callable $fn){
         $this->outside();

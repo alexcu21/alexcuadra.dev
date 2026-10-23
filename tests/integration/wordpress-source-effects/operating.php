@@ -18,7 +18,13 @@ function op_rows($id){global $wpdb;return [$wpdb->get_row($wpdb->prepare("SELECT
 function op_request_rows($owner){global $wpdb;return $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->prefix}ac_proposal_requests WHERE owner_id=%d ORDER BY request_id",$owner),ARRAY_A);}
 global $wpdb;
 $roleBefore=get_role('subscriber')->capabilities;$operator=get_user_by('login','effects_admin')->ID;op_check($operator===1,'known independent synthetic operator');
-op_user($operator);$c=op_controller();$c->install();
+op_user($operator);$c=op_controller();
+$mi=AlexCuadra\EditorialSourceExperiment\operating_storage_marker($wpdb,'ready');
+op_fail(fn()=>AlexCuadra\EditorialSourceExperiment\require_operating_storage_ready($wpdb),'contract_storage_not_ready');
+try{AlexCuadra\EditorialSourceExperiment\migrate_operating_storage($wpdb,source_operation($wpdb),function($name){if($name==='reviews'){throw new RuntimeException('migration_interrupted');}});}catch(RuntimeException $e){op_check($e->getMessage()==='migration_interrupted','DDL checkpoint interrupted');}
+op_fail(fn()=>AlexCuadra\EditorialSourceExperiment\require_operating_storage_ready($wpdb),'contract_storage_not_ready');
+$migration=$c->install();op_check($migration===$mi,'migration resumes partial DDL');op_check($c->install()===$mi,'ready migration is idempotent');
+
 $executor=op_actor('executor');$other=op_actor('other');op_user($executor);$ids=op_pair('main');
 $unicode='<p>'.str_repeat('é',25000).'</p>';[$p,$create]=op_proposal($ids['en'],['body_html'=>$unicode,'tagline'=>'Approved operating tagline']);$prepare=op_prepare_input($p);
 $legacyBefore=op_request_rows($executor);$privateBefore=op_rows($p['proposal_id']);$esBefore=op_rows($ids['es']);
@@ -221,5 +227,13 @@ op_fail(fn()=>$c->auditBatch(),'contract_audit_orphan');
 $orphans=$wpdb->get_results("SELECT f.* FROM $effectTable f LEFT JOIN $eventTable e ON e.event_id=f.event_id WHERE e.event_id IS NULL",ARRAY_A);
 $wpdb->query("DELETE f FROM $effectTable f LEFT JOIN $eventTable e ON e.event_id=f.event_id WHERE e.event_id IS NULL");
 try{$batch=$c->auditBatch($decodeOwner-1,1);op_check(count($batch['owners'])===1&&$batch['owners'][0]===$audit&&!$batch['has_more'],'bounded batch visits final owner');op_check($c->auditBatch($decodeOwner,1)['owners']===[],'batch cursor reaches end without duplicate owner');}finally{foreach($orphans as $orphan){$wpdb->insert($effectTable,$orphan);}}
+// A ready schema is never rebuilt or silently adopted after drift.
+$markerBefore=$wpdb->get_var("SELECT option_value FROM $wpdb->options WHERE option_name='ac_exp_operating_storage'");$migrationSource=op_rows($decodePair['en']);
+$wpdb->query("ALTER TABLE $rt ADD migration_drift INT NULL");try{op_fail(fn()=>$c->install(),'contract_schema_changed');}finally{$wpdb->query("ALTER TABLE $rt DROP migration_drift");}
+$wpdb->query("UPDATE $wpdb->options SET option_value='future-version' WHERE option_name='ac_exp_operating_storage'");try{op_fail(fn()=>$c->install(),'contract_migration_marker_changed');op_fail(fn()=>$c->auditOwner($decodeOwner),'contract_storage_not_ready');}finally{$wpdb->query($wpdb->prepare("UPDATE $wpdb->options SET option_value=%s WHERE option_name='ac_exp_operating_storage'",$markerBefore));}
+op_check($c->install()===$mi&&op_rows($decodePair['en'])===$migrationSource,'migration retry retains source and ready marker');
+$migrationLock='ac_op_migrate_'.substr(hash('sha256',DB_NAME.'|'.$wpdb->prefix),0,32);$lockObserver=new wpdb(DB_USER,DB_PASSWORD,DB_NAME,DB_HOST);$lockObserver->get_var("SELECT GET_LOCK('$migrationLock',0)");try{op_fail(fn()=>$c->install(),'contract_migration_busy');}finally{$lockObserver->query("DO RELEASE_LOCK('$migrationLock')");}
+$wpdb->query('START TRANSACTION');try{op_fail(fn()=>$c->install(),'contract_outer_transaction');}finally{$wpdb->query('ROLLBACK');}
+$preparing=json_encode(AlexCuadra\EditorialSourceExperiment\operating_storage_marker($wpdb,'preparing'));$wpdb->query($wpdb->prepare("UPDATE $wpdb->options SET option_value=%s WHERE option_name='ac_exp_operating_storage'",$preparing));try{op_fail(fn()=>$c->install(),'contract_migration_untracked_data');}finally{$wpdb->query($wpdb->prepare("UPDATE $wpdb->options SET option_value=%s WHERE option_name='ac_exp_operating_storage'",$markerBefore));}
 op_check(get_role('subscriber')->capabilities===$roleBefore,'subscriber global role unchanged');
 echo 'SOURCE_OPERATING_CONTRACT_RESULT='.wp_json_encode(['checks'=>$GLOBALS['operating_checks'],'passed'=>true,'realProposalsRc2'=>true,'independentCliApproval'=>true,'approvalSourceReceiptIntentAtomic'=>true,'proposalReceiptsUnchanged'=>true,'recoveryCapacityReserved'=>true,'recoveryExecutorImplemented'=>true,'dbDisconnectRollbackVerified'=>true,'automaticReconnectInsideTransaction'=>false,'abilitiesRegistered'=>false,'perOwnerOperatingLimits'=>['reviews'=>8,'requests'=>64,'bytes'=>8388608],'rc2BudgetSeparate'=>true]).PHP_EOL;

@@ -2,7 +2,7 @@
 /** Local candidate storage admission; no migration or hooks on load. */
 namespace AlexCuadra\EditorialSourceExperiment;
 
-function operating_storage_schema($db) {
+function operating_storage_schema($db,$only=null) {
     $u='bigint unsigned';$v='varbinary(64)';
     $expected=[
         'reviews'=>[['review_id',$u,'NO',null,'auto_increment'],['owner_id',$u,'NO',null,''],['proposal_id',$u,'NO',null,''],['document','longtext','NO',null,''],['review_hash',$v,'NO',null,'']],
@@ -11,6 +11,7 @@ function operating_storage_schema($db) {
         'apps'=>[['proposal_id',$u,'NO',null,''],['owner_id',$u,'NO',null,''],['review_id',$u,'NO',null,''],['event_id',$v,'NO',null,''],['source_after',$v,'NO',null,''],['reserved_bytes','int unsigned','NO',null,''],['reserved_reviews','int unsigned','NO',null,''],['reserved_requests','int unsigned','NO',null,''],['recovery_review',$u,'YES',null,''],['recovery_event',$v,'YES',null,'']],
     ];
     foreach($expected as $name=>$columns){
+        if($only!==null&&$only!==$name){continue;}
         $table=$db->prefix.'ac_exp_operating_'.$name;$actual=[];
         $rows=$db->get_results("SHOW FULL COLUMNS FROM $table",ARRAY_A);
         if($db->last_error||!$rows){throw new \RuntimeException('contract_schema_changed');}
