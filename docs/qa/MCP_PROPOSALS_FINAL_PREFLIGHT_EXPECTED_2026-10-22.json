@@ -1,0 +1,104 @@
+{
+  "wordpress": "7.1.3",
+  "php": "8.5.11",
+  "databaseServer": "11.8.9-MariaDB-log",
+  "plugins": {
+    "advanced-custom-fields/acf.php": {
+      "version": "6.8.10",
+      "active": true
+    },
+    "alexcuadra-editorial-read/alexcuadra-editorial-read.php": {
+      "version": "0.1.0",
+      "active": true
+    },
+    "all-in-one-wp-security-and-firewall/wp-security.php": {
+      "version": "5.4.10",
+      "active": false
+    },
+    "projects-cpt-for-headless/projects-cpt.php": {
+      "version": "1.0",
+      "active": false
+    },
+    "hostinger-ai-assistant/hostinger-ai-assistant.php": {
+      "version": "3.1.3",
+      "active": false
+    },
+    "hostinger-easy-onboarding/hostinger-easy-onboarding.php": {
+      "version": "3.0.5",
+      "active": true
+    },
+    "hostinger-reach/hostinger-reach.php": {
+      "version": "1.8.7",
+      "active": true
+    },
+    "hostinger/hostinger.php": {
+      "version": "3.0.80",
+      "active": true
+    },
+    "litespeed-cache/litespeed-cache.php": {
+      "version": "7.9.2",
+      "active": true
+    },
+    "mcp-adapter/mcp-adapter.php": {
+      "version": "0.7.1",
+      "active": true
+    },
+    "minimal-coming-soon-maintenance-mode/minimal-coming-soon-maintenance-mode.php": {
+      "version": "2.45",
+      "active": false
+    },
+    "polylang/polylang.php": {
+      "version": "3.9.1",
+      "active": true
+    },
+    "wordpress-beta-tester/wp-beta-tester.php": {
+      "version": "4.0.1",
+      "active": true
+    },
+    "wp-graphql/wp-graphql.php": {
+      "version": "2.25.0",
+      "active": true
+    },
+    "wpgraphql-acf/wpgraphql-acf.php": {
+      "version": "3.0.0",
+      "active": true
+    },
+    "wpgraphql-ide/wpgraphql-ide.php": {
+      "version": "5.7.0",
+      "active": true
+    },
+    "wp-graphql-polylang-0.7.1/wp-graphql-polylang.php": {
+      "version": "0.7.1",
+      "active": true
+    },
+    "wp-migrate-db/wp-migrate-db.php": {
+      "version": "2.7.12",
+      "active": false
+    }
+  },
+  "stylesheet": "twentytwentyfour",
+  "template": "twentytwentyfour",
+  "themeVersion": "1.6",
+  "trees": {
+    "plugins": {
+      "files": 9590,
+      "bytes": 160287119,
+      "sha256": "7059ed6d2edf135531d9aee194dd91ab289c0e57defd8f7233be5c95eabb6fc8"
+    },
+    "mu-plugins": {
+      "files": 2,
+      "bytes": 41044,
+      "sha256": "4eee613fbc2f298ae70924b659abbefe0b59da0d3d1511c736d894c53b498f34"
+    },
+    "themes": {
+      "files": 4044,
+      "bytes": 46865466,
+      "sha256": "e65cad1d0cb9f69a9b8b80adc728c45deab53a1529bec94e2ac8665cb0ba487f"
+    },
+    "content-root": {
+      "files": 1,
+      "bytes": 28,
+      "sha256": "566ba91b664280995ccd23285cd8f2f5608f449d0902fd03c02d10e6fe0739b5"
+    }
+  }
+}

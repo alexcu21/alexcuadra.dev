@@ -1,0 +1,22 @@
+{
+  "format": "proposals-final-preflight-preparation-v1",
+  "remoteExecuted": false,
+  "sshExecuted": false,
+  "installationAuthorized": false,
+  "localUnitTestsPassed": 46,
+  "newFinalPreflightTestMethods": 5,
+  "stubScenariosPassed": 17,
+  "phpSyntaxPassed": true,
+  "shellSyntaxPassed": true,
+  "restoredTreeDigestCrosscheck": {
+    "plugins": true,
+    "mu-plugins": true,
+    "themes": true,
+    "content-root": true
+  },
+  "scriptBytes": 10786,
+  "createsRemoteFiles": false,
+  "exportsBackup": false,
+  "newDockerResources": false,
+  "localFreeBytes": 38208831488
+}

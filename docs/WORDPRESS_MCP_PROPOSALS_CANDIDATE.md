@@ -1,5 +1,7 @@
 # Candidato de propuestas privadas — 22 octubre 2026
 
+**Paso actual:** [preflight final y procedimiento de instalación/reversión](WORDPRESS_MCP_PROPOSALS_INSTALL.md) preparados y probados localmente. Alex ejecuta el comando de solo lectura y devuelve el resumen; no se ha ejecutado SSH ni autorizado instalación. No repetir las suites completadas sin deriva nueva.
+
 **Último resultado:** [tema/MU/drop-ins revisados y303 checks correctos](qa/MCP_PROPOSALS_HOSTING_COMPONENTS_2026-10-22.md) con rc.2 intacto. El pendiente anterior de esos componentes queda superado dentro del ensayo con opciones sintéticas. Siguiente: preflight final de deriva/roles y procedimiento concreto de instalación+scope para decisión de Alex; todavía HOLD, sin instalar. No se exige reproducir indefinidamente todo el proveedor ni se afirma haberlo certificado.
 
 **Actualización vigente:** [rc.2 con los18 plugins exactos del respaldo](qa/MCP_PROPOSALS_SOURCE_PROFILE_2026-10-22.md):13 activos,288 comprobaciones correctas incluyendo HTTP/MCP/GraphQL y seis carreras con WPGraphQL2.25.0/PHP8.5.11. Supera el pendiente anterior de transporte de rc.2 y del inventario de plugins. Sigue HOLD hasta revisar MU/tema/drop-ins/configuración del hosting y preparar la decisión concreta de instalación. Las entradas inferiores se conservan como historial.
