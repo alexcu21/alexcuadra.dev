@@ -1,5 +1,8 @@
 # Ejecución del rediseño
 
+**22 octubre — respaldo real restaurado en aislamiento:** [QA](qa/MCP_PRIVATE_RESTORATION_2026-10-22.md), [resultado](qa/MCP_PRIVATE_RESTORATION_RESULT_2026-10-22.json). Archivo de Alex SHA256 13f20d… verificado; archivos extraídos coinciden;37 tablas sanas y esquemas iguales al manifiesto. Roundtrip SQL local conserva filas/checksums. Núcleo7.1.3/PHP8.5.11 arranca sin cambiar DB; configuración/plugins/temas/MU/drop-ins originales no ejecutados. Docker sin red ni puertos, HTTP/correo bloqueados, contenedores detenidos.27 tests locales correctos. Copias privadas de los intentos conservadas fuera del repo:2.09GiB adicionales;39.6GiB libres. Backup original retenido, sin borrados/SSH/CMS/deploy/contacto. **Siguiente: aceptación funcional del perfil completo actualizado y validación exhaustiva del esquema del candidato antes de presentar instalación para aprobación. Restauración básica verificada no equivale a aceptación de plugins.**
+
+
 ## Continuación — 22 octubre 2026
 
 Preflight de backup real recibido:37 InnoDB y cliente MariaDB11.8.9; deriva PHP8.5.11/WPGraphQL2.25.0/Hostinger3.0.80/IDE5.7.0 registrada, revalidación pendiente. [Coordinador privado](WORDPRESS_MCP_PRIVATE_BACKUP_PLAN.md) preparado con21 tests locales/SSH simulado, lints y dry-run correctos; **sin backup real ni SSH por el agente**. Alex ejecutará el comando y compartirá solo resumen; carpeta privada/disco externo, conservación hasta validar y luego decidir, sin borrado automático. Integridad no equivale a restauración; instalación sigue HOLD.42GiB libres, sin CMS/Workers/contacto/permisos reales cambiados.

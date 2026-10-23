@@ -1,5 +1,7 @@
 # Respaldo privado previo a instalación — decisión de Alex22oct
 
+Estado actualizado: Alex creó el respaldo real y la restauración básica aislada ya pasó. Ver [QA de restauración](qa/MCP_PRIVATE_RESTORATION_2026-10-22.md). Conservar el archivo original; la aceptación funcional del perfil completo y el esquema exhaustivo siguen pendientes antes de instalar. Los pasos históricos de preparación siguientes no significan que haya que repetir la exportación.
+
 Destino elegido por Alex: **disco externo o carpeta privada de su equipo**. Conservar hasta validar instalación y restauración; luego decidir. No TTL, tarea de eliminación ni30 días heredados de contacto. El agente sigue sin ejecutar SSH; Alex ejecuta comandos revisables y comparte únicamente metadata/resultados saneados, nunca dumps, credenciales o contenido privado.
 
 ## Estado actual: coordinador preparado, respaldo real pendiente
