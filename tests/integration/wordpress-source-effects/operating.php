@@ -50,6 +50,13 @@ op_user($operator);$j=source_operation($wpdb);$j->consume($app['event_id'],funct
 op_check($c->effectStatus($p['proposal_id'],'en')['effect_state']==='requested'&&$c->apply($apply)===$app&&$app['effect_state_at_commit']==='pending','effect changes never rewrite frozen receipt');
 wp_get_current_user()->remove_cap(C::APPLY);op_user($executor);op_fail(fn()=>$c->apply($apply),'contract_forbidden');wp_get_current_user()->add_cap(C::APPLY);op_user($executor);
 op_check(!current_user_can('edit_posts')&&!current_user_can('manage_options')&&!current_user_can('edit_post',$ids['en']),'subscriber needs no global source edit or admin');
+// Acceptance reads the whole valid operating ledger in one read-only snapshot.
+op_user(1);$acceptEffects=$wpdb->prefix.'ac_exp_source_effects';$acceptEvents=$wpdb->prefix.'ac_exp_source_events';$acceptOrphans=$wpdb->get_results("SELECT f.* FROM $acceptEffects f LEFT JOIN $acceptEvents e ON e.event_id=f.event_id WHERE e.event_id IS NULL",ARRAY_A);
+op_fail(fn()=>$c->acceptStorage(true),'contract_audit_orphan');
+$wpdb->query("DELETE f FROM $acceptEffects f LEFT JOIN $acceptEvents e ON e.event_id=f.event_id WHERE e.event_id IS NULL");
+try{$accepted=$c->acceptStorage(true);op_check($accepted['totals']['owners']===1&&$accepted['totals']['events']===1&&$accepted['totals']['requests']===2,'nonempty global ledger accepted once');op_check($c->acceptStorage(true)===$accepted&&op_rows($ids['en'])===$sourceAfter,'acceptance repeats without content changes');}finally{foreach($acceptOrphans as $orphan){$wpdb->insert($acceptEffects,$orphan);}op_user($executor);}
+$barrierObserver=new wpdb(DB_USER,DB_PASSWORD,DB_NAME,DB_HOST);$barrierObserver->set_prefix($wpdb->prefix);
+AlexCuadra\EditorialSourceExperiment\with_storage_barrier($wpdb,function()use($barrierObserver,$app){op_check(source_operation($barrierObserver)->consume($app['event_id'],function(){throw new RuntimeException('must_not_purge');})==='not_claimed','barrier leaves worker unclaimed');});
 // Recovery uses a different scope and a fresh independent approval of the inverse.
 op_user($executor);$recoverPrepare=['proposal_id'=>$p['proposal_id'],'locale'=>'en','expected_source_version'=>$app['source_version'],'request_id'=>bin2hex(random_bytes(16))];
 op_fail(fn()=>$c->prepareRecovery($recoverPrepare),'contract_forbidden');wp_get_current_user()->add_cap(C::RECOVER);op_user($executor);

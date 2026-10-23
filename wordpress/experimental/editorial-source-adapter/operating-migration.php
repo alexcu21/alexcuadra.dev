@@ -18,6 +18,9 @@ function require_operating_storage_ready($db){
 }
 /** Only CLI operator. DDL is resumable, never described as transactional. */
 function migrate_operating_storage($db,MariaDbOperation $journal,?callable $checkpoint=null){
+    return with_storage_barrier($db,function()use($db,$journal,$checkpoint){return migrate_locked_operating_storage($db,$journal,$checkpoint);});
+}
+function migrate_locked_operating_storage($db,MariaDbOperation $journal,?callable $checkpoint=null){
     local_wp_guard();
     if(!defined('WP_CLI')||!WP_CLI||!current_user_can('manage_options')){throw new \RuntimeException('contract_operator_required');}
     if($db!==($GLOBALS['wpdb']??null)||get_class($db)!=='wpdb'||!preg_match('/^[a-zA-Z0-9_]+$/D',$db->prefix)){throw new \RuntimeException('contract_dependencies');}

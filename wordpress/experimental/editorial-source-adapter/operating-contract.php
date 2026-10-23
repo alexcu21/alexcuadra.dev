@@ -246,6 +246,21 @@ final class OperatingContract {
             $this->save($owner,$input,$hash,$dto);$this->budget($owner);return $dto;
         });
     }
+    public function acceptStorage($externalWritersStopped,$maxOwners=100){
+        local_wp_guard();if(!defined('WP_CLI')||!WP_CLI||!current_user_can('manage_options')||!current_user_can(self::APPROVE)){$this->fail('contract_operator_required');}
+        if($externalWritersStopped!==true||!is_int($maxOwners)||$maxOwners<1||$maxOwners>100){$this->fail('contract_quiescence_required');}
+        $this->outside();$this->tables();$this->journal->schema();
+        return owned_transaction($this->db,function()use($maxOwners){
+            $this->tables();$this->journal->schema();
+            $orphans=$this->db->get_var("SELECT (SELECT COUNT(*) FROM $this->approvals a LEFT JOIN $this->reviews r ON r.review_id=a.review_id WHERE r.review_id IS NULL)+(SELECT COUNT(*) FROM {$this->db->prefix}ac_exp_source_effects f LEFT JOIN {$this->db->prefix}ac_exp_source_events e ON e.event_id=f.event_id WHERE e.event_id IS NULL)+(SELECT COUNT(*) FROM {$this->db->prefix}ac_exp_source_events e LEFT JOIN $this->apps a ON e.event_id=a.event_id OR e.event_id=a.recovery_event WHERE JSON_UNQUOTE(JSON_EXTRACT(IF(JSON_VALID(e.receipt),e.receipt,'{}'),'$.format')) IN ('operating-application-receipt-v1','operating-recovery-receipt-v1') AND a.proposal_id IS NULL)");
+            if($orphans===null||$this->db->last_error||(int)$orphans!==0){$this->fail('contract_audit_orphan');}
+            $owners=$this->db->get_col($this->db->prepare("SELECT owner_id FROM (SELECT owner_id FROM $this->reviews UNION SELECT owner_id FROM $this->requests UNION SELECT owner_id FROM $this->apps) owners ORDER BY owner_id LIMIT %d",$maxOwners+1));
+            if($this->db->last_error||count($owners)>$maxOwners){$this->fail('contract_acceptance_limit');}
+            $totals=['owners'=>0,'reviews'=>0,'requests'=>0,'applications'=>0,'approvals'=>0,'events'=>0];
+            foreach($owners as $owner){if(!operating_sql_uint($owner)||(int)$owner<1){$this->fail('contract_audit_inconsistent');}$r=audit_operating_owner($this->db,(int)$owner,false);$this->budget((int)$owner);$totals['owners']++;foreach($r as $key=>$value){if($key!=='owner_id'){$totals[$key]+=$value;}}}
+            return ['format'=>'operating-storage-acceptance-v1','accepted'=>true,'snapshot'=>'single-read-only-repeatable-read','totals'=>$totals,'external_quiescence'=>'operator-attested'];
+        },true);
+    }
     public function auditBatch($afterOwner=0,$limit=10){
         local_wp_guard();if(!defined('WP_CLI')||!WP_CLI||!current_user_can('manage_options')||!current_user_can(self::APPROVE)){$this->fail('contract_operator_required');}
         if(!is_int($afterOwner)||$afterOwner<0||!is_int($limit)||$limit<1||$limit>10){$this->fail('contract_invalid_input');}

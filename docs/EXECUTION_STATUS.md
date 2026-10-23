@@ -1,5 +1,8 @@
 # Ejecución del rediseño
 
+**23 octubre — aceptación global con snapshot de solo lectura:**50 comprobaciones iniciales+144 contrato+132 regresiones,326 integraciones correctas;9 casos nuevos. acceptStorage CLI con snapshot global InnoDB y máximo100 propietarios, conteos sin habilitación persistente; barrera cooperativa de transacciones/migración/consumidor, READ ONLY probado por MariaDB1792. Escritores externos requieren pausa declarada por operador: no están bloqueados/certificados por la barrera. [QA/límites](qa/MCP_STORAGE_ACCEPTANCE_2026-10-23.md). Próximo: MCP/export/empaquetado/admisión para destino/preflight/reversión y aprobación. Sin SSH/CMS/grants/pulls/backups nuevos; laboratorio detenido;32GiB libres al inicio.
+
+
 **23 octubre — preparación conjunta de seis tablas desde cero:**45 comprobaciones de migración+140 de contrato+132 regresiones,317 integraciones correctas. Journal y tablas operativas comparten DDL/huella/marker operating-storage-v2, lock, validación parcial y ready; interrupción tras cada tabla y esquema parcial incompatible probados. No requiere journal preexistente ni reconstruye tablas válidas. Contadores de arranque trasladados del contrato; no sumar los antiguos143 a45. [QA/límites](qa/MCP_JOINT_MIGRATION_2026-10-23.md). Pendiente aceptación global en reposo, MCP/export/empaquetado/admisión para destino/preflight/reversión y autorización. Sin SSH/CMS/grants/pulls/backups nuevos; laboratorio detenido;32GiB libres al inicio.
 
 

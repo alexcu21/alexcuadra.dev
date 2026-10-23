@@ -1,14 +1,15 @@
 <?php
 /** Bounded operator audit. No repair, export or source writes. */
 namespace AlexCuadra\EditorialSourceExperiment;
-function audit_operating_owner($db,$owner){
+function audit_operating_owner($db,$owner,$locking=true){
+    $lock=$locking?' FOR UPDATE':'';
     $prefix=$db->prefix.'ac_exp_operating_';$fail=static function(){throw new \RuntimeException('contract_audit_inconsistent');};
-    $read=static function($table,$limit)use($db,$owner,$fail){$r=$db->get_results($db->prepare("SELECT * FROM $table WHERE owner_id=%d LIMIT %d FOR UPDATE",$owner,$limit+1),ARRAY_A);if($db->last_error||count($r??[])>$limit){$fail();}return $r;};
+    $read=static function($table,$limit)use($db,$owner,$fail,$lock){$r=$db->get_results($db->prepare("SELECT * FROM $table WHERE owner_id=%d LIMIT %d$lock",$owner,$limit+1),ARRAY_A);if($db->last_error||count($r??[])>$limit){$fail();}return $r;};
     $reviews=$read($prefix.'reviews',8);$requests=$read($prefix.'requests',64);$apps=$read($prefix.'apps',8);$map=[];$prepare=[];$executed=[];$appEvents=[];$approvals=0;
     foreach($reviews as $r){
         $d=decode_operating_review($r['document']);$id=(int)$r['review_id'];
         if(!operating_sql_uint($r['review_id'])||$id<1||$d['owner_id']!==$owner||$d['proposal_id']!==(int)$r['proposal_id']||hash('sha256',$r['document'])!==$r['review_hash']){$fail();}
-        $post=$db->get_row($db->prepare("SELECT post_author,post_type,post_status,post_password FROM {$db->posts} WHERE ID=%d FOR UPDATE",$d['proposal_id']),ARRAY_A);
+        $post=$db->get_row($db->prepare("SELECT post_author,post_type,post_status,post_password FROM {$db->posts} WHERE ID=%d$lock",$d['proposal_id']),ARRAY_A);
         if($db->last_error||!$post||(int)$post['post_author']!==$owner||$post['post_type']!=='ac_private_proposal'||$post['post_status']!=='draft'||$post['post_password']!==''){$fail();}
         $map[$id]=['row'=>$r,'doc'=>$d];
     }
@@ -24,8 +25,8 @@ function audit_operating_owner($db,$owner){
         if(hash('sha256',json_encode([$kind,$input],JSON_THROW_ON_ERROR))!==$r['request_hash']||$d['project_id']!==$v['project_id']||$d['proposal_id']!==$v['proposal_id']){$fail();}
         if($isPrepare){if(isset($prepare[$id])||$d['review_hash']!==$review['row']['review_hash']||$d['expires_at']!==$v['expires_at']){$fail();}$prepare[$id]=true;continue;}
         $eventId=hash('sha256','operating|'.$owner.'|'.$r['request_id']);if($d['event_id']!==$eventId||isset($executed[$id])){$fail();}
-        $event=$db->get_row($db->prepare("SELECT * FROM {$db->prefix}ac_exp_source_events WHERE event_id=%s FOR UPDATE",$eventId),ARRAY_A);
-        $effect=$db->get_row($db->prepare("SELECT * FROM {$db->prefix}ac_exp_source_effects WHERE event_id=%s FOR UPDATE",$eventId),ARRAY_A);
+        $event=$db->get_row($db->prepare("SELECT * FROM {$db->prefix}ac_exp_source_events WHERE event_id=%s$lock",$eventId),ARRAY_A);
+        $effect=$db->get_row($db->prepare("SELECT * FROM {$db->prefix}ac_exp_source_effects WHERE event_id=%s$lock",$eventId),ARRAY_A);
         if($db->last_error||!$event||!$effect){$fail();}
         $journal=decode_source_event($event);validate_source_effect($effect);
         if($event['event_hash']!==$r['request_hash']||$event['operation']!==$kind||(int)$event['project_id']!==$v['project_id']||(int)$effect['project_id']!==$v['project_id']||$journal!==$d){$fail();}
@@ -33,7 +34,7 @@ function audit_operating_owner($db,$owner){
     }
     foreach($map as $id=>$review){
         if(!isset($prepare[$id])){$fail();}
-        $a=$db->get_row($db->prepare("SELECT * FROM {$prefix}approvals WHERE review_id=%d FOR UPDATE",$id),ARRAY_A);if($db->last_error){$fail();}
+        $a=$db->get_row($db->prepare("SELECT * FROM {$prefix}approvals WHERE review_id=%d$lock",$id),ARRAY_A);if($db->last_error){$fail();}
         if($a){decode_operating_approval($a,$review['doc'],$id,$owner,$review['row']['review_hash']);$approvals++;if($a['consumed_event']!==($executed[$id]['event_id']??null)){$fail();}}
         elseif(isset($executed[$id])){$fail();}
     }

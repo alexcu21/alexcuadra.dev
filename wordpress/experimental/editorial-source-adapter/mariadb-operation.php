@@ -2,6 +2,7 @@
 /** Experimental WP/MariaDB operation. Never registered as an ability. */
 namespace AlexCuadra\EditorialSourceExperiment;
 require_once __DIR__.'/journal-records.php';
+require_once __DIR__.'/storage-barrier.php';
 
 function local_origin_admitted() {
     if(home_url()==='http://wordpress'){return true;}
@@ -55,7 +56,10 @@ function deferred_publish($projectId, callable $write) {
 }
 
 /** Pinned core wpdb + mysqli only. Never let core replay a query on a new session. */
-function owned_transaction($db, callable $work) {
+function owned_transaction($db, callable $work,$readOnly=false) {
+    return with_storage_barrier($db,function()use($db,$work,$readOnly){return fenced_owned_transaction($db,$work,$readOnly);});
+}
+function fenced_owned_transaction($db, callable $work,$readOnly=false) {
     local_wp_guard();
     if($db!==($GLOBALS['wpdb']??null)||get_class($db)!=='wpdb'){throw new \RuntimeException('source_connection_mismatch');}
     $handle=(new \ReflectionProperty(\wpdb::class,'dbh'))->getValue($db);
@@ -85,7 +89,8 @@ function owned_transaction($db, callable $work) {
         \mysqli_report(MYSQLI_REPORT_ERROR|MYSQLI_REPORT_STRICT);
         $r=\mysqli_query($handle,'SELECT @@in_transaction');$row=\mysqli_fetch_row($r);\mysqli_free_result($r);
         if(!$row||(int)$row[0]!==0){throw new \RuntimeException('outer_transaction');}
-        \mysqli_query($handle,'START TRANSACTION');$started=true;
+        if($readOnly){\mysqli_query($handle,'SET TRANSACTION ISOLATION LEVEL REPEATABLE READ');}
+        \mysqli_query($handle,$readOnly?'START TRANSACTION WITH CONSISTENT SNAPSHOT, READ ONLY':'START TRANSACTION');$started=true;
         add_filter('query',$guard,PHP_INT_MAX,1);
         $value=$work();$guard('SELECT 1');
         if(\mysqli_query($handle,'COMMIT')!==true){throw new \RuntimeException('source_transaction_lost');}
@@ -205,6 +210,9 @@ final class MariaDbOperation {
     }
     /** Worker on a separate request/connection. API invocation is not cache delivery proof. */
     public function consume($eventId, callable $purge) {
+        try{return with_storage_barrier($this->db,function()use($eventId,$purge){return $this->consumeLocked($eventId,$purge);});}catch(\RuntimeException $e){if($e->getMessage()==='contract_storage_busy'){return 'not_claimed';}throw $e;}
+    }
+    private function consumeLocked($eventId, callable $purge) {
         $this->outside(); $this->schema();
         $before=$this->effect($eventId);$entry=$this->entry($eventId);
         if(!$before||!$entry){return 'not_claimed';}
