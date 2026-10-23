@@ -1,5 +1,7 @@
 # Candidato de propuestas privadas — 22 octubre 2026
 
+**Actualización vigente:** [rc.2 con los18 plugins exactos del respaldo](qa/MCP_PROPOSALS_SOURCE_PROFILE_2026-10-22.md):13 activos,288 comprobaciones correctas incluyendo HTTP/MCP/GraphQL y seis carreras con WPGraphQL2.25.0/PHP8.5.11. Supera el pendiente anterior de transporte de rc.2 y del inventario de plugins. Sigue HOLD hasta revisar MU/tema/drop-ins/configuración del hosting y preparar la decisión concreta de instalación. Las entradas inferiores se conservan como historial.
+
 **Estado vigente: 0.1.0-rc.2, instalación HOLD.** [Esquema y regresión verificados](qa/MCP_PROPOSALS_SCHEMA_2026-10-22.md):208 SQL,95 fronteras,165 CLI con PHP8.5.11. Paquete nuevo c31e6814864be0692035de7b46322fc2fc0159d2104e0b4d25404c3b15859f07; rc.1 y su evidencia se conservan como históricos. [Respaldo real restaurado](qa/MCP_PRIVATE_RESTORATION_2026-10-22.md), destino/retención ya acordados. Pendientes: perfil completo actualizado y transporte/GraphQL/carreras de rc.2. El script de empaquetado genera rc.2. Las menciones inferiores a falta de backup o destino describen la preparación histórica y están superadas.
 
 **0.1.0-rc.1 preparado para revisión; instalación en HOLD.** Seis abilities de propuestas existentes, sin ejecutar aplicación/recuperación de fuentes. No es la versión0.5-lab con un guard retirado: namespace, CPT, meta, tablas y opción propios, únicamente dos PHP. El laboratorio y Editorial Read se conservan sin modificar.
