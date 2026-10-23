@@ -4,6 +4,7 @@ import hashlib
 import importlib.util
 import json
 import os
+import re
 from pathlib import Path
 import shutil
 import sys
@@ -11,6 +12,7 @@ import zipfile
 import subprocess
 import tempfile
 
+sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[3]
 HERE = Path(__file__).resolve().parent
 SOURCE = Path('/private/tmp/ac-wp-private-restore-_tidfs0c/source')
@@ -72,6 +74,16 @@ def main():
     for network in settings['networks'].values():
         network.pop('name',None)
         if not network.get('internal'): raise ValueError('INTERNAL_NETWORK_REQUIRED')
+    reuse = os.environ.get('AC_SOURCE_EFFECTS_REUSE_NETWORK')
+    if reuse:
+        if not re.fullmatch(r'ac-source-effects-[a-z0-9-]+_default',reuse): raise ValueError('OWN_SOURCE_NETWORK_REQUIRED')
+        observed=json.loads(run(['docker','network','inspect',reuse]))
+        if len(observed)!=1: raise ValueError('NETWORK_NOT_FOUND')
+        net=observed[0]
+        if not net.get('Internal') or net.get('Driver')!='bridge' or net.get('Scope')!='local' or net.get('Containers') or net.get('Labels',{}).get('com.docker.compose.project')!=reuse[:-8]:
+            raise ValueError('EMPTY_OWN_INTERNAL_NETWORK_REQUIRED')
+        if set(settings['networks'])!={'default'}: raise ValueError('SINGLE_INTERNAL_NETWORK_REQUIRED')
+        settings['networks']={'default':{'external':True,'name':reuse}}
     env = {'AC_SOURCE_EFFECTS_HTTP':'synthetic-v1','WORDPRESS_DB_HOST':'db','WORDPRESS_DB_USER':'wordpress','WORDPRESS_DB_PASSWORD':'synthetic-proposals-only','WORDPRESS_DB_NAME':'wordpress',
            'WORDPRESS_CONFIG_EXTRA': "define('WP_ENVIRONMENT_TYPE','local');define('WP_HOME','http://wordpress');define('WP_SITEURL','http://wordpress');define('AC_EDITORIAL_SOURCE_EXPERIMENT',true);define('DISABLE_WP_CRON',true);define('WP_HTTP_BLOCK_EXTERNAL',true);define('WP_ACCESSIBLE_HOSTS','wordpress');define('AUTOMATIC_UPDATER_DISABLED',true);define('DISALLOW_FILE_MODS',true);"}
     mounts = [{'type':'volume','source':'wp-data','target':'/var/www/html'},
@@ -150,13 +162,13 @@ def main():
             operating_output=cli('eval-file','/integration/operating.php')
             operating_marker='SOURCE_OPERATING_CONTRACT_RESULT='
             operating_results=[json.loads(line[len(operating_marker):]) for line in operating_output.splitlines() if line.startswith(operating_marker)]
-            if len(operating_results)!=1 or not operating_results[0].get('passed') or operating_results[0].get('checks',0)<30: raise ValueError('MISSING_OPERATING_RESULT')
+            if len(operating_results)!=1 or not operating_results[0].get('passed') or operating_results[0].get('checks',0)<85: raise ValueError('MISSING_OPERATING_RESULT')
             operating=operating_results[0]
             profile_after=read_profile()
             if profile_before!=profile_after: raise ValueError('PROFILE_CHANGED_DURING_TESTS')
             # Read-only source mounts must still match the private manifest.
             profile.verify_plugins(SOURCE/'wp-content/plugins',manifest,recorded)
-        report={'operatingContract':operating,'sourceProfileBefore':profile_before,'sourceProfileAfter':profile_after,'fullSourceProfile':full,'bilingual':bilingual,'httpAndProcessDeath':http_results[0],'format':'editorial-source-effects-mariadb-v1','result':results[0],'verifiedSourcePlugins':verified,'hostPorts':False,'externalNetwork':False,'sshExecuted':False,'sourceDatabaseImported':False}
+        report={'operatingContract':operating,'sourceProfileBefore':profile_before,'sourceProfileAfter':profile_after,'fullSourceProfile':full,'bilingual':bilingual,'httpAndProcessDeath':http_results[0],'format':'editorial-source-effects-mariadb-v1','result':results[0],'verifiedSourcePlugins':verified,'hostPorts':False,'externalNetwork':False,'sshExecuted':False,'sourceDatabaseImported':False,'reusedInternalNetwork':reuse is not None}
         (work/'result.json').write_text(json.dumps(report,indent=2)+'\n')
         print(json.dumps(report,sort_keys=True),flush=True)
     finally:

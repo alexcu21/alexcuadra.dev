@@ -47,6 +47,32 @@ op_user($operator);$j=source_operation($wpdb);$j->consume($app['event_id'],funct
 op_check($c->effectStatus($p['proposal_id'],'en')['effect_state']==='requested'&&$c->apply($apply)===$app&&$app['effect_state_at_commit']==='pending','effect changes never rewrite frozen receipt');
 wp_get_current_user()->remove_cap(C::APPLY);op_user($executor);op_fail(fn()=>$c->apply($apply),'contract_forbidden');wp_get_current_user()->add_cap(C::APPLY);op_user($executor);
 op_check(!current_user_can('edit_posts')&&!current_user_can('manage_options')&&!current_user_can('edit_post',$ids['en']),'subscriber needs no global source edit or admin');
+// Recovery uses a different scope and a fresh independent approval of the inverse.
+op_user($executor);$recoverPrepare=['proposal_id'=>$p['proposal_id'],'locale'=>'en','expected_source_version'=>$app['source_version'],'request_id'=>bin2hex(random_bytes(16))];
+op_fail(fn()=>$c->prepareRecovery($recoverPrepare),'contract_forbidden');wp_get_current_user()->add_cap(C::RECOVER);op_user($executor);
+[$capacityProposal]=op_proposal($ids['en'],['tagline'=>'Capacity-only review']);for($i=0;$i<6;$i++){$c->prepare(op_prepare_input($capacityProposal));}
+$recoveryLegacy=op_request_rows($executor);$recoveryPrivate=op_rows($p['proposal_id']);$usageReserved=$c->usage($executor);$rr=$c->prepareRecovery($recoverPrepare);$ri=op_apply_input($rr);
+op_check($c->prepareRecovery($recoverPrepare)===$rr,'recovery preparation exact replay');
+$inspection=$c->inspect($rr['review_id'],'en');op_check($inspection['document']['operation']==='recover'&&$inspection['document']['after']['body_html']===$sourceBefore[0]['post_content']&&$inspection['document']['application_event']===$app['event_id'],'inverse review bound to original application');
+op_fail(fn()=>$c->recover($ri),'contract_approval_required');op_fail(fn()=>$c->apply($ri),'contract_operation_mismatch');op_fail(fn()=>$c->recover($apply),'contract_operation_mismatch');
+op_user($other);wp_get_current_user()->add_cap(C::RECOVER);op_user($other);op_fail(fn()=>$c->recover($ri),'contract_not_found');op_user($executor);
+$wrong=$ri;$wrong['locale']='es';op_fail(fn()=>$c->recover($wrong),'contract_not_found');op_approve($c,$rr);
+// Disconnect during the inverse must retain the original application and approval.
+$recoveryBeforeLost=op_rows($ids['en']);$recoveryEsLost=op_rows($ids['es']);$recoverySession=(int)$wpdb->get_var('SELECT CONNECTION_ID()');
+$killRecovery=static function($id)use($ids,$recoverySession){if((int)$id===$ids['en']){$killer=new wpdb(DB_USER,DB_PASSWORD,DB_NAME,DB_HOST);mysqli_query((new ReflectionProperty(wpdb::class,'dbh'))->getValue($killer),'KILL CONNECTION '.$recoverySession);}};
+add_action('save_post_project',$killRecovery,53);try{op_fail(fn()=>$c->recover($ri),'source_transaction_lost');}finally{remove_action('save_post_project',$killRecovery,53);}
+op_check(op_rows($ids['en'])===$recoveryBeforeLost&&op_rows($ids['es'])===$recoveryEsLost,'recovery disconnect rolls back both linked sources');
+op_check($wpdb->get_var($wpdb->prepare("SELECT consumed_event FROM {$wpdb->prefix}ac_exp_operating_approvals WHERE review_id=%d",$rr['review_id']))===null&&$wpdb->get_var($wpdb->prepare("SELECT recovery_event FROM {$wpdb->prefix}ac_exp_operating_apps WHERE proposal_id=%d",$p['proposal_id']))===null,'recovery disconnect preserves unused approval and applied registry');
+$recovered=$c->recover($ri);op_check($recovered['content_state']==='recovered'&&$recovered['application_event']===$app['event_id'],'new immutable recovery receipt');
+op_check(get_post($ids['en'])->post_content===$sourceBefore[0]['post_content']&&get_post_meta($ids['en'],'project_tagline',true)==='Before main en','original fields restored through native APIs');
+op_check(op_rows($ids['es'])===$esBefore&&op_request_rows($executor)===$recoveryLegacy&&op_rows($p['proposal_id'])===$recoveryPrivate,'recovery preserves linked ES and literal rc2 artifacts');
+$recoveryRows=op_rows($ids['en']);op_check($c->recover($ri)===$recovered&&op_rows($ids['en'])===$recoveryRows&&$c->apply($apply)===$app,'both immutable receipts replay without source writes');
+op_check($wpdb->get_var($wpdb->prepare("SELECT consumed_event FROM {$wpdb->prefix}ac_exp_operating_approvals WHERE review_id=%d",$rr['review_id']))===$recovered['event_id'],'fresh recovery approval consumed by recovery event');
+op_check($c->effectStatus($p['proposal_id'],'en')['event_id']===$recovered['event_id']&&$c->effectStatus($p['proposal_id'],'en')['effect_state']==='pending','effect status follows latest committed recovery');
+op_check($c->usage($executor)['reviews']===$usageReserved['reviews']&&$c->usage($executor)['requests']===$usageReserved['requests']&&$c->usage($executor)['bytes']<$usageReserved['bytes'],'reserved capacity converted into retained recovery artifacts');
+op_fail(fn()=>$c->recover(op_apply_input($rr)),'contract_application_changed');wp_get_current_user()->remove_cap(C::RECOVER);op_user($executor);op_fail(fn()=>$c->recover($ri),'contract_forbidden');wp_get_current_user()->add_cap(C::RECOVER);op_user($executor);
+// Independent executor keeps the following drift fixtures within their own budget.
+$executor=op_actor('drift-executor');op_user($executor);
 // A changed proposal invalidates an already approved review.
 $pair=op_pair('proposal-drift');[$p2]=op_proposal($pair['en'],['tagline'=>'First proposed value']);$r2=$c->prepare(op_prepare_input($p2));op_approve($c,$r2);
 $updated=P\execute(['proposal_id'=>$p2['proposal_id'],'locale'=>'en','expected_version'=>$p2['version'],'patch'=>['tagline'=>'Different proposal'],'request_id'=>bin2hex(random_bytes(16))],'update');op_check(!is_wp_error($updated),'rc2 proposal can still change independently');
@@ -84,6 +110,66 @@ $requestOwner=op_actor('quota-requests');op_user($requestOwner);$pair=op_pair('q
 for($i=0;$i<C::MAX_REQUESTS;$i++){$wpdb->query($wpdb->prepare("INSERT INTO $requestsTable VALUES (%d,%s,%s,'{}')",$requestOwner,str_pad(dechex($i),32,'0',STR_PAD_LEFT),str_repeat('a',64)));}
 op_fail(fn()=>$c->prepare(op_prepare_input($qp)),'contract_owner_quota');[$extra]=op_proposal($pair['en'],['tagline'=>'Independent rc2 budget']);op_check($extra['proposal_id']>0&&P\owner_usage($requestOwner)['requests']===2,'rc2 budget remains independent and unchanged');
 $bytesOwner=op_actor('quota-bytes');op_user($bytesOwner);$pair=op_pair('quota-bytes');[$qp]=op_proposal($pair['en'],['tagline'=>'Bytes']);[$reserved]=op_proposal($pair['en'],['tagline'=>'Reserved']);
-$wpdb->query($wpdb->prepare("INSERT INTO $appsTable VALUES (%d,%d,1,%s,%s,%d,0,0)",$reserved['proposal_id'],$bytesOwner,str_repeat('b',64),str_repeat('c',64),C::MAX_BYTES));op_fail(fn()=>$c->prepare(op_prepare_input($qp)),'contract_owner_quota');
+$wpdb->query($wpdb->prepare("INSERT INTO $appsTable (proposal_id,owner_id,review_id,event_id,source_after,reserved_bytes,reserved_reviews,reserved_requests) VALUES (%d,%d,1,%s,%s,%d,0,0)",$reserved['proposal_id'],$bytesOwner,str_repeat('b',64),str_repeat('c',64),C::MAX_BYTES));op_fail(fn()=>$c->prepare(op_prepare_input($qp)),'contract_owner_quota');
+// Real server-side disconnect after body save: no reconnect/replayed ACF write.
+$lostOwner=op_actor('lost-session');op_user($lostOwner);wp_get_current_user()->add_cap(C::RECOVER);op_user($lostOwner);$pair=op_pair('lost-session');
+[$lp]=op_proposal($pair['en'],['body_html'=>'<p>Must never partially commit</p>','tagline'=>'Must stay before']);$lr=$c->prepare(op_prepare_input($lp));op_approve($c,$lr);$li=op_apply_input($lr);$lostBefore=op_rows($pair['en']);$lostEs=op_rows($pair['es']);$session=(int)$wpdb->get_var('SELECT CONNECTION_ID()');$reporting=(new mysqli_driver)->report_mode;
+$kill=static function($id)use($pair,$session){if((int)$id===$pair['en']){$killer=new wpdb(DB_USER,DB_PASSWORD,DB_NAME,DB_HOST);mysqli_query((new ReflectionProperty(wpdb::class,'dbh'))->getValue($killer),'KILL CONNECTION '.$session);}};
+add_action('save_post_project',$kill,53);try{op_fail(fn()=>$c->apply($li),'source_transaction_lost');}finally{remove_action('save_post_project',$kill,53);}
+op_check((new mysqli_driver)->report_mode===$reporting,'mysqli reporting restored after connection loss');
+op_check(op_rows($pair['en'])===$lostBefore&&op_rows($pair['es'])===$lostEs,'physical session loss rolls back body and prevents ACF autocommit');
+op_check($wpdb->get_var($wpdb->prepare("SELECT consumed_event FROM $approvalTable WHERE review_id=%d",$lr['review_id']))===null&&(int)$wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $appsTable WHERE proposal_id=%d",$lp['proposal_id']))===0,'disconnect leaves approval unused and reservation absent');
+$lostEvent=hash('sha256','operating|'.$lostOwner.'|'.$li['request_id']);op_check((int)$wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}ac_exp_source_events WHERE event_id=%s",$lostEvent))===0&&(int)$wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $requestsTable WHERE owner_id=%d AND request_id=%s",$lostOwner,$li['request_id']))===0,'disconnect leaves no event receipt or request receipt');
+$la=$c->apply($li);op_check($c->apply($li)===$la&&get_post_meta($pair['en'],'project_tagline',true)==='Must stay before','same request safely retried once on a fresh session');
+// Recovery conflict cannot overwrite another editor, including a linked-language edit.
+$rpi=['proposal_id'=>$lp['proposal_id'],'locale'=>'en','expected_source_version'=>$la['source_version'],'request_id'=>bin2hex(random_bytes(16))];$lrr=$c->prepareRecovery($rpi);op_approve($c,$lrr);update_post_meta($pair['es'],'another_editor','retain');$conflictRows=op_rows($pair['en']);
+op_fail(fn()=>$c->recover(op_apply_input($lrr)),'contract_source_changed');op_check(op_rows($pair['en'])===$conflictRows&&get_post_meta($pair['es'],'another_editor',true)==='retain','recovery never forces over a linked editor change');
+// An expired recovery review stays immutable; renewal needs another retained slot.
+$renewOwner=op_actor('recovery-renewal');op_user($renewOwner);wp_get_current_user()->add_cap(C::RECOVER);op_user($renewOwner);$renewPair=op_pair('recovery-renewal');
+[$np]=op_proposal($renewPair['en'],['tagline'=>'Renewal applied']);$npr=$c->prepare(op_prepare_input($np));op_approve($c,$npr);$na=$c->apply(op_apply_input($npr));
+$npi=['proposal_id'=>$np['proposal_id'],'locale'=>'en','expected_source_version'=>$na['source_version'],'request_id'=>bin2hex(random_bytes(16))];$nrr=$c->prepareRecovery($npi);op_approve($c,$nrr);$retained=$c->inspect($nrr['review_id'],'en');$beforeRenew=$c->usage($renewOwner);
+$wpdb->query('SET timestamp=UNIX_TIMESTAMP()+601');
+try{
+    op_fail(fn()=>$c->recover(op_apply_input($nrr)),'contract_review_expired');
+    $npi['request_id']=bin2hex(random_bytes(16));$fresh=$c->prepareRecovery($npi);
+    op_check($fresh['review_id']!==$nrr['review_id']&&$c->inspect($nrr['review_id'],'en')===$retained,'renewal retains original sealed expired review');
+    op_check($c->usage($renewOwner)['reviews']===$beforeRenew['reviews']+1&&$c->usage($renewOwner)['requests']===$beforeRenew['requests']+1,'renewal charged without freeing expired artifacts');
+    op_approve($c,$fresh);op_user(1);op_fail(fn()=>$c->approve($nrr['review_id'],'en',$nrr['review_hash']),'contract_application_changed');op_user($renewOwner);
+    wp_get_current_user()->remove_cap(C::APPLY);op_user($renewOwner);
+    $restored=$c->recover(op_apply_input($fresh));op_check($restored['content_state']==='recovered'&&get_post_meta($renewPair['en'],'project_tagline',true)==='Before recovery-renewal en','renewed inverse works with recovery scope alone');
+    op_check($c->effectStatus($np['proposal_id'],'en')['event_id']===$restored['event_id'],'recovery-only scope can read its effect status');
+}finally{op_user($renewOwner);$wpdb->query('SET timestamp=0');}
+// Lose the socket while core _do_query is running, after its final query filter.
+$midSession=(int)$wpdb->get_var('SELECT CONNECTION_ID()');$midBefore=op_rows($renewPair['en']);
+$timer=new wpdb(DB_USER,DB_PASSWORD,DB_NAME,DB_HOST);$timerHandle=(new ReflectionProperty(wpdb::class,'dbh'))->getValue($timer);
+$routine='ac_exp_disconnect_during_query';
+if($timer->query("CREATE PROCEDURE $routine() BEGIN DO SLEEP(0.5); KILL CONNECTION $midSession; END")===false){throw new RuntimeException('disconnect_fixture_routine_failed');}
+try{
+    op_fail(function()use($wpdb,$timerHandle,$routine,$renewPair){AlexCuadra\EditorialSourceExperiment\owned_transaction($wpdb,function()use($wpdb,$timerHandle,$routine,$renewPair){
+        update_post_meta($renewPair['en'],'mid_query_write','must rollback');
+        mysqli_report(MYSQLI_REPORT_OFF);
+        if(!mysqli_query($timerHandle,"CALL $routine()",MYSQLI_ASYNC)){throw new RuntimeException('disconnect_fixture_schedule_failed');}
+        $wpdb->query('SELECT SLEEP(5)');
+    });},'source_transaction_lost');
+    op_check(op_rows($renewPair['en'])===$midBefore,'socket loss inside core query never reaches automatic reconnect replay');
+}finally{
+    // Drain the asynchronous fixture before its local-only routine cleanup.
+    $read=[$timerHandle];$errors=[$timerHandle];$reject=[];mysqli_poll($read,$errors,$reject,3);
+    $result=mysqli_reap_async_query($timerHandle);if($result instanceof mysqli_result){mysqli_free_result($result);}
+    while(mysqli_more_results($timerHandle)){mysqli_next_result($timerHandle);$result=mysqli_store_result($timerHandle);if($result instanceof mysqli_result){mysqli_free_result($result);}}
+    $timer->query("DROP PROCEDURE $routine");
+}
+// The final COMMIT boundary is protected even with no following wpdb query.
+$endSession=(int)$wpdb->get_var('SELECT CONNECTION_ID()');$endBefore=op_rows($renewPair['en']);$endMode=(new mysqli_driver)->report_mode;
+op_fail(function()use($wpdb,$timerHandle,$endSession,$renewPair){AlexCuadra\EditorialSourceExperiment\owned_transaction($wpdb,function()use($timerHandle,$endSession,$renewPair){
+    update_post_meta($renewPair['en'],'end_of_callback','must rollback');mysqli_report(MYSQLI_REPORT_OFF);mysqli_query($timerHandle,'KILL CONNECTION '.$endSession);return ['must_not_commit'=>true];
+});},'source_transaction_lost');
+op_check((new mysqli_driver)->report_mode===$endMode,'driver mode restored after callback-end disconnect');
+op_check(op_rows($renewPair['en'])===$endBefore,'callback-end disconnect cannot report a successful empty commit');
+// Native callbacks cannot commit the coordinator's transaction themselves.
+$controlBefore=op_rows($pair['en']);$reportBefore=(new mysqli_driver)->report_mode;$queryCallbacks=$GLOBALS['wp_filter']['query']->callbacks??[];
+op_fail(function()use($wpdb,$pair){AlexCuadra\EditorialSourceExperiment\owned_transaction($wpdb,function()use($wpdb,$pair){update_post_meta($pair['en'],'forbidden_commit','must rollback');$wpdb->query('SET @@autocommit=1');});},'source_transaction_control_denied');
+op_check(op_rows($pair['en'])===$controlBefore,'intercepted callback commit cannot leak a write');
+op_check((new mysqli_driver)->report_mode===$reportBefore&&($GLOBALS['wp_filter']['query']->callbacks??[])===$queryCallbacks,'transaction driver mode restored after rejected control');
 op_check(get_role('subscriber')->capabilities===$roleBefore,'subscriber global role unchanged');
-echo 'SOURCE_OPERATING_CONTRACT_RESULT='.wp_json_encode(['checks'=>$GLOBALS['operating_checks'],'passed'=>true,'realProposalsRc2'=>true,'independentCliApproval'=>true,'approvalSourceReceiptIntentAtomic'=>true,'proposalReceiptsUnchanged'=>true,'recoveryCapacityReserved'=>true,'recoveryExecutorImplemented'=>false,'abilitiesRegistered'=>false,'perOwnerOperatingLimits'=>['reviews'=>8,'requests'=>64,'bytes'=>8388608],'rc2BudgetSeparate'=>true]).PHP_EOL;
+echo 'SOURCE_OPERATING_CONTRACT_RESULT='.wp_json_encode(['checks'=>$GLOBALS['operating_checks'],'passed'=>true,'realProposalsRc2'=>true,'independentCliApproval'=>true,'approvalSourceReceiptIntentAtomic'=>true,'proposalReceiptsUnchanged'=>true,'recoveryCapacityReserved'=>true,'recoveryExecutorImplemented'=>true,'dbDisconnectRollbackVerified'=>true,'automaticReconnectInsideTransaction'=>false,'abilitiesRegistered'=>false,'perOwnerOperatingLimits'=>['reviews'=>8,'requests'=>64,'bytes'=>8388608],'rc2BudgetSeparate'=>true]).PHP_EOL;

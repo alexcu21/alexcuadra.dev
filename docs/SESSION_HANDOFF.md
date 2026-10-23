@@ -1,5 +1,8 @@
 # Traspaso de sesión — 21 octubre 2026
 
+**23 octubre — recuperación operativa y reconexión cerradas localmente:**94 controles de contrato+132 regresiones,226 integraciones correctas. Scope recover específico, inversa ligada a source_after, aprobación CLI nueva, recibo propio y estado del último efecto. Reserva usable con8 revisiones; renovación retiene/cobra lo caducado. Cuatro cortes reales de sesión, incluido dentro de consulta core y al terminar el callback antes de COMMIT, fuerzan rollback sin autoreplay ni consumo de aprobación; reintento con misma clave. [QA/límites](qa/MCP_OPERATING_RECOVERY_2026-10-23.md). **Siguiente:** formalización estricta, MCP/export/candidato/preflight/reversión; luego instalación/diff autorizados con SSH de Alex. Estimación2–3 incrementos (1–2 candidato,1 aceptación). Sin CMS/grants/Workers/contacto ni backup/pull nuevos. Red interna propia reutilizada tras agotarse pool, nada podado; contenedores detenidos. Espacio del volumen35→33GiB, sin atribución exclusiva al ensayo; registros privados160KiB.
+
+
 ## Contexto y reglas de continuidad
 
 Proyecto: `/Users/Alex/Desktop/AlexC/alexcuadra.dev`. Portfolio Astro con WordPress headless, ACF gratuito, WPGraphQL autenticado y Polylang. Alex pide avanzar por incrementos concretos y verificables. Este resumen consolida el estado; algunas entradas antiguas del plan/bitácora describen pasos ya superados. Leer primero la entrada más reciente y su QA, no interpretar todo el historial como pendientes actuales.

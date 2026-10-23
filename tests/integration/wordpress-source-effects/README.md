@@ -41,3 +41,11 @@ Fallo tardío: una conexión de fixture inserta una intención huérfana conflic
 Límites independientes:8reviews/64requests/8MiB operativos, reserva previa1review/2requests/560KiB; las quotas rc.2 siguen aparte. Fixtures agotan cada contador por separado; el caso de bytes usa reserva SQL sintética para comprobar el límite sin escribir8MiB de padding. Se prueba que aprobar no permite aplicar si falta capacidad para recuperación. La recuperación operativa todavía no está implementada, aunque el writer esté probado y la capacidad quede reservada.
 
 No registra abilities del contrato, no crea una ruta de aprobación y no cambia permisos de usuarios reales. El esquema nuevo es experimental InnoDB; la migración estricta y la aceptación MCP del contrato son parte del candidato pendiente.
+
+## Recuperación operativa y sesión DB — cierre local
+
+El contrato completo pasa94 controles, además de132 regresiones. prepareRecovery/recover requieren scope específico y aprobación nueva; conservan los recibos originales, consumen la reserva al límite y permiten renovar lo vencido solo con espacio adicional, sin borrar históricos. effectStatus admite apply o recover y sigue la última intención. Cuatro cortes reales de conexión incluyen apply, recover y la ejecución dentro de _do_query; mysqli/transaction/filtro final/lista cerrada impiden autoreplay sobre nueva sesión. Driver y filtro se restauran al salir. SQL directo arbitrario/drop-in DB no está admitido. Ante COMMIT incierto se reintenta/consulta la misma clave. [QA y límites](../../../docs/qa/MCP_OPERATING_RECOVERY_2026-10-23.md).
+
+El runner admite AC_SOURCE_EFFECTS_REUSE_NETWORK únicamente para una red ac-source-effects propia, internal/bridge/local, con etiqueta Compose correspondiente y cero endpoints activos. Evita ampliar el pool agotado sin podar recursos. Imágenes cacheadas, DB/WP tmpfs, sin puertos, pulls o SQL/config real. No elimina redes/volúmenes. Almacenamiento del volumen35→33GiB durante el incremento (sin atribución exclusiva); registros privados160KiB, Docker/swap pueden usar disco.
+
+Pendiente: migración/decoders/admisión estrictos, schemas/transporte MCP, export privado y candidato/preflight/reversión. No hay paquete instalable nuevo ni autorización de scopes/edición reales.

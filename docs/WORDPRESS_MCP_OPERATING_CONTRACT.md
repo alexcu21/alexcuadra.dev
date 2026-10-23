@@ -1,6 +1,6 @@
 # Contrato operativo de aplicación — integración local
 
-Estado23 octubre2026: integración ejecutable local, sin plugin/abilities nuevas ni instalación. `OperatingContract` enlaza con Proposals0.1.0-rc.2 y el adaptador WP/MariaDB ya verificado. No cambia el plugin instalado, sus recibos, payloads o cuotas.52 checks nuevos pasan junto con132 del perfil completo;45 del writer cubren también UTF-8.
+Estado23 octubre2026: integración ejecutable local, sin plugin/abilities nuevas ni instalación. `OperatingContract` enlaza con Proposals0.1.0-rc.2 y el adaptador WP/MariaDB ya verificado. No cambia el plugin instalado, sus recibos, payloads o cuotas.94 controles de contrato pasan junto con132 regresiones del perfil completo. [QA de recuperación y desconexión](qa/MCP_OPERATING_RECOVERY_2026-10-23.md). Las45 pruebas previas del writer cubren también UTF-8.
 
 ## Autoridad y revisión
 
@@ -26,7 +26,7 @@ Una repetición exacta devuelve el recibo sin otra escritura, incluso después d
 
 Presupuesto operativo separado por executor:8 revisiones retenidas,64 requests incluidas reservas,8MiB lógicos conservadores. Se contabilizan documentos, slots de aprobación, respuestas, eventos/intenciones y reservas. Se rechazan nuevas operaciones al llegar al límite, sin podar históricos ni liberar aprobaciones por caducidad. No se escriben bytes de padding para las reservas: son contadores.
 
-Antes de escribir se reservan una revisión, dos requests y560KiB para recuperación condicional. Se rechaza aplicar cuando no cabe esa reserva, aunque el diff ya esté aprobado. **Este incremento solo reserva esa capacidad: falta integrar el executor operativo de recuperación**, con nueva revisión/aprobación y source_after exacto. El writer nativo de recuperación ya está probado, pero no sustituye este contrato pendiente.
+Antes de escribir se reservan una revisión, dos requests y560KiB para recuperación condicional. Se rechaza aplicar cuando no cabe esa reserva, aunque el diff ya esté aprobado. `prepareRecovery` consume la reserva para una revisión inversa, ligada al evento original y al source_after exacto; `recover` requiere alexcuadra_recover_project_changes y otra aprobación independiente. Recupera solo los campos revisados mediante APIs, conservando ES y recibos previos. Emite operating-recovery-receipt-v1 y otra intención; effectStatus sigue el último evento. Una revisión vencida puede renovarse con capacidad libre adicional: se conserva y cobra la anterior. No hay recuperación forzada ni renovación ilimitada.
 
 No se impone un límite combinado8MiB a rc.2: conserva su propio8MiB/128requests/8propuestas. Ambos dominios admitidos quedan acotados a16MiB lógicos por executor, más overhead físico de DB; no prometer que el segundo presupuesto reduce retroactivamente el primero. La revisión máxima es512KiB y recibos operativos4KiB. Se alineó el writer con los40000 caracteres UTF-8 de rc.2 (hasta160000 bytes), sin confundir caracteres con bytes; el documento usa JSON UTF-8 sin escapar para conservar el límite previsto.
 
@@ -34,10 +34,10 @@ Conservar todos los registros, respaldo y archivos hasta validar instalación/re
 
 ## Qué falta y siguiente entrega
 
-1. Recuperación operativa consumible con la reserva, source_after exacto y nueva aprobación; formalizar esquema/decodificación/versiones y admisión para candidato. Las tablas actuales son explícitamente experimentales y su comprobación nueva todavía se limita a InnoDB; no son la migración final estricta.
+1. Formalizar esquema/decodificación/versiones y admisión para candidato. Las tablas actuales son explícitamente experimentales y su comprobación nueva todavía se limita a InnoDB; no son la migración final estricta.
 2. Registro/schema MCP acotado, export privado, preflight de configuración admitida, reversión y ZIP/manifiesto probados. Las pruebas HTTP del adaptador siguen usando fixtures; no son aún aceptación del nuevo contrato por MCP.
 3. Instalación y diff público específicamente autorizados, SSH ejecutado por Alex y aceptación real. Ninguna edición real se autoriza por esta integración.
 
 Estimación restante2–3 incrementos:1–2 para completar lo anterior y el candidato;1 para instalación/aceptación autorizadas. Esperas y fallos nuevos pueden añadir vueltas; registrar la causa. Sin ampliar las funcionalidades del laboratorio fuera de esos entregables.
 
-Pendiente obligatorio antes de candidato: impedir y probar la reconexión automática de wpdb durante la transacción. El código de WordPress reintenta la consulta tras error2006 en otra conexión; los SIGKILL de workers no cubren ese caso y podrían perderse los límites transaccionales. La atomicidad indicada corresponde a los escenarios ensayados, no a pérdida/reconexión de la sesión DB. Este endurecimiento y su prueba de desconexión bloquean el candidato instalable.
+Protección de reconexión implementada y verificada en el perfil local admitido: mysqli original, transacción activa, filtro final con modo estricto y lista cerrada de verbos SQL; COMMIT/ROLLBACK nativos sin reconectar y restauración en finally. Cuatro cortes reales cubren apply/recover una consulta de core en curso y el cierre del callback antes de COMMIT, además de los cuatro SIGKILL anteriores. Reintentar siempre la misma clave ante resultado incierto del COMMIT; nunca asumir fallo y crear otra operación. Código con mysqli directo o clase/drop-in DB distinto no está admitido. El candidato todavía exige la formalización y pruebas indicadas arriba.

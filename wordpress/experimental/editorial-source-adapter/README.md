@@ -70,4 +70,11 @@ El runner completo añade52 controles de contrato real sobre Proposals rc.2 y ma
 
 Ver `docs/WORDPRESS_MCP_OPERATING_CONTRACT.md`. Pendiente: recuperación operativa, esquema/migración/decodificación estrictos, schemas/transporte MCP, export y candidato/preflight/reversión. No quitar guards para empaquetar estas fixtures ni considerar manage_options del fixture HTTP como autorización final de edición.
 
-Pendiente obligatorio antes de candidato: impedir y probar la reconexión automática de wpdb durante la transacción. El código de WordPress reintenta la consulta tras error2006 en otra conexión; los SIGKILL de workers no cubren ese caso y podrían perderse los límites transaccionales. La atomicidad indicada corresponde a los escenarios ensayados, no a pérdida/reconexión de la sesión DB. Este endurecimiento y su prueba de desconexión bloquean el candidato instalable.
+
+## Recuperación operativa y sesión DB — cierre local
+
+El contrato completo pasa94 controles, además de132 regresiones. prepareRecovery/recover requieren scope específico y aprobación nueva; conservan los recibos originales, consumen la reserva al límite y permiten renovar lo vencido solo con espacio adicional, sin borrar históricos. effectStatus admite apply o recover y sigue la última intención. Cuatro cortes reales de conexión incluyen apply, recover y la ejecución dentro de _do_query; mysqli/transaction/filtro final/lista cerrada impiden autoreplay sobre nueva sesión. Driver y filtro se restauran al salir. SQL directo arbitrario/drop-in DB no está admitido. Ante COMMIT incierto se reintenta/consulta la misma clave. [QA y límites](../../../docs/qa/MCP_OPERATING_RECOVERY_2026-10-23.md).
+
+El runner admite AC_SOURCE_EFFECTS_REUSE_NETWORK únicamente para una red ac-source-effects propia, internal/bridge/local, con etiqueta Compose correspondiente y cero endpoints activos. Evita ampliar el pool agotado sin podar recursos. Imágenes cacheadas, DB/WP tmpfs, sin puertos, pulls o SQL/config real. No elimina redes/volúmenes. Almacenamiento del volumen35→33GiB durante el incremento (sin atribución exclusiva); registros privados160KiB, Docker/swap pueden usar disco.
+
+Pendiente: migración/decoders/admisión estrictos, schemas/transporte MCP, export privado y candidato/preflight/reversión. No hay paquete instalable nuevo ni autorización de scopes/edición reales.

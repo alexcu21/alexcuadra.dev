@@ -5,6 +5,7 @@ use AlexCuadra\EditorialProposals as P;
 
 final class OperatingContract {
     const APPLY='alexcuadra_apply_project_changes';
+    const RECOVER='alexcuadra_recover_project_changes';
     const APPROVE='alexcuadra_approve_public_project_changes';
     const MAX_REVIEWS=8;
     const MAX_REQUESTS=64;
@@ -32,7 +33,8 @@ final class OperatingContract {
         $active=$this->db->get_var('SELECT @@in_transaction');
         if($active===null||$this->db->last_error||(int)$active!==0){$this->fail('contract_outer_transaction');}
     }
-    private function scope(){local_wp_guard();if(is_wp_error(P\permission())||!current_user_can(self::APPLY)){$this->fail('contract_forbidden');}}
+    private function scope($operation='apply'){local_wp_guard();if(is_wp_error(P\permission())||!current_user_can($operation==='recover'?self::RECOVER:self::APPLY)){$this->fail('contract_forbidden');}}
+    private function readScope(){local_wp_guard();if(is_wp_error(P\permission())||(!current_user_can(self::APPLY)&&!current_user_can(self::RECOVER))){$this->fail('contract_forbidden');}}
     private function input($input,$keys){
         if(array_diff(array_keys($input),$keys)||array_diff($keys,array_keys($input))||!in_array($input['locale']??null,['en','es'],true)){$this->fail('contract_invalid_input');}
         foreach($input as $key=>$value){
@@ -60,13 +62,11 @@ final class OperatingContract {
         $this->sql("CREATE TABLE $this->reviews (review_id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,owner_id BIGINT UNSIGNED NOT NULL,proposal_id BIGINT UNSIGNED NOT NULL,document LONGTEXT NOT NULL,review_hash VARBINARY(64) NOT NULL,KEY owner_id(owner_id)) ENGINE=InnoDB");
         $this->sql("CREATE TABLE $this->approvals (review_id BIGINT UNSIGNED PRIMARY KEY,actor_id BIGINT UNSIGNED NOT NULL,document LONGTEXT NOT NULL,consumed_event VARBINARY(64) NULL) ENGINE=InnoDB");
         $this->sql("CREATE TABLE $this->requests (owner_id BIGINT UNSIGNED NOT NULL,request_id VARBINARY(32) NOT NULL,request_hash VARBINARY(64) NOT NULL,response LONGTEXT NOT NULL,PRIMARY KEY(owner_id,request_id)) ENGINE=InnoDB");
-        $this->sql("CREATE TABLE $this->apps (proposal_id BIGINT UNSIGNED PRIMARY KEY,owner_id BIGINT UNSIGNED NOT NULL,review_id BIGINT UNSIGNED NOT NULL,event_id VARBINARY(64) NOT NULL,source_after VARBINARY(64) NOT NULL,reserved_bytes INT UNSIGNED NOT NULL,reserved_reviews INT UNSIGNED NOT NULL,reserved_requests INT UNSIGNED NOT NULL,KEY owner_id(owner_id)) ENGINE=InnoDB");
+        $this->sql("CREATE TABLE $this->apps (proposal_id BIGINT UNSIGNED PRIMARY KEY,owner_id BIGINT UNSIGNED NOT NULL,review_id BIGINT UNSIGNED NOT NULL,event_id VARBINARY(64) NOT NULL,source_after VARBINARY(64) NOT NULL,reserved_bytes INT UNSIGNED NOT NULL,reserved_reviews INT UNSIGNED NOT NULL,reserved_requests INT UNSIGNED NOT NULL,recovery_review BIGINT UNSIGNED NULL,recovery_event VARBINARY(64) NULL,KEY owner_id(owner_id)) ENGINE=InnoDB");
     }
     private function transaction($owner,callable $fn){
         $this->outside();
-        $this->tables();$this->sql('START TRANSACTION');$done=false;
-        try{$this->ownerLock($owner);$result=$fn();$this->sql('COMMIT');$done=true;return $result;}
-        finally{if(!$done){$this->db->query('ROLLBACK');}}
+        $this->tables();return owned_transaction($this->db,function()use($owner,$fn){$this->ownerLock($owner);return $fn();});
     }
     private function hash($kind,$input){ksort($input);return hash('sha256',json_encode([$kind,$input],JSON_THROW_ON_ERROR));}
     private function replay($owner,$input,$hash){
@@ -105,7 +105,12 @@ final class OperatingContract {
         $this->owned($d['proposal_id'],$owner);return ['document'=>$d,'hash'=>$r['review_hash']];
     }
     private function current(array $d){
-        $this->scope();$p=$this->proposal($d['proposal_id'],$d['locale'],$d['proposal_version'],$d['base_version']);
+        $this->scope($d['operation']);$p=null;
+        if($d['operation']==='recover'){
+            $this->owned($d['proposal_id'],get_current_user_id());
+            $app=$this->row($this->db->prepare("SELECT * FROM $this->apps WHERE proposal_id=%d AND owner_id=%d FOR UPDATE",$d['proposal_id'],get_current_user_id()));
+            if(!$app||$app['recovery_event']!==null||$app['event_id']!==$d['application_event']||$app['source_after']!==$d['source_version']||(int)$app['recovery_review']!==$d['review_id']){$this->fail('contract_application_changed');}
+        }else{$p=$this->proposal($d['proposal_id'],$d['locale'],$d['proposal_version'],$d['base_version']);}
         if($d['expires_at']<=$this->now()){$this->fail('contract_review_expired');}
         if(($this->schema)()!==$d['schema_version']){$this->fail('contract_schema_changed');}
         $s=($this->snapshot)($d['project_id'],$d['locale'],array_fill_keys(array_keys($d['after']),''),true);
@@ -137,7 +142,7 @@ final class OperatingContract {
         local_wp_guard();$this->input(['review_id'=>$reviewId,'locale'=>$locale],['review_id','locale']);$owner=get_current_user_id();
         if(defined('WP_CLI')&&WP_CLI&&current_user_can('manage_options')&&current_user_can(self::APPROVE)){
             $r=$this->row($this->db->prepare("SELECT owner_id FROM $this->reviews WHERE review_id=%d",$reviewId));if(!$r){$this->fail('contract_not_found');}$owner=(int)$r['owner_id'];
-        }else{$this->scope();}
+        }else{$this->readScope();}
         $r=$this->review($reviewId,$owner,$locale);
         return ['format'=>'operating-review-inspection-v1','review_hash'=>$r['hash'],'document'=>$r['document']];
     }
@@ -151,7 +156,7 @@ final class OperatingContract {
         try{
             wp_set_current_user($owner);
             return $this->transaction($owner,function()use($reviewId,$locale,$expectedHash,$actor,$owner){
-                $review=$this->review($reviewId,$owner,$locale,$expectedHash);$d=$review['document'];$this->current($d);
+                $review=$this->review($reviewId,$owner,$locale,$expectedHash);$d=$review['document'];$d['review_id']=$reviewId;$this->current($d);
                 $prior=$this->row($this->db->prepare("SELECT * FROM $this->approvals WHERE review_id=%d FOR UPDATE",$reviewId));
                 if($prior){if($prior['consumed_event']!==null){$this->fail('contract_approval_consumed');}return ['format'=>'operating-approval-receipt-v1','review_id'=>$reviewId,'review_hash'=>$expectedHash,'actor_id'=>(int)$prior['actor_id']];}
                 $approvedAt=$this->now();if($approvedAt>=$d['expires_at']){$this->fail('contract_review_expired');}
@@ -164,7 +169,7 @@ final class OperatingContract {
     }
     public function apply(array $input){
         $this->scope();$this->input($input,['review_id','locale','expected_review_hash','request_id']);$this->outside();$this->tables();$owner=get_current_user_id();$hash=$this->hash('apply',$input);
-        $review=$this->review($input['review_id'],$owner,$input['locale'],$input['expected_review_hash']);$d=$review['document'];
+        $review=$this->review($input['review_id'],$owner,$input['locale'],$input['expected_review_hash']);$d=$review['document'];if($d['operation']!=='apply'){$this->fail('contract_operation_mismatch');}
         $prior=$this->replay($owner,$input,$hash);if($prior!==null){return $prior;}
         $event=['event_id'=>hash('sha256','operating|'.$owner.'|'.$input['request_id']),'event_hash'=>$hash,'project_id'=>$d['project_id'],'operation'=>'apply'];
         return $this->journal->record($event,function()use($owner,$input,$hash,$event){
@@ -177,7 +182,7 @@ final class OperatingContract {
             if($this->row($this->db->prepare("SELECT proposal_id FROM $this->apps WHERE proposal_id=%d FOR UPDATE",$d['proposal_id']))){$this->fail('contract_proposal_already_applied');}
             // Reserve one recovery review, two requests and its bounded payload/event.
             $this->budget($owner,1,3,self::RECOVERY_BYTES+8192+256+self::MAX_RECEIPT+128);
-            $this->sql($this->db->prepare("INSERT INTO $this->apps VALUES (%d,%d,%d,%s,'',%d,1,2)",$d['proposal_id'],$owner,$input['review_id'],$event['event_id'],self::RECOVERY_BYTES));
+            $this->sql($this->db->prepare("INSERT INTO $this->apps VALUES (%d,%d,%d,%s,'',%d,1,2,NULL,NULL)",$d['proposal_id'],$owner,$input['review_id'],$event['event_id'],self::RECOVERY_BYTES));
             $after=write_source($d,$this->snapshot,$this->schema,$this->clear);
             $this->sql($this->db->prepare("UPDATE $this->apps SET source_after=%s WHERE proposal_id=%d",$after['version'],$d['proposal_id']));
             if($this->sql($this->db->prepare("UPDATE $this->approvals SET consumed_event=%s WHERE review_id=%d AND consumed_event IS NULL AND UNIX_TIMESTAMP()<%d",$event['event_id'],$input['review_id'],$d['expires_at']))!==1){$this->fail($this->now()>=$d['expires_at']?'contract_review_expired':'contract_approval_changed');}
@@ -186,10 +191,63 @@ final class OperatingContract {
             $this->save($owner,$input,$hash,$dto);$this->budget($owner);return $dto;
         });
     }
+    /** Frozen inverse of one committed application; never a forced overwrite. */
+    public function prepareRecovery(array $input){
+        $this->scope('recover');$this->input($input,['proposal_id','locale','expected_source_version','request_id']);
+        $owner=get_current_user_id();$hash=$this->hash('prepare_recovery',$input);
+        return $this->transaction($owner,function()use($input,$owner,$hash){
+            $this->owned($input['proposal_id'],$owner);$prior=$this->replay($owner,$input,$hash);if($prior!==null){return $prior;}
+            $app=$this->row($this->db->prepare("SELECT * FROM $this->apps WHERE proposal_id=%d AND owner_id=%d FOR UPDATE",$input['proposal_id'],$owner));
+            if(!$app||$app['recovery_event']!==null){$this->fail('contract_application_changed');}
+            if($app['source_after']!==$input['expected_source_version']){$this->fail('contract_source_changed');}
+            $original=$this->review((int)$app['review_id'],$owner,$input['locale']);$d=$original['document'];
+            if($app['recovery_review']!==null){
+                $previous=$this->review((int)$app['recovery_review'],$owner,$input['locale']);
+                if($previous['document']['expires_at']>$this->now()){$this->fail('contract_recovery_review_exists');}
+                // Expired reviews remain immutable and charged; renewal needs real free capacity.
+                $this->budget($owner,1,1,self::MAX_DOCUMENT+192+4096+self::MAX_RECEIPT+128);
+            }
+            $s=($this->snapshot)($d['project_id'],$d['locale'],array_fill_keys(array_keys($d['after']),''),true);
+            if($s['version']!==$app['source_after']||$s['before']!==$d['after']){$this->fail('contract_source_changed');}
+            if(($this->schema)()!==$d['schema_version']){$this->fail('contract_schema_changed');}
+            $created=$this->now();
+            $rd=['format'=>'operating-review-v1','owner_id'=>$owner,'proposal_id'=>$d['proposal_id'],'project_id'=>$d['project_id'],'locale'=>$d['locale'],
+                'operation'=>'recover','application_event'=>$app['event_id'],'application_review_hash'=>$original['hash'],
+                'source_version'=>$s['version'],'schema_version'=>$d['schema_version'],'before'=>$s['before'],'after'=>$d['before'],
+                'created_at'=>$created,'expires_at'=>$created+600];
+            $encoded=json_encode($rd,JSON_THROW_ON_ERROR|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+            if(strlen($encoded)>self::MAX_DOCUMENT){$this->fail('contract_review_full');}
+            // review_id is stored in the row and approval binding, not recursively hashed.
+            $rh=hash('sha256',$encoded);$this->sql($this->db->prepare("INSERT INTO $this->reviews (owner_id,proposal_id,document,review_hash) VALUES (%d,%d,%s,%s)",$owner,$d['proposal_id'],$encoded,$rh));$id=(int)$this->db->insert_id;
+            $this->sql($this->db->prepare("UPDATE $this->apps SET recovery_review=%d,reserved_reviews=0,reserved_requests=1,reserved_bytes=%d WHERE proposal_id=%d",$id,8192+self::MAX_RECEIPT+128,$d['proposal_id']));
+            $dto=['format'=>'operating-review-receipt-v1','review_id'=>$id,'proposal_id'=>$d['proposal_id'],'project_id'=>$d['project_id'],'locale'=>$d['locale'],'review_hash'=>$rh,'expires_at'=>$rd['expires_at']];
+            $this->save($owner,$input,$hash,$dto);$this->budget($owner);return $dto;
+        });
+    }
+    public function recover(array $input){
+        $this->scope('recover');$this->input($input,['review_id','locale','expected_review_hash','request_id']);$this->outside();$this->tables();
+        $owner=get_current_user_id();$hash=$this->hash('recover',$input);$r=$this->review($input['review_id'],$owner,$input['locale'],$input['expected_review_hash']);$d=$r['document'];
+        if($d['operation']!=='recover'){$this->fail('contract_operation_mismatch');}
+        $prior=$this->replay($owner,$input,$hash);if($prior!==null){return $prior;}
+        $event=['event_id'=>hash('sha256','operating|'.$owner.'|'.$input['request_id']),'event_hash'=>$hash,'project_id'=>$d['project_id'],'operation'=>'recover'];
+        return $this->journal->record($event,function()use($owner,$input,$hash,$event){
+            $this->ownerLock($owner);$r=$this->review($input['review_id'],$owner,$input['locale'],$input['expected_review_hash']);$d=$r['document'];$d['review_id']=$input['review_id'];$this->current($d);
+            $approval=$this->row($this->db->prepare("SELECT * FROM $this->approvals WHERE review_id=%d FOR UPDATE",$input['review_id']));
+            if(!$approval){$this->fail('contract_approval_required');}$a=json_decode($approval['document'],true,512,JSON_THROW_ON_ERROR);
+            if($a['review_hash']!==$input['expected_review_hash']||$a['executor_id']!==$owner||$a['actor_id']===$owner||$a['actor_id']!==(int)$approval['actor_id']||$a['approved_at']<$d['created_at']||$a['approved_at']>=$d['expires_at']){$this->fail('contract_approval_invalid');}
+            if($approval['consumed_event']!==null){$this->fail('contract_approval_consumed');}
+            $after=write_source($d,$this->snapshot,$this->schema,$this->clear);
+            if($this->sql($this->db->prepare("UPDATE $this->approvals SET consumed_event=%s WHERE review_id=%d AND consumed_event IS NULL AND UNIX_TIMESTAMP()<%d",$event['event_id'],$input['review_id'],$d['expires_at']))!==1){$this->fail($this->now()>=$d['expires_at']?'contract_review_expired':'contract_approval_changed');}
+            if($this->sql($this->db->prepare("UPDATE $this->apps SET recovery_event=%s,reserved_reviews=0,reserved_requests=0,reserved_bytes=8192 WHERE proposal_id=%d AND recovery_review=%d AND recovery_event IS NULL",$event['event_id'],$d['proposal_id'],$input['review_id']))!==1){$this->fail('contract_application_changed');}
+            $dto=['format'=>'operating-recovery-receipt-v1','event_id'=>$event['event_id'],'application_event'=>$d['application_event'],'review_id'=>$input['review_id'],'proposal_id'=>$d['proposal_id'],'project_id'=>$d['project_id'],'locale'=>$d['locale'],
+                'content_state'=>'recovered','source_version'=>$after['version'],'effect_state_at_commit'=>'pending'];
+            $this->save($owner,$input,$hash,$dto);$this->budget($owner);return $dto;
+        });
+    }
     public function effectStatus($proposalId,$locale){
-        $this->scope();$this->input(['proposal_id'=>$proposalId,'locale'=>$locale],['proposal_id','locale']);$owner=get_current_user_id();$this->owned($proposalId,$owner);
+        $this->readScope();$this->input(['proposal_id'=>$proposalId,'locale'=>$locale],['proposal_id','locale']);$owner=get_current_user_id();$this->owned($proposalId,$owner);
         $app=$this->row($this->db->prepare("SELECT * FROM $this->apps WHERE proposal_id=%d AND owner_id=%d",$proposalId,$owner));if(!$app){$this->fail('contract_not_found');}
-        $review=$this->review((int)$app['review_id'],$owner,$locale);$effect=$this->journal->effect($app['event_id']);if(!$effect){$this->fail('contract_effect_unavailable');}
-        return ['format'=>'operating-effect-status-v1','event_id'=>$app['event_id'],'proposal_id'=>$proposalId,'locale'=>$locale,'effect_state'=>$effect['state'],'attempts'=>(int)$effect['attempts']];
+        $review=$this->review((int)$app['review_id'],$owner,$locale);$eventId=$app['recovery_event']??$app['event_id'];$effect=$this->journal->effect($eventId);if(!$effect){$this->fail('contract_effect_unavailable');}
+        return ['format'=>'operating-effect-status-v1','event_id'=>$eventId,'proposal_id'=>$proposalId,'locale'=>$locale,'effect_state'=>$effect['state'],'attempts'=>(int)$effect['attempts']];
     }
 }

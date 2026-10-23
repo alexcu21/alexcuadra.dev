@@ -53,6 +53,57 @@ function deferred_publish($projectId, callable $write) {
     }
 }
 
+/** Pinned core wpdb + mysqli only. Never let core replay a query on a new session. */
+function owned_transaction($db, callable $work) {
+    local_wp_guard();
+    if($db!==($GLOBALS['wpdb']??null)||get_class($db)!=='wpdb'){throw new \RuntimeException('source_connection_mismatch');}
+    $handle=(new \ReflectionProperty(\wpdb::class,'dbh'))->getValue($db);
+    if(!$handle instanceof \mysqli){throw new \RuntimeException('source_mysqli_required');}
+    $mode=(new \mysqli_driver)->report_mode;$started=false;$committed=false;$guard=null;
+    $assert=static function()use($db,$handle){
+        \mysqli_report(MYSQLI_REPORT_ERROR|MYSQLI_REPORT_STRICT);
+        if($db!==($GLOBALS['wpdb']??null)||(new \ReflectionProperty(\wpdb::class,'dbh'))->getValue($db)!==$handle){throw new \RuntimeException('source_transaction_lost');}
+        $result=\mysqli_query($handle,'SELECT @@in_transaction');$row=\mysqli_fetch_row($result);\mysqli_free_result($result);
+        if(!$row||(int)$row[0]!==1){throw new \RuntimeException('source_transaction_lost');}
+    };
+    $guard=static function($sql)use($assert,&$guard){
+        global $wp_filter;
+        // Other connections can reset PHP's process-wide mysqli reporting mode.
+        // Reassert before every wpdb query, and refuse a later filter in this slot.
+        \mysqli_report(MYSQLI_REPORT_ERROR|MYSQLI_REPORT_STRICT);
+        $entries=$wp_filter['query']->callbacks[PHP_INT_MAX]??[];$last=end($entries);
+        if(!$last||$last['function']!==$guard){throw new \RuntimeException('source_query_guard_changed');}
+        $assert();
+        // Closed SQL verb admission excludes implicit/explicit commit statements.
+        // SET timestamp is solely the local expiry-test clock; no other SET is admitted.
+        if(!preg_match('/^\s*(?:SELECT|INSERT|UPDATE|DELETE|REPLACE|SHOW|DESCRIBE|EXPLAIN)\b/i',$sql)
+            && !preg_match('/^\s*SET\s+timestamp\s*=/i',$sql)){throw new \RuntimeException('source_transaction_control_denied');}
+        return $sql;
+    };
+    try{
+        \mysqli_report(MYSQLI_REPORT_ERROR|MYSQLI_REPORT_STRICT);
+        $r=\mysqli_query($handle,'SELECT @@in_transaction');$row=\mysqli_fetch_row($r);\mysqli_free_result($r);
+        if(!$row||(int)$row[0]!==0){throw new \RuntimeException('outer_transaction');}
+        \mysqli_query($handle,'START TRANSACTION');$started=true;
+        add_filter('query',$guard,PHP_INT_MAX,1);
+        $value=$work();$guard('SELECT 1');
+        if(\mysqli_query($handle,'COMMIT')!==true){throw new \RuntimeException('source_transaction_lost');}
+        $committed=true;return $value;
+    }catch(\mysqli_sql_exception $e){
+        if(in_array($e->getCode(),[2006,2013,2055],true)){throw new \RuntimeException('source_transaction_lost',0,$e);}
+        throw $e;
+    }finally{
+        remove_filter('query',$guard,PHP_INT_MAX);
+        try{
+            if($started&&!$committed){
+                \mysqli_report(MYSQLI_REPORT_ERROR|MYSQLI_REPORT_STRICT);
+                // Raw original handle only: rollback must never reconnect.
+                try{\mysqli_query($handle,'ROLLBACK');}catch(\Throwable $ignored){}
+            }
+        }finally{\mysqli_report($mode);}
+    }
+}
+
 final class MariaDbOperation {
     private $db;
     private $events;
@@ -64,7 +115,7 @@ final class MariaDbOperation {
         if (!preg_match('/^[a-zA-Z0-9_]+$/D',$db->prefix)) { throw new \RuntimeException('invalid_prefix'); }
     }
     private function query($sql) {
-        $n=$this->db->query($sql); if ($n===false) { throw new \RuntimeException('experiment_sql_failed'); } return $n;
+        try{$n=$this->db->query($sql);}catch(\mysqli_sql_exception $e){if(in_array($e->getCode(),[2006,2013,2055],true)){throw $e;}throw new \RuntimeException('experiment_sql_failed',0,$e);} if ($n===false) { throw new \RuntimeException('experiment_sql_failed'); } return $n;
     }
     private function outside() {
         local_wp_guard();
@@ -107,9 +158,8 @@ final class MariaDbOperation {
         $this->outside(); $this->schema();
         foreach(['event_id','event_hash'] as $key){if(!is_string($event[$key]??null)||!preg_match('/^[a-f0-9]{64}$/D',$event[$key])){throw new \RuntimeException('invalid_event');}}
         if(!is_int($event['project_id']??null)||$event['project_id']<1||!in_array($event['operation']??null,['apply','recover'],true)){throw new \RuntimeException('invalid_event');}
-        $id=$event['project_id']; $committed=false;
-        $this->query('START TRANSACTION');
-        try {
+        $id=$event['project_id'];
+        try {return owned_transaction($this->db,function()use($event,$write,$id){
             $prior=$this->db->get_row($this->db->prepare("SELECT * FROM $this->events WHERE event_id=%s FOR UPDATE",$event['event_id']),ARRAY_A);
             if($this->db->last_error){throw new \RuntimeException('experiment_sql_failed');}
             if($prior){
@@ -123,9 +173,8 @@ final class MariaDbOperation {
             if(strlen($encoded)>65536){throw new \RuntimeException('receipt_too_large');}
             $this->query($this->db->prepare("UPDATE $this->events SET receipt=%s WHERE event_id=%s",$encoded,$event['event_id']));
             $this->query($this->db->prepare("INSERT INTO $this->effects (event_id,project_id,state,available_at) VALUES (%s,%d,'pending',UNIX_TIMESTAMP())",$event['event_id'],$id));
-            $this->query('COMMIT'); $committed=true; return $receipt;
-        } finally {
-            if(!$committed){$this->db->query('ROLLBACK');}
+            return $receipt;
+        });} finally {
             clean_post_cache($id); wp_cache_delete($id,'post_meta');
             if(function_exists('acf_flush_value_cache')){acf_flush_value_cache($id,'project_tagline');}
             if($this->invalidate!==null){($this->invalidate)($id);}
