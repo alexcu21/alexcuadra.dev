@@ -1,0 +1,15 @@
+# Auditoría operativa por propietario y lotes — 23 octubre
+
+131 controles del contrato y132 regresiones pasan:263 integraciones;11 casos nuevos. Perfil completo y datos sintéticos, rc.2/WP/MariaDB/ACF/Polylang/LiteSpeed reales.
+
+Métodos CLI exclusivos auditOwner/auditBatch: manage_options+scope de aprobación, sin ability/REST/GraphQL ni cambios de identidad. Cada propietario usa el bloqueo rc.2 y transacción protegida para leer hasta8 revisiones,64 requests y8 aplicaciones; exceder límites cierra la auditoría. Comprueba también presupuesto incluyendo reservas. Devuelve solo conteos, sin cuerpos, propuestas ni SQL.
+
+Reconstruye los inputs de prepare/prepareRecovery/apply/recover desde revisión+request_id, recalcula request_hash y el event_id derivado de propietario/clave. Contrasta el event_hash, la igualdad del recibo de request/journal y el Project/operación del efecto. Cada revisión debe tener un recibo de preparación único; la aprobación debe estar sin consumir o ligada al evento de ejecución correspondiente. Toda ejecución debe pertenecer a una aplicación.
+
+Comprueba propietario/estado/tipo de la propuesta privada, huella de revisión, registro de aplicación y source_after. Las recuperaciones, incluidas revisiones caducadas retenidas, deben ser la inversa exacta de los campos de la aplicación y enlazar evento/hash/esquema originales. No compara la fuente pública actual con una revisión histórica ni exige que una propuesta actualmente conserve la misma versión: pueden existir cambios posteriores legítimos.
+
+Batch recorre IDs ordenados con cursor y máximo10 propietarios. Comprueba globalmente aprobaciones sin revisión, efectos sin evento y eventos con formato de recibo operativo sin aplicación. No atribuye los eventos genéricos de los fixtures del adaptador a este contrato. Cada propietario tiene snapshot propio; el recorrido no constituye un snapshot global simultáneo. Una aceptación/migración requiere escritores detenidos y recorrer hasta has_more=false; no se ha hecho ese procedimiento en destino. No certifica adulteración por actor DB privilegiado ni una auditoría forense de toda la historia rc.2.
+
+Once casos añadidos: rechazo sin autoridad, cadena completa válida, event_hash y request_hash inconsistentes, recibo de preparación ausente, conservación de fuente/resultados, recuperación renovada válida, límite de lote inválido, huérfanos detectados, lote final y cursor sin duplicados. Solo el fixture retira temporalmente/restaura sus huérfanos inyectados para probar el recorrido válido. El auditor no repara, borra ni exporta.
+
+Pendiente: migración/admisión final reanudable con aceptación en reposo, schema/transporte MCP operativo, export privado, ZIP/manifiesto/preflight/reversión y autorización de instalación/permisos/diff. No hay candidato instalable. Dos ejecuciones completas (sin sumarlas como cobertura) con imágenes cacheadas/red interna reutilizada y WP/DB tmpfs; sin SSH/pulls/puertos/SQL o config real/grants/CMS/Workers/contacto/backups nuevos.32GiB libres al inicio; Docker/swap pueden usar disco. Laboratorios detenidos y recursos previos retenidos.

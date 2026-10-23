@@ -3,6 +3,7 @@
 namespace AlexCuadra\EditorialSourceExperiment;
 use AlexCuadra\EditorialProposals as P;
 require_once __DIR__.'/operating-storage.php';
+require_once __DIR__.'/operating-audit.php';
 
 final class OperatingContract {
     const APPLY='alexcuadra_apply_project_changes';
@@ -245,6 +246,27 @@ final class OperatingContract {
                 'content_state'=>'recovered','source_version'=>$after['version'],'effect_state_at_commit'=>'pending'];
             $this->save($owner,$input,$hash,$dto);$this->budget($owner);return $dto;
         });
+    }
+    public function auditBatch($afterOwner=0,$limit=10){
+        local_wp_guard();if(!defined('WP_CLI')||!WP_CLI||!current_user_can('manage_options')||!current_user_can(self::APPROVE)){$this->fail('contract_operator_required');}
+        if(!is_int($afterOwner)||$afterOwner<0||!is_int($limit)||$limit<1||$limit>10){$this->fail('contract_invalid_input');}
+        $this->outside();$this->tables();$this->journal->schema();
+        $orphan=$this->db->get_var("SELECT COUNT(*) FROM $this->approvals a LEFT JOIN $this->reviews r ON r.review_id=a.review_id WHERE r.review_id IS NULL");
+        if($orphan===null||$this->db->last_error||(int)$orphan!==0){$this->fail('contract_audit_orphan');}
+        $orphan=$this->db->get_var("SELECT COUNT(*) FROM {$this->db->prefix}ac_exp_source_effects f LEFT JOIN {$this->db->prefix}ac_exp_source_events e ON e.event_id=f.event_id WHERE e.event_id IS NULL");
+        if($orphan===null||$this->db->last_error||(int)$orphan!==0){$this->fail('contract_audit_orphan');}
+        $orphan=$this->db->get_var("SELECT COUNT(*) FROM {$this->db->prefix}ac_exp_source_events e LEFT JOIN $this->apps a ON e.event_id=a.event_id OR e.event_id=a.recovery_event WHERE JSON_UNQUOTE(JSON_EXTRACT(IF(JSON_VALID(e.receipt),e.receipt,'{}'),'$.format')) IN ('operating-application-receipt-v1','operating-recovery-receipt-v1') AND a.proposal_id IS NULL");
+        if($orphan===null||$this->db->last_error||(int)$orphan!==0){$this->fail('contract_audit_orphan');}
+        $owners=$this->db->get_col($this->db->prepare("SELECT owner_id FROM (SELECT owner_id FROM $this->reviews UNION SELECT owner_id FROM $this->requests UNION SELECT owner_id FROM $this->apps) owners WHERE owner_id>%d ORDER BY owner_id LIMIT %d",$afterOwner,$limit+1));
+        if($this->db->last_error){$this->fail('contract_sql_failed');}$more=count($owners)>$limit;$out=[];
+        foreach(array_slice($owners,0,$limit) as $owner){if(!operating_sql_uint($owner)||(int)$owner<1){$this->fail('contract_audit_inconsistent');}$out[]=$this->auditOwner((int)$owner);$afterOwner=(int)$owner;}
+        return ['format'=>'operating-audit-batch-v1','owners'=>$out,'after_owner'=>$afterOwner,'has_more'=>$more,'snapshot'=>'per-owner'];
+    }
+    public function auditOwner($owner){
+        local_wp_guard();if(!defined('WP_CLI')||!WP_CLI||!current_user_can('manage_options')||!current_user_can(self::APPROVE)){$this->fail('contract_operator_required');}
+        if(!is_int($owner)||$owner<1){$this->fail('contract_invalid_input');}
+        $this->outside();$this->tables();$this->journal->schema();
+        return $this->transaction($owner,function()use($owner){$result=audit_operating_owner($this->db,$owner);$this->budget($owner);return $result;});
     }
     public function effectStatus($proposalId,$locale){
         $this->readScope();$this->tables();$this->input(['proposal_id'=>$proposalId,'locale'=>$locale],['proposal_id','locale']);$owner=get_current_user_id();$this->owned($proposalId,$owner);

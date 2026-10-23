@@ -1,5 +1,8 @@
 # Ejecución del rediseño
 
+**23 octubre — auditoría operativa por propietario/lotes:**131 controles de contrato+132 regresiones,263 integraciones correctas;11 casos nuevos. Reconstrucción de inputs/request_hash/event_id, vínculo journal/recibos/aprobaciones/aplicación y recuperación inversa; huérfanos detectados y cursor máximo10 propietarios. Solo CLI operador, sin reparación/export; snapshot por propietario, aceptación global exige escritores detenidos. [QA/límites](qa/MCP_OPERATING_AUDIT_2026-10-23.md). Próximo: migración/admisión final, MCP/export/paquete/preflight/reversión y aceptación autorizada. Sin SSH/CMS/grants/pulls/backups nuevos; laboratorio detenido;32GiB libres al inicio.
+
+
 **23 octubre — journal/efectos y relaciones al consultar estado:**120 controles de contrato+132 regresiones,252 integraciones correctas.9 casos nuevos rechazan registros de efecto, recibos y Projects/revisiones cruzados; no hay llamadas de caché por efectos dañados. Estado contrasta aplicación/evento/revisión/aprobación consumida/recibo. [QA y límites](qa/MCP_OPERATING_JOURNAL_2026-10-23.md). Pendiente auditoría global de relaciones (requests/event_hash/recibos/orígenes), migración/admisión final, MCP/export/candidato/preflight/reversión y aceptación autorizada. Sin SSH/CMS/grants/pulls/backup nuevos; laboratorio detenido y red interna reutilizada.32GiB libres al inicio.
 
 
