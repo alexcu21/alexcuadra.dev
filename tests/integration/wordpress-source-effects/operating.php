@@ -171,5 +171,18 @@ $controlBefore=op_rows($pair['en']);$reportBefore=(new mysqli_driver)->report_mo
 op_fail(function()use($wpdb,$pair){AlexCuadra\EditorialSourceExperiment\owned_transaction($wpdb,function()use($wpdb,$pair){update_post_meta($pair['en'],'forbidden_commit','must rollback');$wpdb->query('SET @@autocommit=1');});},'source_transaction_control_denied');
 op_check(op_rows($pair['en'])===$controlBefore,'intercepted callback commit cannot leak a write');
 op_check((new mysqli_driver)->report_mode===$reportBefore&&($GLOBALS['wp_filter']['query']->callbacks??[])===$queryCallbacks,'transaction driver mode restored after rejected control');
+// Storage drift is rejected before exposing a review or starting a source write.
+op_user(1);$rt=$wpdb->prefix.'ac_exp_operating_reviews';
+$wpdb->query("ALTER TABLE $rt ADD unexpected INT NULL");try{op_fail(fn()=>$c->inspect($rr['review_id'],'en'),'contract_schema_changed');}finally{$wpdb->query("ALTER TABLE $rt DROP unexpected");}
+$wpdb->query("ALTER TABLE $rt ADD KEY unexpected(owner_id,proposal_id)");try{op_fail(fn()=>$c->inspect($rr['review_id'],'en'),'contract_schema_changed');}finally{$wpdb->query("ALTER TABLE $rt DROP KEY unexpected");}
+$wpdb->query("ALTER TABLE $rt ADD CONSTRAINT unexpected_check CHECK(owner_id>0)");try{op_fail(fn()=>$c->inspect($rr['review_id'],'en'),'contract_schema_changed');}finally{$wpdb->query("ALTER TABLE $rt DROP CONSTRAINT unexpected_check");}
+$wpdb->query("ALTER TABLE $rt MODIFY document LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL");try{op_fail(fn()=>$c->inspect($rr['review_id'],'en'),'contract_schema_changed');}finally{$wpdb->query("ALTER TABLE $rt MODIFY document LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL");}
+$stored=$wpdb->get_row($wpdb->prepare("SELECT document,review_hash FROM $rt WHERE review_id=%d",$rr['review_id']),ARRAY_A);
+foreach(['unknown','wrong_type','wrong_fields','wrong_expiry'] as $case){
+    $bad=json_decode($stored['document'],true);
+    if($case==='unknown'){$bad['force']=true;}elseif($case==='wrong_type'){$bad['owner_id']=(string)$bad['owner_id'];}elseif($case==='wrong_fields'){unset($bad['before']['body_html']);}else{$bad['expires_at']++;}
+    $encoded=wp_json_encode($bad);$wpdb->query($wpdb->prepare("UPDATE $rt SET document=%s,review_hash=%s WHERE review_id=%d",$encoded,hash('sha256',$encoded),$rr['review_id']));
+    try{op_fail(fn()=>$c->inspect($rr['review_id'],'en'),'contract_review_corrupt');}finally{$wpdb->query($wpdb->prepare("UPDATE $rt SET document=%s,review_hash=%s WHERE review_id=%d",$stored['document'],$stored['review_hash'],$rr['review_id']));}
+}
 op_check(get_role('subscriber')->capabilities===$roleBefore,'subscriber global role unchanged');
 echo 'SOURCE_OPERATING_CONTRACT_RESULT='.wp_json_encode(['checks'=>$GLOBALS['operating_checks'],'passed'=>true,'realProposalsRc2'=>true,'independentCliApproval'=>true,'approvalSourceReceiptIntentAtomic'=>true,'proposalReceiptsUnchanged'=>true,'recoveryCapacityReserved'=>true,'recoveryExecutorImplemented'=>true,'dbDisconnectRollbackVerified'=>true,'automaticReconnectInsideTransaction'=>false,'abilitiesRegistered'=>false,'perOwnerOperatingLimits'=>['reviews'=>8,'requests'=>64,'bytes'=>8388608],'rc2BudgetSeparate'=>true]).PHP_EOL;

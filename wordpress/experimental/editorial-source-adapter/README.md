@@ -78,3 +78,7 @@ El contrato completo pasa94 controles, además de132 regresiones. prepareRecover
 El runner admite AC_SOURCE_EFFECTS_REUSE_NETWORK únicamente para una red ac-source-effects propia, internal/bridge/local, con etiqueta Compose correspondiente y cero endpoints activos. Evita ampliar el pool agotado sin podar recursos. Imágenes cacheadas, DB/WP tmpfs, sin puertos, pulls o SQL/config real. No elimina redes/volúmenes. Almacenamiento del volumen35→33GiB durante el incremento (sin atribución exclusiva); registros privados160KiB, Docker/swap pueden usar disco.
 
 Pendiente: migración/decoders/admisión estrictos, schemas/transporte MCP, export privado y candidato/preflight/reversión. No hay paquete instalable nuevo ni autorización de scopes/edición reales.
+
+## Admisión de almacenamiento y revisión
+
+102 controles operativos+132 regresiones pasan. operating-storage.php valida columnas/índices/defaults/tipos/constraints y collation de las cuatro tablas; decoder cerrado para revisiones apply/recover.8 casos nuevos cubren alteraciones reales de esquema y documentos inválidos con hash consistente. Instalación local nueva con LONGTEXT utf8mb4_bin; esquemas previos incompatibles se rechazan, no se migran automáticamente. No es candidato final: faltan decoders de aprobaciones/recibos/app/effect, migración/admisión final, MCP/export/paquete/preflight/reversión y aceptación autorizada.

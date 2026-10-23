@@ -2,6 +2,7 @@
 /** Local operational-contract integration. No plugin hooks, abilities or live migration. */
 namespace AlexCuadra\EditorialSourceExperiment;
 use AlexCuadra\EditorialProposals as P;
+require_once __DIR__.'/operating-storage.php';
 
 final class OperatingContract {
     const APPLY='alexcuadra_apply_project_changes';
@@ -52,6 +53,7 @@ final class OperatingContract {
         if(!$row){$this->fail('contract_owner_not_ready');}
     }
     private function tables(){
+        operating_storage_schema($this->db);
         foreach([$this->reviews,$this->approvals,$this->requests,$this->apps,$this->db->prefix.'ac_proposal_owners',$this->db->prefix.'ac_proposal_requests'] as $table){
             $engine=$this->db->get_var($this->db->prepare('SELECT ENGINE FROM information_schema.TABLES WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME=%s',$table));
             if($this->db->last_error||$engine!=='InnoDB'){$this->fail('contract_transactional_storage_required');}
@@ -59,9 +61,9 @@ final class OperatingContract {
     }
     public function install(){
         local_wp_guard();if(!defined('WP_CLI')||!WP_CLI||!current_user_can('manage_options')){$this->fail('contract_operator_required');}$this->outside();
-        $this->sql("CREATE TABLE $this->reviews (review_id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,owner_id BIGINT UNSIGNED NOT NULL,proposal_id BIGINT UNSIGNED NOT NULL,document LONGTEXT NOT NULL,review_hash VARBINARY(64) NOT NULL,KEY owner_id(owner_id)) ENGINE=InnoDB");
-        $this->sql("CREATE TABLE $this->approvals (review_id BIGINT UNSIGNED PRIMARY KEY,actor_id BIGINT UNSIGNED NOT NULL,document LONGTEXT NOT NULL,consumed_event VARBINARY(64) NULL) ENGINE=InnoDB");
-        $this->sql("CREATE TABLE $this->requests (owner_id BIGINT UNSIGNED NOT NULL,request_id VARBINARY(32) NOT NULL,request_hash VARBINARY(64) NOT NULL,response LONGTEXT NOT NULL,PRIMARY KEY(owner_id,request_id)) ENGINE=InnoDB");
+        $this->sql("CREATE TABLE $this->reviews (review_id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,owner_id BIGINT UNSIGNED NOT NULL,proposal_id BIGINT UNSIGNED NOT NULL,document LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,review_hash VARBINARY(64) NOT NULL,KEY owner_id(owner_id)) ENGINE=InnoDB");
+        $this->sql("CREATE TABLE $this->approvals (review_id BIGINT UNSIGNED PRIMARY KEY,actor_id BIGINT UNSIGNED NOT NULL,document LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,consumed_event VARBINARY(64) NULL) ENGINE=InnoDB");
+        $this->sql("CREATE TABLE $this->requests (owner_id BIGINT UNSIGNED NOT NULL,request_id VARBINARY(32) NOT NULL,request_hash VARBINARY(64) NOT NULL,response LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,PRIMARY KEY(owner_id,request_id)) ENGINE=InnoDB");
         $this->sql("CREATE TABLE $this->apps (proposal_id BIGINT UNSIGNED PRIMARY KEY,owner_id BIGINT UNSIGNED NOT NULL,review_id BIGINT UNSIGNED NOT NULL,event_id VARBINARY(64) NOT NULL,source_after VARBINARY(64) NOT NULL,reserved_bytes INT UNSIGNED NOT NULL,reserved_reviews INT UNSIGNED NOT NULL,reserved_requests INT UNSIGNED NOT NULL,recovery_review BIGINT UNSIGNED NULL,recovery_event VARBINARY(64) NULL,KEY owner_id(owner_id)) ENGINE=InnoDB");
     }
     private function transaction($owner,callable $fn){
@@ -98,7 +100,7 @@ final class OperatingContract {
     }
     private function review($id,$owner,$locale,$hash=null){
         $r=$this->row($this->db->prepare("SELECT * FROM $this->reviews WHERE review_id=%d AND owner_id=%d FOR UPDATE",$id,$owner));
-        if(!$r){$this->fail('contract_not_found');}if(strlen($r['document'])>self::MAX_DOCUMENT){$this->fail('contract_review_corrupt');}$d=json_decode($r['document'],true,512,JSON_THROW_ON_ERROR);
+        if(!$r){$this->fail('contract_not_found');}if(strlen($r['document'])>self::MAX_DOCUMENT){$this->fail('contract_review_corrupt');}$d=decode_operating_review($r['document']);
         if(!is_array($d)||hash('sha256',$r['document'])!==$r['review_hash']||$d['owner_id']!==$owner||$d['proposal_id']!==(int)$r['proposal_id']||$d['format']!=='operating-review-v1'){$this->fail('contract_review_corrupt');}
         if($d['locale']!==$locale){$this->fail('contract_not_found');}
         if($hash!==null&&!hash_equals($r['review_hash'],$hash)){$this->fail('contract_review_changed');}
@@ -139,7 +141,7 @@ final class OperatingContract {
         });
     }
     public function inspect($reviewId,$locale){
-        local_wp_guard();$this->input(['review_id'=>$reviewId,'locale'=>$locale],['review_id','locale']);$owner=get_current_user_id();
+        local_wp_guard();$this->tables();$this->input(['review_id'=>$reviewId,'locale'=>$locale],['review_id','locale']);$owner=get_current_user_id();
         if(defined('WP_CLI')&&WP_CLI&&current_user_can('manage_options')&&current_user_can(self::APPROVE)){
             $r=$this->row($this->db->prepare("SELECT owner_id FROM $this->reviews WHERE review_id=%d",$reviewId));if(!$r){$this->fail('contract_not_found');}$owner=(int)$r['owner_id'];
         }else{$this->readScope();}
@@ -245,7 +247,7 @@ final class OperatingContract {
         });
     }
     public function effectStatus($proposalId,$locale){
-        $this->readScope();$this->input(['proposal_id'=>$proposalId,'locale'=>$locale],['proposal_id','locale']);$owner=get_current_user_id();$this->owned($proposalId,$owner);
+        $this->readScope();$this->tables();$this->input(['proposal_id'=>$proposalId,'locale'=>$locale],['proposal_id','locale']);$owner=get_current_user_id();$this->owned($proposalId,$owner);
         $app=$this->row($this->db->prepare("SELECT * FROM $this->apps WHERE proposal_id=%d AND owner_id=%d",$proposalId,$owner));if(!$app){$this->fail('contract_not_found');}
         $review=$this->review((int)$app['review_id'],$owner,$locale);$eventId=$app['recovery_event']??$app['event_id'];$effect=$this->journal->effect($eventId);if(!$effect){$this->fail('contract_effect_unavailable');}
         return ['format'=>'operating-effect-status-v1','event_id'=>$eventId,'proposal_id'=>$proposalId,'locale'=>$locale,'effect_state'=>$effect['state'],'attempts'=>(int)$effect['attempts']];

@@ -14,7 +14,7 @@ Límite: se reprodujo código completo y sync vacío observado, no opciones priv
 
 ## Trabajo pendiente para edición operativa
 
-Aplicación, revisión, aprobación CLI independiente y recuperación consumible integradas sobre rc.2:94 controles de contrato+132 regresiones. Reserva convertida aun al límite de revisiones, renovación retenida/cobrada y protección verificada ante cuatro cortes de conexión. [Contrato actual](WORDPRESS_MCP_OPERATING_CONTRACT.md), [QA/límites](qa/MCP_OPERATING_RECOVERY_2026-10-23.md). No hay paquete ni scopes reales nuevos. Falta formalizar y probar el candidato. Ambas fases anteriores se conservan como evidencia; no repetirlas sin cambio o fallo concreto.
+Aplicación, revisión, aprobación CLI independiente y recuperación consumible integradas sobre rc.2:102 controles de contrato+132 regresiones. Reserva convertida aun al límite de revisiones, renovación retenida/cobrada y protección verificada ante cuatro cortes de conexión. [Contrato actual](WORDPRESS_MCP_OPERATING_CONTRACT.md), [QA/límites](qa/MCP_OPERATING_RECOVERY_2026-10-23.md). No hay paquete ni scopes reales nuevos. Admisión exacta de cuatro tablas y decoder de revisiones cerrados. Faltan decoders finales de aprobaciones/recibos/app/effect y migración/admisión final, transporte MCP/export/paquete/preflight/reversión. [QA actual](qa/MCP_OPERATING_STORAGE_2026-10-23.md). Ambas fases anteriores se conservan como evidencia; no repetirlas sin cambio o fallo concreto.
 
 | Entrega pendiente | Iteraciones estimadas | Resultado verificable |
 | --- | --- | --- |

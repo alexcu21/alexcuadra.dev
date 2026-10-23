@@ -1,6 +1,6 @@
 # Contrato operativo de aplicación — integración local
 
-Estado23 octubre2026: integración ejecutable local, sin plugin/abilities nuevas ni instalación. `OperatingContract` enlaza con Proposals0.1.0-rc.2 y el adaptador WP/MariaDB ya verificado. No cambia el plugin instalado, sus recibos, payloads o cuotas.94 controles de contrato pasan junto con132 regresiones del perfil completo. [QA de recuperación y desconexión](qa/MCP_OPERATING_RECOVERY_2026-10-23.md). Las45 pruebas previas del writer cubren también UTF-8.
+Estado23 octubre2026: integración ejecutable local, sin plugin/abilities nuevas ni instalación. `OperatingContract` enlaza con Proposals0.1.0-rc.2 y el adaptador WP/MariaDB ya verificado. No cambia el plugin instalado, sus recibos, payloads o cuotas.102 controles de contrato pasan junto con132 regresiones del perfil completo. [QA de recuperación y desconexión](qa/MCP_OPERATING_RECOVERY_2026-10-23.md). Las45 pruebas previas del writer cubren también UTF-8.
 
 ## Autoridad y revisión
 
@@ -34,7 +34,7 @@ Conservar todos los registros, respaldo y archivos hasta validar instalación/re
 
 ## Qué falta y siguiente entrega
 
-1. Formalizar esquema/decodificación/versiones y admisión para candidato. Las tablas actuales son explícitamente experimentales y su comprobación nueva todavía se limita a InnoDB; no son la migración final estricta.
+1. Formalizar esquema/decodificación/versiones y admisión para candidato. Las cuatro tablas tienen admisión estricta y decoder cerrado de revisiones; faltan decoders de aprobaciones/recibos/app/effect y migración final/reanudable. [QA de almacenamiento](qa/MCP_OPERATING_STORAGE_2026-10-23.md).
 2. Registro/schema MCP acotado, export privado, preflight de configuración admitida, reversión y ZIP/manifiesto probados. Las pruebas HTTP del adaptador siguen usando fixtures; no son aún aceptación del nuevo contrato por MCP.
 3. Instalación y diff público específicamente autorizados, SSH ejecutado por Alex y aceptación real. Ninguna edición real se autoriza por esta integración.
 
