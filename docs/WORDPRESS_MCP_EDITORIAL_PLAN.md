@@ -18,6 +18,8 @@ Inventario actual: `core/get-site-info`, `core/get-user-info`, `core/get-environ
 
 ## Incrementos de esta etapa
 
+Actualización23 octubre posterior: [HTTP/MariaDB real](qa/MCP_SOURCE_EFFECTS_HTTP_2026-10-23.md) pasa46 checks y58 CLI,4 SIGKILL y cabecera nativa sin escrituras por retry. [Cierre y estimación](WORDPRESS_MCP_SOURCE_REMAINING.md): perfil completo/bilingüe pendiente,1–2 iteraciones para adaptador; contrato operativo/candidato/instalación autorizada4–6 en total. No scopes o escritura reales implícitos.
+
 Actualización23 octubre posterior: [58 comprobaciones WP/MariaDB reales](qa/MCP_SOURCE_EFFECTS_MARIADB_2026-10-23.md), dos plugins verificados, misma conexión WP/ACF+recibo/intención y wrapper LiteSpeed exacto. CLI/sintético; no entrega hosting ni perfil completo/HTTP/fallos de proceso MariaDB. Próximo: cubrir esos contextos y autorizador/cuotas antes de candidato; sin instalación/permisos nuevos.
 
 Actualización23 octubre posterior: protocolo persistente de efectos probado en SQLite real,54 checks y39 regresiones del writer. [QA](qa/MCP_EFFECT_JOURNAL_SQLITE_2026-10-23.md). Commit/rollback, procesos muertos, leases y replay probados con fixtures, sin WP/MariaDB real. Próximo: misma conexión MariaDB y envoltorio LiteSpeed en copia aislada; no conectar SQLite a WordPress ni habilitar apply/recover reales.

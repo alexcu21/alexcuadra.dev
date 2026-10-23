@@ -43,8 +43,8 @@ def main():
     for network in settings['networks'].values():
         network.pop('name',None)
         if not network.get('internal'): raise ValueError('INTERNAL_NETWORK_REQUIRED')
-    env = {'WORDPRESS_DB_HOST':'db','WORDPRESS_DB_USER':'wordpress','WORDPRESS_DB_PASSWORD':'synthetic-proposals-only','WORDPRESS_DB_NAME':'wordpress',
-           'WORDPRESS_CONFIG_EXTRA': "define('WP_ENVIRONMENT_TYPE','local');define('WP_HOME','http://wordpress');define('WP_SITEURL','http://wordpress');define('AC_EDITORIAL_SOURCE_EXPERIMENT',true);define('DISABLE_WP_CRON',true);define('WP_HTTP_BLOCK_EXTERNAL',true);define('AUTOMATIC_UPDATER_DISABLED',true);define('DISALLOW_FILE_MODS',true);"}
+    env = {'AC_SOURCE_EFFECTS_HTTP':'synthetic-v1','WORDPRESS_DB_HOST':'db','WORDPRESS_DB_USER':'wordpress','WORDPRESS_DB_PASSWORD':'synthetic-proposals-only','WORDPRESS_DB_NAME':'wordpress',
+           'WORDPRESS_CONFIG_EXTRA': "define('WP_ENVIRONMENT_TYPE','local');define('WP_HOME','http://wordpress');define('WP_SITEURL','http://wordpress');define('AC_EDITORIAL_SOURCE_EXPERIMENT',true);define('DISABLE_WP_CRON',true);define('WP_HTTP_BLOCK_EXTERNAL',true);define('WP_ACCESSIBLE_HOSTS','wordpress');define('AUTOMATIC_UPDATER_DISABLED',true);define('DISALLOW_FILE_MODS',true);"}
     mounts = [{'type':'volume','source':'wp-data','target':'/var/www/html'},
               {'type':'bind','source':str(HERE),'target':'/integration','read_only':True},
               {'type':'bind','source':str(ROOT/'wordpress/experimental/editorial-source-adapter'),'target':'/experiment','read_only':True},
@@ -72,7 +72,12 @@ def main():
         marker='SOURCE_EFFECTS_MARIADB_RESULT='
         results=[json.loads(line[len(marker):]) for line in output.splitlines() if line.startswith(marker)]
         if len(results)!=1 or results[0].get('passed') is not True or results[0].get('checks',0)<45: raise ValueError('MISSING_RESULT')
-        report={'format':'editorial-source-effects-mariadb-v1','result':results[0],'verifiedSourcePlugins':verified,'hostPorts':False,'externalNetwork':False,'sshExecuted':False,'sourceDatabaseImported':False}
+        http_output=cli('eval-file','/integration/transport.php')
+        http_marker='SOURCE_EFFECTS_HTTP_RESULT='
+        http_results=[json.loads(line[len(http_marker):]) for line in http_output.splitlines() if line.startswith(http_marker)]
+        if len(http_results)!=1 or http_results[0].get('passed') is not True or http_results[0].get('checks',0)<30:
+            raise ValueError('MISSING_HTTP_RESULT')
+        report={'httpAndProcessDeath':http_results[0],'format':'editorial-source-effects-mariadb-v1','result':results[0],'verifiedSourcePlugins':verified,'hostPorts':False,'externalNetwork':False,'sshExecuted':False,'sourceDatabaseImported':False}
         (work/'result.json').write_text(json.dumps(report,indent=2)+'\n')
         print(json.dumps(report,sort_keys=True),flush=True)
     finally:

@@ -11,3 +11,13 @@ Los tests no crean ni activan plugin editorial, usuarios de CMS real, capabiliti
 Resultado y logs quedan en el directorio privado anunciado. Solo result.json contiene metadatos publicables. La primera ejecución paró por un indicador de caché null (resuelto comprobando backend core); el contador inicialmente local a eval-file se corrigió antes de aceptar el informe. No se publica contenido ni logs privados en Git.
 
 Límites: CLI con dos plugins y opciones sintéticas; no perfil completo ni propagación Polylang, HTTP ni entrega de caché del hosting. Las pruebas de proceso muerto existentes son SQLite, no MariaDB. No afirmar atomicidad del caché externo ni certificación de otras callbacks de plugins a partir de este ensayo.
+
+## Extensión HTTP y cortes de procesos
+
+El runner también ejecuta `transport.php`:46 comprobaciones adicionales sobre Apache HTTP real dentro de la red Docker. El fixture de rutas solo se carga con `AC_SOURCE_EFFECTS_HTTP=synthetic-v1`, opt-in/local y Host wordpress; usa REST y Application Passwords de usuarios sintéticos. Anónimo/subscriber no pueden ejecutar. No es una ruta de producción ni el autorizador final: manage_options aquí solo controla escenarios de fixture y nunca se registra una ability.
+
+`http-fixture.php` permite únicamente casos/IDs sintéticos previamente creados y fases cerradas. No acepta PHP/SQL/parches arbitrarios. Se consulta mediante `?rest_route` sin depender de reglas de reescritura. El guard HTTP solo admite http://wordpress:80 sin userinfo y bloquea lo demás; no hay puertos host ni TLS público. Los helpers comunes se movieron a support.php para ejercitar el mismo lector/escritor en CLI y HTTP.
+
+Cuatro SIGKILL reales a workers Apache: antes/después de COMMIT y antes/después de API de purga. Un marcador independiente confirma el checkpoint antes del corte; la respuesta HTTP fallida por sí sola no basta. MariaDB revierte fuente completa/intención/counter no confirmados y conserva lo confirmado. Un contador transaccional separado comprueba que replay y recuperación del consumidor no vuelven a ejecutar el writer. Se expira únicamente el lease de fixture en SQL para retomar sin esperar30s. Dos llamadas de invalidación tras perder acknowledgment después de invocar la API prueban explícitamente entrega al menos una vez, no exactamente una vez.
+
+Se comprueba cabecera X-LiteSpeed-Purge en la respuesta real del consumidor; fuente normal/rollback no emiten purga. Tags/headers permanecen sin cambios dentro de la escritura. Las colas/tags generadas al crear fixtures se limpian antes de medir las peticiones, solo en este laboratorio. No se certifica entrega de caché del hosting ni perfil completo; esos son los límites pendientes de esta extensión.
