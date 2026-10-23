@@ -24,8 +24,8 @@ function validate_fields($fields) {
 /**
  * read($id,$locale,$fields,true): fresh locked snapshot in review_source shape.
  * schema(): validated schema fingerprint. cache($id): clear WP/ACF value caches.
- * Caller must own transaction, approval, effect isolation and rollback. No such
- * coordinator exists here yet; this function must never be registered as an ability.
+ * Caller must own transaction, approval, effect isolation and rollback. The separate
+ * MariaDB coordinator is experimental; never register this function as an ability.
  */
 function write_source(array $document, callable $read, callable $schema, callable $cache) {
     if (!defined('AC_EDITORIAL_SOURCE_EXPERIMENT') || AC_EDITORIAL_SOURCE_EXPERIMENT !== true

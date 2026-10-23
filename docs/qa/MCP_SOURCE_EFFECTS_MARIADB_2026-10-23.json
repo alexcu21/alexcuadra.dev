@@ -1,0 +1,31 @@
+{
+  "format": "editorial-source-effects-mariadb-v1",
+  "result": {
+    "checks": 58,
+    "passed": true,
+    "wordpress": "7.1.3",
+    "mariadb": "11.8.9-MariaDB-ubu2404",
+    "acf": "6.8.10",
+    "litespeed": "7.9.2",
+    "sameConnectionAtomicity": true,
+    "nativePurgeApiInvoked": true,
+    "hostingCacheDeliveryVerified": false,
+    "httpContextVerified": false
+  },
+  "verifiedSourcePlugins": {
+    "advanced-custom-fields": {
+      "files": 624,
+      "bytes": 28938815
+    },
+    "litespeed-cache": {
+      "files": 320,
+      "bytes": 2856521
+    }
+  },
+  "hostPorts": false,
+  "externalNetwork": false,
+  "sshExecuted": false,
+  "sourceDatabaseImported": false,
+  "sourceWriterBoundaryRegressionChecks": 39,
+  "sqliteJournalRegressionChecks": 54
+}
