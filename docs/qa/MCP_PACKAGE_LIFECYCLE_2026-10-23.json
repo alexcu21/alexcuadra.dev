@@ -1,0 +1,149 @@
+{
+  "packageLifecycle": {
+    "phases": [
+      {
+        "phase": "disabled",
+        "checks": 8,
+        "passed": true
+      },
+      {
+        "phase": "enabled",
+        "checks": 10,
+        "passed": true
+      },
+      {
+        "phase": "deactivated",
+        "checks": 8,
+        "passed": true
+      }
+    ],
+    "checks": 26,
+    "passed": true,
+    "wordpressInstallerVerified": true,
+    "normalPluginLoading": true
+  },
+  "packageCandidate": {
+    "sha256": "ba76d9f36c020f069544af068beb09c999a570b2a912ad86f67d695dc4e0c13f",
+    "disabled": {
+      "checks": 8,
+      "passed": true,
+      "abilitiesRegistered": false,
+      "storageCreated": false
+    },
+    "testedExtractedArchive": true,
+    "productionReady": false
+  },
+  "operatingMcp": {
+    "checks": 68,
+    "passed": true,
+    "transport": "official MCP adapter JSON-RPC HTTP",
+    "abilities": 6,
+    "approvalExposed": false,
+    "credentials": "synthetic Application Passwords",
+    "liveCmsModified": false
+  },
+  "jointMigration": {
+    "checks": 50,
+    "passed": true,
+    "tables": 6,
+    "ddlInterruptionCheckpoints": 6,
+    "realProcessKill": false
+  },
+  "operatingContract": {
+    "checks": 155,
+    "passed": true,
+    "realProposalsRc2": true,
+    "independentCliApproval": true,
+    "approvalSourceReceiptIntentAtomic": true,
+    "proposalReceiptsUnchanged": true,
+    "recoveryCapacityReserved": true,
+    "recoveryExecutorImplemented": true,
+    "dbDisconnectRollbackVerified": true,
+    "automaticReconnectInsideTransaction": false,
+    "abilitiesRegistered": true,
+    "perOwnerOperatingLimits": {
+      "reviews": 8,
+      "requests": 64,
+      "bytes": 8388608
+    },
+    "rc2BudgetSeparate": true
+  },
+  "sourceProfileBefore": {
+    "installedSourcePlugins": 18,
+    "activeSourcePlugins": 13,
+    "additionalPrivateProposals": 1,
+    "muPlugins": 2,
+    "theme": "twentytwentyfour",
+    "themeVersion": "1.6",
+    "passed": true
+  },
+  "sourceProfileAfter": {
+    "installedSourcePlugins": 18,
+    "activeSourcePlugins": 13,
+    "additionalPrivateProposals": 1,
+    "muPlugins": 2,
+    "theme": "twentytwentyfour",
+    "themeVersion": "1.6",
+    "passed": true
+  },
+  "fullSourceProfile": true,
+  "bilingual": {
+    "checks": 24,
+    "passed": true,
+    "polylang": "3.9.1",
+    "translationRowsPreserved": true,
+    "unexpectedSyncAndFilterDenied": true,
+    "linkedConflictDenied": true
+  },
+  "httpAndProcessDeath": {
+    "checks": 50,
+    "passed": true,
+    "transport": "internal HTTP Apache",
+    "authentication": "synthetic Application Passwords",
+    "sigkillCheckpoints": 4,
+    "nativeHttpPurgeHeaderVerified": true,
+    "sameMariaDbConnection": true,
+    "sourceWritesOnRetry": false,
+    "hostingCacheDeliveryVerified": false,
+    "fullSourceCodeProfileVerified": true,
+    "fullHostingConfigurationVerified": false
+  },
+  "format": "editorial-normal-plugin-lifecycle-v1",
+  "result": {
+    "checks": 58,
+    "passed": true,
+    "wordpress": "7.1.3",
+    "mariadb": "11.8.9-MariaDB-ubu2404",
+    "acf": "6.8.10",
+    "litespeed": "7.9.2",
+    "sameConnectionAtomicity": true,
+    "nativePurgeApiInvoked": true,
+    "hostingCacheDeliveryVerified": false,
+    "httpContextVerified": false
+  },
+  "verifiedSourcePlugins": {
+    "all-source-plugins": {
+      "files": 9590,
+      "bytes": 160287119
+    },
+    "themes": {
+      "files": 4044,
+      "bytes": 46865466
+    },
+    "mu-plugins": {
+      "files": 2,
+      "bytes": 41044
+    }
+  },
+  "hostPorts": false,
+  "externalNetwork": false,
+  "sshExecuted": false,
+  "sourceDatabaseImported": false,
+  "reusedInternalNetwork": true,
+  "realIntegrationChecks": 439,
+  "candidateReady": false,
+  "productionReady": false,
+  "remotePreflightExecuted": false,
+  "preflightSyntaxVerified": true,
+  "preflightSha256": "c9564f38fb63ff08f69e25228597b600e2d80c0bedcfa87d1a022a8bd4f2cca8"
+}

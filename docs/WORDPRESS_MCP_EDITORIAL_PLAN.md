@@ -1,5 +1,8 @@
 # Etapa técnica: MCP editorial con permisos acotados
 
+**23 octubre — instalador/activación/reversión normal y preflight listo:**26 controles de ciclo normal+413 previos=439 integraciones correctas. ZIP rc.1 sin cambios instalado por WP-CLI; disabled8/enabled10/deactivated8, factory desde plugin instalado y lectura vía adaptador oficial; fuentes/ledger/roles/caps/otros plugins conservados frente a baseline posterior a instalación. [QA/alcance](qa/MCP_PACKAGE_LIFECYCLE_2026-10-23.md). Preflight metadata solo lectura preparado/sintaxis validada, pendiente de Alex; no SSH ejecutado. rc.1 sigue localOnly/productionReady=false: falta perfil/opt-in para destino y nueva versión/ensayo antes de aprobación.32GiB libres antes/después; laboratorio detenido.
+
+
 **23 octubre — ZIP operativo rc.1 local reproducible:**413 comprobaciones (405 contra módulos extraídos+8 de bootstrap desactivado), hash ba76d9f36c020f069544af068beb09c999a570b2a912ad86f67d695dc4e0c13f,32207B. Bootstrap desactivado por defecto; opt-in solo local; factory propia usada por MCP. [Paquete/plan](WORDPRESS_MCP_OPERATING_PACKAGE.md), [QA y límites](qa/MCP_LOCAL_PACKAGE_2026-10-23.md). No productionReady ni instalador/activación normal certificados: falta admisión de destino, preflight y reversión ensayados antes de pedir aprobación. Sin SSH/CMS/grants/pulls/backups reales nuevos; laboratorio detenido;32GiB libres antes/después.
 
 

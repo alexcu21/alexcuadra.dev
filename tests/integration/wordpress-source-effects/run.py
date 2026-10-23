@@ -134,10 +134,13 @@ def main():
         env['AC_SOURCE_EFFECTS_PACKAGE']='local-rc1'
         for service in ['wordpress','cli']:
             settings['services'][service]['volumes'].append({'type':'bind','source':str(package_dir),'target':'/operating-package','read_only':True})
+            settings['services'][service]['volumes'].append({'type':'bind','source':str(archive_path),'target':'/operating-candidate.zip','read_only':True})
     config = work/'compose.json';config.write_text(json.dumps(settings))
     compose=['docker','compose','-p',work.name.replace('_','-'),'-f',str(config),'--profile','tools']
-    def cli(*args, shell=False, disabled=False):
+    def cli(*args, shell=False, disabled=False, normal=False, phase=None):
         command=compose+['run','--rm','--no-deps','--pull','never']
+        if normal: command+=['-e','AC_SOURCE_EFFECTS_PACKAGE_NORMAL=1']
+        if phase: command+=['-e','AC_PACKAGE_LIFECYCLE_PHASE='+phase]
         if disabled: command+=['-e','WORDPRESS_CONFIG_EXTRA='+package_disabled_config]
         if shell: command+=['--entrypoint','sh']
         return run(command+['cli',*args])
@@ -207,7 +210,22 @@ def main():
             if profile_before!=profile_after: raise ValueError('PROFILE_CHANGED_DURING_TESTS')
             # Read-only source mounts must still match the private manifest.
             profile.verify_plugins(SOURCE/'wp-content/plugins',manifest,recorded)
-        report={'packageCandidate':package_check,'operatingMcp':operating_mcp,'jointMigration':joint_migration,'operatingContract':operating,'sourceProfileBefore':profile_before,'sourceProfileAfter':profile_after,'fullSourceProfile':full,'bilingual':bilingual,'httpAndProcessDeath':http_results[0],'format':'editorial-source-effects-mariadb-v1','result':results[0],'verifiedSourcePlugins':verified,'hostPorts':False,'externalNetwork':False,'sshExecuted':False,'sourceDatabaseImported':False,'reusedInternalNetwork':reuse is not None}
+        lifecycle=None
+        if package_dir:
+            cli('plugin','install','/operating-candidate.zip',disabled=True)
+            cli('eval-file','/integration/package-lifecycle.php',normal=True,disabled=True,phase='baseline')
+            cli('plugin','activate','alexcuadra-editorial-operating',normal=True,disabled=True)
+            disabled_lifecycle=cli('eval-file','/integration/package-lifecycle.php',normal=True,disabled=True,phase='disabled')
+            enabled_lifecycle=cli('eval-file','/integration/package-lifecycle.php',normal=True,phase='enabled')
+            cli('plugin','deactivate','alexcuadra-editorial-operating',normal=True)
+            deactivated_lifecycle=cli('eval-file','/integration/package-lifecycle.php',normal=True,phase='deactivated')
+            vals=[]
+            for stage in [disabled_lifecycle,enabled_lifecycle,deactivated_lifecycle]:
+                values=[json.loads(line.split('=',1)[1]) for line in stage.splitlines() if line.startswith('SOURCE_PACKAGE_LIFECYCLE_RESULT=')]
+                if len(values)!=1 or not values[0].get('passed'): raise ValueError('LIFECYCLE_FAILED')
+                vals.append(values[0])
+            lifecycle={'phases':vals,'checks':sum(v['checks'] for v in vals),'passed':True,'wordpressInstallerVerified':True,'normalPluginLoading':True}
+        report={'packageLifecycle':lifecycle,'packageCandidate':package_check,'operatingMcp':operating_mcp,'jointMigration':joint_migration,'operatingContract':operating,'sourceProfileBefore':profile_before,'sourceProfileAfter':profile_after,'fullSourceProfile':full,'bilingual':bilingual,'httpAndProcessDeath':http_results[0],'format':'editorial-source-effects-mariadb-v1','result':results[0],'verifiedSourcePlugins':verified,'hostPorts':False,'externalNetwork':False,'sshExecuted':False,'sourceDatabaseImported':False,'reusedInternalNetwork':reuse is not None}
         (work/'result.json').write_text(json.dumps(report,indent=2)+'\n')
         print(json.dumps(report,sort_keys=True),flush=True)
     finally:

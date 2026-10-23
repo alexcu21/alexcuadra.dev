@@ -1,0 +1,13 @@
+# Instalador y reversión como plugin normal — 23 octubre
+
+26 comprobaciones nuevas+413 previas=439 integraciones correctas. ZIP rc.1 sellado sin cambios (SHA256 ba76d9f36c020f069544af068beb09c999a570b2a912ad86f67d695dc4e0c13f), WordPress completo y datos sintéticos. Las413 previas conservan el bootstrap/MCP HTTP por fixture; la fase nueva verifica la carga normal y ejecución del adaptador oficial en CLI, no HTTP adicional con ese nuevo orden de carga.
+
+Se instala el ZIP con wp plugin install sin activar ni forzar overwrite. Después se captura baseline: posts/meta/taxonomías/relaciones/usermeta, seis tablas, roles, marcador y otros plugins activos. Activación normal con opt-in ausente:8 controles (activo pero seis abilities ausentes y baseline conservada). Opt-in local en proceso nuevo:10 controles (activo, seis abilities, Reflection confirma factory del archivo instalado, lectura del último efecto mediante adaptador oficial y baseline conservada). Desactivación y proceso nuevo:8 controles (inactivo, seis abilities ausentes, datos/caps/fuentes/otros plugins conservados).
+
+El fixture ya no carga el bootstrap durante esta fase; módulos y require_once usan ruta del plugin instalado. La activación no crea tablas, cambia scopes ni deshace historia. Los datos operativos existentes se retienen al desactivar. No se borra plugin/volúmenes ni se restaura SQL. La reversión probada es la desactivación del código local; la recuperación de contenido sigue siendo operación distinta con aprobación independiente.
+
+Preflight remoto preparado en wordpress/operations/editorial-operating-candidate-preflight.sh. sh -n y php -l8.5 correctos; no se ejecutó contra servidor. Recoge versiones/estado plugins/tema, clases/drop-ins/caché, funciones disponibles, motores core/rc.2, presencia de las seis tablas/marcador y capacidades booleanas del usuario2. Solo código de lectura; no exporta contenidos/credenciales, no DDL/grants/instalación/config. El bootstrap habitual de WordPress/plugins sigue siendo el del sitio. No intenta privilegios DDL ni presupone autorización de instalación.
+
+Pendiente para versión apta de destino: obtener esta salida actual, definir/admitir perfil y opt-in productivo, construir nueva versión sellada y ensayar sus guardas/preflight/reversión antes de pedir aprobación. rc.1 conserva localOptinOnly/productionReady=false. No instalar/activar todavía en CMS compartido.
+
+Una ejecución completa con imágenes cacheadas y red interna reutilizada, WP/DB tmpfs; dos comprobaciones de sintaxis aisladas sin red.32GiB libres antes/después; Docker/swap pueden usar disco. Sin SSH/pulls/SQL o config real/grants/CMS/Workers/contacto/backups o export reales nuevos. Contenedores detenidos, recursos previos retenidos.
