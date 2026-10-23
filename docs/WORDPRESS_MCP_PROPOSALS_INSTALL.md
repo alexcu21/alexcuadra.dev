@@ -4,6 +4,11 @@ Estado: preparado para revisión, **sin autorización de instalación todavía**
 SSH desde su terminal; el agente no lo ejecuta. Primero devolver el preflight de solo lectura.
 No instalar/conceder scopes solo porque las comprobaciones técnicas resulten correctas.
 
+Actualización: Alex devolvió el preflight de2026-10-23T03:40:56Z, todos los checks y huellas
+correctos, operador CLI observado1. [Salida recibida](qa/MCP_PROPOSALS_FINAL_PREFLIGHT_2026-10-23.json).
+Queda pendiente únicamente la decisión específica para el cambio descrito. No repetir la
+comprobación ni los laboratorios salvo demora/cambio/deriva que lo justifique.
+
 ## Paquete y alcance concreto
 
 - Sitio https://content.alexcuadra.dev, single site.
@@ -71,8 +76,72 @@ opciones, permisos, archivos o esquema. Un false mantiene HOLD y se analiza ante
    con la reversión siguiente. Preservar propuesta de prueba/tablas/recibos y respaldo.
 10. Tras validar instalación y recuperación, Alex decide retención. No programar borrados.
 
-Los comandos de mutación y transferencia se concretarán con la salida actual del preflight;
-no contienen aquí IDs/rutas remotas supuestos ni se han ejecutado.
+Los comandos siguientes usan el operador1 observado y una carpeta privada nueva elegida para este despliegue. No se han ejecutado.
+
+## Comandos concretos para revisión, aún sin ejecutar
+
+Destino privado nuevo elegido para este despliegue; mkdir falla si ya existe. Después de
+aprobar el alcance, Alex ejecuta por fases y devuelve cada resultado antes de continuar.
+No ejecutar toda la secuencia sin verificar los puntos de parada.
+
+### A. Carpeta privada y transferencia
+
+```sh
+ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=10 -p 65002 u776991923@194.164.64.104 'umask 077; mkdir -p "$HOME/.ac-editorial-deploy" && chmod 700 "$HOME/.ac-editorial-deploy" && mkdir "$HOME/.ac-editorial-deploy/proposals-0.1.0-rc.2-20261023"'
+scp -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=10 -P 65002 /Users/Alex/Desktop/AlexC/alexcuadra.dev/artifacts/wordpress/alexcuadra-editorial-proposals-0.1.0-rc.2.zip u776991923@194.164.64.104:.ac-editorial-deploy/proposals-0.1.0-rc.2-20261023/candidate.zip
+ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=10 -p 65002 u776991923@194.164.64.104 'chmod 600 "$HOME/.ac-editorial-deploy/proposals-0.1.0-rc.2-20261023/candidate.zip" && sha256sum "$HOME/.ac-editorial-deploy/proposals-0.1.0-rc.2-20261023/candidate.zip"'
+```
+
+Exigir SHA256 c31e6814864be0692035de7b46322fc2fc0159d2104e0b4d25404c3b15859f07.
+Si falla un comando, parar; no sobrescribir ni limpiar rutas existentes.
+
+### B. Instalar, opt-in y preparar almacenamiento, todavía sin scope
+
+Dentro de una sesión SSH que Alex abra, tras verificar el hash:
+
+```sh
+cd "$HOME/domains/alexcuadra.dev/public_html/content"
+wp --path=. plugin install "$HOME/.ac-editorial-deploy/proposals-0.1.0-rc.2-20261023/candidate.zip"
+wp --path=. plugin get alexcuadra-editorial-proposals --fields=name,version,status --format=json
+wp --path=. eval '$d=WP_PLUGIN_DIR . "/alexcuadra-editorial-proposals"; $expected=["alexcuadra-editorial-proposals.php"=>"a9a1b498ab18472a30966cfcd160ef91d35aa62420911e31ca30e7ec3452949e","storage.php"=>"074f96126397e91b68f407feb3989cc147d9b81aeffb6790766486b9433639af","README.md"=>"52de66e733a0ba4a41f004a24c8804c15102187578e7e45e0a3f3c8d99eea617"]; $names=array_keys($expected); sort($names); if (array_values(array_diff(scandir($d),[".",".."])) !== $names) { WP_CLI::error("UNEXPECTED_PACKAGE_FILES"); } foreach ($expected as $file=>$hash) { if (is_link($d . "/" . $file) || hash_file("sha256",$d . "/" . $file) !== $hash) { WP_CLI::error("PACKAGE_HASH_MISMATCH"); } } WP_CLI::line("PACKAGE_FILES_VERIFIED");'
+```
+
+Parar y verificar0.1.0-rc.2/inactivo y bytes instalados contra el manifiesto del ZIP antes
+de habilitarlo. No --force, no actualizar otros plugins. Después:
+
+```sh
+wp --path=. config set AC_EDITORIAL_PROPOSALS_SITE 'https://content.alexcuadra.dev' --type=constant
+wp --path=. plugin activate alexcuadra-editorial-proposals
+wp --path=. --user=1 eval '$r=AlexCuadra\EditorialProposals\install_storage(); if ($r !== true || !AlexCuadra\EditorialProposals\storage_schema_valid()) { WP_CLI::error("PROPOSALS_STORAGE_NOT_READY"); } WP_CLI::line("PROPOSALS_STORAGE_READY");'
+```
+
+Cada fallo detiene la fase; no continuar a la siguiente línea después de error. No se ha
+ensayado DDL con privilegios del hosting; fallo de permisos se diagnostica sin reparación
+automática. Verificar fuentes/Read y denegación de usuario2 sin prepare antes de faseC.
+
+### C. Scope exacto, solo después de revisar faseB
+
+```sh
+wp --path=. user add-cap 2 alexcuadra_prepare_project_changes
+```
+
+No cambiar roles. Revisar capacidades efectivas y smoke descrito mediante el conector;
+Alex conserva control de SSH. Los informes de aceptación no deben contener passwords,
+wp-config, SQL ni campos originales privados.
+
+### D. Cierre de admisiones si se requiere revertir
+
+Solo retirar cambios propios de este despliegue, después de confirmar que se aplicaron:
+
+```sh
+wp --path=. user remove-cap 2 alexcuadra_prepare_project_changes
+wp --path=. plugin deactivate alexcuadra-editorial-proposals
+wp --path=. config delete AC_EDITORIAL_PROPOSALS_SITE --type=constant
+```
+
+Conservar ZIP privado, tablas/recibos/propuestas y backup. No ejecutar uninstall ni DROP.
+Estos comandos son un procedimiento manual revisable, no un instalador transaccional;
+la ejecución y verificación por fases se coordinarán tras la aprobación.
 
 ## Reversión limitada
 

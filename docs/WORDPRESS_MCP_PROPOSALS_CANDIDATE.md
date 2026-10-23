@@ -1,5 +1,7 @@
 # Candidato de propuestas privadas — 22 octubre 2026
 
+**Preflight final recibido y correcto:** operador1, usuario2 mantiene solo lectura, sin deriva ni colisiones. [Procedimiento con comandos concretos](WORDPRESS_MCP_PROPOSALS_INSTALL.md) listo para aprobación específica de rc.2/opt-in/tablas/scope2/smoke. Ninguna mutación remota ejecutada; Alex ejecuta SSH por fases tras aprobar.
+
 **Paso actual:** [preflight final y procedimiento de instalación/reversión](WORDPRESS_MCP_PROPOSALS_INSTALL.md) preparados y probados localmente. Alex ejecuta el comando de solo lectura y devuelve el resumen; no se ha ejecutado SSH ni autorizado instalación. No repetir las suites completadas sin deriva nueva.
 
 **Último resultado:** [tema/MU/drop-ins revisados y303 checks correctos](qa/MCP_PROPOSALS_HOSTING_COMPONENTS_2026-10-22.md) con rc.2 intacto. El pendiente anterior de esos componentes queda superado dentro del ensayo con opciones sintéticas. Siguiente: preflight final de deriva/roles y procedimiento concreto de instalación+scope para decisión de Alex; todavía HOLD, sin instalar. No se exige reproducir indefinidamente todo el proveedor ni se afirma haberlo certificado.
