@@ -1,0 +1,14 @@
+{
+  "format": "editorial-source-writer-boundary-v1",
+  "checks": 39,
+  "passed": true,
+  "realWordPress": false,
+  "transactionOrPurgeVerified": false,
+  "installedPluginChanged": false,
+  "lab05Changed": false,
+  "sshExecuted": false,
+  "dockerStarted": false,
+  "cmsWrites": false,
+  "localStorage": "small source, tests and reports only; no backup copies",
+  "candidateSha256": "c31e6814864be0692035de7b46322fc2fc0159d2104e0b4d25404c3b15859f07"
+}

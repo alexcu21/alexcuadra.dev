@@ -1,0 +1,9 @@
+# Adaptador experimental de fuente — frontera de APIs
+
+Se añadió un módulo separado en `wordpress/experimental/editorial-source-adapter`, sin hooks ni registro de abilities. No se modifican el laboratorio0.5, Read, Proposals rc.2 o sus ZIP/manifiestos. El ZIP rc.2 conserva SHA256 c31e6814864be0692035de7b46322fc2fc0159d2104e0b4d25404c3b15859f07.
+
+Validación local: lint PHP correcto y39 comprobaciones sintéticas correctas con `php tests/experimental/source-writer.php`. Casos: tagline EN/ES sin wp_update_post ni timestamps; cuerpo sin ACF; cuerpo+tagline con una sola llamada de cuerpo; texto con comillas y barras conservado; vacío distinto de ausencia; recuperación de fila/referencia ausentes conservando meta ajena; no-op con false de API; rechazo de producción/staging/origen real, campo desconocido, referencia ajena, versión y esquema desfasados antes de APIs; rechazo de título/términos/timestamps ajenos cambiados; metadata silenciosamente no persistida; deriva de esquema posterior; fallo/excepción de API con limpieza en finally y sin continuar metadata tras fallo de cuerpo.
+
+**No es aceptación WordPress/SQL/ACF/Polylang real.** No implementa transacción, autorización, intención durable o aplazamiento de purga. Un fallo posterior a una escritura requiere rollback del futuro coordinador. No registrar el módulo como ability ni conectarlo al CMS real. Ver contrato y siguientes pruebas en el README del experimento.
+
+Impacto local: solo pequeños archivos de código/pruebas/informes,35GiB libres al inicio. Sin Docker, dependencias nuevas, descargas de CMS, respaldo, SSH o escrituras remotas. No se repiten suites del paquete instalado al no modificarse. Propuesta227 y respaldo privado se conservan. El siguiente incremento es la intención durable y coordinación de efectos antes de ensayar la integración con el perfil aislado existente.
