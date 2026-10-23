@@ -1,6 +1,7 @@
 <?php
 /** Experimental WP/MariaDB operation. Never registered as an ability. */
 namespace AlexCuadra\EditorialSourceExperiment;
+require_once __DIR__.'/journal-records.php';
 
 function local_origin_admitted() {
     if(home_url()==='http://wordpress'){return true;}
@@ -164,7 +165,7 @@ final class MariaDbOperation {
             if($this->db->last_error){throw new \RuntimeException('experiment_sql_failed');}
             if($prior){
                 if($prior['event_hash']!==$event['event_hash']||(int)$prior['project_id']!==$id||$prior['operation']!==$event['operation']){throw new \RuntimeException('event_reused');}
-                return json_decode($prior['receipt'],true,512,JSON_THROW_ON_ERROR);
+                return decode_source_event($prior);
             }
             $this->query($this->db->prepare("INSERT INTO $this->events VALUES (%s,%s,%d,%s,'')",$event['event_id'],$event['event_hash'],$id,$event['operation']));
             $receipt=deferred_publish($id,$write);
@@ -180,13 +181,27 @@ final class MariaDbOperation {
             if($this->invalidate!==null){($this->invalidate)($id);}
         }
     }
+    public function entry($eventId) {
+        $this->outside();$this->schema();
+        if(!operating_hex($eventId)){throw new \RuntimeException('invalid_event');}
+        $r=$this->db->get_row($this->db->prepare("SELECT * FROM $this->events WHERE event_id=%s",$eventId),ARRAY_A);
+        if($this->db->last_error){throw new \RuntimeException('experiment_sql_failed');}
+        if($r){decode_source_event($r);}return $r;
+    }
     public function effect($eventId) {
-        $this->outside();
-        return $this->db->get_row($this->db->prepare("SELECT * FROM $this->effects WHERE event_id=%s",$eventId),ARRAY_A);
+        $this->outside();$this->schema();
+        if(!operating_hex($eventId)){throw new \RuntimeException('invalid_event');}
+        $r=$this->db->get_row($this->db->prepare("SELECT * FROM $this->effects WHERE event_id=%s",$eventId),ARRAY_A);
+        if($this->db->last_error){throw new \RuntimeException('experiment_sql_failed');}
+        return $r?validate_source_effect($r):null;
     }
     /** Worker on a separate request/connection. API invocation is not cache delivery proof. */
     public function consume($eventId, callable $purge) {
-        $this->outside(); $this->schema(); $token=bin2hex(random_bytes(16));
+        $this->outside(); $this->schema();
+        $before=$this->effect($eventId);$entry=$this->entry($eventId);
+        if(!$before||!$entry){return 'not_claimed';}
+        if($before['project_id']!==$entry['project_id']){throw new \RuntimeException('source_event_relation_changed');}
+        $token=bin2hex(random_bytes(16));
         $n=$this->query($this->db->prepare("UPDATE $this->effects f SET state='running',attempts=attempts+1,lease_token=%s,lease_until=UNIX_TIMESTAMP()+30
             WHERE event_id=%s AND attempts<8 AND EXISTS (SELECT 1 FROM $this->events e WHERE e.event_id=f.event_id AND e.project_id=f.project_id AND e.receipt<>'')
             AND ((state IN ('pending','retry') AND available_at<=UNIX_TIMESTAMP()) OR (state='running' AND lease_until<=UNIX_TIMESTAMP()))",$token,$eventId));

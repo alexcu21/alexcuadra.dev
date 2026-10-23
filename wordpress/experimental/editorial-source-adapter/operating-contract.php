@@ -250,6 +250,15 @@ final class OperatingContract {
         $this->readScope();$this->tables();$this->input(['proposal_id'=>$proposalId,'locale'=>$locale],['proposal_id','locale']);$owner=get_current_user_id();$this->owned($proposalId,$owner);
         $app=$this->row($this->db->prepare("SELECT * FROM $this->apps WHERE proposal_id=%d AND owner_id=%d",$proposalId,$owner));if($app){validate_operating_application($app);}if(!$app){$this->fail('contract_not_found');}
         $review=$this->review((int)$app['review_id'],$owner,$locale);$eventId=$app['recovery_event']??$app['event_id'];$effect=$this->journal->effect($eventId);if(!$effect){$this->fail('contract_effect_unavailable');}
+        $entry=$this->journal->entry($eventId);
+        if(!$entry||$entry['operation']!==($app['recovery_event']===null?'apply':'recover')||(int)$entry['project_id']!==$review['document']['project_id']||(int)$effect['project_id']!==$review['document']['project_id']){$this->fail('contract_journal_relation_changed');}
+        $kind=$entry['operation'];$receipt=decode_operating_receipt($entry['receipt'],$kind,['proposal_id'=>$proposalId,'locale'=>$locale]);
+        $expectedReview=$kind==='apply'?(int)$app['review_id']:(int)$app['recovery_review'];
+        $binding=$this->review($expectedReview,$owner,$locale);
+        $approval=$this->row($this->db->prepare("SELECT * FROM $this->approvals WHERE review_id=%d",$expectedReview));
+        if(!$approval){$this->fail('contract_journal_relation_changed');}
+        decode_operating_approval($approval,$binding['document'],$expectedReview,$owner,$binding['hash']);
+        if($receipt['event_id']!==$eventId||$receipt['review_id']!==$expectedReview||$receipt['project_id']!==$review['document']['project_id']||$approval['consumed_event']!==$eventId||($kind==='apply'&&$receipt['source_version']!==$app['source_after'])||($kind==='recover'&&$receipt['application_event']!==$app['event_id'])){$this->fail('contract_journal_relation_changed');}
         return ['format'=>'operating-effect-status-v1','event_id'=>$eventId,'proposal_id'=>$proposalId,'locale'=>$locale,'effect_state'=>$effect['state'],'attempts'=>(int)$effect['attempts']];
     }
 }
