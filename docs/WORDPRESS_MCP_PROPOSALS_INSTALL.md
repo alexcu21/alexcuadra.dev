@@ -1,6 +1,6 @@
 # Proposals rc.2 — procedimiento revisable de instalación y reversión
 
-Estado: **Alex autorizó explícitamente** rc.2, opt-in/dos tablas, scope prepare únicamente a usuario2/subscriber y una propuesta privada de verificación, respondiendo «si procede» después de la revisión. Alex ejecuta SSH desde su terminal; el agente no lo ejecuta. FaseA confirmada por Alex: transferencia y SHA256 correctos en la ruta privada prevista. FaseB1 confirmada por Alex: plugin0.1.0-rc.2 inactivo y PACKAGE_FILES_VERIFIED. La instalación reportó purga de cachés. FaseB2 confirmada por Alex: constante/activación/esquema verificados y tablas vacías.14 Projects con huella c38acd1690f173488f075443d03a80c96b6b483a5bd407040cbbd40a7ff462af, Read EN/ES y permisos/rol intactos. FaseC confirmada: solo prepare añadido a2. Smoke nativo real completado: propuesta227 privada, tres revisiones create/update/restore. Pendiente únicamente postflight final de servidor. No volver a pedir esta misma autorización.
+Estado: **Alex autorizó explícitamente** rc.2, opt-in/dos tablas, scope prepare únicamente a usuario2/subscriber y una propuesta privada de verificación, respondiendo «si procede» después de la revisión. Alex ejecuta SSH desde su terminal; el agente no lo ejecuta. FaseA confirmada por Alex: transferencia y SHA256 correctos en la ruta privada prevista. FaseB1 confirmada por Alex: plugin0.1.0-rc.2 inactivo y PACKAGE_FILES_VERIFIED. La instalación reportó purga de cachés. FaseB2 confirmada por Alex: constante/activación/esquema verificados y tablas vacías.14 Projects con huella c38acd1690f173488f075443d03a80c96b6b483a5bd407040cbbd40a7ff462af, Read EN/ES y permisos/rol intactos. FaseC confirmada: solo prepare añadido a2. Smoke nativo real completado: propuesta227 privada, tres revisiones create/update/restore. Postflight final recibido y correcto; despliegue validado en el alcance acordado. No volver a pedir esta misma autorización.
 
 Actualización: Alex devolvió el preflight de2026-10-23T03:40:56Z, todos los checks y huellas
 correctos, operador CLI observado1. [Salida recibida](qa/MCP_PROPOSALS_FINAL_PREFLIGHT_2026-10-23.json).
@@ -165,7 +165,7 @@ No cambiar roles. Revisar capacidades efectivas y smoke descrito mediante el con
 Alex conserva control de SSH. Los informes de aceptación no deben contener passwords,
 wp-config, SQL ni campos originales privados.
 
-### Postflight final pendiente
+### Postflight final completado
 
 Scope y smoke ya ejecutados; no repetir grant ni creación. La propuesta227 permanece en borrador privado. El replay de creación devolvió el resultado original sin alterar el head restaurado. Ver evidencia nativa en `qa/MCP_PROPOSALS_NATIVE_LIVE_SMOKE_2026-10-23.json`.
 
@@ -175,7 +175,7 @@ Alex ejecuta este último control de solo lectura; verifica baseline de14 Projec
 ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=10 -p 65002 u776991923@194.164.64.104 'sh -s' < /Users/Alex/Desktop/AlexC/alexcuadra.dev/wordpress/operations/editorial-proposals-live-postflight.sh
 ```
 
-Devolver salida completa hasta `END_EDITORIAL_PROPOSALS_LIVE_POSTFLIGHT_V1`. No cerrar validación hasta recibirla. Impacto local: solo pequeños scripts e informes; sin descargas ni nuevas copias del respaldo. Se conserva el respaldo privado existente hasta decisión de Alex.
+Alex devolvió la salida completa y `END_EDITORIAL_PROPOSALS_LIVE_POSTFLIGHT_V1`: fuentes/permisos intactos, ledger1/3,2162 bytes lógicos; privacidad verificada en CLI para2/1/0. Ver `qa/MCP_PROPOSALS_LIVE_POSTFLIGHT_2026-10-23.json`. Validación del despliegue cerrada en ese alcance; no repetir este procedimiento. Impacto local: solo pequeños scripts e informes; sin descargas ni nuevas copias del respaldo. Se conserva el respaldo privado existente hasta decisión de Alex.
 
 ### D. Cierre de admisiones si se requiere revertir
 

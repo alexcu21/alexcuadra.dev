@@ -1,0 +1,37 @@
+{
+  "format": "editorial-proposals-live-postflight-v1",
+  "reportedBy": "Alex terminal",
+  "endMarkerReceived": true,
+  "result": {
+    "version": "0.1.0-rc.2",
+    "proposalId": 227,
+    "ownerId": 2,
+    "projectId": 146,
+    "locale": "en",
+    "state": "draft",
+    "applied": false,
+    "revisionCount": 3,
+    "ownerProposalCount": 1,
+    "ownerRequestCount": 3,
+    "ownerLogicalBytes": 2162,
+    "projectCount": 14,
+    "sourceHash": "c38acd1690f173488f075443d03a80c96b6b483a5bd407040cbbd40a7ff462af",
+    "sourcesUnchanged": true,
+    "onlyPrepareScopeAdded": true,
+    "subscriberRoleUnchanged": true,
+    "otherActivePluginsUnchanged": true,
+    "readPluginUnchanged": true,
+    "sourceEditAdminDenied": true,
+    "adminWithoutPrepareDenied": true,
+    "restPrivacyVerified": true,
+    "operatorCreatedNoProposal": true,
+    "operatorWroteNoData": true,
+    "graphqlPrivacy": {
+      "2": "private-nodes-hidden-complete-collection",
+      "1": "private-nodes-hidden-complete-collection",
+      "0": "private-nodes-hidden-complete-collection"
+    },
+    "graphqlContext": "server-side CLI",
+    "graphqlHttpVerified": false
+  }
+}
