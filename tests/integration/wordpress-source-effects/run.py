@@ -143,6 +143,12 @@ def main():
             cli('--user=effects_admin','eval','$r=AlexCuadra\\EditorialProposals\\install_storage();if($r!==true){WP_CLI::error("CANDIDATE_STORAGE_FAILED");}')
             cli('eval-file','/integration/full-setup.php')
             profile_before=read_profile()
+        joint_migration=None
+        if full:
+            joint_output=cli('eval-file','/integration/migration.php')
+            joint_values=[json.loads(line.split('=',1)[1]) for line in joint_output.splitlines() if line.startswith('SOURCE_JOINT_MIGRATION_RESULT=')]
+            if len(joint_values)!=1 or not joint_values[0].get('passed') or joint_values[0].get('checks',0)<45: raise ValueError('JOINT_MIGRATION_FAILED')
+            joint_migration=joint_values[0]
         output=cli('eval-file','/integration/check.php')
         marker='SOURCE_EFFECTS_MARIADB_RESULT='
         results=[json.loads(line[len(marker):]) for line in output.splitlines() if line.startswith(marker)]
@@ -162,13 +168,13 @@ def main():
             operating_output=cli('eval-file','/integration/operating.php')
             operating_marker='SOURCE_OPERATING_CONTRACT_RESULT='
             operating_results=[json.loads(line[len(operating_marker):]) for line in operating_output.splitlines() if line.startswith(operating_marker)]
-            if len(operating_results)!=1 or not operating_results[0].get('passed') or operating_results[0].get('checks',0)<143: raise ValueError('MISSING_OPERATING_RESULT')
+            if len(operating_results)!=1 or not operating_results[0].get('passed') or operating_results[0].get('checks',0)<140: raise ValueError('MISSING_OPERATING_RESULT')
             operating=operating_results[0]
             profile_after=read_profile()
             if profile_before!=profile_after: raise ValueError('PROFILE_CHANGED_DURING_TESTS')
             # Read-only source mounts must still match the private manifest.
             profile.verify_plugins(SOURCE/'wp-content/plugins',manifest,recorded)
-        report={'operatingContract':operating,'sourceProfileBefore':profile_before,'sourceProfileAfter':profile_after,'fullSourceProfile':full,'bilingual':bilingual,'httpAndProcessDeath':http_results[0],'format':'editorial-source-effects-mariadb-v1','result':results[0],'verifiedSourcePlugins':verified,'hostPorts':False,'externalNetwork':False,'sshExecuted':False,'sourceDatabaseImported':False,'reusedInternalNetwork':reuse is not None}
+        report={'jointMigration':joint_migration,'operatingContract':operating,'sourceProfileBefore':profile_before,'sourceProfileAfter':profile_after,'fullSourceProfile':full,'bilingual':bilingual,'httpAndProcessDeath':http_results[0],'format':'editorial-source-effects-mariadb-v1','result':results[0],'verifiedSourcePlugins':verified,'hostPorts':False,'externalNetwork':False,'sshExecuted':False,'sourceDatabaseImported':False,'reusedInternalNetwork':reuse is not None}
         (work/'result.json').write_text(json.dumps(report,indent=2)+'\n')
         print(json.dumps(report,sort_keys=True),flush=True)
     finally:

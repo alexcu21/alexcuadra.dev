@@ -20,10 +20,7 @@ global $wpdb;
 $roleBefore=get_role('subscriber')->capabilities;$operator=get_user_by('login','effects_admin')->ID;op_check($operator===1,'known independent synthetic operator');
 op_user($operator);$c=op_controller();
 $mi=AlexCuadra\EditorialSourceExperiment\operating_storage_marker($wpdb,'ready');
-op_fail(fn()=>AlexCuadra\EditorialSourceExperiment\require_operating_storage_ready($wpdb),'contract_storage_not_ready');
-try{AlexCuadra\EditorialSourceExperiment\migrate_operating_storage($wpdb,source_operation($wpdb),function($name){if($name==='reviews'){throw new RuntimeException('migration_interrupted');}});}catch(RuntimeException $e){op_check($e->getMessage()==='migration_interrupted','DDL checkpoint interrupted');}
-op_fail(fn()=>AlexCuadra\EditorialSourceExperiment\require_operating_storage_ready($wpdb),'contract_storage_not_ready');
-$migration=$c->install();op_check($migration===$mi,'migration resumes partial DDL');op_check($c->install()===$mi,'ready migration is idempotent');
+$migration=$c->install();op_check($migration===$mi,'joint migration remains ready');op_check($c->install()===$mi,'ready migration is idempotent');
 
 $executor=op_actor('executor');$other=op_actor('other');op_user($executor);$ids=op_pair('main');
 $unicode='<p>'.str_repeat('é',25000).'</p>';[$p,$create]=op_proposal($ids['en'],['body_html'=>$unicode,'tagline'=>'Approved operating tagline']);$prepare=op_prepare_input($p);

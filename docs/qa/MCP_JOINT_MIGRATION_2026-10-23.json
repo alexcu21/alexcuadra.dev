@@ -1,0 +1,109 @@
+{
+  "jointMigration": {
+    "checks": 45,
+    "passed": true,
+    "tables": 6,
+    "ddlInterruptionCheckpoints": 6,
+    "realProcessKill": false
+  },
+  "operatingContract": {
+    "checks": 140,
+    "passed": true,
+    "realProposalsRc2": true,
+    "independentCliApproval": true,
+    "approvalSourceReceiptIntentAtomic": true,
+    "proposalReceiptsUnchanged": true,
+    "recoveryCapacityReserved": true,
+    "recoveryExecutorImplemented": true,
+    "dbDisconnectRollbackVerified": true,
+    "automaticReconnectInsideTransaction": false,
+    "abilitiesRegistered": false,
+    "perOwnerOperatingLimits": {
+      "reviews": 8,
+      "requests": 64,
+      "bytes": 8388608
+    },
+    "rc2BudgetSeparate": true
+  },
+  "sourceProfileBefore": {
+    "installedSourcePlugins": 18,
+    "activeSourcePlugins": 13,
+    "additionalPrivateProposals": 1,
+    "muPlugins": 2,
+    "theme": "twentytwentyfour",
+    "themeVersion": "1.6",
+    "passed": true
+  },
+  "sourceProfileAfter": {
+    "installedSourcePlugins": 18,
+    "activeSourcePlugins": 13,
+    "additionalPrivateProposals": 1,
+    "muPlugins": 2,
+    "theme": "twentytwentyfour",
+    "themeVersion": "1.6",
+    "passed": true
+  },
+  "fullSourceProfile": true,
+  "bilingual": {
+    "checks": 24,
+    "passed": true,
+    "polylang": "3.9.1",
+    "translationRowsPreserved": true,
+    "unexpectedSyncAndFilterDenied": true,
+    "linkedConflictDenied": true
+  },
+  "httpAndProcessDeath": {
+    "checks": 50,
+    "passed": true,
+    "transport": "internal HTTP Apache",
+    "authentication": "synthetic Application Passwords",
+    "sigkillCheckpoints": 4,
+    "nativeHttpPurgeHeaderVerified": true,
+    "sameMariaDbConnection": true,
+    "sourceWritesOnRetry": false,
+    "hostingCacheDeliveryVerified": false,
+    "fullSourceCodeProfileVerified": true,
+    "fullHostingConfigurationVerified": false
+  },
+  "format": "editorial-joint-storage-migration-v2",
+  "result": {
+    "checks": 58,
+    "passed": true,
+    "wordpress": "7.1.3",
+    "mariadb": "11.8.9-MariaDB-ubu2404",
+    "acf": "6.8.10",
+    "litespeed": "7.9.2",
+    "sameConnectionAtomicity": true,
+    "nativePurgeApiInvoked": true,
+    "hostingCacheDeliveryVerified": false,
+    "httpContextVerified": false
+  },
+  "verifiedSourcePlugins": {
+    "all-source-plugins": {
+      "files": 9590,
+      "bytes": 160287119
+    },
+    "themes": {
+      "files": 4044,
+      "bytes": 46865466
+    },
+    "mu-plugins": {
+      "files": 2,
+      "bytes": 41044
+    }
+  },
+  "hostPorts": false,
+  "externalNetwork": false,
+  "sshExecuted": false,
+  "sourceDatabaseImported": false,
+  "reusedInternalNetwork": true,
+  "realIntegrationChecks": 317,
+  "resumableTables": 6,
+  "journalRequiredPreexisting": false,
+  "candidateReady": false,
+  "sourceHashes": {
+    "wordpress/experimental/editorial-source-adapter/operating-migration.php": "dc74a419ff72b54446a332c01a7d28da5baa61950b3dc7178abcd3d3aded95a8",
+    "wordpress/experimental/editorial-source-adapter/mariadb-operation.php": "56db7a5d2678e39c5d9246bc9b24d017796f1e24cc4c2e6b4b2cc227221fa35b",
+    "tests/integration/wordpress-source-effects/migration.php": "b284ef4d1231660beb918c569d8074bf6e59daca8a299d4aa99c8b0772da78e1"
+  }
+}

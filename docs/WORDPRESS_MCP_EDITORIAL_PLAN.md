@@ -1,5 +1,8 @@
 # Etapa técnica: MCP editorial con permisos acotados
 
+**23 octubre — preparación conjunta de seis tablas desde cero:**45 comprobaciones de migración+140 de contrato+132 regresiones,317 integraciones correctas. Journal y tablas operativas comparten DDL/huella/marker operating-storage-v2, lock, validación parcial y ready; interrupción tras cada tabla y esquema parcial incompatible probados. No requiere journal preexistente ni reconstruye tablas válidas. Contadores de arranque trasladados del contrato; no sumar los antiguos143 a45. [QA/límites](qa/MCP_JOINT_MIGRATION_2026-10-23.md). Pendiente aceptación global en reposo, MCP/export/empaquetado/admisión para destino/preflight/reversión y autorización. Sin SSH/CMS/grants/pulls/backups nuevos; laboratorio detenido;32GiB libres al inicio.
+
+
 **23 octubre — preparación reanudable de cuatro tablas operativas:**143 controles de contrato+132 regresiones,275 integraciones correctas;12 casos nuevos. Marcador preparing/ready con huella DDL, lock de migración, validación previa, reanudación tras DDL parcial e idempotencia; operaciones bloqueadas sin ready. No ALTER ni adopción de datos/esquemas desconocidos. [QA/alcance](qa/MCP_OPERATING_MIGRATION_2026-10-23.md). Requiere las dos tablas journal ya preparadas: falta preparación conjunta/reanudable del journal, aceptación global en reposo, MCP/export/paquete/preflight/reversión y aceptación autorizada. Sin SSH/CMS/grants/pulls/backups nuevos; laboratorio detenido;32GiB libres al inicio.
 
 

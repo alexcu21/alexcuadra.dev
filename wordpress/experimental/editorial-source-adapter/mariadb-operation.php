@@ -125,17 +125,25 @@ final class MariaDbOperation {
     }
     public function install() {
         $this->outside();
-        $this->query("CREATE TABLE $this->events (event_id VARBINARY(64) NOT NULL PRIMARY KEY,event_hash VARBINARY(64) NOT NULL,
-            project_id BIGINT UNSIGNED NOT NULL,operation VARBINARY(8) NOT NULL,receipt LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL) ENGINE=InnoDB");
-        $this->query("CREATE TABLE $this->effects (event_id VARBINARY(64) NOT NULL PRIMARY KEY,project_id BIGINT UNSIGNED NOT NULL,
-            state VARBINARY(16) NOT NULL,attempts INT UNSIGNED NOT NULL DEFAULT 0,available_at BIGINT UNSIGNED NOT NULL,
-            lease_token VARBINARY(32) NULL,lease_until BIGINT UNSIGNED NULL,last_outcome VARBINARY(16) NULL) ENGINE=InnoDB");
+        $existing=$this->db->get_var($this->db->prepare("SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME IN (%s,%s)",$this->events,$this->effects));
+        if((int)$existing===2){$this->schema();return;}
+        if($existing===null||(int)$existing!==0){throw new \RuntimeException('experiment_partial_schema');}
+        foreach($this->definitions() as $ddl){$this->query($ddl);}
+        $this->schema();
     }
-    public function schema() {
+    public function definitions(){return [
+        'source_events'=>"CREATE TABLE $this->events (event_id VARBINARY(64) NOT NULL PRIMARY KEY,event_hash VARBINARY(64) NOT NULL,
+            project_id BIGINT UNSIGNED NOT NULL,operation VARBINARY(8) NOT NULL,receipt LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL) ENGINE=InnoDB",
+        'source_effects'=>"CREATE TABLE $this->effects (event_id VARBINARY(64) NOT NULL PRIMARY KEY,project_id BIGINT UNSIGNED NOT NULL,
+            state VARBINARY(16) NOT NULL,attempts INT UNSIGNED NOT NULL DEFAULT 0,available_at BIGINT UNSIGNED NOT NULL,
+            lease_token VARBINARY(32) NULL,lease_until BIGINT UNSIGNED NULL,last_outcome VARBINARY(16) NULL) ENGINE=InnoDB",
+    ];}
+    public function schema($only=null) {
         $expected=[
             $this->events=>[['event_id','varbinary(64)','NO','PRI',null],['event_hash','varbinary(64)','NO','',null],['project_id','bigint unsigned','NO','',null],['operation','varbinary(8)','NO','',null],['receipt','longtext','NO','',null]],
             $this->effects=>[['event_id','varbinary(64)','NO','PRI',null],['project_id','bigint unsigned','NO','',null],['state','varbinary(16)','NO','',null],['attempts','int unsigned','NO','','0'],['available_at','bigint unsigned','NO','',null],['lease_token','varbinary(32)','YES','',null],['lease_until','bigint unsigned','YES','',null],['last_outcome','varbinary(16)','YES','',null]]];
         foreach($expected as $table=>$columns){
+            if($only!==null&&$only!==$table){continue;}
             $rows=$this->db->get_results("SHOW FULL COLUMNS FROM $table",ARRAY_A);
             $actual=[];
             foreach($rows??[] as $row){
@@ -149,7 +157,7 @@ final class MariaDbOperation {
             $constraints=$this->db->get_var($this->db->prepare("SELECT COUNT(*) FROM information_schema.TABLE_CONSTRAINTS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME=%s AND CONSTRAINT_TYPE IN ('CHECK','FOREIGN KEY')",$table));
             if($triggers===null || (int)$triggers!==0 || $constraints===null || (int)$constraints!==0){throw new \RuntimeException('experiment_schema_changed');}
         }
-        foreach([$this->events,$this->effects,$this->db->posts,$this->db->postmeta,$this->db->options,$this->db->terms,$this->db->term_taxonomy,$this->db->term_relationships] as $table){
+        foreach([...($only===null?[$this->events,$this->effects]:[$only]),$this->db->posts,$this->db->postmeta,$this->db->options,$this->db->terms,$this->db->term_taxonomy,$this->db->term_relationships] as $table){
             $engine=$this->db->get_var($this->db->prepare('SELECT ENGINE FROM information_schema.TABLES WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME=%s',$table));
             if($engine!=='InnoDB'){throw new \RuntimeException('transactional_tables_required');}
         }
