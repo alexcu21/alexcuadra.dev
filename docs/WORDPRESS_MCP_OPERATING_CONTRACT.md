@@ -34,7 +34,7 @@ Conservar todos los registros, respaldo y archivos hasta validar instalación/re
 
 ## Qué falta y siguiente entrega
 
-1. Formalizar esquema/decodificación/versiones y admisión para candidato. Las cuatro tablas tienen admisión estricta y decoder cerrado de revisiones; faltan decoders de aprobaciones/recibos/app/effect y migración final/reanudable. [QA de almacenamiento](qa/MCP_OPERATING_STORAGE_2026-10-23.md).
+1. Formalizar esquema/decodificación/versiones y admisión para candidato. Las cuatro tablas tienen admisión estricta y decoder cerrado de revisiones; Aprobaciones, recibos operativos y aplicaciones ya validan estructura y vínculos al leerse. Faltan validación final del journal/efectos, auditoría de relaciones entre tablas y migración final/reanudable. [QA de almacenamiento](qa/MCP_OPERATING_STORAGE_2026-10-23.md).
 2. Registro/schema MCP acotado, export privado, preflight de configuración admitida, reversión y ZIP/manifiesto probados. Las pruebas HTTP del adaptador siguen usando fixtures; no son aún aceptación del nuevo contrato por MCP.
 3. Instalación y diff público específicamente autorizados, SSH ejecutado por Alex y aceptación real. Ninguna edición real se autoriza por esta integración.
 

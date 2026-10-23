@@ -1,5 +1,8 @@
 # Traspaso de sesión — 21 octubre 2026
 
+**23 octubre — validadores de registros operativos:**111 controles de contrato+132 regresiones,243 integraciones correctas. Aprobaciones ligadas a revisión/actor/executor/vigencia, recibos cerrados por operación y aplicaciones con reservas coherentes;9 casos nuevos prueban corrupción y conservación de fuente/recibos válidos. [QA y límites](qa/MCP_OPERATING_RECORDS_2026-10-23.md). Faltan journal/efectos finales, auditoría entre tablas, migración/admisión final, MCP/export/candidato/preflight/reversión y aceptación autorizada. Sin SSH/CMS/grants/pulls/backup nuevos; red interna reutilizada, laboratorio detenido.32GiB libres al inicio.
+
+
 **23 octubre — admisión de almacenamiento y revisiones:**102 controles de contrato+132 regresiones,234 integraciones correctas. Cuatro esquemas operativos exactos (columnas/índices/tipos/defaults/constraints/collation), LONGTEXT utf8mb4_bin y decoder cerrado de reviews apply/recover.8 casos nuevos rechazan deriva de esquema y documentos malformados aun con hash recalculado. [QA y alcance](qa/MCP_OPERATING_STORAGE_2026-10-23.md). No es migración final ni candidato: faltan decoders de aprobaciones/recibos/app/effect, migración/admisión final, transporte MCP/export/ZIP/preflight/reversión y aceptación autorizada. Sin SSH/CMS/grants/Workers/contacto/pulls/backup nuevos; red interna reutilizada, contenedores detenidos;32GiB libres al inicio.
 
 

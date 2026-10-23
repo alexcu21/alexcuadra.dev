@@ -47,3 +47,43 @@ function decode_operating_review($encoded) {
         return $d;
     }catch(\Throwable $e){throw new \RuntimeException('contract_review_corrupt',0,$e);}
 }
+
+function operating_keys($d,array $keys){return is_array($d)&&!array_diff(array_keys($d),$keys)&&!array_diff($keys,array_keys($d));}
+function operating_hex($v,$n=64){return is_string($v)&&preg_match('/^[a-f0-9]{'.$n.'}$/D',$v)===1;}
+function operating_positive($v){return is_int($v)&&$v>0;}
+function operating_sql_uint($v){return (is_int($v)&&$v>=0)||(is_string($v)&&preg_match('/^(0|[1-9][0-9]*)$/D',$v)&&strlen($v)<=strlen((string)PHP_INT_MAX)&&(strlen($v)<strlen((string)PHP_INT_MAX)||strcmp($v,(string)PHP_INT_MAX)<=0));}
+function decode_operating_approval(array $row,array $review,$reviewId,$owner,$hash){
+    try{
+        if(!is_string($row['document']??null)||strlen($row['document'])>3904){throw new \Exception();}
+        $a=json_decode($row['document'],true,16,JSON_THROW_ON_ERROR);
+        if(!operating_keys($a,['format','review_id','review_hash','executor_id','actor_id','approved_at'])||$a['format']!=='operating-approval-v1'){throw new \Exception();}
+        foreach(['review_id','executor_id','actor_id','approved_at'] as $k){if(!operating_positive($a[$k])){throw new \Exception();}}
+        if(!operating_sql_uint($row['review_id']??null)||!operating_sql_uint($row['actor_id']??null)||$a['review_id']!==$reviewId||(int)$row['review_id']!==$reviewId||$a['executor_id']!==$owner||$a['actor_id']===$owner||(int)$row['actor_id']!==$a['actor_id']||!operating_hex($a['review_hash'])||$a['review_hash']!==$hash||$a['approved_at']<$review['created_at']||$a['approved_at']>=$review['expires_at']||!array_key_exists('consumed_event',$row)||($row['consumed_event']!==null&&!operating_hex($row['consumed_event']))){throw new \Exception();}
+        return $a;
+    }catch(\Throwable $e){throw new \RuntimeException('contract_approval_invalid',0,$e);}
+}
+function decode_operating_receipt($encoded,$kind,array $input){
+    try{
+        if(!is_string($encoded)||strlen($encoded)>4096){throw new \Exception();}$d=json_decode($encoded,true,16,JSON_THROW_ON_ERROR);
+        $keys=['format','review_id','proposal_id','project_id','locale'];
+        if($kind==='prepare'||$kind==='prepare_recovery'){$keys=array_merge($keys,['review_hash','expires_at']);$format='operating-review-receipt-v1';}
+        else{$keys=array_merge($keys,['event_id','content_state','source_version','effect_state_at_commit']);$format=$kind==='apply'?'operating-application-receipt-v1':'operating-recovery-receipt-v1';if($kind==='recover'){$keys[]='application_event';}}
+        if(!operating_keys($d,$keys)||$d['format']!==$format||$d['locale']!==$input['locale']){throw new \Exception();}
+        foreach(['review_id','proposal_id','project_id'] as $k){if(!operating_positive($d[$k])){throw new \Exception();}}
+        foreach(['review_id','proposal_id'] as $k){if(isset($input[$k])&&$input[$k]!==$d[$k]){throw new \Exception();}}
+        foreach(['review_hash','source_version','event_id','application_event'] as $k){if(isset($d[$k])&&!operating_hex($d[$k])){throw new \Exception();}}
+        if(isset($d['expires_at'])&&!operating_positive($d['expires_at'])){throw new \Exception();}
+        if(isset($d['content_state'])&&($d['content_state']!==($kind==='apply'?'applied':'recovered')||$d['effect_state_at_commit']!=='pending')){throw new \Exception();}
+        return $d;
+    }catch(\Throwable $e){throw new \RuntimeException('contract_receipt_corrupt',0,$e);}
+}
+function validate_operating_application(array $r){
+    $keys=['proposal_id','owner_id','review_id','event_id','source_after','reserved_bytes','reserved_reviews','reserved_requests','recovery_review','recovery_event'];
+    if(!operating_keys($r,$keys)){throw new \RuntimeException('contract_application_corrupt');}
+    foreach(['proposal_id','owner_id','review_id','reserved_bytes','reserved_reviews','reserved_requests'] as $k){if(!operating_sql_uint($r[$k])||(in_array($k,['proposal_id','owner_id','review_id'],true)&&(int)$r[$k]===0)){throw new \RuntimeException('contract_application_corrupt');}}
+    $state=[(int)$r['reserved_bytes'],(int)$r['reserved_reviews'],(int)$r['reserved_requests']];
+    if(!operating_hex($r['event_id'])||!operating_hex($r['source_after'])||($r['recovery_review']!==null&&(!operating_sql_uint($r['recovery_review'])||(int)$r['recovery_review']<1))||($r['recovery_event']!==null&&!operating_hex($r['recovery_event']))){throw new \RuntimeException('contract_application_corrupt');}
+    $expected=$r['recovery_review']===null?[573440,1,2]:($r['recovery_event']===null?[12416,0,1]:[8192,0,0]);
+    if($state!==$expected||($r['recovery_event']!==null&&$r['recovery_review']===null)){throw new \RuntimeException('contract_application_corrupt');}
+    return $r;
+}
