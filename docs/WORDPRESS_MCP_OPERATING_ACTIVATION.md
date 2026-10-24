@@ -1,6 +1,6 @@
-# Activación y almacenamiento rc.3 — fase para revisión
+# Activación y almacenamiento rc.3 — fase completada
 
-Estado: Alex autoriza con «si adelante» el opt-in del sitio, activación de rc.3 y creación de las seis tablas vacías, manteniendo permisos y contenido. Ejecución remota pendiente de Alex; el agente no ejecuta SSH. No incluye grants, aceptación global con pausa externa, aprobación de un diff ni edición pública. Alex completó la fase inactiva:rc.3/hash correcto,15 archivos verificados,14 Projects y propuestas/permisos sin cambios, sin opt-in/tablas/abilities. [Resultado real](qa/MCP_OPERATING_LIVE_INACTIVE_INSTALL_2026-10-23.json). No repetir la subida o instalación.
+Estado: Alex autorizó y ejecutó la activación/almacenamiento. Resultado real: rc.3 activo, opt-in canónico, seis tablas verificadas y vacías,131072bytes aproximados de datos+índices,18 denegaciones verificadas,14 Projects y fuentes/propuestas/permisos/roles/demás plugins/configuración conservados. Run `operating-activate.xnDUquzN`. [Evidencia aportada por Alex](qa/MCP_OPERATING_LIVE_ACTIVATION_2026-10-23.json). El agente no ejecutó SSH. No repetir instalación ni activación. No se concedieron scopes ni se hizo aceptación global o edición pública. La siguiente fase tiene un [plan separado](WORDPRESS_MCP_OPERATING_SCOPES.md).
 
 Alcance propuesto:
 
@@ -36,7 +36,7 @@ ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=10 -p 65002 
 
 Pasar toda la salida, incluido `OPERATING_ACTIVATION_RUN`, `OPERATING_ACTIVATION_STORAGE_RESULT` y `END_EDITORIAL_OPERATING_ACTIVATE_STORAGE_V1`. Se espera active/storageSchemaVerified/newStorageEmpty=true,tableCount6,permissionDenialsVerified18,projectCount14,capabilitiesAdded/editorialDataWritten/globalStorageAcceptancePerformed=false. La estimación de datos/índices de tablas se informa en el resultado.
 
-Si falla, detenerse y aportar la salida/identificador; no repetir el script completo ni invocar manualmente install para evitar la comparación contra otra baseline. Revisar el estado antes de autorizar una reanudación. Este documento no certifica aún privilegios DDL del servidor.
+Si falla, detenerse y aportar la salida/identificador; no repetir el script completo ni invocar manualmente install para evitar la comparación contra otra baseline. Revisar el estado antes de autorizar una reanudación. La ejecución real confirmó la creación del esquema propio; no certifica otros privilegios DDL.
 
 ## Desactivar sin borrar ni deshacer cambios ajenos
 
@@ -54,6 +54,6 @@ El ejemplo es un marcador, no ejecutar literalmente. La salida acaba en `END_EDI
 
 ## Almacenamiento y respaldo
 
-En el ensayo inicial, información de MariaDB para las seis tablas vacías:131072bytes de datos+índices. Es una estimación estadística, no el espacio físico de ficheros/overhead ni una certificación de cuota. El resultado real informará su valor. Se añaden además scripts/baselines pequeños y temporales normales; no se descarga ni exporta otro respaldo al equipo. El equipo mostraba32GiB libres antes y después del ensayo (redondeados); Docker puede usar RAM/swap/capas.
+En el ensayo inicial, información de MariaDB para las seis tablas vacías:131072bytes de datos+índices. Es una estimación estadística, no el espacio físico de ficheros/overhead ni una certificación de cuota. La ejecución real confirmó esa misma estimación. Se añaden además scripts/baselines pequeños y temporales normales; no se descarga ni exporta otro respaldo al equipo. El equipo mostraba32GiB libres antes y después del ensayo (redondeados); Docker puede usar RAM/swap/capas.
 
 El respaldo privado anterior se conserva:247734036bytes/SHA esperado comprobados de nuevo y evidencia de restauración previa coincidente. No se presenta como dump nuevo ni como fotografía actual de los datos posteriores. Esta fase es aditiva y su reversión conserva las tablas; no restaura ciegamente ese respaldo.

@@ -20,10 +20,11 @@ SOURCE = Path('/private/tmp/ac-wp-private-restore-_tidfs0c/source')
 
 def main():
     os.umask(0o077)
-    allowed_args=[[],["--full-profile"],["--full-profile","--inactive-install-only"],["--full-profile","--activation-only"]]
+    allowed_args=[[],["--full-profile"],["--full-profile","--inactive-install-only"],["--full-profile","--activation-only"],["--full-profile","--scopes-only"]]
     full = bool(sys.argv[1:]) and sys.argv[1:] in allowed_args
     activation_only = sys.argv[1:]==["--full-profile","--activation-only"]
-    install_only = sys.argv[1:]==["--full-profile","--inactive-install-only"] or activation_only
+    scopes_only = sys.argv[1:]==["--full-profile","--scopes-only"]
+    install_only = sys.argv[1:]==["--full-profile","--inactive-install-only"] or activation_only or scopes_only
     if sys.argv[1:] not in allowed_args: raise ValueError("INVALID_ARGUMENTS")
     if install_only and os.environ.get('AC_SOURCE_EFFECTS_PACKAGE')!='local-rc3': raise ValueError('RC3_REQUIRED')
     if os.environ.get('DOCKER_HOST') or shutil.disk_usage('/private/tmp').free < 8*1024**3:
@@ -140,9 +141,12 @@ def main():
             settings['services'][service]['volumes'].append({'type':'bind','source':str(package_dir),'target':'/operating-package','read_only':True})
             settings['services'][service]['volumes'].append({'type':'bind','source':str(archive_path),'target':'/operating-candidate.zip','read_only':True})
     if install_only: settings['services']['cli']['volumes'].append({'type':'bind','source':str(ROOT/'wordpress/operations/editorial-operating-install-inactive.sh'),'target':'/deploy-install.sh','read_only':True})
-    if activation_only:
+    if activation_only or scopes_only:
         for source,target in [('editorial-operating-activate-storage.sh','/activate-storage.sh'),('editorial-operating-disable.sh','/disable-operating.sh')]:
             settings['services']['cli']['volumes'].append({'type':'bind','source':str(ROOT/'wordpress/operations'/source),'target':target,'read_only':True})
+    if scopes_only:
+        for name in ['grant-scopes','accept-storage','revoke-scopes']:
+            settings['services']['cli']['volumes'].append({'type':'bind','source':str(ROOT/('wordpress/operations/editorial-operating-'+name+'.sh')),'target':'/'+name+'.sh','read_only':True})
     config = work/'compose.json';config.write_text(json.dumps(settings))
     compose=['docker','compose','-p',work.name.replace('_','-'),'-f',str(config),'--profile','tools']
     def cli(*args, shell=False, disabled=False, normal=False, phase=None, production=None, root=False):
@@ -200,10 +204,15 @@ def main():
             cli('eval-file','/integration/install-seed.php')
             cli('-c','mv wp-content/mu-plugins/source-effects-fixture.php wp-content/source-effects-fixture-admission.disabled',shell=True)
             try:
-                deployment_out=cli('/integration/activation-exercise.sh' if activation_only else '/integration/install-exercise.sh',shell=True,normal=True,production='install-inactive',root=True)
-                marker='SOURCE_ACTIVATION_DEPLOYMENT_RESULT=' if activation_only else 'SOURCE_INACTIVE_DEPLOYMENT_RESULT='
+                deployment_out=cli('/integration/scopes-exercise.sh' if scopes_only else '/integration/activation-exercise.sh' if activation_only else '/integration/install-exercise.sh',shell=True,normal=True,production='install-inactive',root=True)
+                marker='SOURCE_SCOPES_DEPLOYMENT_RESULT=' if scopes_only else 'SOURCE_ACTIVATION_DEPLOYMENT_RESULT=' if activation_only else 'SOURCE_INACTIVE_DEPLOYMENT_RESULT='
                 vals=[json.loads(line.split('=',1)[1]) for line in deployment_out.splitlines() if line.startswith(marker)]
-                if activation_only:
+                if scopes_only:
+                    grants=[json.loads(line.split('=',1)[1]) for line in deployment_out.splitlines() if line.startswith('OPERATING_SCOPES_RESULT=')]
+                    accepts=[json.loads(line.split('=',1)[1]) for line in deployment_out.splitlines() if line.startswith('OPERATING_STORAGE_ACCEPTANCE_RESULT=')]
+                    if len(vals)!=1 or not vals[0].get('passed') or vals[0].get('checks')!=12 or len(grants)!=1 or len(accepts)!=1: raise ValueError('SCOPES_DEPLOYMENT_FAILED')
+                    report={'format':'editorial-operating-scopes-deployment-qa-v1','result':vals[0],'grantVerification':grants[0],'acceptanceVerification':accepts[0],'candidateSha256':package_manifest['sha256'],'hostPorts':False,'externalNetwork':False,'sshExecuted':False,'sourceDatabaseImported':False}
+                elif activation_only:
                     active=[json.loads(line.split('=',1)[1]) for line in deployment_out.splitlines() if line.startswith('OPERATING_ACTIVATION_STORAGE_RESULT=')]
                     disabled=[json.loads(line.split('=',1)[1]) for line in deployment_out.splitlines() if line.startswith('OPERATING_DISABLE_RESULT=')]
                     if len(vals)!=1 or not vals[0].get('passed') or vals[0].get('checks')!=10 or len(active)!=1 or len(disabled)!=1: raise ValueError('ACTIVATION_DEPLOYMENT_FAILED')

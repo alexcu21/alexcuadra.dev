@@ -1,0 +1,25 @@
+{
+  "format": "editorial-operating-live-activation-evidence-v1",
+  "source": "Output supplied by Alex; agent did not execute SSH",
+  "result": {
+    "version": "0.1.0-rc.3",
+    "candidateSha256": "d0b09a1612fa95606915b33fa8664ae29589008abed4ca77c3c35a5259b8ed30",
+    "activationRun": "operating-activate.xnDUquzN",
+    "active": true,
+    "siteOptin": "https://content.alexcuadra.dev",
+    "storageSchemaVerified": true,
+    "newStorageEmpty": true,
+    "tableCount": 6,
+    "tableDataAndIndexBytesApproximate": 131072,
+    "permissionDenialsVerified": 18,
+    "projectCount": 14,
+    "sourcesAndPrivateProposalsUnchanged": true,
+    "userMetadataAndRolesUnchanged": true,
+    "otherActivePluginsUnchanged": true,
+    "otherConfigCodeUnchanged": true,
+    "newGlobalScopesAbsent": true,
+    "capabilitiesAdded": false,
+    "globalStorageAcceptancePerformed": false,
+    "editorialDataWritten": false
+  }
+}

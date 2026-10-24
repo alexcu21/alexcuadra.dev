@@ -20,10 +20,9 @@ Resultado vigente:597 comprobaciones del candidato rc.3, que incorpora admisión
 
 | Entrega pendiente | Iteraciones estimadas | Resultado verificable |
 | --- | --- | --- |
-| Cierre del candidato frente a destino | 1 | Fase inactiva real completada; activación/migración vacía/reversión preparadas (10 escenarios/18 denegaciones), requieren autorización nueva. Después revisar scopes/aceptación dentro de su alcance, sin diff público implícito |
-| Instalación y aceptación autorizadas | 1 | Paquete/permisos/operaciones revisables y aprobados; Alex ejecuta SSH por fases; verificación real dentro del alcance autorizado |
+| Permisos y aceptación inicial en destino | 1 | Instalación/activación/seis tablas vacías completadas;12 escenarios de scopes/aceptación/revocación pasan. Falta autorización de tres capacidades, pausa efectiva y salidas de Alex por fases; revisar ambas antes de cerrar |
 
-**Estimación vigente restante:2 entregas de trabajo**, sujeta a incompatibilidades/resultados/aprobación; no equivale a número de mensajes o comandos. No volver a presentar perfiles o engine locales como pendientes.
+**Estimación vigente restante:1 entrega de trabajo**, sujeta a incompatibilidades/resultados/aprobación; no equivale a número de mensajes o comandos. No volver a presentar perfiles o engine locales como pendientes.
 
 Una edición pública requiere su diff concreto aprobado; no se programa ahora ni se considera autorizada por «continúa». No pedir autorización antes de tener candidato/plan concretos y revisables. Los fixtures REST de manage_options no son el autorizador operativo final.
 
@@ -35,6 +34,6 @@ Preflight recibido: la restricción PHP link afecta al export del rc.1 local. Se
 
 Último incremento:32GiB libres antes/después redondeados; sin nuevo backup real ni limpieza de recursos. La nueva lectura de destino solo exporta metadata al terminal de Alex.
 
-Preflight real pasa11/11. Fase inactiva:9 escenarios nuevos del script exacto correctos, [comandos/alcance listos para autorización](WORDPRESS_MCP_OPERATING_DEPLOYMENT.md). ZIP/código rc.3 no cambia. No contar las597 comprobaciones del candidato como ejecutadas de nuevo. Alex ya autorizó y completó la fase inactiva; la evidencia histórica mantiene sus campos originales. Activación/almacenamiento requieren autorización nueva.
+Preflight real pasa11/11. Fase inactiva:9 escenarios nuevos del script exacto correctos, [comandos/alcance listos para autorización](WORDPRESS_MCP_OPERATING_DEPLOYMENT.md). ZIP/código rc.3 no cambia. No contar las597 comprobaciones del candidato como ejecutadas de nuevo. Alex ya autorizó y completó la fase inactiva; la evidencia histórica mantiene sus campos originales. Activación/almacenamiento ya autorizados y completados; la autorización nueva pendiente corresponde a scopes/aceptación.
 
-Estado real más reciente:rc.3 instalado **inactivo**, sin opt-in/tablas/abilities,14 Projects/propuestas/permisos conservados. [Evidencia](qa/MCP_OPERATING_LIVE_INACTIVE_INSTALL_2026-10-23.json). [Siguiente fase concreta](WORDPRESS_MCP_OPERATING_ACTIVATION.md),10 escenarios/18 permisos correctos, pendiente autorización de activación y seis tablas vacías sin grants. No reinstalar ni repetir la primera fase.
+Estado real más reciente:rc.3 **activo**, opt-in canónico, seis tablas listas/vacías,18 denegaciones,14 Projects/propuestas/permisos conservados. [Evidencia](qa/MCP_OPERATING_LIVE_ACTIVATION_2026-10-23.json). [Siguiente fase concreta](WORDPRESS_MCP_OPERATING_SCOPES.md):tres scopes directos y aceptación inicial de solo lectura,12 escenarios correctos, pendiente autorización y ejecución por Alex. Puede coordinar la pausa, pero aún no está iniciada. No reinstalar ni reactivar. El cierre de esta entrega no incluye una aplicación pública ni certifica MCP HTTP del hosting; cualquier diff requiere una autorización concreta posterior.
