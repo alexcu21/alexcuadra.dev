@@ -36,6 +36,9 @@ phase=grant
 sh /grant-scopes.sh --external-writers-stopped > "$stage/granted.log" 2>&1
 cat "$stage/granted.log"
 run="$(php -r '$s=file_get_contents($argv[1]);preg_match("/^OPERATING_SCOPES_RESULT=(.+)$/m",$s,$m);$r=json_decode($m[1]??"",true,32,JSON_THROW_ON_ERROR);if($r["allowedPermissionChecks"]!==6||$r["deniedPermissionChecks"]!==12||!$r["onlyExpectedDirectCapabilitiesChanged"]||$r["editorialDataWritten"]){exit(96);}echo $r["grantRun"];' "$stage/granted.log")"
+phase=diagnose-matching
+sh /diagnose-scopes.sh "$run" > "$stage/diagnose-matching.log" 2>&1
+php -r '$s=file_get_contents($argv[1]);preg_match("/^OPERATING_SCOPES_DIAGNOSIS=(.+)$/m",$s,$m);$r=json_decode($m[1]??"",true,32,JSON_THROW_ON_ERROR);exit($r["matchesOriginalPostflightCondition"]&&!$r["changedSnapshotSections"]&&!$r["cmsWritesPerformed"]&&!$r["acceptancePerformed"]?0:1);' "$stage/diagnose-matching.log"
 phase=repeat-grant
 if sh /grant-scopes.sh --external-writers-stopped > "$stage/repeat-grant.log" 2>&1; then exit 97; fi
 phase=accept
@@ -46,10 +49,13 @@ phase=invalid-revoke
 if sh /revoke-scopes.sh '../../outside' > "$stage/invalid-revoke.log" 2>&1; then exit 99; fi
 phase=external-changes
 wp --path=/var/www/html eval 'global $wpdb;$id=(int)$wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_type=\"project\" ORDER BY ID LIMIT 1");$wpdb->update($wpdb->posts,["post_content"=>"Retain external synthetic change"],["ID"=>$id]);get_userdata(2)->add_cap("synthetic_unrelated_permission");get_userdata(2)->add_cap("alexcuadra_recover_project_changes",false);'
+phase=diagnose-drift
+sh /diagnose-scopes.sh "$run" > "$stage/diagnose-drift.log" 2>&1
+php -r '$s=file_get_contents($argv[1]);preg_match("/^OPERATING_SCOPES_DIAGNOSIS=(.+)$/m",$s,$m);$r=json_decode($m[1]??"",true,32,JSON_THROW_ON_ERROR);exit(!$r["matchesOriginalPostflightCondition"]&&in_array("posts",$r["changedSnapshotSections"],true)&&in_array("usermeta",$r["changedSnapshotSections"],true)&&$r["expectedDirectCapabilitiesMatchByUser"][1]&&!$r["expectedDirectCapabilitiesMatchByUser"][2]&&!$r["cmsWritesPerformed"]&&!$r["acceptancePerformed"]?0:1);' "$stage/diagnose-drift.log"
 phase=revoke-and-repeat
 sh /revoke-scopes.sh "$run" > "$stage/revoked.log" 2>&1
 sh /revoke-scopes.sh "$run" > "$stage/revoked-repeat.log" 2>&1
 php -r 'foreach(array_slice($argv,1) as $p){if(!str_contains(file_get_contents($p),"END_EDITORIAL_OPERATING_REVOKE_SCOPES_V1")){exit(1);}}' "$stage/revoked.log" "$stage/revoked-repeat.log"
 retained="$(wp --path=/var/www/html eval 'global $wpdb;$u=get_userdata(2);if($wpdb->get_var("SELECT post_content FROM $wpdb->posts WHERE post_type=\"project\" ORDER BY ID LIMIT 1")!=="Retain external synthetic change"||!$u->has_cap("synthetic_unrelated_permission")||($u->caps["alexcuadra_recover_project_changes"]??null)!==false||isset($u->caps["alexcuadra_apply_project_changes"])||get_userdata(1)->has_cap("alexcuadra_approve_public_project_changes")){WP_CLI::error("EXTERNAL_CHANGE_LOST");}WP_CLI::line("EXTERNAL_CHANGES_RETAINED");')"
 test "$retained" = EXTERNAL_CHANGES_RETAINED
-printf '%s\n' 'SOURCE_SCOPES_DEPLOYMENT_RESULT={"checks":12,"passed":true,"exactPreparedScripts":true,"missingPauseRejected":true,"packageDriftRejected":true,"definedFalseAndGlobalScopeRejected":true,"faultAfterFirstWriteRolledBack":true,"onlyThreeCapabilitiesAdded":true,"repeatGrantRejected":true,"readOnlyInitialAcceptance":true,"badRevocationRunRejected":true,"revocationAndRepeatVerified":true,"externalContentUnrelatedPermissionAndFalseDenialPreserved":true,"sshExecuted":false}'
+printf '%s\n' 'SOURCE_SCOPES_DEPLOYMENT_RESULT={"checks":12,"diagnosticChecks":2,"passed":true,"exactPreparedScripts":true,"missingPauseRejected":true,"packageDriftRejected":true,"definedFalseAndGlobalScopeRejected":true,"faultAfterFirstWriteRolledBack":true,"onlyThreeCapabilitiesAdded":true,"repeatGrantRejected":true,"readOnlyInitialAcceptance":true,"badRevocationRunRejected":true,"revocationAndRepeatVerified":true,"externalContentUnrelatedPermissionAndFalseDenialPreserved":true,"sshExecuted":false}'

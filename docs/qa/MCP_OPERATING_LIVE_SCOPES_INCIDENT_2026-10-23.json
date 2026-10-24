@@ -1,0 +1,13 @@
+{
+  "format": "editorial-operating-live-scopes-incident-v1",
+  "source": "Output supplied by Alex; agent did not execute SSH",
+  "grantRun": "operating-scopes.yQCBqE9c",
+  "observedMarker": "EDITORIAL_OPERATING_GRANT_SCOPES_V1",
+  "failure": "SCOPES_POSTFLIGHT_CHANGED",
+  "failedPhase": "independent postflight after grant mutation",
+  "finalReceiptReceived": false,
+  "grantMayHaveCommitted": true,
+  "actualCapabilitiesNotYetReconciled": true,
+  "acceptancePerformedByThisFlow": false,
+  "nextAction": "Read-only diagnosis against original baseline; do not repeat grants or accept storage yet"
+}

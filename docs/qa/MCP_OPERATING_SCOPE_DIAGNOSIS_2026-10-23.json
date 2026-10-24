@@ -1,0 +1,74 @@
+{
+  "format": "editorial-operating-scopes-deployment-qa-v1",
+  "result": {
+    "checks": 12,
+    "diagnosticChecks": 2,
+    "passed": true,
+    "exactPreparedScripts": true,
+    "missingPauseRejected": true,
+    "packageDriftRejected": true,
+    "definedFalseAndGlobalScopeRejected": true,
+    "faultAfterFirstWriteRolledBack": true,
+    "onlyThreeCapabilitiesAdded": true,
+    "repeatGrantRejected": true,
+    "readOnlyInitialAcceptance": true,
+    "badRevocationRunRejected": true,
+    "revocationAndRepeatVerified": true,
+    "externalContentUnrelatedPermissionAndFalseDenialPreserved": true,
+    "sshExecuted": false
+  },
+  "grantVerification": {
+    "version": "0.1.0-rc.3",
+    "candidateSha256": "d0b09a1612fa95606915b33fa8664ae29589008abed4ca77c3c35a5259b8ed30",
+    "grantRun": "operating-scopes.XXCnCbOk",
+    "user2Added": [
+      "alexcuadra_apply_project_changes",
+      "alexcuadra_recover_project_changes"
+    ],
+    "operator1Added": [
+      "alexcuadra_approve_public_project_changes"
+    ],
+    "onlyExpectedDirectCapabilitiesChanged": true,
+    "subscriberRoleUnchanged": true,
+    "otherRolesAndUserMetadataUnchanged": true,
+    "sourcesAndPrivateProposalsUnchanged": true,
+    "configurationAndActivePluginsUnchanged": true,
+    "operatingStorageUnchanged": true,
+    "allowedPermissionChecks": 6,
+    "deniedPermissionChecks": 12,
+    "sourceEditAdminDeniedForUser2": true,
+    "approvalOrProposalCreated": false,
+    "editorialDataWritten": false,
+    "globalStorageAcceptancePerformed": false
+  },
+  "acceptanceVerification": {
+    "version": "0.1.0-rc.3",
+    "candidateSha256": "d0b09a1612fa95606915b33fa8664ae29589008abed4ca77c3c35a5259b8ed30",
+    "acceptance": {
+      "format": "operating-storage-acceptance-v1",
+      "accepted": true,
+      "snapshot": "single-read-only-repeatable-read",
+      "totals": {
+        "owners": 0,
+        "reviews": 0,
+        "requests": 0,
+        "applications": 0,
+        "approvals": 0,
+        "events": 0
+      },
+      "external_quiescence": "operator-attested"
+    },
+    "allowedPermissionChecks": 6,
+    "deniedPermissionChecks": 12,
+    "sourcesRolesPermissionsAndStorageUnchanged": true,
+    "editorialDataWritten": false,
+    "externalPause": "operator-attested",
+    "softwareEnforcesExternalPause": false
+  },
+  "candidateSha256": "d0b09a1612fa95606915b33fa8664ae29589008abed4ca77c3c35a5259b8ed30",
+  "hostPorts": false,
+  "externalNetwork": false,
+  "sshExecuted": false,
+  "sourceDatabaseImported": false,
+  "scope": "Synthetic diagnosis verification; does not certify the failed live grant"
+}

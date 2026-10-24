@@ -1,6 +1,20 @@
-# Permisos operativos y aceptación inicial — autorizados, ejecución pendiente
+# Permisos operativos — conciliación pendiente tras fallo del postflight
 
-La activación real de rc.3 quedó completada: seis tablas listas/vacías,14 Projects conservados y ningún permiso nuevo. [Evidencia de Alex](qa/MCP_OPERATING_LIVE_ACTIVATION_2026-10-23.json). No repetir instalación, activación ni la propuesta227. Alex autorizó esta fase con «si adelante»: apply/recover directos para usuario2, approve directo para operador1 y aceptación posterior de solo lectura. Ejecución pendiente por Alex; el agente no ejecuta SSH. La autorización no incluye aplicar un diff público. Alex confirmó que puede coordinar la pausa; no confirmó que ya esté iniciada. Ejecutar primero la concesión con pausa efectiva y revisar su recibo antes de la aceptación.
+**Incidencia real:**Alex ejecutó la concesión autorizada, run `operating-scopes.yQCBqE9c`. La mutación alcanzó el postflight independiente, que falló con `SCOPES_POSTFLIGHT_CHANGED`; no llegó el recibo final. Los permisos pueden estar concedidos: no repetir la concesión ni ejecutar aceptación. [Evidencia](qa/MCP_OPERATING_LIVE_SCOPES_INCIDENT_2026-10-23.json). Se prepara diagnóstico de solo lectura frente a la baseline original, sin reemplazarla ni aceptar desviaciones. La causa real permanece sin identificar.
+
+La activación real de rc.3 quedó completada: seis tablas listas/vacías,14 Projects conservados y ningún permiso nuevo. [Evidencia de Alex](qa/MCP_OPERATING_LIVE_ACTIVATION_2026-10-23.json). No repetir instalación, activación ni la propuesta227. Alex autorizó esta fase con «si adelante»: apply/recover directos para usuario2, approve directo para operador1 y aceptación posterior de solo lectura. Ejecución iniciada por Alex y detenida tras el fallo descrito arriba; el agente no ejecuta SSH. La autorización no incluye aplicar un diff público. Alex confirmó que puede coordinar la pausa; no confirmó que ya esté iniciada. Ejecutar primero la concesión con pausa efectiva y revisar su recibo antes de la aceptación.
+
+## Siguiente comando: diagnóstico del fallo
+
+Comprobación de solo lectura del CMS frente a la baseline del run fallido; no concede/revoca permisos ni acepta almacenamiento. Conserva en el servidor un helper pequeño privado, sin cambiar la baseline original. Sin descargas al equipo. No mostrar hashes/baseline/logs privados: devuelve nombres de secciones que difieren, booleanos y solo los tres scopes previstos. Que el diagnóstico termine correctamente no significa que el postflight coincida: revisar `matchesOriginalPostflightCondition` y los detalles.
+
+```bash
+ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=10 -p 65002 u776991923@194.164.64.104 'sh -s -- operating-scopes.yQCBqE9c' < /Users/Alex/Desktop/AlexC/alexcuadra.dev/wordpress/operations/editorial-operating-diagnose-scopes.sh
+```
+
+Aportar `OPERATING_SCOPES_DIAGNOSIS` y `END_EDITORIAL_OPERATING_SCOPES_DIAGNOSIS_V1`. Mantener la pausa durante esta revisión. No sustituir la baseline ni normalizar/ignorar una diferencia sin identificar su causa.
+
+Ensayo del diagnóstico exacto correcto: dos casos adicionales sobre el circuito de12 escenarios, estado coincidente y deriva de contenido/usermeta/capacidad. Lectura READ ONLY/REPEATABLE READ sobre conexión nativa con barrera; no se añaden vías de mutación. [Resultado sintético](qa/MCP_OPERATING_SCOPE_DIAGNOSIS_2026-10-23.json), laboratorio `/private/tmp/ac-source-effects-umzgbsjw` detenido. No reproduce todavía la causa del fallo real ni certifica su resolución.32GiB libres redondeados antes/después, sin descargas/backup nuevos ni cambios al ZIP rc.3.
 
 ## Cambio exacto
 
