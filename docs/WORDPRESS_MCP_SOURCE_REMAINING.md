@@ -1,5 +1,7 @@
 # Cierre del adaptador y edición operativa — alcance restante
 
+Último incremento:lecturas MCP reales registradas. Preparada [una revisión privada por MCP](WORDPRESS_MCP_OPERATING_PRIVATE_REVIEW.md) con parámetros fijados; escritura/ejecución pendiente de autorización nueva. No se ejecutó ninguna mutación.
+
 **Estado vigente — aceptación de almacenamiento completada:**Alex ejecutó la auditoría autorizada de rc.3; accepted=true, snapshot READ ONLY/REPEATABLE READ, totales operativos cero,6 permisos permitidos/12denegados y conservación antes/después sin escritura editorial. [Resultado real](qa/MCP_OPERATING_LIVE_STORAGE_ACCEPTANCE_2026-10-23.json). Los scopes exactos ya estaban corroborados;14Projects coinciden con huella histórica y propuesta227 con su evidencia/ledger. La diferencia global histórica de postmeta **sigue abierta**, con causa/filas/valores anteriores sin reconstruir. No certificar el postflight global fallido ni reemplazar su baseline. Esta aceptación no aprueba un diff público ni certifica apply/recover/MCP HTTP en el hosting. Puede levantarse la pausa de esta auditoría; cualquier operación posterior requiere evaluar/coordinar su propia pausa. No repetir instalación/activación/grants/aceptación sin una razón nueva.
 
 Estado23 octubre2026. Proposals rc.2 ya está instalado y validado: no reinstalar, repetir grant o recrear propuesta227. La autorización existente no incluye aplicar cambios a Projects reales. El trabajo nuevo sigue separado en `wordpress/experimental/editorial-source-adapter`.
@@ -26,7 +28,9 @@ Resultado vigente:597 comprobaciones del candidato rc.3, que incorpora admisión
 | Auditoría inicial de almacenamiento | Completada; accepted=true, cero registros operativos,6 permisos permitidos/12denegados, sin escritura editorial |
 | Incidencia histórica global postmeta | Abierta; lecturas estables y corroboración editorial correctas no recuperan el valor anterior ni atribuyen la causa |
 | Descubrimiento MCP del hosting | Verificado:6operaciones presentes con esquemas/metadatos iguales al paquete sellado;0ejecuciones editoriales |
-| Aplicación/recuperación y ejecución MCP del hosting | No certificados por el descubrimiento ni la auditoría; circuito completo ensayado localmente. Sin diff público autorizado |
+| Lecturas MCP del hosting | Usuario2/subscriber, lecturas públicas EN/ES y propuesta227 confirmados;4rechazos operativos saneados sin código detallado |
+| Preparación/inspección positiva de revisión privada | Plan concreto pendiente autorización de una revisión persistente, sin aplicación |
+| Aplicación/recuperación productivas | No certificadas; circuito completo ensayado localmente. Sin diff público autorizado |
 
 **Auditoría de almacenamiento:0 iteraciones pendientes.** La prueba acotada de lock terminó inconclusa(0candidatos/0intentos). La investigación de postmeta tiene un alcance distinto y no se estima sin evidencia nueva de la causa; no convertir accepted=true en una afirmación de cierre de esa incidencia ni de toda la edición operativa productiva.
 

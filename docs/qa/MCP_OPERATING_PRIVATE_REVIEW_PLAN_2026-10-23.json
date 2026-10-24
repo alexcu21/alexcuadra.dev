@@ -1,0 +1,30 @@
+{
+  "format": "editorial-operating-private-review-plan-v1",
+  "authorized": false,
+  "executed": false,
+  "ability": "alexcuadra/prepare-project-application",
+  "parameters": {
+    "proposal_id": 227,
+    "locale": "en",
+    "expected_proposal_version": "737a0558179ee7df25706593918782eefb24297135fa4860090af450e4560b44",
+    "expected_base_version": "bbca3d9ada7d199ebd4911b39625bcdd0b6d1285c0793562a6bbb06df6074d85",
+    "request_id": "605030ef5efbfbd1e15f9b0d127f281d"
+  },
+  "actorId": 2,
+  "projectId": 146,
+  "existingPatchFields": [
+    "tagline"
+  ],
+  "followupAbility": "alexcuadra/inspect-project-review",
+  "maximumNewReviews": 1,
+  "maximumNewRequests": 1,
+  "publicApplicationAuthorized": false,
+  "approvalAuthorized": false,
+  "recoveryAuthorized": false,
+  "newProposalAuthorized": false,
+  "originalProposalMutationAuthorized": false,
+  "retainReviewAfterExpiry": true,
+  "expirySeconds": 600,
+  "idempotentRetryUsesSameExactParameters": true,
+  "privatePatchValuesExcluded": true
+}

@@ -1,0 +1,109 @@
+{
+  "format": "editorial-operating-native-read-evidence-v1",
+  "source": "Live WordPress MCP calls",
+  "authenticatedActor": {
+    "id": 2,
+    "roles": [
+      "subscriber"
+    ]
+  },
+  "siteInfo": {
+    "permissionDenied": true,
+    "returnedUrlVerified": false,
+    "permissionsExpanded": false
+  },
+  "operatingEmptyStateQueries": [
+    {
+      "ability_name": "alexcuadra/inspect-project-review",
+      "parameters": {
+        "review_id": 1,
+        "locale": "en"
+      },
+      "isError": true,
+      "messages": [
+        "Editorial operation rejected."
+      ],
+      "detailedCodeReturned": false
+    },
+    {
+      "ability_name": "alexcuadra/get-project-effect-state",
+      "parameters": {
+        "proposal_id": 227,
+        "locale": "en"
+      },
+      "isError": true,
+      "messages": [
+        "Editorial operation rejected."
+      ],
+      "detailedCodeReturned": false
+    },
+    {
+      "ability_name": "alexcuadra/inspect-project-review",
+      "parameters": {
+        "review_id": 1,
+        "locale": "es"
+      },
+      "isError": true,
+      "messages": [
+        "Editorial operation rejected."
+      ],
+      "detailedCodeReturned": false
+    },
+    {
+      "ability_name": "alexcuadra/get-project-effect-state",
+      "parameters": {
+        "proposal_id": 227,
+        "locale": "es"
+      },
+      "isError": true,
+      "messages": [
+        "Editorial operation rejected."
+      ],
+      "detailedCodeReturned": false
+    }
+  ],
+  "publicProjectReads": [
+    {
+      "id": 146,
+      "locale": "en",
+      "translations": [
+        {
+          "id": 196,
+          "locale": "es"
+        }
+      ]
+    },
+    {
+      "id": 196,
+      "locale": "es",
+      "translations": [
+        {
+          "id": 146,
+          "locale": "en"
+        }
+      ]
+    }
+  ],
+  "existingProposal": {
+    "proposalId": 227,
+    "projectId": 146,
+    "locale": "en",
+    "version": "737a0558179ee7df25706593918782eefb24297135fa4860090af450e4560b44",
+    "baseVersion": "bbca3d9ada7d199ebd4911b39625bcdd0b6d1285c0793562a6bbb06df6074d85",
+    "state": "draft",
+    "applied": false,
+    "patchFields": [
+      "tagline"
+    ],
+    "patchValuesOmitted": true
+  },
+  "abilityExecutionCalls": 9,
+  "operatingReadExecutionCalls": 4,
+  "mutationAbilityExecutionCalls": 0,
+  "reviewCreated": false,
+  "sourceApplicationRequested": false,
+  "exact404CodeVerified": false,
+  "otherUserOrAnonymousPrivacyVerified": false,
+  "postmetaIncidentResolved": false,
+  "sshExecuted": false
+}
