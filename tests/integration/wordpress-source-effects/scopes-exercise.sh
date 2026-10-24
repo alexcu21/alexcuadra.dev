@@ -39,6 +39,26 @@ run="$(php -r '$s=file_get_contents($argv[1]);preg_match("/^OPERATING_SCOPES_RES
 phase=diagnose-matching
 sh /diagnose-scopes.sh "$run" > "$stage/diagnose-matching.log" 2>&1
 php -r '$s=file_get_contents($argv[1]);preg_match("/^OPERATING_SCOPES_DIAGNOSIS=(.+)$/m",$s,$m);$r=json_decode($m[1]??"",true,32,JSON_THROW_ON_ERROR);exit($r["matchesOriginalPostflightCondition"]&&!$r["changedSnapshotSections"]&&!$r["cmsWritesPerformed"]&&!$r["acceptancePerformed"]?0:1);' "$stage/diagnose-matching.log"
+phase=postmeta-matching
+baseline_file="$HOME/.ac-editorial-deploy/$run/baseline.base64"
+baseline_sha="$(sha256sum "$baseline_file")"
+sh /diagnose-postmeta.sh "$run" > "$stage/postmeta-matching.log" 2>&1
+php /integration/postmeta-assert.php "$stage/postmeta-matching.log" matching
+phase=postmeta-one-added-row
+wp --path=/var/www/html eval 'global $wpdb;$id=(int)$wpdb->get_var($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_type=%s ORDER BY ID LIMIT 1","project"));if(get_post_meta($id,"_edit_lock",false)){WP_CLI::error("LOCK_ALREADY_EXISTS");}add_post_meta($id,"_edit_lock",time().":1");'
+sh /diagnose-postmeta.sh "$run" > "$stage/postmeta-single.log" 2>&1
+php /integration/postmeta-assert.php "$stage/postmeta-single.log" single-added
+phase=postmeta-multiple-added-rows
+wp --path=/var/www/html eval 'global $wpdb;$id=(int)$wpdb->get_var($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_type=%s ORDER BY ID LIMIT 1","project"));add_post_meta($id,"synthetic_sensitive_label","SYNTHETIC_PRIVATE_VALUE");'
+sh /diagnose-postmeta.sh "$run" > "$stage/postmeta-multiple.log" 2>&1
+php /integration/postmeta-assert.php "$stage/postmeta-multiple.log" multiple-added
+wp --path=/var/www/html eval 'global $wpdb;$id=(int)$wpdb->get_var($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_type=%s ORDER BY ID LIMIT 1","project"));delete_post_meta($id,"_edit_lock");delete_post_meta($id,"synthetic_sensitive_label");'
+phase=postmeta-update-existing-row
+wp --path=/var/www/html eval 'global $wpdb;$id=$wpdb->get_var($wpdb->prepare("SELECT meta_id FROM $wpdb->postmeta WHERE meta_value=%s ORDER BY meta_id LIMIT 1","Retain source tagline"));if(!$id){WP_CLI::error("TAGLINE_FIXTURE_MISSING");}$wpdb->update($wpdb->postmeta,["meta_value"=>"Synthetic updated existing tagline"],["meta_id"=>$id]);'
+sh /diagnose-postmeta.sh "$run" > "$stage/postmeta-updated.log" 2>&1
+php /integration/postmeta-assert.php "$stage/postmeta-updated.log" updated
+wp --path=/var/www/html eval 'global $wpdb;$wpdb->update($wpdb->postmeta,["meta_value"=>"Retain source tagline"],["meta_value"=>"Synthetic updated existing tagline"]);'
+test "$baseline_sha" = "$(sha256sum "$baseline_file")"
 phase=repeat-grant
 if sh /grant-scopes.sh --external-writers-stopped > "$stage/repeat-grant.log" 2>&1; then exit 97; fi
 phase=accept
@@ -58,4 +78,4 @@ sh /revoke-scopes.sh "$run" > "$stage/revoked-repeat.log" 2>&1
 php -r 'foreach(array_slice($argv,1) as $p){if(!str_contains(file_get_contents($p),"END_EDITORIAL_OPERATING_REVOKE_SCOPES_V1")){exit(1);}}' "$stage/revoked.log" "$stage/revoked-repeat.log"
 retained="$(wp --path=/var/www/html eval 'global $wpdb;$u=get_userdata(2);if($wpdb->get_var("SELECT post_content FROM $wpdb->posts WHERE post_type=\"project\" ORDER BY ID LIMIT 1")!=="Retain external synthetic change"||!$u->has_cap("synthetic_unrelated_permission")||($u->caps["alexcuadra_recover_project_changes"]??null)!==false||isset($u->caps["alexcuadra_apply_project_changes"])||get_userdata(1)->has_cap("alexcuadra_approve_public_project_changes")){WP_CLI::error("EXTERNAL_CHANGE_LOST");}WP_CLI::line("EXTERNAL_CHANGES_RETAINED");')"
 test "$retained" = EXTERNAL_CHANGES_RETAINED
-printf '%s\n' 'SOURCE_SCOPES_DEPLOYMENT_RESULT={"checks":12,"diagnosticChecks":2,"passed":true,"exactPreparedScripts":true,"missingPauseRejected":true,"packageDriftRejected":true,"definedFalseAndGlobalScopeRejected":true,"faultAfterFirstWriteRolledBack":true,"onlyThreeCapabilitiesAdded":true,"repeatGrantRejected":true,"readOnlyInitialAcceptance":true,"badRevocationRunRejected":true,"revocationAndRepeatVerified":true,"externalContentUnrelatedPermissionAndFalseDenialPreserved":true,"sshExecuted":false}'
+printf '%s\n' 'SOURCE_SCOPES_DEPLOYMENT_RESULT={"checks":12,"diagnosticChecks":2,"postmetaDiagnosticChecks":4,"passed":true,"exactPreparedScripts":true,"missingPauseRejected":true,"packageDriftRejected":true,"definedFalseAndGlobalScopeRejected":true,"faultAfterFirstWriteRolledBack":true,"onlyThreeCapabilitiesAdded":true,"repeatGrantRejected":true,"readOnlyInitialAcceptance":true,"badRevocationRunRejected":true,"revocationAndRepeatVerified":true,"externalContentUnrelatedPermissionAndFalseDenialPreserved":true,"sshExecuted":false}'

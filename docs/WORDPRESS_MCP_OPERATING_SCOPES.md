@@ -1,10 +1,28 @@
 # Permisos operativos — conciliación pendiente tras fallo del postflight
 
+**Diagnóstico real recibido:**las capacidades directas de1 y2 coinciden exactamente con lo esperado; los tres scopes están true. Solo difiere `postmeta`. Posts, propuestas/ledger, usermeta normalizado, roles, configuración, otros plugins y almacenamiento operativo coinciden en esta lectura con la baseline original. No se hizo aceptación. [Resultado real](qa/MCP_OPERATING_LIVE_SCOPE_DIAGNOSIS_2026-10-23.json). La causa/fila/valor anterior no quedan identificados por una huella global; no tratar automáticamente la deriva como inocua ni sustituir la baseline.
+
 **Incidencia real:**Alex ejecutó la concesión autorizada, run `operating-scopes.yQCBqE9c`. La mutación alcanzó el postflight independiente, que falló con `SCOPES_POSTFLIGHT_CHANGED`; no llegó el recibo final. Los permisos pueden estar concedidos: no repetir la concesión ni ejecutar aceptación. [Evidencia](qa/MCP_OPERATING_LIVE_SCOPES_INCIDENT_2026-10-23.json). Se prepara diagnóstico de solo lectura frente a la baseline original, sin reemplazarla ni aceptar desviaciones. La causa real permanece sin identificar.
 
 La activación real de rc.3 quedó completada: seis tablas listas/vacías,14 Projects conservados y ningún permiso nuevo. [Evidencia de Alex](qa/MCP_OPERATING_LIVE_ACTIVATION_2026-10-23.json). No repetir instalación, activación ni la propuesta227. Alex autorizó esta fase con «si adelante»: apply/recover directos para usuario2, approve directo para operador1 y aceptación posterior de solo lectura. Ejecución iniciada por Alex y detenida tras el fallo descrito arriba; el agente no ejecuta SSH. La autorización no incluye aplicar un diff público. Alex confirmó que puede coordinar la pausa; no confirmó que ya esté iniciada. Ejecutar primero la concesión con pausa efectiva y revisar su recibo antes de la aceptación.
 
-## Siguiente comando: diagnóstico del fallo
+## Siguiente comando: evidencia acotada de postmeta
+
+Conservar la pausa mientras se ejecuta y revisa este diagnóstico. Los permisos ya coinciden: no volver a concederlos. No ejecutar todavía aceptación. El comando lee el CMS en dos procesos/snapshots consecutivos READ ONLY; conserva hashes pequeños de la primera observación en una carpeta privada nueva del servidor. No reemplaza ni reinterpreta la baseline original. No exporta valores de metadata, cuerpos ni credenciales, ni descarga un respaldo.
+
+```bash
+ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=10 -p 65002 u776991923@194.164.64.104 'sh -s -- operating-scopes.yQCBqE9c' < /Users/Alex/Desktop/AlexC/alexcuadra.dev/wordpress/operations/editorial-operating-diagnose-postmeta.sh
+```
+
+Pegar las dos líneas `OPERATING_POSTMETA_DIAGNOSIS` y el cierre `END_EDITORIAL_OPERATING_POSTMETA_DIAGNOSIS_V1`. Buscar coincidencia exacta de mapas de capacidades, secciones distintas y estabilidad entre observaciones. Dos lecturas estables no certifican que todos los escritores externos estén detenidos.
+
+La prueba de reconstrucción examina como máximo las32 filas con mayor meta_id: prueba excluir en memoria cada una por separado y sufijos de esas filas. Solo si el hash reconstruido coincide exactamente con el original puede afirmar que el resto de las filas actuales reproduce la baseline. No ejecuta DELETE/UPDATE, no atribuye autor/causa ni acepta esa diferencia. Devuelve únicamente IDs/categorías de las filas candidatas, y formato válido/incorrecto para un posible `_edit_lock`; no sus valores ni nombres arbitrarios de claves.
+
+Si no encuentra coincidencia, la búsqueda es inconclusa: puede haber actualizaciones, eliminaciones o adiciones fuera de su límite. Un hash anterior no recupera los valores antiguos. No eliminar locks ni sustituir baseline para hacer pasar el control. El diagnóstico se limita a5000 filas/16MiB de valores y se detiene si excede ese tamaño.
+
+Ensayo exacto:4 casos nuevos correctos y12+2 regresiones previas correctas; [QA](qa/MCP_OPERATING_POSTMETA_DIAGNOSIS_2026-10-23.md). No se ha identificado todavía la fila/cambio real. Sin cambios al ZIP rc.3, SSH del agente o respaldo nuevo.
+
+## Diagnóstico general ya ejecutado por Alex
 
 Comprobación de solo lectura del CMS frente a la baseline del run fallido; no concede/revoca permisos ni acepta almacenamiento. Conserva en el servidor un helper pequeño privado, sin cambiar la baseline original. Sin descargas al equipo. No mostrar hashes/baseline/logs privados: devuelve nombres de secciones que difieren, booleanos y solo los tres scopes previstos. Que el diagnóstico termine correctamente no significa que el postflight coincida: revisar `matchesOriginalPostflightCondition` y los detalles.
 

@@ -145,7 +145,7 @@ def main():
         for source,target in [('editorial-operating-activate-storage.sh','/activate-storage.sh'),('editorial-operating-disable.sh','/disable-operating.sh')]:
             settings['services']['cli']['volumes'].append({'type':'bind','source':str(ROOT/'wordpress/operations'/source),'target':target,'read_only':True})
     if scopes_only:
-        for name in ['grant-scopes','accept-storage','revoke-scopes','diagnose-scopes']:
+        for name in ['grant-scopes','accept-storage','revoke-scopes','diagnose-scopes','diagnose-postmeta']:
             settings['services']['cli']['volumes'].append({'type':'bind','source':str(ROOT/('wordpress/operations/editorial-operating-'+name+'.sh')),'target':'/'+name+'.sh','read_only':True})
     config = work/'compose.json';config.write_text(json.dumps(settings))
     compose=['docker','compose','-p',work.name.replace('_','-'),'-f',str(config),'--profile','tools']

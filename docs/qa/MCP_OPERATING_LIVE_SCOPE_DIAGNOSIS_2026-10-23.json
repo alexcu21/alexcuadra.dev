@@ -1,0 +1,31 @@
+{
+  "source": "Output supplied by Alex; no SSH executed by agent",
+  "result": {
+    "format": "editorial-operating-scope-diagnosis-v1",
+    "version": "0.1.0-rc.3",
+    "grantRun": "operating-scopes.yQCBqE9c",
+    "expectedDirectCapabilitiesMatchByUser": {
+      "1": true,
+      "2": true
+    },
+    "plannedDirectScopeValues": {
+      "1": {
+        "alexcuadra_approve_public_project_changes": true
+      },
+      "2": {
+        "alexcuadra_apply_project_changes": true,
+        "alexcuadra_recover_project_changes": true
+      }
+    },
+    "capabilitiesStrictMatch": true,
+    "snapshotStrictMatch": false,
+    "changedSnapshotSections": [
+      "postmeta"
+    ],
+    "snapshotValuesMatchIgnoringKeyOrder": false,
+    "matchesOriginalPostflightCondition": false,
+    "cmsWritesPerformed": false,
+    "acceptancePerformed": false,
+    "privateValuesExported": false
+  }
+}

@@ -1,5 +1,7 @@
 # Cierre del adaptador y edición operativa — alcance restante
 
+Actualización real: activación completada; la concesión autorizada se detuvo en el postflight. El diagnóstico confirma los tres permisos exactos y deriva únicamente en postmeta. La aceptación sigue pendiente de conciliar esa diferencia; no repetir grants. [Estado/evidencia y siguiente lectura](WORDPRESS_MCP_OPERATING_SCOPES.md).
+
 Estado23 octubre2026. Proposals rc.2 ya está instalado y validado: no reinstalar, repetir grant o recrear propuesta227. La autorización existente no incluye aplicar cambios a Projects reales. El trabajo nuevo sigue separado en `wordpress/experimental/editorial-source-adapter`.
 
 ## Adaptador: validación local cerrada
