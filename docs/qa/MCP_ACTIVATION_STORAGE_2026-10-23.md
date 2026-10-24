@@ -1,0 +1,17 @@
+# Activación, seis tablas y desactivación — 23 octubre
+
+10 escenarios correctos del script exacto y su reversión, únicamente en Docker/base sintética. [Resultado](MCP_ACTIVATION_STORAGE_2026-10-23.json). Los597 controles anteriores del candidato y9 de instalación inactiva no se suman como ejecutados de nuevo. rc.3/ZIP/SHA permanecen intactos.
+
+Escenarios: paquete con archivo extra rechazado antes de cambiar configuración; scope apply preexistente rechazado sin activar; opt-in incorrecto rechazado; activación+seis tablas vacías+recibo correctos; repetición de la activación bloqueada; install() ready idempotente; run de reversión fuera del directorio permitido rechazado; desactivación/retiro solo de SITE; conservación de edición y grant externos; repetición idempotente de la desactivación.18 permisos comprobados (6 abilities por cuentas0/1/2), todos denegados antes de conceder scopes. En la reversión las abilities dejan de estar registradas.
+
+Perfil completo de código/WP7.1.3/PHP8.5.11/MariaDB11.8.9, instalación normal desde ZIP, opt-in real en wp-config, entorno production simulado, sin fixture MU de pruebas durante la ejecución. Scripts corridos bajo root solo dentro del contenedor CLI nuevo para crear el árbol HOME del ensayo; user1/manage_options dentro de WordPress. Configuración privada real/SQL no importados.
+
+Comprobador guarda solo huellas/conteos. Antes de la migración y al finalizar compara fuentes/propuestas/usermeta/roles/ledger/otros plugins. Tokens de wp-config sin comentarios/espacios y sin la definición exacta de SITE coinciden; permisos del archivo se conservan. Esquema ready verificado y tablas vacías; datos+índices estadísticos suman131072bytes en el ensayo, sin certificar overhead físico/cuota real. La nueva opción de schema y seis tablas son cambios previstos; no se describen como rollback SQL transaccional.
+
+Para probar conservación ajena, el fixture introduce después de activar una edición de contenido y un grant apply de usuario2. Son cambios sintéticos de instrumentación, no acciones de los scripts ni del hosting. El disable los conserva y verifica contra baseline inmediatamente anterior a la desactivación, en vez de forzar el contenido/roles al estado de la activación. No se borran tablas, marker, registros ni archivos privados. No se revocan grants ajenos. Se guarda baseline nueva por cada disable.
+
+Se exige baseline/migration-ready/recibo antes de END, por el hallazgo previo de PHP fatal con exit0. No ejecutar automáticamente la reversión ante una discrepancia; detenerse, pasar salida/run y revisar. Privilegios DDL reales no certificados por el ensayo. No se ejecutó acceptStorage ni se declara una pausa externa inexistente.
+
+Respaldo anterior retenido:247734036bytes/SHA esperado revalidados y evidencia de restauración previa coherente. No hay nuevo dump o descarga. Laboratorio aceptado /private/tmp/ac-source-effects-b73r9hjf/result.json, detenido al finalizar; recursos anteriores retenidos.32GiB libres antes/después redondeados. Imágenes cacheadas, red interna sin puertos, tmpfs/RAM/swap/capas posibles; sin SSH/SCP del agente ni cambios CMS/Workers/contacto reales.
+
+[Plan/comandos/reversión preparados para autorización](../WORDPRESS_MCP_OPERATING_ACTIVATION.md). Alcance propuesto:solo opt-in, activación y almacenamiento propio vacío, sin grants/edición pública. La autorización previa de Alex únicamente cubrió la instalación inactiva, que ya fue completada y [verificada](MCP_OPERATING_LIVE_INACTIVE_INSTALL_2026-10-23.json).

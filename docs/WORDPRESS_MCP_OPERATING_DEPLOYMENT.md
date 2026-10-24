@@ -1,6 +1,6 @@
 # Instalación operativa rc.3 — fase inactiva para aprobación
 
-Estado: Alex autoriza explícitamente con «si hazlo» la subida e instalación inactiva de rc.3. Ejecución remota pendiente de Alex; se mantiene su instrucción de que el agente no ejecute SSH/SCP. La autorización no incluye opt-in, activación, migración, scopes ni edición pública. El preflight aportado por Alex del24octubre00:50:30UTC (23octubre en Nicaragua) pasa11/11 y coincide con el candidato. [Resultado](qa/MCP_OPERATING_ADMISSION_LIVE_PREFLIGHT_2026-10-23.json). El campo histórico `installationAuthorized=false` de ese resultado describe el estado anterior a esta autorización; no se altera la evidencia original.
+Estado: Alex autorizó con «si hazlo» y completó la subida e instalación inactiva de rc.3; resultado completo END recibido y verificado:14 Projects, propuestas y permisos conservados. [Evidencia](qa/MCP_OPERATING_LIVE_INACTIVE_INSTALL_2026-10-23.json). No repetir la instalación; se mantiene su instrucción de que el agente no ejecute SSH/SCP. La autorización no incluye opt-in, activación, migración, scopes ni edición pública. El preflight aportado por Alex del24octubre00:50:30UTC (23octubre en Nicaragua) pasa11/11 y coincide con el candidato. [Resultado](qa/MCP_OPERATING_ADMISSION_LIVE_PREFLIGHT_2026-10-23.json). El campo histórico `installationAuthorized=false` de ese resultado describe el estado anterior a esta autorización; no se altera la evidencia original.
 
 Alcance de esta aprobación: crear una carpeta privada de staging, subir el ZIP sellado, verificar SHA256 e instalar únicamente `alexcuadra-editorial-operating` **inactivo**. Sin opt-in, activación, migración, grants, nuevas propuestas ni edición pública. No reinstalar Read o Proposals rc.2. El instalador bloquea una instalación existente y no tiene force ni activate. El siguiente paso necesita revisar la salida; no continuar automáticamente a otras fases.
 
@@ -18,7 +18,7 @@ Después se exige igualdad de esas huellas, versión rc.3 inactiva y los15 archi
 
 Almacenamiento:153370bytes de ZIP+archivos instalados, más unos20KiB del comprobador, baseline pequeño, directorios y temporales/cachés del instalador. La carga útil prevista es menor que1MiB; el consumo transitorio de WordPress/Hostinger puede ser mayor. No se crea/descarga otro respaldo real. En el equipo de Alex se conservan el ZIP y respaldo existentes, más scripts/registros locales; Docker puede usar RAM/swap/capas. No borrar respaldo ni laboratorios.
 
-## Comandos preparados para Alex, después de autorizar esta fase
+## Comandos históricos de la fase ya completada — no repetir
 
 El agente no ejecuta SSH/SCP. Si falla un comando, detenerse y pasar su salida; no repetir con force ni borrar archivos para continuar.
 
@@ -59,5 +59,7 @@ ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=10 -p 65002 
 No desinstala ni elimina datos. No retirar constantes o grants ajenos a esta fase. Retirar los archivos instalados sería una decisión posterior de Alex; no se programa limpieza automática.
 
 ## Fases posteriores, todavía fuera de esta aprobación
+
+[Activación y almacenamiento: comandos y reversión preparados para revisión](WORDPRESS_MCP_OPERATING_ACTIVATION.md).
 
 Opt-in/activación y preparación de seis tablas requieren comandos/baseline específicos y autorización nueva. La aceptación global exige que el operador confirme una pausa de escritores externos; el programa no puede certificarla. Grants apply/recover de usuario2 y approve del operador1 deben revisarse como cambios exactos separados. No se conceden edit_posts/manage_options al suscriptor. Una edición pública exige además su diff y aprobación independiente; «continúa» no autoriza un diff desconocido. [Plan general de reversión](WORDPRESS_MCP_OPERATING_PACKAGE.md).

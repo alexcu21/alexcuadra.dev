@@ -20,7 +20,7 @@ Resultado vigente:597 comprobaciones del candidato rc.3, que incorpora admisión
 
 | Entrega pendiente | Iteraciones estimadas | Resultado verificable |
 | --- | --- | --- |
-| Cierre del candidato frente a destino | 1 | Preflight11/11 recibido y fase inactiva ensayada/preparada para autorización; tras su salida, cerrar comandos/alcance de activación/migración/scopes/aceptación/reversión; cambios adicionales solo ante incompatibilidad |
+| Cierre del candidato frente a destino | 1 | Fase inactiva real completada; activación/migración vacía/reversión preparadas (10 escenarios/18 denegaciones), requieren autorización nueva. Después revisar scopes/aceptación dentro de su alcance, sin diff público implícito |
 | Instalación y aceptación autorizadas | 1 | Paquete/permisos/operaciones revisables y aprobados; Alex ejecuta SSH por fases; verificación real dentro del alcance autorizado |
 
 **Estimación vigente restante:2 entregas de trabajo**, sujeta a incompatibilidades/resultados/aprobación; no equivale a número de mensajes o comandos. No volver a presentar perfiles o engine locales como pendientes.
@@ -35,4 +35,6 @@ Preflight recibido: la restricción PHP link afecta al export del rc.1 local. Se
 
 Último incremento:32GiB libres antes/después redondeados; sin nuevo backup real ni limpieza de recursos. La nueva lectura de destino solo exporta metadata al terminal de Alex.
 
-Preflight real pasa11/11. Fase inactiva:9 escenarios nuevos del script exacto correctos, [comandos/alcance listos para autorización](WORDPRESS_MCP_OPERATING_DEPLOYMENT.md). ZIP/código rc.3 no cambia. No contar las597 comprobaciones del candidato como ejecutadas de nuevo. installationAuthorized sigue false hasta respuesta de Alex.
+Preflight real pasa11/11. Fase inactiva:9 escenarios nuevos del script exacto correctos, [comandos/alcance listos para autorización](WORDPRESS_MCP_OPERATING_DEPLOYMENT.md). ZIP/código rc.3 no cambia. No contar las597 comprobaciones del candidato como ejecutadas de nuevo. Alex ya autorizó y completó la fase inactiva; la evidencia histórica mantiene sus campos originales. Activación/almacenamiento requieren autorización nueva.
+
+Estado real más reciente:rc.3 instalado **inactivo**, sin opt-in/tablas/abilities,14 Projects/propuestas/permisos conservados. [Evidencia](qa/MCP_OPERATING_LIVE_INACTIVE_INSTALL_2026-10-23.json). [Siguiente fase concreta](WORDPRESS_MCP_OPERATING_ACTIVATION.md),10 escenarios/18 permisos correctos, pendiente autorización de activación y seis tablas vacías sin grants. No reinstalar ni repetir la primera fase.
