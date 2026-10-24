@@ -1,5 +1,9 @@
 # Plan de rediseño de alexcuadra.dev
 
+**24 octubre — cambio de prioridad acordado con Alex:**se pausa la ampliación y certificación editorial MCP para dedicar el esfuerzo al portafolio visible. El comprobador de operador preparado queda aplazado: no ejecutar su comando por continuidad automática. No se desactivaron plugins ni revocaron permisos; se conservan revisión1, propuesta227, backups, paquetes y evidencia. Aplicación/recuperación productivas y privacidad de otro dueño autenticado siguen sin certificar; incidencia histórica postmeta abierta, sin más búsquedas ciegas. Retomar solo ante una necesidad editorial concreta y un diff público aprobado por separado.
+
+**24 octubre — retomado el portafolio visible:**pasada acotada de navegación Home en staging: menú EN con Enter/Espacio/Tab/Escape, salto al contenido con foco, claro/oscuro y persistencia al pasar a ES, menú ES, transición móvil320CSS/escritorio1440CSS y acceso a proyectos correctos en los casos observados. Siete capturas≈448KiB; sin cambios de producto ni despliegue. [Evidencia y límites](qa/HOME_NAVIGATION_STAGING_2026-10-24.md). No cerrar QA integral/zoom200%/lector ni429. Próximo trabajo de producto: listado y ficha reutilizable de proyectos; agrupar QA restante en la aceptación final, no exigir otra cadena de microcomprobaciones antes de avanzar. Contacto continúa aplazado.
+
 Actualización de contacto: Turnstile staging guardado según Alex; bindings de envío y límite inicial (5 intentos/minuto por IP y ubicación) preparados en Wrangler local. Formulario desactivado; destinatario privado, despliegue, interfaz y prueba real pendientes. Ver `docs/CONTACT_FORM_PLAN.md`.
 
 Creado: 17 de octubre de 2026. Actualizado: 18 de octubre de 2026. Estado: ejecución por fases; infraestructura y autenticación operativas, modelado/bilingüismo en curso, interfaz nueva pendiente.

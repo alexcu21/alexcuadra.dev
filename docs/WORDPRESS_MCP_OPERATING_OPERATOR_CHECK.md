@@ -1,5 +1,7 @@
 # Comprobación del operador y almacenamiento actual
 
+**24 octubre — cambio de prioridad acordado con Alex:**se pausa la ampliación y certificación editorial MCP para dedicar el esfuerzo al portafolio visible. El comprobador de operador preparado queda aplazado: no ejecutar su comando por continuidad automática. No se desactivaron plugins ni revocaron permisos; se conservan revisión1, propuesta227, backups, paquetes y evidencia. Aplicación/recuperación productivas y privacidad de otro dueño autenticado siguen sin certificar; incidencia histórica postmeta abierta, sin más búsquedas ciegas. Retomar solo ante una necesidad editorial concreta y un diff público aprobado por separado.
+
 Preparada el 24 de octubre de 2026; **pendiente de ejecución en el hosting**. No cambia el paquete sellado rc.3, no repite instalación, permisos ni aceptación inicial y no aprueba la revisión caducada.
 
 Comprueba los permisos de las seis abilities con las identidades 0/1/2 (6 permitidos, 12 denegados). El operador 1 mantiene aprobación independiente por CLI y carece de los scopes de aplicación y recuperación; el usuario 2 conserva su separación respecto a aprobación y administración.

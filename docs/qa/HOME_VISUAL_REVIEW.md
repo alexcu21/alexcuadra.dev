@@ -1,5 +1,7 @@
 # Revisión de primera entrega — 19 octubre 2026
 
+Actualización24octubre: [navegación real en staging](HOME_NAVIGATION_STAGING_2026-10-24.md) comprobada en EN/ES, móvil y escritorio, incluidos teclado de menú, salto al contenido y temas. Alcance parcial; no sustituye la matriz integral. Por decisión de prioridad de Alex, sus variantes restantes se agrupan en aceptación final y no bloquean retomar listado/ficha de proyectos. MCP queda aplazado.
+
 Actualización posterior: QA real EN/ES a320px detectó recorte de menciones Home, corregido con columna única en anchos pequeños y verificado sin overflow. Añadido salto de contenido y main que incluye el hero. Revisadas páginas compartidas en matriz parcial; [resultados/capturas](BILINGUAL_ACCESSIBILITY_LOCAL.md). Se conservan pendientes de variantes restantes,zoom y accesibilidad integral.
 
 Actualización: acceso integrado al origen4325 funcional en la sesión más reciente; servidor estaba apagado y se reinició. Menú móvil en ambos temas y Tab/Escape/foco comprobados; tema persiste al navegar. Ver [evidencia y límites](REFERENCE_NESTED_SEO_BROWSER.md). Las menciones de bloqueo inferiores describen el estado anterior; la matriz completa sigue abierta.
