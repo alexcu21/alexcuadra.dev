@@ -1,6 +1,6 @@
-# Permisos operativos y aceptación inicial — preparados para autorización
+# Permisos operativos y aceptación inicial — autorizados, ejecución pendiente
 
-La activación real de rc.3 quedó completada: seis tablas listas/vacías,14 Projects conservados y ningún permiso nuevo. [Evidencia de Alex](qa/MCP_OPERATING_LIVE_ACTIVATION_2026-10-23.json). No repetir instalación, activación ni la propuesta227. Esta fase todavía no está autorizada ni ejecutada en el hosting. Alex confirmó que puede coordinar la pausa; no confirmó que ya esté iniciada.
+La activación real de rc.3 quedó completada: seis tablas listas/vacías,14 Projects conservados y ningún permiso nuevo. [Evidencia de Alex](qa/MCP_OPERATING_LIVE_ACTIVATION_2026-10-23.json). No repetir instalación, activación ni la propuesta227. Alex autorizó esta fase con «si adelante»: apply/recover directos para usuario2, approve directo para operador1 y aceptación posterior de solo lectura. Ejecución pendiente por Alex; el agente no ejecuta SSH. La autorización no incluye aplicar un diff público. Alex confirmó que puede coordinar la pausa; no confirmó que ya esté iniciada. Ejecutar primero la concesión con pausa efectiva y revisar su recibo antes de la aceptación.
 
 ## Cambio exacto
 
