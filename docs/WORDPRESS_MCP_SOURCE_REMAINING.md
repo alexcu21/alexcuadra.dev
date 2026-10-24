@@ -25,9 +25,10 @@ Resultado vigente:597 comprobaciones del candidato rc.3, que incorpora admisión
 | Instalación, activación, seis tablas y scopes | Completados; mapas directos exactos corroborados, rol subscriber y demás permisos conservados |
 | Auditoría inicial de almacenamiento | Completada; accepted=true, cero registros operativos,6 permisos permitidos/12denegados, sin escritura editorial |
 | Incidencia histórica global postmeta | Abierta; lecturas estables y corroboración editorial correctas no recuperan el valor anterior ni atribuyen la causa |
-| Aplicación/recuperación y MCP HTTP del hosting | No certificados por esta auditoría; circuito completo ensayado localmente. Sin diff público autorizado |
+| Descubrimiento MCP del hosting | Verificado:6operaciones presentes con esquemas/metadatos iguales al paquete sellado;0ejecuciones editoriales |
+| Aplicación/recuperación y ejecución MCP del hosting | No certificados por el descubrimiento ni la auditoría; circuito completo ensayado localmente. Sin diff público autorizado |
 
-**Auditoría de almacenamiento:0 iteraciones pendientes.** La investigación de postmeta tiene un alcance distinto y no se estima sin identificar la causa; no convertir accepted=true en una afirmación de cierre de esa incidencia ni de toda la edición operativa productiva.
+**Auditoría de almacenamiento:0 iteraciones pendientes.** La prueba acotada de lock terminó inconclusa(0candidatos/0intentos). La investigación de postmeta tiene un alcance distinto y no se estima sin evidencia nueva de la causa; no convertir accepted=true en una afirmación de cierre de esa incidencia ni de toda la edición operativa productiva.
 
 Una edición pública requiere su diff concreto aprobado; no se programa ahora ni se considera autorizada por «continúa». No pedir autorización antes de tener candidato/plan concretos y revisables. Los fixtures REST de manage_options no son el autorizador operativo final.
 

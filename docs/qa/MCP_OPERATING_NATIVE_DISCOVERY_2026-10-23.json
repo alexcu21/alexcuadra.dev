@@ -1,0 +1,51 @@
+{
+  "format": "editorial-operating-native-discovery-v1",
+  "candidateSha256": "d0b09a1612fa95606915b33fa8664ae29589008abed4ca77c3c35a5259b8ed30",
+  "source": "Live WordPress MCP discovery and six get-ability-info calls; schema comparison with verified sealed archive",
+  "totalDiscoveredAbilities": 17,
+  "operatingAbilitiesVerified": 6,
+  "entries": [
+    {
+      "name": "alexcuadra/prepare-project-application",
+      "inputSchemaMatchesSealedPackage": true,
+      "outputSchemaMatchesSealedPackage": true,
+      "metadataMatchesSealedContract": true
+    },
+    {
+      "name": "alexcuadra/inspect-project-review",
+      "inputSchemaMatchesSealedPackage": true,
+      "outputSchemaMatchesSealedPackage": true,
+      "metadataMatchesSealedContract": true
+    },
+    {
+      "name": "alexcuadra/apply-project-review",
+      "inputSchemaMatchesSealedPackage": true,
+      "outputSchemaMatchesSealedPackage": true,
+      "metadataMatchesSealedContract": true
+    },
+    {
+      "name": "alexcuadra/prepare-project-recovery",
+      "inputSchemaMatchesSealedPackage": true,
+      "outputSchemaMatchesSealedPackage": true,
+      "metadataMatchesSealedContract": true
+    },
+    {
+      "name": "alexcuadra/recover-project-review",
+      "inputSchemaMatchesSealedPackage": true,
+      "outputSchemaMatchesSealedPackage": true,
+      "metadataMatchesSealedContract": true
+    },
+    {
+      "name": "alexcuadra/get-project-effect-state",
+      "inputSchemaMatchesSealedPackage": true,
+      "outputSchemaMatchesSealedPackage": true,
+      "metadataMatchesSealedContract": true
+    }
+  ],
+  "abilityExecuteCalls": 0,
+  "editorialMutationsRequested": false,
+  "sourceReadOrApplyRecoverExecutionVerified": false,
+  "anonymousPrivacyReverified": false,
+  "sshExecuted": false,
+  "postmetaIncidentResolved": false
+}

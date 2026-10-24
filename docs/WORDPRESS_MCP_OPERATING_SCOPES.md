@@ -1,8 +1,10 @@
 # Permisos corroborados y almacenamiento aceptado — incidencia de postmeta abierta
 
+**Último resultado:**diagnóstico de lock inconcluso:0candidatos dentro del intervalo,0intentos de reconstrucción; permisos exactos. [Evidencia](qa/MCP_OPERATING_LIVE_LOCK_DIAGNOSIS_2026-10-23.json). No se identificó fila/valor/autor; no ampliar búsquedas iguales sin evidencia nueva. La incidencia postmeta permanece abierta y la aceptación de almacenamiento sigue completada. Descubrimiento MCP real de las6operaciones y sus esquemas/metadatos verificado, sin ejecutarlas; [QA](qa/MCP_OPERATING_NATIVE_DISCOVERY_2026-10-23.md). No se solicita nuevo comando en esta fase.
+
 **Estado vigente — aceptación de almacenamiento completada:**Alex ejecutó la auditoría autorizada de rc.3; accepted=true, snapshot READ ONLY/REPEATABLE READ, totales operativos cero,6 permisos permitidos/12denegados y conservación antes/después sin escritura editorial. [Resultado real](qa/MCP_OPERATING_LIVE_STORAGE_ACCEPTANCE_2026-10-23.json). Los scopes exactos ya estaban corroborados;14Projects coinciden con huella histórica y propuesta227 con su evidencia/ledger. La diferencia global histórica de postmeta **sigue abierta**, con causa/filas/valores anteriores sin reconstruir. No certificar el postflight global fallido ni reemplazar su baseline. Esta aceptación no aprueba un diff público ni certifica apply/recover/MCP HTTP en el hosting. Puede levantarse la pausa de esta auditoría; cualquier operación posterior requiere evaluar/coordinar su propia pausa. No repetir instalación/activación/grants/aceptación sin una razón nueva.
 
-## Investigación siguiente: comprobar una hipótesis concreta sin atribuir causa
+## Prueba de lock realizada: resultado inconcluso
 
 «Diferencia histórica de postmeta» significa únicamente que el hash global difiere de la lectura anterior al grant. No se guardaron valores de cada fila en esa baseline. Los14Projects actuales están corroborados contra su huella histórica y los patches/versiones de la propuesta contra su evidencia/ledger. La causa global no está identificada. Alex confirmó que no tenía una pantalla de edición abierta: no atribuirlo a una pestaña ni afirmar que fue un heartbeat.
 
@@ -18,7 +20,7 @@ La búsqueda utiliza la hora del archivo de baseline como ancla de búsqueda, no
 
 Una coincidencia reconstruye exactamente la diferencia de una fila y corrobora el resto de postmeta frente al grant. No identifica quién ejecutó el cambio ni garantiza que fuera core. Sin coincidencia o con presupuesto agotado, el resultado es **inconcluso**: no excluye cambios múltiples, de usuario, de otras filas ni tiempos fuera del intervalo. No prometer identificar la causa desde un hash, ni continuar ensanchando búsquedas sin evidencia nueva.
 
-[8 casos sintéticos correctos](qa/MCP_OPERATING_LOCK_FINGERPRINT_2026-10-23.md), PHP8.5.11 local; sin Docker/DB/SSH. No se volvió a ejecutar el circuito WP completo: el algoritmo nuevo es puro y el resto conserva el patrón de lectura ya probado. Falta la salida real; el incidente permanece abierto.
+[8 casos sintéticos correctos](qa/MCP_OPERATING_LOCK_FINGERPRINT_2026-10-23.md), PHP8.5.11 local; sin Docker/DB/SSH. No se volvió a ejecutar el circuito WP completo: el algoritmo nuevo es puro y el resto conserva el patrón de lectura ya probado. Salida real recibida:0candidatos/0intentos, sin reconstrucción. El incidente permanece abierto; no repetir ni ampliar ciegamente esta búsqueda.
 
 ## Registro de ejecución y comandos históricos
 

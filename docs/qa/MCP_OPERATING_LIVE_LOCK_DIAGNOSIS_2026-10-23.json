@@ -1,0 +1,36 @@
+{
+  "source": "Output supplied by Alex; no SSH executed by agent",
+  "result": {
+    "format": "editorial-operating-lock-diagnosis-v1",
+    "grantRun": "operating-scopes.yQCBqE9c",
+    "checks": {
+      "expectedDirectCapabilitiesMatchByUser": {
+        "1": true,
+        "2": true
+      },
+      "changedSnapshotSections": [
+        "postmeta"
+      ],
+      "lockEvidence": {
+        "baselinePostmetaMatchesCurrent": false,
+        "eligibleLockRows": 0,
+        "testedCandidateLimit": 4,
+        "timestampSearchSecondsBeforeBaselineFileTime": 600,
+        "timestampReference": "baseline-file-mtime-search-anchor-not-an-audit-clock",
+        "attempts": 0,
+        "boundedSearchStopped": false,
+        "singleLockTimestampDifferenceReconstructsBaselineExactly": false,
+        "matchingRow": null,
+        "allOtherPostmetaRowsMatchGrantBaseline": false,
+        "writerIdentityEstablished": false,
+        "cmsWritesPerformed": false,
+        "deviationAccepted": false,
+        "privateValuesExported": false
+      },
+      "cmsWritesPerformed": false,
+      "acceptancePerformed": false,
+      "baselineReplaced": false
+    }
+  },
+  "interpretation": "Inconclusive: no eligible lock rows and no candidate reconstructions attempted. No writer or cause established; does not rule out other timestamps, fields or multiple changes."
+}
