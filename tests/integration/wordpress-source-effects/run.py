@@ -20,8 +20,10 @@ SOURCE = Path('/private/tmp/ac-wp-private-restore-_tidfs0c/source')
 
 def main():
     os.umask(0o077)
-    full = sys.argv[1:]==["--full-profile"]
-    if sys.argv[1:] not in [[],["--full-profile"]]: raise ValueError("INVALID_ARGUMENTS")
+    full = sys.argv[1:] in [["--full-profile"],["--full-profile","--inactive-install-only"]]
+    install_only = sys.argv[1:]==["--full-profile","--inactive-install-only"]
+    if sys.argv[1:] not in [[],["--full-profile"],["--full-profile","--inactive-install-only"]]: raise ValueError("INVALID_ARGUMENTS")
+    if install_only and os.environ.get('AC_SOURCE_EFFECTS_PACKAGE')!='local-rc3': raise ValueError('RC3_REQUIRED')
     if os.environ.get('DOCKER_HOST') or shutil.disk_usage('/private/tmp').free < 8*1024**3:
         raise ValueError('LOCAL_DOCKER_AND_8_GIB_REQUIRED')
     spec = importlib.util.spec_from_file_location('profile', HERE.parent/'wordpress-proposals-profile/run.py')
@@ -135,16 +137,18 @@ def main():
         for service in ['wordpress','cli']:
             settings['services'][service]['volumes'].append({'type':'bind','source':str(package_dir),'target':'/operating-package','read_only':True})
             settings['services'][service]['volumes'].append({'type':'bind','source':str(archive_path),'target':'/operating-candidate.zip','read_only':True})
+    if install_only: settings['services']['cli']['volumes'].append({'type':'bind','source':str(ROOT/'wordpress/operations/editorial-operating-install-inactive.sh'),'target':'/deploy-install.sh','read_only':True})
     config = work/'compose.json';config.write_text(json.dumps(settings))
     compose=['docker','compose','-p',work.name.replace('_','-'),'-f',str(config),'--profile','tools']
-    def cli(*args, shell=False, disabled=False, normal=False, phase=None, production=None):
+    def cli(*args, shell=False, disabled=False, normal=False, phase=None, production=None, root=False):
         command=compose+['run','--rm','--no-deps','--pull','never']
+        if root: command+=['--user','0:0','-e','WP_CLI_ALLOW_ROOT=1']
         if normal: command+=['-e','AC_SOURCE_EFFECTS_PACKAGE_NORMAL=1']
         if phase: command+=['-e','AC_PACKAGE_LIFECYCLE_PHASE='+phase]
         if production:
             prod_config=package_disabled_config.replace("define('WP_ENVIRONMENT_TYPE','local');", "define('WP_ENVIRONMENT_TYPE','production');").replace("define('AC_EDITORIAL_SOURCE_EXPERIMENT',true);",'')
             site='https://wrong.example.invalid' if production=='wrong-site' else 'https://content.alexcuadra.dev'
-            prod_config+="define('AC_EDITORIAL_OPERATING_SITE','"+site+"');"
+            if production!='install-inactive': prod_config+="define('AC_EDITORIAL_OPERATING_SITE','"+site+"');"
             if production=='ambiguous': prod_config+="define('AC_EDITORIAL_OPERATING_LOCAL',true);"
             if production=='experiment': prod_config+="define('AC_EDITORIAL_SOURCE_EXPERIMENT',true);"
             if production=='local-environment': prod_config=prod_config.replace("define('WP_ENVIRONMENT_TYPE','production');", "define('WP_ENVIRONMENT_TYPE','local');")
@@ -187,6 +191,19 @@ def main():
             disabled_values=[json.loads(line.split('=',1)[1]) for line in disabled_out.splitlines() if line.startswith('SOURCE_PACKAGE_DISABLED_RESULT=')]
             if len(disabled_values)!=1 or not disabled_values[0].get('passed'): raise ValueError('DISABLED_PACKAGE_FAILED')
             package_check={'sha256':package_manifest['sha256'],'disabled':disabled_values[0],'testedExtractedArchive':True,'productionReady':False}
+        if install_only:
+            cli('eval-file','/integration/install-seed.php')
+            cli('-c','mv wp-content/mu-plugins/source-effects-fixture.php wp-content/source-effects-fixture-admission.disabled',shell=True)
+            try:
+                deployment_out=cli('/integration/install-exercise.sh',shell=True,normal=True,production='install-inactive',root=True)
+                vals=[json.loads(line.split('=',1)[1]) for line in deployment_out.splitlines() if line.startswith('SOURCE_INACTIVE_DEPLOYMENT_RESULT=')]
+                installs=[json.loads(line.split('=',1)[1]) for line in deployment_out.splitlines() if line.startswith('OPERATING_INSTALL_INACTIVE_RESULT=')]
+                if len(vals)!=1 or not vals[0].get('passed') or vals[0].get('checks')!=9 or len(installs)!=2 or installs[0]!=installs[1]: raise ValueError('INACTIVE_DEPLOYMENT_FAILED')
+                report={'format':'editorial-operating-inactive-deployment-qa-v1','result':vals[0],'installVerification':installs[0],'candidateSha256':package_manifest['sha256'],'hostPorts':False,'externalNetwork':False,'sshExecuted':False,'sourceDatabaseImported':False}
+                (work/'result.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,sort_keys=True),flush=True)
+            finally:
+                cli('-c','mv wp-content/source-effects-fixture-admission.disabled wp-content/mu-plugins/source-effects-fixture.php',shell=True)
+            return
         joint_migration=None
         if full:
             joint_output=cli('eval-file','/integration/migration.php')

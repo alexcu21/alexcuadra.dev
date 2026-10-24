@@ -10,7 +10,7 @@ Registro diferido a los hooks oficiales de abilities, cuando los demás plugins 
 
 Construcción reproducible: `python3 scripts/package-editorial-operating.py`; el constructor rechaza sobrescribir una versión sellada distinta. El preflight de admisión se genera desde el módulo del ZIP verificado con `python3 scripts/prepare-editorial-operating-admission-preflight.py`. Alex ejecuta el SSH; el agente no conecta al hosting. Ese preflight compara explícitamente un perfil prospectivo con el candidato añadido solo en memoria: no representa instalación, activación ni admisión real. Además comprueba campos/tipo público traducible, callback de purga, ausencia de tablas/marker, baseline de usuario2 y disponibilidad del operador1.
 
-Antes de proponer instalación falta la salida de ese preflight, revisión del alcance concreto de instalación/permisos/aceptación y comandos por fases. Una edición pública requiere aparte su diff aprobado. El ensayo productivo usa base sintética/red interna, no prueba el hosting ni la entrega de purga real. Las pruebas completas de aplicación/recuperación y MCP HTTP conservan el modo local; la admisión con env production se comprueba como plugin instalado por CLI, sin afirmar apply/recover o MCP HTTP reales en producción.
+El preflight real de admisión pasa11/11. La primera fase —subida e instalación inactiva— ya tiene comandos y9 escenarios del script exacto verificados; [revisión/autorización pendiente](WORDPRESS_MCP_OPERATING_DEPLOYMENT.md). Activación/migración/scopes/aceptación aún necesitan comandos y aprobación propios. Una edición pública requiere aparte su diff aprobado. El ensayo productivo usa base sintética/red interna, no prueba el hosting ni la entrega de purga real. Las pruebas completas de aplicación/recuperación y MCP HTTP conservan el modo local; la admisión con env production se comprueba como plugin instalado por CLI, sin afirmar apply/recover o MCP HTTP reales en producción.
 
 Plan de reversión para el candidato final:
 
@@ -19,4 +19,4 @@ Plan de reversión para el candidato final:
 3. Verificar lectura pública EN/ES, denegación de aplicación/recuperación, roles/caps y plugin/source hashes esperados. Una desactivación no revierte ediciones públicas ya confirmadas.
 4. Si hay que revertir contenido, preparar y revisar la inversa exacta y obtener aprobación independiente; si hay conflicto, preservar el estado del editor y detener la recuperación. Restaurar el backup completo requiere plan/validación distintos, no rollback ciego de SQL.
 
-Este plan no se ha ejecutado en destino ni autoriza cambios. Pendiente preflight de admisión de Alex y revisión de comandos/alcance de la versión vigente antes de pedir aprobación.
+Este plan no se ha ejecutado en destino ni autoriza cambios. Preflight recibido y fase inactiva concreta preparada para autorización; las fases posteriores siguen separadas y no autorizadas.

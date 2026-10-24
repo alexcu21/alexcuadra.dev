@@ -1,0 +1,51 @@
+{
+  "format": "editorial-operating-inactive-deployment-review-v1",
+  "livePreflightChecks": 11,
+  "livePreflightPassed": true,
+  "localResult": {
+    "format": "editorial-operating-inactive-deployment-qa-v1",
+    "result": {
+      "checks": 9,
+      "missingSuccessReceiptRefused": true,
+      "passed": true,
+      "exactPreparedScript": true,
+      "corruptArchiveRejected": true,
+      "repeatRefused": true,
+      "extraSymlinkTamperedMissingFilesRejected": true,
+      "restoredPackageReverified": true,
+      "baselinePrivate": true,
+      "activation": false,
+      "sshExecuted": false
+    },
+    "installVerification": {
+      "version": "0.1.0-rc.3",
+      "candidateSha256": "d0b09a1612fa95606915b33fa8664ae29589008abed4ca77c3c35a5259b8ed30",
+      "packageFilesVerified": true,
+      "active": false,
+      "optinAbsent": true,
+      "operatingTablesAbsent": true,
+      "operatingAbilitiesAbsent": true,
+      "projectCount": 2,
+      "sourcesAndPrivateProposalsUnchanged": true,
+      "userMetadataAndRolesUnchanged": true,
+      "activePluginsUnchanged": true,
+      "capabilitiesAdded": false,
+      "editorialDataWritten": false
+    },
+    "candidateSha256": "d0b09a1612fa95606915b33fa8664ae29589008abed4ca77c3c35a5259b8ed30",
+    "hostPorts": false,
+    "externalNetwork": false,
+    "sshExecuted": false,
+    "sourceDatabaseImported": false
+  },
+  "previousCandidateChecks": 597,
+  "newDeploymentScenarios": 9,
+  "installationAuthorized": false,
+  "liveInstallationExecuted": false,
+  "backupRetained": true,
+  "zipBytes": 36877,
+  "expandedBytes": 116493,
+  "files": 15,
+  "storageFreeGiBBeforeRounded": 32,
+  "storageFreeGiBAfterRounded": 32
+}

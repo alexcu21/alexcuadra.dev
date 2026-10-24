@@ -20,7 +20,7 @@ Resultado vigente:597 comprobaciones del candidato rc.3, que incorpora admisión
 
 | Entrega pendiente | Iteraciones estimadas | Resultado verificable |
 | --- | --- | --- |
-| Cierre del candidato frente a destino | 1 | Alex aporta preflight de admisión; revisar resultado y cerrar comandos/alcance de instalación, permisos, verificación y reversión; cambios adicionales solo si aparece incompatibilidad |
+| Cierre del candidato frente a destino | 1 | Preflight11/11 recibido y fase inactiva ensayada/preparada para autorización; tras su salida, cerrar comandos/alcance de activación/migración/scopes/aceptación/reversión; cambios adicionales solo ante incompatibilidad |
 | Instalación y aceptación autorizadas | 1 | Paquete/permisos/operaciones revisables y aprobados; Alex ejecuta SSH por fases; verificación real dentro del alcance autorizado |
 
 **Estimación vigente restante:2 entregas de trabajo**, sujeta a incompatibilidades/resultados/aprobación; no equivale a número de mensajes o comandos. No volver a presentar perfiles o engine locales como pendientes.
@@ -34,3 +34,5 @@ Medición histórica anterior:35GiB libres al inicio y33GiB al final del volumen
 Preflight recibido: la restricción PHP link afecta al export del rc.1 local. Se aborda en este incremento como incompatibilidad concreta antes de admitir producción, conservando el ZIP sellado. [Revisión y compatibilidad](qa/MCP_OPERATING_DESTINATION_PREFLIGHT_2026-10-23.md). Esta corrección adicional ya queda cerrada con412 comprobaciones. La admisión y el paquete se completan en rc.3; la estimación actual figura arriba.
 
 Último incremento:32GiB libres antes/después redondeados; sin nuevo backup real ni limpieza de recursos. La nueva lectura de destino solo exporta metadata al terminal de Alex.
+
+Preflight real pasa11/11. Fase inactiva:9 escenarios nuevos del script exacto correctos, [comandos/alcance listos para autorización](WORDPRESS_MCP_OPERATING_DEPLOYMENT.md). ZIP/código rc.3 no cambia. No contar las597 comprobaciones del candidato como ejecutadas de nuevo. installationAuthorized sigue false hasta respuesta de Alex.
