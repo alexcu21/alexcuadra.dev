@@ -1,5 +1,7 @@
 # Cierre del adaptador y edición operativa — alcance restante
 
+Incremento completado24octubre:repetición idempotente del request_id original y lectura por idioma,9comprobaciones reales correctas. Mismo recibo/revisión/hash/expiración; EN legible, ES rechazado sin documento; propuesta227 intacta/borrador/sin aplicar. [QA](qa/MCP_OPERATING_NATIVE_IDEMPOTENCY_2026-10-24.md). No conteos globales de BD ni otras cuentas/anonimato certificados.
+
 Último incremento24octubre:una revisión privada real preparada/inspeccionada con12comprobaciones correctas y propuesta227 sin cambios/sin aplicar. [Resultado real](qa/MCP_OPERATING_PRIVATE_REVIEW_LIVE_2026-10-24.md). Fase autorizada completada; no se aprobó ni aplicó contenido público.
 
 **Estado vigente — aceptación de almacenamiento completada:**Alex ejecutó la auditoría autorizada de rc.3; accepted=true, snapshot READ ONLY/REPEATABLE READ, totales operativos cero,6 permisos permitidos/12denegados y conservación antes/después sin escritura editorial. [Resultado real](qa/MCP_OPERATING_LIVE_STORAGE_ACCEPTANCE_2026-10-23.json). Los scopes exactos ya estaban corroborados;14Projects coinciden con huella histórica y propuesta227 con su evidencia/ledger. La diferencia global histórica de postmeta **sigue abierta**, con causa/filas/valores anteriores sin reconstruir. No certificar el postflight global fallido ni reemplazar su baseline. Esta aceptación no aprueba un diff público ni certifica apply/recover/MCP HTTP en el hosting. Puede levantarse la pausa de esta auditoría; cualquier operación posterior requiere evaluar/coordinar su propia pausa. No repetir instalación/activación/grants/aceptación sin una razón nueva.
@@ -30,6 +32,7 @@ Resultado vigente:597 comprobaciones del candidato rc.3, que incorpora admisión
 | Descubrimiento MCP del hosting | Verificado:6operaciones presentes con esquemas/metadatos iguales al paquete sellado;0ejecuciones editoriales |
 | Lecturas MCP del hosting | Usuario2/subscriber, lecturas públicas EN/ES y propuesta227 confirmados;4rechazos operativos saneados sin código detallado |
 | Preparación/inspección positiva de revisión privada | Completada por MCP:revisión1/owner2/227/146EN,12comprobaciones correctas, versión/base/propuesta conservadas |
+| Repetición idempotente y lectura por idioma | Completadas por MCP sobre revisión1; recibo/caducidad/documento/propuesta conservados, ES rechazado sin documento |
 | Aplicación/recuperación productivas | No certificadas; circuito completo ensayado localmente. Sin diff público autorizado |
 
 **Auditoría de almacenamiento:0 iteraciones pendientes.** La prueba acotada de lock terminó inconclusa(0candidatos/0intentos). La investigación de postmeta tiene un alcance distinto y no se estima sin evidencia nueva de la causa; no convertir accepted=true en una afirmación de cierre de esa incidencia ni de toda la edición operativa productiva.

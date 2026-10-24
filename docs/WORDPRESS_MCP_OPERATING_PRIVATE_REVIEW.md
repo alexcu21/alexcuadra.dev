@@ -1,5 +1,7 @@
 # Revisión privada por MCP — fase autorizada y completada
 
+Comprobación adicional24octubre completada:replay exacto devuelve el recibo/revisión1 sin renovar expiración; documento EN y propuesta idénticos antes/después, ES rechazado sin documento.9comprobaciones correctas por MCP. [Resultado real](qa/MCP_OPERATING_NATIVE_IDEMPOTENCY_2026-10-24.md). No se preparó otra solicitud lógica ni se aprobó/aplicó contenido; no repetir/regenerar por caducidad.
+
 Estado:Alex autorizó «si autorizo continua» el24octubre y la fase quedó completada:revisión1 preparada una sola vez e inspeccionada por MCP,12comprobaciones correctas y propuesta227 sin cambios/en borrador/sin aplicar. [Recibo y límites reales](qa/MCP_OPERATING_PRIVATE_REVIEW_LIVE_2026-10-24.md). No se aprobó/aplicó/recuperó ni se creó otra propuesta. El documento inspeccionado ocupa849bytes JSON reserializado, sin atribuirle el espacio físico total de BD. La revisión se conserva al caducar; no regenerarla para repetir la prueba. Incidencia histórica postmeta abierta. No repetir la preparación ni la aceptación inicial de tablas vacías.
 
 Los pasos siguientes registran el alcance ejecutado y el protocolo de revisión, no una solicitud de volver a ejecutarlo.

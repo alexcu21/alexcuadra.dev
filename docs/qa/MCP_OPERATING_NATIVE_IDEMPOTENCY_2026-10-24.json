@@ -1,0 +1,60 @@
+{
+  "format": "editorial-operating-native-idempotency-v1",
+  "dateLocal": "2026-10-24",
+  "source": "Live WordPress MCP; existing authorized logical request replayed exactly",
+  "actorId": 2,
+  "actorRoles": [
+    "subscriber"
+  ],
+  "requestId": "605030ef5efbfbd1e15f9b0d127f281d",
+  "prepareReplayCallCount": 1,
+  "newRequestIdGenerated": false,
+  "receipt": {
+    "format": "operating-review-receipt-v1",
+    "review_id": 1,
+    "proposal_id": 227,
+    "project_id": 146,
+    "locale": "en",
+    "review_hash": "ecaf5b7835e98fb157e70e852aa718322e8df5f6d82c807040b1489f673e9738",
+    "expires_at": 1792866125
+  },
+  "checks": {
+    "sameOriginalReceipt": true,
+    "reviewReadableInOriginalLocale": true,
+    "reviewInspectionUnchanged": true,
+    "reviewHashUnchanged": true,
+    "expiryNotRenewed": true,
+    "wrongLocaleRejected": true,
+    "wrongLocaleReturnedNoDocument": true,
+    "proposalDtoUnchanged": true,
+    "proposalStillDraftUnapplied": true
+  },
+  "identityReadCount": 1,
+  "inspectionReadCount": 3,
+  "proposalReadCount": 2,
+  "inspectionReadLocales": [
+    "en",
+    "es"
+  ],
+  "rejectedLocale": "es",
+  "rejectedLocaleMessages": [
+    "Editorial operation rejected."
+  ],
+  "detailed404CodeVerified": false,
+  "reviewCreationRepeatedInObservedContractPath": false,
+  "creationClaimBasis": "Pre-existing review1 and replay returned same original receipt; verified sealed prepare replay path returns before INSERT. Global SQL counts not queried.",
+  "quotaDirectlyQueried": false,
+  "globalTableCountsQueried": false,
+  "otherUserOrAnonymousPrivacyReverified": false,
+  "globalDatabasePreservationReverified": false,
+  "privateDocumentOrPatchValuesExported": false,
+  "approvalRequested": false,
+  "applyRequested": false,
+  "recoveryRequested": false,
+  "effectConsumerRequested": false,
+  "originalProposalMutationRequested": false,
+  "postmetaIncidentResolved": false,
+  "sshExecuted": false,
+  "dockerStarted": false,
+  "backupCreated": false
+}
