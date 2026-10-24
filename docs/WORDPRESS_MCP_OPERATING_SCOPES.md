@@ -1,5 +1,7 @@
 # Permisos corroborados y almacenamiento aceptado — incidencia de postmeta abierta
 
+Privacidad anónima del transporte MCP comprobada en2rutas:401/rest_forbidden, sin documento privado; control positivo del usuario2 correcto. [QA y límites](qa/MCP_OPERATING_ANONYMOUS_ACCESS_2026-10-24.md). No se añadieron credenciales/permisos ni se ejecutaron operaciones editoriales; incidencia postmeta abierta.
+
 Revisión1:replay exacto e idioma comprobados por MCP,9verificaciones correctas sin renovar caducidad y con documento/propuesta iguales. [Evidencia](qa/MCP_OPERATING_NATIVE_IDEMPOTENCY_2026-10-24.md). Se mantienen límites de conteos SQL/otras cuentas y la incidencia histórica postmeta. No se autorizó ni ejecutó aplicación pública.
 
 **24octubre — fase privada completada:**revisión1 de propuesta227/Project146EN preparada e inspeccionada por MCP bajo autorización de Alex,12comprobaciones correctas, propuesta original intacta/borrador/sin aplicar. [Evidencia real](qa/MCP_OPERATING_PRIVATE_REVIEW_LIVE_2026-10-24.md). No hay aprobación ni aplicación/recuperación autorizada. La revisión persiste tras caducar; no repetir preparación ni el script inicial que exige tablas vacías. Incidencia histórica postmeta sigue abierta.

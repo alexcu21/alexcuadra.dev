@@ -1,0 +1,38 @@
+{
+  "format": "editorial-operating-anonymous-access-v1",
+  "dateLocal": "2026-10-24",
+  "anonymousHttpEvidence": "MCP_OPERATING_ANONYMOUS_HTTP_2026-10-24.json",
+  "anonymousEndpointCount": 2,
+  "anonymousResponses": {
+    "httpStatus": 401,
+    "wordpressErrorCode": "rest_forbidden",
+    "privateDocumentReturned": false
+  },
+  "authenticatedPositiveControl": {
+    "source": "Live WordPress MCP",
+    "checks": {
+      "authenticatedActorIs2Subscriber": true,
+      "authenticatedReviewReadable": true,
+      "originalReviewHashMatches": true,
+      "ownerAndTargetMatch": true,
+      "expiryNotRenewed": true
+    },
+    "actorId": 2,
+    "roles": [
+      "subscriber"
+    ],
+    "reviewId": 1,
+    "reviewHash": "ecaf5b7835e98fb157e70e852aa718322e8df5f6d82c807040b1489f673e9738",
+    "expiresAt": 1792866125,
+    "privateValuesExported": false
+  },
+  "mutatingAbilityCalled": false,
+  "initializeOrSessionCreationRequested": false,
+  "otherAuthenticatedOwnerVerified": false,
+  "stolenSessionReplayVerified": false,
+  "otherRestOrGraphqlSurfacesVerified": false,
+  "postmetaIncidentResolved": false,
+  "sshExecuted": false,
+  "dockerStarted": false,
+  "backupCreated": false
+}
