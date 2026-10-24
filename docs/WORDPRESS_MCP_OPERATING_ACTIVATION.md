@@ -1,6 +1,6 @@
 # Activación y almacenamiento rc.3 — fase para revisión
 
-Estado: preparada para autorización nueva; no ejecutada en el hosting. Alex completó la fase inactiva:rc.3/hash correcto,15 archivos verificados,14 Projects y propuestas/permisos sin cambios, sin opt-in/tablas/abilities. [Resultado real](qa/MCP_OPERATING_LIVE_INACTIVE_INSTALL_2026-10-23.json). No repetir la subida o instalación.
+Estado: Alex autoriza con «si adelante» el opt-in del sitio, activación de rc.3 y creación de las seis tablas vacías, manteniendo permisos y contenido. Ejecución remota pendiente de Alex; el agente no ejecuta SSH. No incluye grants, aceptación global con pausa externa, aprobación de un diff ni edición pública. Alex completó la fase inactiva:rc.3/hash correcto,15 archivos verificados,14 Projects y propuestas/permisos sin cambios, sin opt-in/tablas/abilities. [Resultado real](qa/MCP_OPERATING_LIVE_INACTIVE_INSTALL_2026-10-23.json). No repetir la subida o instalación.
 
 Alcance propuesto:
 
