@@ -1,6 +1,6 @@
 # Instalación operativa rc.3 — fase inactiva para aprobación
 
-Estado: preparada, no autorizada ni ejecutada en el hosting. El preflight aportado por Alex del24octubre00:50:30UTC (23octubre en Nicaragua) pasa11/11 y coincide con el candidato. [Resultado](qa/MCP_OPERATING_ADMISSION_LIVE_PREFLIGHT_2026-10-23.json). `installationAuthorized=false` se mantiene; una comprobación técnica no concede autorización de instalación.
+Estado: Alex autoriza explícitamente con «si hazlo» la subida e instalación inactiva de rc.3. Ejecución remota pendiente de Alex; se mantiene su instrucción de que el agente no ejecute SSH/SCP. La autorización no incluye opt-in, activación, migración, scopes ni edición pública. El preflight aportado por Alex del24octubre00:50:30UTC (23octubre en Nicaragua) pasa11/11 y coincide con el candidato. [Resultado](qa/MCP_OPERATING_ADMISSION_LIVE_PREFLIGHT_2026-10-23.json). El campo histórico `installationAuthorized=false` de ese resultado describe el estado anterior a esta autorización; no se altera la evidencia original.
 
 Alcance de esta aprobación: crear una carpeta privada de staging, subir el ZIP sellado, verificar SHA256 e instalar únicamente `alexcuadra-editorial-operating` **inactivo**. Sin opt-in, activación, migración, grants, nuevas propuestas ni edición pública. No reinstalar Read o Proposals rc.2. El instalador bloquea una instalación existente y no tiene force ni activate. El siguiente paso necesita revisar la salida; no continuar automáticamente a otras fases.
 
