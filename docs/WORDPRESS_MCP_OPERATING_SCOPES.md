@@ -2,6 +2,24 @@
 
 **Estado vigente — aceptación de almacenamiento completada:**Alex ejecutó la auditoría autorizada de rc.3; accepted=true, snapshot READ ONLY/REPEATABLE READ, totales operativos cero,6 permisos permitidos/12denegados y conservación antes/después sin escritura editorial. [Resultado real](qa/MCP_OPERATING_LIVE_STORAGE_ACCEPTANCE_2026-10-23.json). Los scopes exactos ya estaban corroborados;14Projects coinciden con huella histórica y propuesta227 con su evidencia/ledger. La diferencia global histórica de postmeta **sigue abierta**, con causa/filas/valores anteriores sin reconstruir. No certificar el postflight global fallido ni reemplazar su baseline. Esta aceptación no aprueba un diff público ni certifica apply/recover/MCP HTTP en el hosting. Puede levantarse la pausa de esta auditoría; cualquier operación posterior requiere evaluar/coordinar su propia pausa. No repetir instalación/activación/grants/aceptación sin una razón nueva.
 
+## Investigación siguiente: comprobar una hipótesis concreta sin atribuir causa
+
+«Diferencia histórica de postmeta» significa únicamente que el hash global difiere de la lectura anterior al grant. No se guardaron valores de cada fila en esa baseline. Los14Projects actuales están corroborados contra su huella histórica y los patches/versiones de la propuesta contra su evidencia/ledger. La causa global no está identificada. Alex confirmó que no tenía una pantalla de edición abierta: no atribuirlo a una pestaña ni afirmar que fue un heartbeat.
+
+El core verificado contiene `wp_set_post_lock()` y `wp_refresh_post_lock()`, que pueden renovar `_edit_lock` con `hora:usuario`. La siguiente prueba examina si una sola variación de hora, conservando usuario y todo el resto de postmeta, reconstruye **exactamente** el hash original. Es una hipótesis criptográficamente contrastable, no una exención general de locks.
+
+```bash
+ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=10 -p 65002 u776991923@194.164.64.104 'sh -s -- operating-scopes.yQCBqE9c' < /Users/Alex/Desktop/AlexC/alexcuadra.dev/wordpress/operations/editorial-operating-diagnose-editor-lock.sh
+```
+
+Lectura CMS dentro de READ ONLY/REPEATABLE READ; no requiere repetir la aceptación ni la pausa de aquella auditoría. Solo crea un helper pequeño privado en el servidor, sin descarga de backup. Pasar `OPERATING_LOCK_DIAGNOSIS` y `END_EDITORIAL_OPERATING_LOCK_DIAGNOSIS_V1`.
+
+La búsqueda utiliza la hora del archivo de baseline como ancla de búsqueda, no como reloj de auditoría. Entre locks con tiempo cercano(-600/+3600segundos), prueba como máximo4candidatos y601valores previos(desde el ancla hasta600segundos antes), sin cambiar usuario. Se limita a512MiB de entrada acumulada a hash y5segundos de búsqueda,5000filas/16MiB de valores. No imprime tiempos/usuarios/valores; solo IDs de la fila si hay coincidencia, categorías y booleanos. No cambia registros, no acepta diferencias ni reemplaza baseline.
+
+Una coincidencia reconstruye exactamente la diferencia de una fila y corrobora el resto de postmeta frente al grant. No identifica quién ejecutó el cambio ni garantiza que fuera core. Sin coincidencia o con presupuesto agotado, el resultado es **inconcluso**: no excluye cambios múltiples, de usuario, de otras filas ni tiempos fuera del intervalo. No prometer identificar la causa desde un hash, ni continuar ensanchando búsquedas sin evidencia nueva.
+
+[8 casos sintéticos correctos](qa/MCP_OPERATING_LOCK_FINGERPRINT_2026-10-23.md), PHP8.5.11 local; sin Docker/DB/SSH. No se volvió a ejecutar el circuito WP completo: el algoritmo nuevo es puro y el resto conserva el patrón de lectura ya probado. Falta la salida real; el incidente permanece abierto.
+
 ## Registro de ejecución y comandos históricos
 
 Los comandos siguientes se conservan para revisión/reversión; la auditoría ya terminó y no se solicita repetirla.

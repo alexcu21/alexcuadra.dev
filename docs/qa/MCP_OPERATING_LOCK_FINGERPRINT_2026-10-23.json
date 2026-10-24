@@ -1,0 +1,20 @@
+{
+  "format": "editorial-operating-lock-fingerprint-qa-v1",
+  "checks": 8,
+  "passed": true,
+  "php": "8.5.11",
+  "syntheticRowsOnly": true,
+  "databaseUsed": false,
+  "dockerUsed": false,
+  "sshExecuted": false,
+  "covers": [
+    "unchanged-table",
+    "exact-single-timestamp-reconstruction",
+    "other-content-change-rejected",
+    "two-lock-changes-inconclusive",
+    "changed-user-inconclusive",
+    "outside-window-inconclusive",
+    "budget-stop-inconclusive",
+    "immutable-input-and-no-value-export"
+  ]
+}
