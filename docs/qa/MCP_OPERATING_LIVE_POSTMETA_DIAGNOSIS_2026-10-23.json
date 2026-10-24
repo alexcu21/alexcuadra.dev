@@ -1,0 +1,77 @@
+{
+  "source": "Output supplied by Alex; no SSH executed by agent",
+  "observations": [
+    {
+      "format": "editorial-operating-postmeta-diagnosis-v1",
+      "grantRun": "operating-scopes.yQCBqE9c",
+      "observation": "capture",
+      "comparison": {
+        "expectedDirectCapabilitiesMatchByUser": {
+          "1": true,
+          "2": true
+        },
+        "changedSnapshotSections": [
+          "postmeta"
+        ],
+        "postmeta": {
+          "baselinePostmetaMatches": false,
+          "rowCount": 729,
+          "keyCategoryCounts": {
+            "edit_lock": 45,
+            "edit_last": 41,
+            "other": 643
+          },
+          "searchLimitNewestRows": 32,
+          "baselineReconstructedByRemovingCurrentRowsInMemory": false,
+          "matchedAddedRowDescriptors": [],
+          "interpretation": "No reconstruction found within this bounded addition-only search; changed or deleted prior values cannot be recovered from the baseline hash",
+          "rowsDeleted": false,
+          "deviationAccepted": false
+        }
+      },
+      "postmetaMatchesFirstObservation": null,
+      "fullSnapshotAndCapabilitiesMatchFirstObservation": null,
+      "cmsWritesPerformed": false,
+      "acceptancePerformed": false,
+      "baselineReplaced": false,
+      "privateValuesExported": false,
+      "externalWriterPauseCertified": false
+    },
+    {
+      "format": "editorial-operating-postmeta-diagnosis-v1",
+      "grantRun": "operating-scopes.yQCBqE9c",
+      "observation": "compare",
+      "comparison": {
+        "expectedDirectCapabilitiesMatchByUser": {
+          "1": true,
+          "2": true
+        },
+        "changedSnapshotSections": [
+          "postmeta"
+        ],
+        "postmeta": {
+          "baselinePostmetaMatches": false,
+          "rowCount": 729,
+          "keyCategoryCounts": {
+            "edit_lock": 45,
+            "edit_last": 41,
+            "other": 643
+          },
+          "searchLimitNewestRows": 32,
+          "baselineReconstructedByRemovingCurrentRowsInMemory": false,
+          "matchedAddedRowDescriptors": [],
+          "interpretation": "No reconstruction found within this bounded addition-only search; changed or deleted prior values cannot be recovered from the baseline hash",
+          "rowsDeleted": false,
+          "deviationAccepted": false
+        }
+      },
+      "postmetaMatchesFirstObservation": true,
+      "fullSnapshotAndCapabilitiesMatchFirstObservation": true,
+      "cmsWritesPerformed": false,
+      "acceptancePerformed": false,
+      "baselineReplaced": false,
+      "privateValuesExported": false,
+      "externalWriterPauseCertified": false
+    }
+  ]
+}

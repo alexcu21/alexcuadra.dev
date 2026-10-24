@@ -1,12 +1,28 @@
 # Permisos operativos — conciliación pendiente tras fallo del postflight
 
+**Última lectura real:**729 filas de postmeta estables en dos observaciones; scopes exactos. La búsqueda de adiciones no reconstruyó la huella original. Esto no identifica la causa ni demuestra que sean locks. [Evidencia real](qa/MCP_OPERATING_LIVE_POSTMETA_DIAGNOSIS_2026-10-23.json). No se ha hecho aceptación ni se reemplazó baseline.
+
 **Diagnóstico real recibido:**las capacidades directas de1 y2 coinciden exactamente con lo esperado; los tres scopes están true. Solo difiere `postmeta`. Posts, propuestas/ledger, usermeta normalizado, roles, configuración, otros plugins y almacenamiento operativo coinciden en esta lectura con la baseline original. No se hizo aceptación. [Resultado real](qa/MCP_OPERATING_LIVE_SCOPE_DIAGNOSIS_2026-10-23.json). La causa/fila/valor anterior no quedan identificados por una huella global; no tratar automáticamente la deriva como inocua ni sustituir la baseline.
 
 **Incidencia real:**Alex ejecutó la concesión autorizada, run `operating-scopes.yQCBqE9c`. La mutación alcanzó el postflight independiente, que falló con `SCOPES_POSTFLIGHT_CHANGED`; no llegó el recibo final. Los permisos pueden estar concedidos: no repetir la concesión ni ejecutar aceptación. [Evidencia](qa/MCP_OPERATING_LIVE_SCOPES_INCIDENT_2026-10-23.json). Se prepara diagnóstico de solo lectura frente a la baseline original, sin reemplazarla ni aceptar desviaciones. La causa real permanece sin identificar.
 
 La activación real de rc.3 quedó completada: seis tablas listas/vacías,14 Projects conservados y ningún permiso nuevo. [Evidencia de Alex](qa/MCP_OPERATING_LIVE_ACTIVATION_2026-10-23.json). No repetir instalación, activación ni la propuesta227. Alex autorizó esta fase con «si adelante»: apply/recover directos para usuario2, approve directo para operador1 y aceptación posterior de solo lectura. Ejecución iniciada por Alex y detenida tras el fallo descrito arriba; el agente no ejecuta SSH. La autorización no incluye aplicar un diff público. Alex confirmó que puede coordinar la pausa; no confirmó que ya esté iniciada. Ejecutar primero la concesión con pausa efectiva y revisar su recibo antes de la aceptación.
 
-## Siguiente comando: evidencia acotada de postmeta
+## Siguiente lectura: corroboración editorial con evidencia histórica
+
+El diagnóstico anterior no identificó filas añadidas; no repetir búsquedas iguales ni sustituir la baseline. Se conserva evidencia anterior independiente: hash `c38acd1690f173488f075443d03a80c96b6b483a5bd407040cbbd40a7ff462af` de las filas, **todos** los metadatos y relaciones de los14 Projects, más identidad/base/versiones de la propuesta227. El ledger rc.2 guarda respuestas con los patches de cada revisión y su huella se compara con la baseline de concesión.
+
+La siguiente lectura compara esos datos sin exportar cuerpos/metadatos/patches. Comprueba también la consistencia del payload con su fuente y los patches de cabecera/historial contra las respuestas del ledger, exigiendo que ese ledger siga intacto. Conservar el mismo token de versión no basta para pasar esa comprobación. No reconstruye las fechas del historial, no atribuye autor/causa y no certifica que todo postmeta esté intacto. No concede/revoca scopes, no acepta almacenamiento y no cambia la baseline. Un recibo final solo confirma que el diagnóstico terminó: revisar sus booleanos.
+
+```bash
+ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=10 -p 65002 u776991923@194.164.64.104 'sh -s -- operating-scopes.yQCBqE9c' < /Users/Alex/Desktop/AlexC/alexcuadra.dev/wordpress/operations/editorial-operating-check-editorial-evidence.sh
+```
+
+Mantener la pausa durante la comprobación y pasar `OPERATING_EDITORIAL_EVIDENCE` y `END_EDITORIAL_OPERATING_EDITORIAL_EVIDENCE_V1`. Si la huella histórica de Projects no coincide, no inferir que todo sea contenido cambiado o que sean solo locks: la huella incluye ambos. Si coincide, acota la deriva fuera de las filas/meta/relaciones de esos14 Projects; aún no identifica la diferencia global ni garantiza todas las columnas del historial privado.
+
+Ensayo de la nueva lectura:6 casos nuevos correctos y18 regresiones previas correctas; [QA y límites](qa/MCP_OPERATING_EDITORIAL_EVIDENCE_2026-10-23.md). El script crea solo un helper pequeño privado en el servidor; sin descarga de respaldo al equipo. No hay aún salida real de esta corroboración.
+
+## Diagnóstico de postmeta ya ejecutado por Alex
 
 Conservar la pausa mientras se ejecuta y revisa este diagnóstico. Los permisos ya coinciden: no volver a concederlos. No ejecutar todavía aceptación. El comando lee el CMS en dos procesos/snapshots consecutivos READ ONLY; conserva hashes pequeños de la primera observación en una carpeta privada nueva del servidor. No reemplaza ni reinterpreta la baseline original. No exporta valores de metadata, cuerpos ni credenciales, ni descarga un respaldo.
 
