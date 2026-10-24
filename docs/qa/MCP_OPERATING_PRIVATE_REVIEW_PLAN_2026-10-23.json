@@ -1,7 +1,7 @@
 {
   "format": "editorial-operating-private-review-plan-v1",
-  "authorized": false,
-  "executed": false,
+  "authorized": true,
+  "executed": true,
   "ability": "alexcuadra/prepare-project-application",
   "parameters": {
     "proposal_id": 227,
@@ -26,5 +26,16 @@
   "retainReviewAfterExpiry": true,
   "expirySeconds": 600,
   "idempotentRetryUsesSameExactParameters": true,
-  "privatePatchValuesExcluded": true
+  "privatePatchValuesExcluded": true,
+  "authorization": {
+    "dateLocal": "2026-10-24",
+    "source": "Alex: si autorizo continua",
+    "scope": "One prepare and inspect of existing proposal227; no approval or public application"
+  },
+  "prepareRequestAttempted": true,
+  "executionStatus": "prepared-and-inspected-successfully",
+  "executedDateLocal": "2026-10-24",
+  "resultReviewId": 1,
+  "resultReviewHash": "ecaf5b7835e98fb157e70e852aa718322e8df5f6d82c807040b1489f673e9738",
+  "resultEvidence": "MCP_OPERATING_PRIVATE_REVIEW_LIVE_2026-10-24.json"
 }

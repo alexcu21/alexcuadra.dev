@@ -1,0 +1,72 @@
+{
+  "format": "editorial-operating-private-review-live-v1",
+  "dateLocal": "2026-10-24",
+  "authorization": "Alex: si autorizo continua; one private review and inspection only",
+  "candidateVersion": "0.1.0-rc.3",
+  "candidateSha256": "d0b09a1612fa95606915b33fa8664ae29589008abed4ca77c3c35a5259b8ed30",
+  "actorId": 2,
+  "actorRoles": [
+    "subscriber"
+  ],
+  "requestId": "605030ef5efbfbd1e15f9b0d127f281d",
+  "prepareCallCount": 1,
+  "inspectCallCount": 1,
+  "originalProposalReadCount": 2,
+  "identityReadCount": 1,
+  "receipt": {
+    "format": "operating-review-receipt-v1",
+    "review_id": 1,
+    "proposal_id": 227,
+    "project_id": 146,
+    "locale": "en",
+    "review_hash": "ecaf5b7835e98fb157e70e852aa718322e8df5f6d82c807040b1489f673e9738",
+    "expires_at": 1792866125
+  },
+  "documentMetadata": {
+    "ownerId": 2,
+    "proposalId": 227,
+    "projectId": 146,
+    "locale": "en",
+    "operation": "apply",
+    "proposalVersion": "737a0558179ee7df25706593918782eefb24297135fa4860090af450e4560b44",
+    "baseVersion": "bbca3d9ada7d199ebd4911b39625bcdd0b6d1285c0793562a6bbb06df6074d85",
+    "sourceVersion": "7155326c7020d40dfb33be2045800640220a566fc0cccbd6482cad3424eb2836",
+    "schemaVersion": "3b8cc64b813301c23c8a274870568e6522fba9b69b48ea029fdc6425d260ac42",
+    "createdAt": 1792865525,
+    "expiresAt": 1792866125,
+    "selectedFields": [
+      "tagline"
+    ],
+    "reencodedInspectionJsonUtf8Bytes": 849,
+    "byteMeasurementIsServerAllocation": false,
+    "privateBeforeAfterValuesExported": false
+  },
+  "checks": {
+    "inspectionFormat": true,
+    "receiptHashMatchesInspection": true,
+    "ownerAndTargetMatch": true,
+    "reviewOperationIsApplyIntent": true,
+    "proposalVersionAndBasePinned": true,
+    "onlyTaglineFrozen": true,
+    "privateAfterValueMatchesExistingPatch": true,
+    "acfReferenceMatchesExpected": true,
+    "expiryMatchesReceipt": true,
+    "expiryIs600Seconds": true,
+    "originalProposalUnchanged": true,
+    "originalProposalStillDraftUnapplied": true
+  },
+  "originalProposalDtoUnchanged": true,
+  "approvalRequested": false,
+  "applyRequested": false,
+  "recoveryRequested": false,
+  "effectConsumerRequested": false,
+  "newProposalRequested": false,
+  "otherUserOrAnonymousPrivacyReverified": false,
+  "globalDatabasePreservationReverified": false,
+  "postmetaIncidentResolved": false,
+  "sshExecuted": false,
+  "dockerStarted": false,
+  "backupCreated": false,
+  "reviewRetainedAfterExpiry": true,
+  "operatingTableRowCountsDirectlyQueried": false
+}

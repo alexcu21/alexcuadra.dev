@@ -1,6 +1,6 @@
 # Cierre del adaptador y edición operativa — alcance restante
 
-Último incremento:lecturas MCP reales registradas. Preparada [una revisión privada por MCP](WORDPRESS_MCP_OPERATING_PRIVATE_REVIEW.md) con parámetros fijados; escritura/ejecución pendiente de autorización nueva. No se ejecutó ninguna mutación.
+Último incremento24octubre:una revisión privada real preparada/inspeccionada con12comprobaciones correctas y propuesta227 sin cambios/sin aplicar. [Resultado real](qa/MCP_OPERATING_PRIVATE_REVIEW_LIVE_2026-10-24.md). Fase autorizada completada; no se aprobó ni aplicó contenido público.
 
 **Estado vigente — aceptación de almacenamiento completada:**Alex ejecutó la auditoría autorizada de rc.3; accepted=true, snapshot READ ONLY/REPEATABLE READ, totales operativos cero,6 permisos permitidos/12denegados y conservación antes/después sin escritura editorial. [Resultado real](qa/MCP_OPERATING_LIVE_STORAGE_ACCEPTANCE_2026-10-23.json). Los scopes exactos ya estaban corroborados;14Projects coinciden con huella histórica y propuesta227 con su evidencia/ledger. La diferencia global histórica de postmeta **sigue abierta**, con causa/filas/valores anteriores sin reconstruir. No certificar el postflight global fallido ni reemplazar su baseline. Esta aceptación no aprueba un diff público ni certifica apply/recover/MCP HTTP en el hosting. Puede levantarse la pausa de esta auditoría; cualquier operación posterior requiere evaluar/coordinar su propia pausa. No repetir instalación/activación/grants/aceptación sin una razón nueva.
 
@@ -29,7 +29,7 @@ Resultado vigente:597 comprobaciones del candidato rc.3, que incorpora admisión
 | Incidencia histórica global postmeta | Abierta; lecturas estables y corroboración editorial correctas no recuperan el valor anterior ni atribuyen la causa |
 | Descubrimiento MCP del hosting | Verificado:6operaciones presentes con esquemas/metadatos iguales al paquete sellado;0ejecuciones editoriales |
 | Lecturas MCP del hosting | Usuario2/subscriber, lecturas públicas EN/ES y propuesta227 confirmados;4rechazos operativos saneados sin código detallado |
-| Preparación/inspección positiva de revisión privada | Plan concreto pendiente autorización de una revisión persistente, sin aplicación |
+| Preparación/inspección positiva de revisión privada | Completada por MCP:revisión1/owner2/227/146EN,12comprobaciones correctas, versión/base/propuesta conservadas |
 | Aplicación/recuperación productivas | No certificadas; circuito completo ensayado localmente. Sin diff público autorizado |
 
 **Auditoría de almacenamiento:0 iteraciones pendientes.** La prueba acotada de lock terminó inconclusa(0candidatos/0intentos). La investigación de postmeta tiene un alcance distinto y no se estima sin evidencia nueva de la causa; no convertir accepted=true en una afirmación de cierre de esa incidencia ni de toda la edición operativa productiva.
@@ -46,4 +46,6 @@ Preflight recibido: la restricción PHP link afecta al export del rc.1 local. Se
 
 Preflight real pasa11/11. Fase inactiva:9 escenarios nuevos del script exacto correctos, [comandos/alcance listos para autorización](WORDPRESS_MCP_OPERATING_DEPLOYMENT.md). ZIP/código rc.3 no cambia. No contar las597 comprobaciones del candidato como ejecutadas de nuevo. Alex ya autorizó y completó la fase inactiva; la evidencia histórica mantiene sus campos originales. Activación/almacenamiento ya autorizados y completados; scopes/aceptación ya autorizados y ejecutados; no solicitar la misma autorización ni repetir comandos.
 
-Estado real más reciente:rc.3 activo y seis tablas operativas aceptadas/vacías, scopes corroborados y6 permisos permitidos/12denegados, sin escritura editorial durante la auditoría. [Recibo real](qa/MCP_OPERATING_LIVE_STORAGE_ACCEPTANCE_2026-10-23.json), [alcance e incidencia abierta](WORDPRESS_MCP_OPERATING_SCOPES.md). Puede levantarse la pausa coordinada para esta lectura. El cierre de la auditoría no certifica apply/recover/MCP HTTP del hosting ni aprueba una edición pública.
+Estado real más reciente:rc.3 activo; aceptación inicial completada cuando las seis tablas estaban vacías, y revisión privada1 creada/inspeccionada después, scopes corroborados y6 permisos permitidos/12denegados, sin escritura editorial durante la auditoría. [Recibo real](qa/MCP_OPERATING_LIVE_STORAGE_ACCEPTANCE_2026-10-23.json), [alcance e incidencia abierta](WORDPRESS_MCP_OPERATING_SCOPES.md). Puede levantarse la pausa coordinada para esta lectura. El cierre de la auditoría no certifica apply/recover/MCP HTTP del hosting ni aprueba una edición pública.
+
+**Fase privada:0iteraciones pendientes.** Preparar/publicar un cambio real requiere su contenido concreto y aprobación independiente de la revisión/hash vigentes; no se cuenta como autorizado por esta verificación.

@@ -1,8 +1,10 @@
-# Revisión privada por MCP — fase concreta para autorización
+# Revisión privada por MCP — fase autorizada y completada
 
-Estado: preparada, no autorizada ni ejecutada. La instalación, los scopes exactos y la aceptación inicial de almacenamiento ya están completados. El descubrimiento de6operaciones y las lecturas nativas se comprobaron. [QA real de lectura](qa/MCP_OPERATING_NATIVE_READS_2026-10-23.md). La incidencia histórica de postmeta permanece abierta y no se reemplaza su baseline.
+Estado:Alex autorizó «si autorizo continua» el24octubre y la fase quedó completada:revisión1 preparada una sola vez e inspeccionada por MCP,12comprobaciones correctas y propuesta227 sin cambios/en borrador/sin aplicar. [Recibo y límites reales](qa/MCP_OPERATING_PRIVATE_REVIEW_LIVE_2026-10-24.md). No se aprobó/aplicó/recuperó ni se creó otra propuesta. El documento inspeccionado ocupa849bytes JSON reserializado, sin atribuirle el espacio físico total de BD. La revisión se conserva al caducar; no regenerarla para repetir la prueba. Incidencia histórica postmeta abierta. No repetir la preparación ni la aceptación inicial de tablas vacías.
 
-## Operación propuesta
+Los pasos siguientes registran el alcance ejecutado y el protocolo de revisión, no una solicitud de volver a ejecutarlo.
+
+## Operación autorizada y ejecutada
 
 Usar el conector actual como usuario2/subscriber para crear **una** revisión privada de la propuesta227 existente, Project146/EN, que actualmente contiene únicamente el campo `tagline`. Se fijan su versión `737a0558179ee7df25706593918782eefb24297135fa4860090af450e4560b44` y su base `bbca3d9ada7d199ebd4911b39625bcdd0b6d1285c0793562a6bbb06df6074d85`, confirmadas de nuevo por lectura real. [Parámetros concretos y request_id reservado](qa/MCP_OPERATING_PRIVATE_REVIEW_PLAN_2026-10-23.json). Ese identificador de idempotencia no es una credencial y debe conservarse ante cualquier reintento.
 
@@ -25,6 +27,6 @@ Si la respuesta se pierde, puede haber COMMIT aun sin recibo visible. No variar 
 
 ## Límites de autorización y de evidencia
 
-La autorización previa cubrió los tres scopes y la aceptación de almacenamiento de solo lectura. Esta fase solicita aparte una revisión privada persistente y su lectura; no presupone aprobación de un diff público. Una eventual edición pública necesita mostrar/aprobar el cambio exacto y la aprobación independiente por CLI con su hash vigente.
+La autorización previa cubrió los tres scopes y la aceptación de almacenamiento de solo lectura. Alex autorizó y completó aparte esta revisión privada persistente y su lectura; no presupone aprobación de un diff público. Una eventual edición pública necesita mostrar/aprobar el cambio exacto y la aprobación independiente por CLI con su hash vigente.
 
-No se pide SSH a Alex para crear esta revisión:el agente puede ejecutarla por MCP después de la autorización. No se añaden permisos porque core/get-site-info esté denegado. La prueba positiva de preparación/inspección real sigue pendiente; los4rechazos de lectura actuales no certifican su error404 exacto porque el conector solo devuelve el mensaje.
+No se ejecutó SSH:el agente la preparó e inspeccionó por MCP con la autorización registrada. No se añaden permisos porque core/get-site-info esté denegado. La prueba positiva de preparación/inspección real quedó completada con revisión1; los4rechazos de lectura actuales no certifican su error404 exacto porque el conector solo devuelve el mensaje.
