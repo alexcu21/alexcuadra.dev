@@ -1,8 +1,14 @@
-# Permisos corroborados — auditoría de almacenamiento pendiente; incidencia de postmeta abierta
+# Permisos corroborados y almacenamiento aceptado — incidencia de postmeta abierta
+
+**Estado vigente — aceptación de almacenamiento completada:**Alex ejecutó la auditoría autorizada de rc.3; accepted=true, snapshot READ ONLY/REPEATABLE READ, totales operativos cero,6 permisos permitidos/12denegados y conservación antes/después sin escritura editorial. [Resultado real](qa/MCP_OPERATING_LIVE_STORAGE_ACCEPTANCE_2026-10-23.json). Los scopes exactos ya estaban corroborados;14Projects coinciden con huella histórica y propuesta227 con su evidencia/ledger. La diferencia global histórica de postmeta **sigue abierta**, con causa/filas/valores anteriores sin reconstruir. No certificar el postflight global fallido ni reemplazar su baseline. Esta aceptación no aprueba un diff público ni certifica apply/recover/MCP HTTP en el hosting. Puede levantarse la pausa de esta auditoría; cualquier operación posterior requiere evaluar/coordinar su propia pausa. No repetir instalación/activación/grants/aceptación sin una razón nueva.
+
+## Registro de ejecución y comandos históricos
+
+Los comandos siguientes se conservan para revisión/reversión; la auditoría ya terminó y no se solicita repetirla.
 
 **Estado actual:**Alex aporta corroboración editorial correcta:14Projects completos coinciden con la huella histórica; propuesta227 válida con identidad/versiones y patches de cabecera/historial contrastados con ledger que coincide con la baseline de concesión; capacidades exactas. [Evidencia real](qa/MCP_OPERATING_LIVE_EDITORIAL_EVIDENCE_2026-10-23.json). Las fechas del historial no fueron reconstruidas; la diferencia global postmeta y su autor/causa siguen sin identificar. La evidencia histórica corrobora el estado actual de los Projects; no reconstruye la partición de postmeta que existía justo antes del grant. No emitir el recibo original de postflight global como si hubiera pasado.
 
-## Siguiente comando: auditoría de almacenamiento ya autorizada
+## Auditoría de almacenamiento autorizada y ejecutada
 
 La aceptación de almacenamiento es una operación independiente de solo lectura, ya autorizada por Alex. Verifica esquema/estado vacío, permisos(6permitidos/12denegados), huérfanos/cuotas/relaciones operativas dentro de READ ONLY/REPEATABLE READ y conserva el estado observado durante esta auditoría. No resuelve ni acepta la diferencia histórica de postmeta; no reemplaza la baseline original del grant. La incidencia permanece abierta incluso si accepted=true. No concede permisos ni aprueba/aplica un diff público.
 

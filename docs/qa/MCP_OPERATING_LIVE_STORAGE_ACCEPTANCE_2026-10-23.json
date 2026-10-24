@@ -1,0 +1,33 @@
+{
+  "source": "Output supplied by Alex; no SSH executed by agent",
+  "result": {
+    "version": "0.1.0-rc.3",
+    "candidateSha256": "d0b09a1612fa95606915b33fa8664ae29589008abed4ca77c3c35a5259b8ed30",
+    "acceptance": {
+      "format": "operating-storage-acceptance-v1",
+      "accepted": true,
+      "snapshot": "single-read-only-repeatable-read",
+      "totals": {
+        "owners": 0,
+        "reviews": 0,
+        "requests": 0,
+        "applications": 0,
+        "approvals": 0,
+        "events": 0
+      },
+      "external_quiescence": "operator-attested"
+    },
+    "allowedPermissionChecks": 6,
+    "deniedPermissionChecks": 12,
+    "sourcesRolesPermissionsAndStorageUnchanged": true,
+    "editorialDataWritten": false,
+    "externalPause": "operator-attested",
+    "softwareEnforcesExternalPause": false
+  },
+  "scopeNotes": [
+    "Before/after preservation applies to this read-only audit, not the original grant baseline",
+    "Historical generic postmeta drift remains unresolved",
+    "No public diff approved or applied; no operating editorial records created",
+    "External pause was operator-attested; software did not enforce it"
+  ]
+}

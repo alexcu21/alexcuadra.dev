@@ -1,8 +1,6 @@
 # Cierre del adaptador y edición operativa — alcance restante
 
-Última evidencia:14Projects completos coinciden con huella histórica; propuesta227 válida con versiones/patches contrastados contra ledger intacto; permisos exactos. Corroboración real cerrada en ese alcance. Siguiente paso:auditoría de almacenamiento de solo lectura ya autorizada. La diferencia histórica global postmeta sigue abierta y no se da por aceptada ni se reemplaza su baseline. [Estado/recibo/comando](WORDPRESS_MCP_OPERATING_SCOPES.md).
-
-Actualización real: activación completada; la concesión autorizada se detuvo en el postflight. El diagnóstico confirma los tres permisos exactos y deriva únicamente en postmeta. La aceptación sigue pendiente de conciliar esa diferencia; no repetir grants. [Estado/evidencia y siguiente lectura](WORDPRESS_MCP_OPERATING_SCOPES.md).
+**Estado vigente — aceptación de almacenamiento completada:**Alex ejecutó la auditoría autorizada de rc.3; accepted=true, snapshot READ ONLY/REPEATABLE READ, totales operativos cero,6 permisos permitidos/12denegados y conservación antes/después sin escritura editorial. [Resultado real](qa/MCP_OPERATING_LIVE_STORAGE_ACCEPTANCE_2026-10-23.json). Los scopes exactos ya estaban corroborados;14Projects coinciden con huella histórica y propuesta227 con su evidencia/ledger. La diferencia global histórica de postmeta **sigue abierta**, con causa/filas/valores anteriores sin reconstruir. No certificar el postflight global fallido ni reemplazar su baseline. Esta aceptación no aprueba un diff público ni certifica apply/recover/MCP HTTP en el hosting. Puede levantarse la pausa de esta auditoría; cualquier operación posterior requiere evaluar/coordinar su propia pausa. No repetir instalación/activación/grants/aceptación sin una razón nueva.
 
 Estado23 octubre2026. Proposals rc.2 ya está instalado y validado: no reinstalar, repetir grant o recrear propuesta227. La autorización existente no incluye aplicar cambios a Projects reales. El trabajo nuevo sigue separado en `wordpress/experimental/editorial-source-adapter`.
 
@@ -20,13 +18,16 @@ Límite: se reprodujo código completo y sync vacío observado, no opciones priv
 
 Aplicación, revisión, aprobación CLI independiente y recuperación consumible integradas sobre rc.2; seis tablas con preparación conjunta reanudable, validadores y auditoría de relaciones. Aceptación global en snapshot READ ONLY con barrera cooperativa; requiere pausa externa declarada en destino. Seis abilities probadas por MCP HTTP local y export privado por propietario probado únicamente con datos sintéticos. [Contrato actual](WORDPRESS_MCP_OPERATING_CONTRACT.md), [QA de transporte](qa/MCP_OPERATING_TRANSPORT_2026-10-23.md), [QA del export](qa/MCP_PRIVATE_EXPORT_2026-10-23.md).
 
-Resultado vigente:597 comprobaciones del candidato rc.3, que incorpora admisión productiva explícita y export compatible con link deshabilitado. [QA](qa/MCP_PRODUCTION_ADMISSION_2026-10-23.md), [paquete/plan](WORDPRESS_MCP_OPERATING_PACKAGE.md). Instalador/activación/desactivación normal probados; perfil productivo simulado verifica scopes/registro/consulta/auditoría/export por CLI. El circuito completo apply/recover/MCP HTTP sigue ensayado en modo local. Sin scopes reales nuevos ni edición pública.
+Resultado vigente:597 comprobaciones del candidato rc.3, que incorpora admisión productiva explícita y export compatible con link deshabilitado. [QA](qa/MCP_PRODUCTION_ADMISSION_2026-10-23.md), [paquete/plan](WORDPRESS_MCP_OPERATING_PACKAGE.md). Instalador/activación/desactivación normal probados; perfil productivo simulado verifica scopes/registro/consulta/auditoría/export por CLI. El circuito completo apply/recover/MCP HTTP sigue ensayado en modo local. Scopes reales exactos corroborados y aceptación de almacenamiento completada, sin edición pública.
 
-| Entrega pendiente | Iteraciones estimadas | Resultado verificable |
-| --- | --- | --- |
-| Permisos y aceptación inicial en destino | 1 | Instalación/activación/seis tablas vacías completadas;12 escenarios de scopes/aceptación/revocación pasan. Falta autorización de tres capacidades, pausa efectiva y salidas de Alex por fases; revisar ambas antes de cerrar |
+| Alcance | Estado verificable |
+| --- | --- |
+| Instalación, activación, seis tablas y scopes | Completados; mapas directos exactos corroborados, rol subscriber y demás permisos conservados |
+| Auditoría inicial de almacenamiento | Completada; accepted=true, cero registros operativos,6 permisos permitidos/12denegados, sin escritura editorial |
+| Incidencia histórica global postmeta | Abierta; lecturas estables y corroboración editorial correctas no recuperan el valor anterior ni atribuyen la causa |
+| Aplicación/recuperación y MCP HTTP del hosting | No certificados por esta auditoría; circuito completo ensayado localmente. Sin diff público autorizado |
 
-**Estimación vigente restante:1 entrega de trabajo**, sujeta a incompatibilidades/resultados/aprobación; no equivale a número de mensajes o comandos. No volver a presentar perfiles o engine locales como pendientes.
+**Auditoría de almacenamiento:0 iteraciones pendientes.** La investigación de postmeta tiene un alcance distinto y no se estima sin identificar la causa; no convertir accepted=true en una afirmación de cierre de esa incidencia ni de toda la edición operativa productiva.
 
 Una edición pública requiere su diff concreto aprobado; no se programa ahora ni se considera autorizada por «continúa». No pedir autorización antes de tener candidato/plan concretos y revisables. Los fixtures REST de manage_options no son el autorizador operativo final.
 
@@ -38,6 +39,6 @@ Preflight recibido: la restricción PHP link afecta al export del rc.1 local. Se
 
 Último incremento:32GiB libres antes/después redondeados; sin nuevo backup real ni limpieza de recursos. La nueva lectura de destino solo exporta metadata al terminal de Alex.
 
-Preflight real pasa11/11. Fase inactiva:9 escenarios nuevos del script exacto correctos, [comandos/alcance listos para autorización](WORDPRESS_MCP_OPERATING_DEPLOYMENT.md). ZIP/código rc.3 no cambia. No contar las597 comprobaciones del candidato como ejecutadas de nuevo. Alex ya autorizó y completó la fase inactiva; la evidencia histórica mantiene sus campos originales. Activación/almacenamiento ya autorizados y completados; la autorización nueva pendiente corresponde a scopes/aceptación.
+Preflight real pasa11/11. Fase inactiva:9 escenarios nuevos del script exacto correctos, [comandos/alcance listos para autorización](WORDPRESS_MCP_OPERATING_DEPLOYMENT.md). ZIP/código rc.3 no cambia. No contar las597 comprobaciones del candidato como ejecutadas de nuevo. Alex ya autorizó y completó la fase inactiva; la evidencia histórica mantiene sus campos originales. Activación/almacenamiento ya autorizados y completados; scopes/aceptación ya autorizados y ejecutados; no solicitar la misma autorización ni repetir comandos.
 
-Estado real más reciente:rc.3 **activo**, opt-in canónico, seis tablas listas/vacías,18 denegaciones,14 Projects/propuestas/permisos conservados. [Evidencia](qa/MCP_OPERATING_LIVE_ACTIVATION_2026-10-23.json). [Siguiente fase concreta](WORDPRESS_MCP_OPERATING_SCOPES.md):tres scopes directos y aceptación inicial de solo lectura,12 escenarios correctos, pendiente autorización y ejecución por Alex. Puede coordinar la pausa, pero aún no está iniciada. No reinstalar ni reactivar. El cierre de esta entrega no incluye una aplicación pública ni certifica MCP HTTP del hosting; cualquier diff requiere una autorización concreta posterior.
+Estado real más reciente:rc.3 activo y seis tablas operativas aceptadas/vacías, scopes corroborados y6 permisos permitidos/12denegados, sin escritura editorial durante la auditoría. [Recibo real](qa/MCP_OPERATING_LIVE_STORAGE_ACCEPTANCE_2026-10-23.json), [alcance e incidencia abierta](WORDPRESS_MCP_OPERATING_SCOPES.md). Puede levantarse la pausa coordinada para esta lectura. El cierre de la auditoría no certifica apply/recover/MCP HTTP del hosting ni aprueba una edición pública.
