@@ -1,5 +1,7 @@
 # Candidato operativo y admisión explícita
 
+Última evidencia:14Projects completos coinciden con huella histórica; propuesta227 válida con versiones/patches contrastados contra ledger intacto; permisos exactos. Corroboración real cerrada en ese alcance. Siguiente paso:auditoría de almacenamiento de solo lectura ya autorizada. La diferencia histórica global postmeta sigue abierta y no se da por aceptada ni se reemplaza su baseline. [Estado/recibo/comando](WORDPRESS_MCP_OPERATING_SCOPES.md).
+
 Actualización real: activación completada; la concesión autorizada se detuvo en el postflight. El diagnóstico confirma los tres permisos exactos y deriva únicamente en postmeta. La aceptación sigue pendiente de conciliar esa diferencia; no repetir grants. [Estado/evidencia y siguiente lectura](WORDPRESS_MCP_OPERATING_SCOPES.md).
 
 Candidato vigente0.1.0-rc.3: [ZIP](../artifacts/wordpress/alexcuadra-editorial-operating-0.1.0-rc.3.zip), [manifiesto](../artifacts/wordpress/alexcuadra-editorial-operating-0.1.0-rc.3.manifest.json).36877bytes; SHA256 `d0b09a1612fa95606915b33fa8664ae29589008abed4ca77c3c35a5259b8ed30`. productionAdmissionImplemented=true/localOptinOnly=false; productionReady=false e installationAuthorized=false indican que todavía falta aceptación/autorización real, no que se active automáticamente. rc.1 conserva sus bytes y su carácter solo local. Un borrador rc.2 fue sustituido antes de entrega y conservado privadamente; no se instala.
