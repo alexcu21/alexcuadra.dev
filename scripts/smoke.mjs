@@ -129,12 +129,16 @@ if (process.argv.includes('--check-home-es')) {
       assert.ok(html.includes(`hreflang="${language}" href="https://alexcuadra.dev${path}"`));
     }
   }
-  assert.ok(links(spanishHome).some(path => /^\/work\/[^/]+/.test(path)), 'ES Home must preserve real project links');
+  const spanishFeatured = links(spanishHome).find(path => /^\/es\/proyectos\/[^/]+/.test(path));
+  assert.ok(spanishFeatured, 'ES Home must link published Spanish projects');
+  assert.doesNotMatch(spanishHome, /href="\/work\/[^"/]+/);
   assert.ok(links(spanishHome).some(path => /^\/articles\/category\/[^/]+/.test(path)), 'Keep current reference category links');
   const featured = links(home).find(path => /^\/work\/[^/]+/.test(path));
   assert.ok(featured);
   const project = await check(featured);
   assert.match(project, /<html[^>]*lang="en"/);
+  const spanishProject = await check(spanishFeatured);
+  assert.match(spanishProject, /<html[^>]*lang="es"/);
   console.log('PASS Home EN/ES: translated CMS fields, reciprocal alternates and existing collection URLs');
 }
 if (process.argv.includes('--check-about-es-absent')) {

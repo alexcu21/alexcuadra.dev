@@ -1,5 +1,7 @@
 # Diferencias de diseño y siguiente entrega
 
+Actualización posterior24octubre: conjunto visual desplegado en staging desde6ea5414, versióna35f2c0d-b218-44bf-8ae9-72c156f9abad. SmokeEN/ES/proyectos/CSP/contacto desactivado correcto; Motion observado en el Worker. Aceptación parcial por indisponibilidad posterior503 y CMS429 observado; artículos/LAB y matriz restante pendientes. [Entrega y límites](qa/DESIGN_STAGING_RELEASE_2026-10-24.md). Producción sin cambios.
+
 Actualización posterior24octubre: revisión local con contenido CMS real completada en alcance acotado. Corregida HomeES para usar fichas españolas existentes, sin fallback inglés ni consultas adicionales. La selección mantiene el orden reciente de cada idioma, por lo que EN y ES pueden destacar proyectos diferentes. [QA y preparación agrupada de staging](qa/REAL_CONTENT_RELEASE_REVIEW_2026-10-24.md).
 
 Actualización posterior24octubre: tarjetas de canales editoriales compartidas por Home/archivo y panel CTA implementados localmente, con conteos existentes, acceso a correo y proyectos del idioma. [QA y capturas](qa/CHANNELS_CTA_2026-10-24.md). Búsqueda, filtros de publicaciones y una lectura editorial más elaborada siguen siendo alcance posterior; esta entrega conserva el archivo por canales. Siguiente: revisión conjunta con contenido real y preparación agrupada para staging.

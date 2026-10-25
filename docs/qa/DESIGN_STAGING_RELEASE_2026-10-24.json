@@ -1,0 +1,59 @@
+{
+  "format": "portfolio-design-staging-release-v1",
+  "date": "2026-10-24",
+  "worker": "alexcuadra-dev-staging",
+  "url": "https://alexcuadra-dev-staging.alexcu21.workers.dev",
+  "sourceCommit": "6ea5414d90255bb474a8e0b8a7c0fb92490b6fae",
+  "version": "a35f2c0d-b218-44bf-8ae9-72c156f9abad",
+  "previousVersion": "1b12660e-22b5-4e0d-8120-cf89c4ab60e5",
+  "deployed": true,
+  "productionChanged": false,
+  "cmsWritten": false,
+  "contactEnabled": false,
+  "buildAstroFiles": 174,
+  "astroDiagnostics": 0,
+  "smoke": {
+    "passed": true,
+    "scope": [
+      "technical404",
+      "home-en",
+      "home-es",
+      "project-en",
+      "project-es",
+      "canonical-alternates",
+      "CSP-inline-hashes",
+      "authenticated-public-read",
+      "contact-disabled"
+    ]
+  },
+  "motion": {
+    "assetStatus": 200,
+    "assetBytes": 9794,
+    "matchesBuild": true,
+    "assetSha256": "76b644c8a4677222d48e333fbd0def5b11628aa32ea32cd947630dd25ac7b2e6",
+    "intermediateCardOpacity": "0.923348",
+    "intermediateCardTransform": "matrix(1, 0, 0, 1, 0, 2.62806)",
+    "finalCardsOpacity": "1",
+    "finalCardsTransform": "none",
+    "consoleWarningsOrErrorsAtInitialHomeInspection": 0,
+    "osReducedMotionNotTested": true
+  },
+  "laterFailure": {
+    "path": "/articles/",
+    "status": 503,
+    "retryAfterSeconds": 60,
+    "cacheControl": "no-store",
+    "robots": "noindex, nofollow",
+    "safeBodyVerified": true,
+    "upstream429Observed": true,
+    "upstreamOperationObserved": "LocalizedHome",
+    "articleSpecificOperationNotCaptured": true
+  },
+  "acceptanceComplete": false,
+  "pending": [
+    "articles-and-lab-availability",
+    "mobile-remote-and-reduced-motion-os",
+    "integral-acceptance",
+    "CMS-429-root-cause"
+  ]
+}

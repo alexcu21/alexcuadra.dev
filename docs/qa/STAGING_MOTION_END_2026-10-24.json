@@ -1,0 +1,29 @@
+{
+  "cards": [
+    {
+      "inline": null,
+      "opacity": "1",
+      "transform": "none"
+    },
+    {
+      "inline": null,
+      "opacity": "1",
+      "transform": "none"
+    },
+    {
+      "inline": null,
+      "opacity": "1",
+      "transform": "none"
+    },
+    {
+      "inline": "",
+      "opacity": "1",
+      "transform": "none"
+    }
+  ],
+  "scripts": [
+    "/_astro/PageMotion.astro_astro_type_script_index_0_lang.CFaTGo-4.js"
+  ],
+  "scrollWidth": 1280,
+  "width": 1280
+}
