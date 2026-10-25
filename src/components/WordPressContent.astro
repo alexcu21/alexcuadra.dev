@@ -29,3 +29,13 @@ const readerId = `wp-reader-${scope}`;
   </section> : <Fragment set:html={section.html} />)}
 </div>
 </div>
+<script>
+  import { mountResponsiveFocus } from '../scripts/responsive-focus.js';
+  document.querySelectorAll('.editorial-document.has-outline').forEach(root => {
+    const compact = root.querySelector<HTMLDetailsElement>('.editorial-toc')!;
+    const sidebar = root.querySelector<HTMLElement>('.editorial-sidebar')!;
+    mountResponsiveFocus({root:document, media:matchMedia('(min-width: 64rem)'),
+      narrow:{region:compact,target:compact.querySelector('summary')!},
+      wide:{region:sidebar,target:sidebar.querySelector('.editorial-reader-link')!}});
+  });
+</script>

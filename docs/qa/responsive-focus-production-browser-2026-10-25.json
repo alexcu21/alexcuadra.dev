@@ -1,0 +1,23 @@
+{
+  "checkedAt": "2026-10-25T17:26:23.908Z",
+  "observations": [
+    {
+      "scenario": "desktop outline to compact",
+      "focus": "SUMMARY",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "focus": "editorial-reader-link",
+      "scenario": "compact outline to desktop",
+      "width": 1280
+    },
+    {
+      "controls": "menu-content",
+      "expanded": "false",
+      "focus": "BUTTON",
+      "scenario": "desktop menu to compact",
+      "width": 320
+    }
+  ]
+}

@@ -117,7 +117,9 @@ const isCurrentPage = (href: string) => {
 </nav>
 
 <script>
+	import { mountResponsiveFocus } from '../scripts/responsive-focus.js';
 	class MenuButton extends HTMLElement {
+		private disposeResponsive?: () => void;
 		constructor() {
 			super();
 
@@ -148,14 +150,16 @@ const isCurrentPage = (href: string) => {
 			});
 
 			// Hide menu button for large screens.
-			const handleViewports = (e: MediaQueryList | MediaQueryListEvent) => {
-				setExpanded(e.matches);
-				btn.hidden = e.matches;
+			const handleViewports = (desktop: boolean) => {
+				setExpanded(desktop);
+				btn.hidden = desktop;
 			};
 			const mediaQueries = window.matchMedia('(min-width: 64em)');
-			handleViewports(mediaQueries);
-			mediaQueries.addEventListener('change', handleViewports);
+			this.disposeResponsive = mountResponsiveFocus({root:document, media:mediaQueries,
+				narrow:{region:btn,target:btn}, wide:{region:menu,target:menu.querySelector('a')!},
+				update:handleViewports});
 		}
+		disconnectedCallback() { this.disposeResponsive?.(); }
 	}
 	customElements.define('menu-button', MenuButton);
 </script>
