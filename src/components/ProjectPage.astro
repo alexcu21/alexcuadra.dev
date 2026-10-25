@@ -82,12 +82,12 @@ const alternates: {locale: 'en' | 'es'; path: string}[] = alternate ? [{locale, 
   .project-image { margin: 0; }
   .project-story { display: grid; gap: 1.5rem; padding-block: 3rem; border-bottom: 1px solid var(--gray-800); min-width: 0; }
   h2 { font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.2; letter-spacing: -.03em; }
-  .story-content { min-width: 0; max-width: 70ch; font-size: 1.0625rem; }
+  .story-content { min-width: 0; font-size: 1.0625rem; }
   .project-end { padding-top: 2.5rem; }
   @media (min-width: 50em) {
     .project { padding-block: 3rem 5rem; }
     .project-nav { margin-bottom: 3rem; }
     .project-header { padding-bottom: 2.5rem; }
-    .project-story { grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: 3rem; padding-block: 4rem; }
+    .project-story { gap: 2rem; padding-block: 4rem; }
   }
 </style>

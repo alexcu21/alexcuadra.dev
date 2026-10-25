@@ -7,14 +7,25 @@ interface Props { html?: string | null; sections?: Section[]; scope?: string; to
 const { html, sections, scope = 'body', toc = false, locale = 'en' } = Astro.props;
 const document = prepareWordPressDocument(sections ?? [{ key: 'body', html }], scope);
 const tocLabel = locale === 'es' ? 'En esta página' : 'On this page';
+const hasOutline = toc && document.headings.length >= 2;
+const readerId = `wp-reader-${scope}`;
 ---
-{toc && document.headings.length >= 2 && <details class="editorial-toc" open>
+<div class:list={['editorial-document', { 'has-outline': hasOutline }]}>
+{hasOutline && <aside class="editorial-sidebar" aria-label={tocLabel}>
+  <div class="editorial-sidebar-inner">
+    <p class="editorial-sidebar-title">{tocLabel}</p>
+    <a class="editorial-reader-link" href={`#${readerId}`}>{locale === 'es' ? 'Leer contenido' : 'Read content'} ↓</a>
+    <nav aria-label={tocLabel} tabindex="0"><TableOfContentsList items={document.outline} /></nav>
+  </div>
+</aside>}
+{hasOutline && <details class="editorial-toc">
   <summary>{tocLabel}</summary>
   <nav aria-label={tocLabel}><TableOfContentsList items={document.outline} /></nav>
 </details>}
-<div class="wordpress-content">
+<div class="wordpress-content" id={readerId} tabindex="-1">
   {document.sections.map(section => section.title ? <section class="wordpress-section">
     <h2 id={section.id} tabindex="-1">{section.title}</h2>
     {section.text != null ? <p class="editorial-plain">{section.text}</p> : <Fragment set:html={section.html} />}
   </section> : <Fragment set:html={section.html} />)}
+</div>
 </div>

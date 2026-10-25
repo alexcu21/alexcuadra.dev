@@ -23,7 +23,9 @@ export async function request({ document, variables }) {
       title: slug === 'minimal' ? 'Minimal project' : casePreview ? 'christianitytoday.com'
         : spanish ? 'Proyecto de demostración' : 'Demonstration project',
       modified: slug === 'minimal' ? '2026-10-01T00:00:00' : '2026-10-24T00:00:00',
-      content: slug === 'minimal' ? '' : mode === 'project-case-current'
+      content: slug === 'minimal' ? '' : mode === 'project-long-outline'
+        ? Array.from({length: 40}, (_, i) => `<h2>Section ${i + 1}: responsive editorial content</h2><p>Long outline fixture. Reading stays beside the navigation without waiting for the list to end.</p>`).join('')
+        : mode === 'project-case-current'
         ? caseCurrent.entries.find(entry => entry.language.code === code).content
         : mode === 'project-case-draft'
         ? caseDrafts.entries.find(entry => entry.locale === (spanish ? 'es' : 'en')).contentHtml

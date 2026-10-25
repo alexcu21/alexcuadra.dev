@@ -1,0 +1,28 @@
+{
+  "checkedAt": "2026-10-25T15:58:35.721Z",
+  "checks": [
+    {
+      "path": "/es/proyectos/christianitytoday-com-2",
+      "status": 200,
+      "auth": "verified",
+      "robots": "noindex, nofollow",
+      "retryAfter": null,
+      "csp": true,
+      "sidebar": true,
+      "compactClosed": true
+    },
+    {
+      "path": "/work/christianitytoday-com",
+      "status": 200,
+      "auth": "verified",
+      "robots": "noindex, nofollow",
+      "retryAfter": null,
+      "csp": true,
+      "sidebar": true,
+      "compactClosed": true
+    }
+  ],
+  "initialVersion": "08279df8-1f62-4204-a6bd-a47d93b52ecc",
+  "version": "0cf469e9-670d-43e6-98a9-f5e40ce0a269",
+  "verification": "Initial HTTP EN/ES checks belong to initialVersion. Final corrected version checked in browser: Spanish case, computed overflow-x clip, sticky top32px after keyboard heading navigation, focused el-reto, viewport1280, scrollWidth1280."
+}

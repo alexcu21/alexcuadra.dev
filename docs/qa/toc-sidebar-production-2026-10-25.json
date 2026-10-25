@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-10-25T16:01:49.045Z",
+  "version": "a20d636d-93df-4be8-af8e-8140c393dc0a",
+  "previousVersion": "43c88691-2f4c-4e68-b045-56398276b4c6",
+  "checks": [
+    {
+      "path": "/es/proyectos/christianitytoday-com-2",
+      "status": 200,
+      "auth": "verified",
+      "robots": null,
+      "retryAfter": null,
+      "csp": true,
+      "sidebar": true,
+      "compactClosed": true
+    },
+    {
+      "path": "/work/christianitytoday-com",
+      "status": 200,
+      "auth": "verified",
+      "robots": null,
+      "retryAfter": null,
+      "csp": true,
+      "sidebar": true,
+      "compactClosed": true
+    }
+  ]
+}

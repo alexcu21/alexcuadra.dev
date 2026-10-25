@@ -83,6 +83,11 @@ test('actual reference templates preserve HTTP, content and pagination contracts
     assert.doesNotMatch(html, /99\.9%|450\+|SDET|PRIVATE_SCRIPT/);
   }
   const projectEmpty = await get('/es/proyectos/?mode=projects-empty');
+  const longOutline = await get('/work/case-study?mode=project-long-outline');
+  assert.equal(longOutline.response.status, 200);
+  assert.match(longOutline.html, /href="#wp-reader-body"/);
+  assert.match(longOutline.html, /id="wp-reader-body" tabindex="-1"/);
+  assert.equal((longOutline.html.match(/<h2[^>]*id="wp-content-body-body-section-/g) || []).length, 40);
   assert.equal(projectEmpty.response.status, 200);
   assert.match(projectEmpty.html, /Todavía no hay proyectos publicados/);
   assert.match(projectEmpty.html, /href="\/work\/"/);
@@ -219,7 +224,9 @@ test('actual reference templates preserve HTTP, content and pagination contracts
     ['/lab/training-lab?mode=outline', 'On this page'], ['/es/laboratorio/laboratorio?mode=outline', 'En esta página']]) {
     const { response, html } = await get(path);
     assert.equal(response.status, 200, path);
-    assert.match(html, /<details[^>]*class="editorial-toc"[^>]*open/);
+    assert.match(html, /<aside[^>]*class="editorial-sidebar"/);
+    assert.match(html, /<details[^>]*class="editorial-toc"/);
+    assert.doesNotMatch(html, /<details[^>]*class="editorial-toc"[^>]*open/);
     assert.ok(html.includes(`<summary>${label}</summary>`));
     assert.ok(html.includes(`aria-label="${label}"`));
     const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]);
