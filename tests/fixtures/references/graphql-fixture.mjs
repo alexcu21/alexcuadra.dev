@@ -11,6 +11,22 @@ function upstreamFailure() {
 export async function request({ document, variables }) {
   const mode = scenario.getStore();
   if (mode === 'outage') upstreamFailure();
+  if (document.includes('query LocalizedProjects')) {
+    const code = document.includes('language: ES') ? 'ES' : 'EN';
+    const spanish = code === 'ES';
+    if (mode === 'projects-empty') return { projects: connection([]) };
+    return { projects: connection(['case-study', 'minimal'].map(slug => ({
+      ...visible, language: { code }, slug: spanish && slug === 'case-study' ? 'caso-de-estudio' : slug,
+      title: slug === 'minimal' ? 'Minimal project' : spanish ? 'Proyecto de demostración' : 'Demonstration project',
+      modified: slug === 'minimal' ? '2026-10-01T00:00:00' : '2026-10-24T00:00:00',
+      content: slug === 'minimal' ? '' : '<p>Synthetic project scope.</p><script>PRIVATE_SCRIPT</script>',
+      projects: slug === 'minimal' ? null : { projectTagline: spanish ? 'Diseño y desarrollo de una experiencia web' : 'Design and development of a web experience', websiteurl: 'https://example.test/', githuburl: null },
+      featuredImage: slug === 'minimal' ? null : { node: { sourceUrl: '/project-preview.svg' } },
+      tags: { nodes: slug === 'minimal' ? [] : [{ name: 'WordPress' }, { name: 'React' }] },
+      translations: slug === 'minimal' ? [] : [{ ...visible, databaseId: 900,
+        slug: spanish ? 'case-study' : 'caso-de-estudio', language: { code: spanish ? 'EN' : 'ES' } }],
+    }))) };
+  }
   if (document.includes('query PageNavigation')) {
     if (mode === 'nav-outage') upstreamFailure();
     return { page: mode === 'nav-es' ? { ...visible, language: { code: 'EN' }, translations: [

@@ -1,5 +1,7 @@
 # Listado y ficha reutilizable — incremento local, 19 octubre 2026
 
+Actualización24octubre: las maquetas originales ya están disponibles localmente y se han inspeccionado. La primera adaptación nueva y sus límites están en [QA actual](PROJECT_DESIGN_INCREMENT_2026-10-24.md); la comparación/prioridades en [revisión de diseño](../DESIGN_REVIEW_2026-10-24.md). La afirmación inferior sobre ausencia de HTML corresponde al19octubre.
+
 Alex autorizó continuar los incrementos manteniendo abierta la aceptación visual restante de Home. Sin acceso al navegador ni alternativa para sortear el bloqueo.
 
 ## Implementación

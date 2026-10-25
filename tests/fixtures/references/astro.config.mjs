@@ -6,6 +6,10 @@ export default defineConfig({
   devToolbar: { enabled: false },
   integrations: [{ name: 'actual-reference-routes', hooks: { 'astro:config:setup': ({ injectRoute }) => {
     for (const [pattern, file] of [
+      ['/work', '../../../src/pages/work.astro'],
+      ['/work/[...slug]', '../../../src/pages/work/[...slug].astro'],
+      ['/es/proyectos', '../../../src/pages/es/proyectos/index.astro'],
+      ['/es/proyectos/[...slug]', '../../../src/pages/es/proyectos/[...slug].astro'],
       ['/articles', '../../../src/pages/articles.astro'],
       ['/blog', '../../../src/pages/blog.astro'],
       ['/blog/[slug]', '../../../src/pages/blog/[slug].astro'],

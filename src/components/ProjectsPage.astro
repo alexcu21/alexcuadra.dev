@@ -25,6 +25,10 @@ const projects = sortProjectsByModified(projectsData);
 		<main id="main-content" tabindex="-1" class="wrapper stack projects-archive">
 			<nav aria-label={spanish ? 'Idioma de la página' : 'Page language'}><a href={spanish ? '/work/' : '/es/proyectos/'} lang={spanish ? 'en' : 'es'}>{spanish ? 'English' : 'Español'}</a></nav>
       <header class="archive-header">
+        <div class="archive-meta">
+          <p class="eyebrow">{spanish ? '// Trabajo seleccionado' : '// Selected work'}</p>
+          <p class="archive-count"><span>{String(projects.length).padStart(2, '0')}</span> {spanish ? 'proyectos' : 'projects'}</p>
+        </div>
         <h1>{spanish ? 'Proyectos' : 'My Work'}</h1>
         <p>{spanish ? 'Explora mis proyectos y experiencia.' : 'See my most recent projects below to get an idea of my past experience.'}</p>
       </header>
@@ -50,9 +54,14 @@ const projects = sortProjectsByModified(projectsData);
   .projects-flow { gap: 4rem; }
   .projects-archive { padding-top: 2rem; gap: 2.5rem; }
   nav a, .empty { color: var(--gray-300); text-underline-offset: .3em; }
-  .archive-header { max-width: 54ch; }
-  h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); letter-spacing: -.04em; overflow-wrap: anywhere; }
-  .archive-header p { color: var(--gray-300); font-size: 1.125rem; line-height: 1.7; margin-top: 1.25rem; }
+  .archive-header { padding-bottom: 2rem; border-bottom: 1px solid var(--gray-800); }
+  .archive-meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; }
+  .eyebrow, .archive-count { font: .75rem/1.5 var(--font-mono); }
+  .eyebrow { color: var(--link-color); text-transform: uppercase; letter-spacing: .08em; }
+  .archive-count { color: var(--gray-300); }
+  .archive-count span { color: var(--link-color); }
+  h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; letter-spacing: -.04em; overflow-wrap: anywhere; }
+  .archive-header > p { color: var(--gray-300); font-size: 1.125rem; line-height: 1.7; margin-top: 1.25rem; max-width: 54ch; }
   .projects-archive :global(.grid) { gap: 1.5rem; grid-auto-rows: auto; grid-template-columns: minmax(0, 1fr); }
   .projects-archive :global(.grid > li) { min-width: 0; }
   .empty { padding: 2rem; border: 1px solid var(--gray-800); border-radius: 1rem; background: var(--gray-900); }

@@ -32,6 +32,29 @@ test('actual reference templates preserve HTTP, content and pagination contracts
     const response = await fetch(base + path);
     return { response, html: await response.text() };
   };
+  // Actual project routes: multilingual links and missing content must survive
+  // the shared visual component changes, without inventing case-study sections.
+  for (const [path, title] of [['/work/', 'Demonstration project'], ['/es/proyectos/', 'Proyecto de demostración'],
+    ['/work/case-study', 'Demonstration project'], ['/es/proyectos/caso-de-estudio', 'Proyecto de demostración']]) {
+    const { response, html } = await get(path);
+    assert.equal(response.status, 200, path);
+    assert.ok(html.includes(title), path);
+    assert.equal((html.match(/<h1(?:\s|>)/g) || []).length, 1);
+    assert.match(html, /project-preview.svg/);
+    assert.doesNotMatch(html, /PRIVATE_SCRIPT|99\.9%|450\+|testimonial/);
+  }
+  const projectDetail = await get('/work/case-study');
+  assert.match(projectDetail.html, /Synthetic project scope/);
+  assert.match(projectDetail.html, /href="\/es\/proyectos\/caso-de-estudio"/);
+  const projectMinimal = await get('/work/minimal');
+  assert.equal(projectMinimal.response.status, 200);
+  assert.doesNotMatch(projectMinimal.html, /project-story-title|project-preview.svg|class="project-details"|Explore the project/);
+  const projectEmpty = await get('/es/proyectos/?mode=projects-empty');
+  assert.equal(projectEmpty.response.status, 200);
+  assert.match(projectEmpty.html, /Todavía no hay proyectos publicados/);
+  assert.match(projectEmpty.html, /href="\/work\/"/);
+  const projectMissing = await get('/work/missing');
+  assert.equal(projectMissing.response.status, 404);
   for (const [path, expected] of [
     ['/articles/', /Medium/],
     ['/articles/category/medium', /Second synthetic reference/],

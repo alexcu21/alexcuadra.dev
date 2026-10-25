@@ -1,0 +1,27 @@
+---
+interface Props { src: string; title: string; compact?: boolean; }
+const { src, title, compact = false } = Astro.props;
+---
+<div class:list={['project-media', { compact }]}>
+  <div class="media-bar" aria-hidden="true">
+    <span class="window-dots"><i></i><i></i><i></i></span>
+    <span class="media-label">{title}</span>
+  </div>
+  <div class="image-surface">
+    <img src={src} alt="" loading={compact ? 'lazy' : 'eager'} decoding="async" />
+  </div>
+</div>
+<style>
+  .project-media { overflow: hidden; border: 1px solid var(--gray-800); border-radius: 1rem; background: var(--gray-900); }
+  .media-bar { display: flex; align-items: center; gap: 1rem; min-height: 2.75rem; padding: .75rem 1rem; border-bottom: 1px solid var(--gray-800); }
+  .window-dots { display: inline-flex; gap: .3rem; flex-shrink: 0; }
+  .window-dots i { width: .4rem; height: .4rem; border-radius: 50%; background: var(--gray-500); }
+  .window-dots i:nth-child(2) { background: var(--link-color); opacity: .6; }
+  .window-dots i:nth-child(3) { background: var(--link-color); }
+  .media-label { color: var(--gray-300); font: .7rem/1.5 var(--font-mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .image-surface { background: var(--gray-999); }
+  img { display: block; width: 100%; height: auto; }
+  .compact { border-radius: .75rem; }
+  .compact .media-bar { min-height: 2.25rem; padding: .5rem .75rem; }
+  .compact img { aspect-ratio: 16 / 10; object-fit: contain; }
+</style>
