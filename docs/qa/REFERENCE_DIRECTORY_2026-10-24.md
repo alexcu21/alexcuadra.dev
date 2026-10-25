@@ -24,4 +24,12 @@ Navegador sobre componentes reales con datos sintéticos: DISENO encuentra Dise�
 
 ## Entrega
 
-Preparado para staging; recibo remoto se añadirá después del despliegue. Producción conserva `6c82a0d4-51b0-4f0e-a683-a8b2e65426b3`. El bloqueo429 y la aceptación final continúan abiertos; estos filtros no los resuelven. Sin mutación CMS, nueva dependencia ni activación del contacto. MCP editorial sigue aplazado.
+Desplegado en staging desde el commit `6c3a3b7` (árbol limpio), versión **`f7445197-da24-4302-9873-117aab5c07d3`**, Worker `alexcuadra-dev-staging`. Versión previa identificada `a35f2c0d-b218-44bf-8ae9-72c156f9abad`, sin rollback. Artefacto generado comprobado: staging, sin rutas de producción, autenticación=true, contacto=false, coordinador/bindings conservados. Subida1521.03KiB/gzip359.84KiB. No push ni nuevo build por el recibo.
+
+Lectura puntual `/articles/`:200,10entradas, identidad CMS verified, staging noindex, cuatro scripts inline ejecutables con hashes presentes en CSP, sin formulario de contacto/widget. Una navegación adicional en navegador confirmó10/10, selección Podcast3/10 y combinación Guatemala1/10 con el título real Episodio4. Todas las interacciones posteriores fueron sobre la página cargada, sin nuevas navegaciones al CMS.320CSS remoto con scrollWidth320; viewport restaurado. No se repitió el smoke global ni se capturaron logs upstream.
+
+![Filtros con contenido real en staging](reference-directory-staging-2026-10-24.png)
+
+[Staging móvil](reference-directory-staging-320-2026-10-24.png). El servidor local4410 se detuvo y la pestaña sintética se cerró; se conserva la pestaña de staging para revisión.
+
+Producción conserva `6c82a0d4-51b0-4f0e-a683-a8b2e65426b3`. El bloqueo429 y la aceptación final continúan abiertos; estos filtros no los resuelven. Sin mutación CMS, nueva dependencia ni activación del contacto. MCP editorial sigue aplazado.
