@@ -51,6 +51,29 @@ test('actual reference templates preserve HTTP, content and pagination contracts
   const projectMinimal = await get('/work/minimal');
   assert.equal(projectMinimal.response.status, 200);
   assert.doesNotMatch(projectMinimal.html, /project-story-title|project-preview.svg|class="project-details"|Explore the project/);
+  assert.doesNotMatch(projectMinimal.html, /class="editorial-toc"/);
+  assert.doesNotMatch(projectDetail.html, /class="editorial-toc"/);
+  const currentCase = await get('/work/case-study?mode=project-case-current');
+  assert.equal(currentCase.response.status, 200);
+  assert.match(currentCase.html, /class="editorial-toc"/);
+  assert.match(currentCase.html, /href="#wp-content-body-body-the-solution"/);
+  assert.match(currentCase.html, /<h4\b[^>]*id="wp-content-body-body-the-solution"/);
+  const currentSpanish = await get('/es/proyectos/caso-de-estudio?mode=project-case-current');
+  assert.doesNotMatch(currentSpanish.html, /class="editorial-toc"/);
+  for (const [path, label, heading] of [
+    ['/work/case-study?mode=project-case-draft', 'On this page', 'the-solution'],
+    ['/es/proyectos/caso-de-estudio?mode=project-case-draft', 'En esta página', 'la-solucion'],
+  ]) {
+    const { response, html } = await get(path);
+    assert.equal(response.status, 200, path);
+    assert.match(html, /class="editorial-toc"/);
+    assert.ok(html.includes(`aria-label="${label}"`));
+    assert.ok(html.includes(`href="#wp-content-body-body-${heading}"`));
+    assert.ok(html.includes(`id="wp-content-body-body-${heading}" tabindex="-1"`));
+    assert.doesNotMatch(html, /<h4\b/);
+    assert.equal((html.match(/<h1(?:\s|>)/g) || []).length, 1);
+    assert.doesNotMatch(html, /99\.9%|450\+|SDET|PRIVATE_SCRIPT/);
+  }
   const projectEmpty = await get('/es/proyectos/?mode=projects-empty');
   assert.equal(projectEmpty.response.status, 200);
   assert.match(projectEmpty.html, /Todavía no hay proyectos publicados/);

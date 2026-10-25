@@ -49,7 +49,7 @@ const alternates: {locale: 'en' | 'es'; path: string}[] = alternate ? [{locale, 
     {img && <figure class="project-image"><ProjectMedia src={img} title={title} /></figure>}
     {hasBody && <section class="project-story" aria-labelledby="project-story-title">
       <div class="story-heading"><p class="eyebrow" aria-hidden="true">// 01</p><h2 id="project-story-title">{locale === 'es' ? 'Sobre el proyecto' : 'About the project'}</h2></div>
-      <div class="story-content"><WordPressContent html={content} /></div>
+      <div class="story-content"><WordPressContent html={content} toc locale={locale} /></div>
     </section>}
     <nav class="project-end" aria-label={locale === 'es' ? 'Más proyectos' : 'More projects'}>
       <a class="back-link" href={routeBase('projects', locale)}><Icon icon="arrow-left" /> {locale === 'es' ? 'Volver a proyectos' : 'Back to projects'}</a>

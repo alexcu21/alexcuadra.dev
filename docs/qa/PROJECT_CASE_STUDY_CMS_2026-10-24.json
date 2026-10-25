@@ -1,0 +1,40 @@
+{
+  "capturedAt": "2026-10-25T05:18:55.140Z",
+  "scope": "Two explicitly approved body edits via WordPress editor; no claim of database-wide preservation.",
+  "approval": "Alex approved both bodies in this chat on 2026-10-24",
+  "preservedFields": [
+    "databaseId",
+    "title",
+    "slug",
+    "status",
+    "isRestricted",
+    "hasPassword",
+    "language",
+    "projects",
+    "featuredImage",
+    "tags",
+    "translations"
+  ],
+  "englishProseUnchanged": true,
+  "spanishMatchesApprovedTranslation": true,
+  "entries": [
+    {
+      "id": 146,
+      "locale": "EN",
+      "slug": "christianitytoday-com",
+      "status": "publish",
+      "modified": "2026-10-25T05:16:53",
+      "h2Count": 4,
+      "contentSha256": "cef524bf3d8ce81da0cb44d657b61ef2e41610224dd9a9133b6848a80040cd43"
+    },
+    {
+      "id": 196,
+      "locale": "ES",
+      "slug": "christianitytoday-com-2",
+      "status": "publish",
+      "modified": "2026-10-25T05:17:42",
+      "h2Count": 4,
+      "contentSha256": "1f5c602c7428ef5cdf4c4bc9e95df3d2e039e76bac64ac5ec1c97da0cd9dce39"
+    }
+  ]
+}

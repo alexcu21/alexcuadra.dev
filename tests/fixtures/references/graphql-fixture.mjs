@@ -1,4 +1,6 @@
 import { scenario } from './scenario.mjs';
+import caseDrafts from '../../../docs/wordpress/project-case-study-drafts.json';
+import caseCurrent from '../../../docs/wordpress/project-case-study-current.json';
 export const gql = (parts, ...values) => parts.reduce((result, part, i) => result + part + (values[i] ?? ''), '');
 const visible = { status: 'publish', isRestricted: false, hasPassword: false };
 const connection = (nodes, hasNextPage = false, endCursor = null) => ({ nodes, pageInfo: { hasNextPage, endCursor } });
@@ -14,13 +16,22 @@ export async function request({ document, variables }) {
   if (document.includes('query LocalizedProjects')) {
     const code = document.includes('language: ES') ? 'ES' : 'EN';
     const spanish = code === 'ES';
+    const casePreview = ['project-case-draft', 'project-case-current'].includes(mode);
     if (mode === 'projects-empty') return { projects: connection([]) };
     return { projects: connection(['case-study', 'minimal'].map(slug => ({
       ...visible, language: { code }, slug: spanish && slug === 'case-study' ? 'caso-de-estudio' : slug,
-      title: slug === 'minimal' ? 'Minimal project' : spanish ? 'Proyecto de demostración' : 'Demonstration project',
+      title: slug === 'minimal' ? 'Minimal project' : casePreview ? 'christianitytoday.com'
+        : spanish ? 'Proyecto de demostración' : 'Demonstration project',
       modified: slug === 'minimal' ? '2026-10-01T00:00:00' : '2026-10-24T00:00:00',
-      content: slug === 'minimal' ? '' : '<p>Synthetic project scope.</p><script>PRIVATE_SCRIPT</script>',
-      projects: slug === 'minimal' ? null : { projectTagline: spanish ? 'Diseño y desarrollo de una experiencia web' : 'Design and development of a web experience', websiteurl: 'https://example.test/', githuburl: null },
+      content: slug === 'minimal' ? '' : mode === 'project-case-current'
+        ? caseCurrent.entries.find(entry => entry.language.code === code).content
+        : mode === 'project-case-draft'
+        ? caseDrafts.entries.find(entry => entry.locale === (spanish ? 'es' : 'en')).contentHtml
+        : '<p>Synthetic project scope.</p><script>PRIVATE_SCRIPT</script>',
+      projects: slug === 'minimal' ? null : { projectTagline: casePreview
+        ? caseDrafts.entries.find(entry => entry.locale === (spanish ? 'es' : 'en')).tagline
+        : spanish ? 'Diseño y desarrollo de una experiencia web' : 'Design and development of a web experience',
+        websiteurl: casePreview ? 'https://www.christianitytoday.com/' : 'https://example.test/', githuburl: null },
       featuredImage: slug === 'minimal' ? null : { node: { sourceUrl: '/project-preview.svg' } },
       tags: { nodes: slug === 'minimal' ? [] : [{ name: 'WordPress' }, { name: 'React' }] },
       translations: slug === 'minimal' ? [] : [{ ...visible, databaseId: 900,

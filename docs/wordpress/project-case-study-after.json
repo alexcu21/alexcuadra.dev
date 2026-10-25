@@ -1,0 +1,84 @@
+{
+  "capturedAt": "2026-10-25T05:18:55.140Z",
+  "scope": "Public rendered content after the approved body edits, not RAW editor source or a database backup.",
+  "entries": [
+    {
+      "databaseId": 146,
+      "title": "christianitytoday.com",
+      "slug": "christianitytoday-com",
+      "status": "publish",
+      "isRestricted": false,
+      "hasPassword": false,
+      "content": "\n<p class=\"wp-block-paragraph\"><strong>Role:</strong> Frontend Developer (Contractor)</p>\n\n\n\n<p class=\"wp-block-paragraph\"><strong>Tech Stack:</strong> WordPress Block Editor (Gutenberg), React, Svelte, Advanced Custom Fields (ACF Pro), WordPress REST API, Modern CSS / SCSS</p>\n\n\n\n<h2 class=\"wp-block-heading\">Overview</h2>\n\n\n\n<p class=\"wp-block-paragraph\">Engineered a custom, production-ready block suite for Christianity Today’s digital publishing platform, translating complex, high-fidelity design specifications into flexible, reusable editorial components within the WordPress block editor.</p>\n\n\n\n<h2 class=\"wp-block-heading\">The Challenge</h2>\n\n\n\n<p class=\"wp-block-paragraph\">The publication required a modern editorial toolkit to create rich, visually sophisticated long-form stories and landing pages. The core objective was achieving pixel-perfect fidelity with strict Figma design systems while keeping the editing experience intuitive, performant, and resilient against layout breakage across different viewports.</p>\n\n\n\n<h2 class=\"wp-block-heading\">The Solution</h2>\n\n\n\n<p class=\"wp-block-paragraph\">Operating as an external frontend contractor, I developed custom blocks leveraging React, Svelte, and ACF Pro integrated with the WordPress Block API. I established modular styling architectures and strict component props to enforce design tokens (typography, spacing, responsive grid behaviors) directly in the editor canvas, providing content creators with a true WYSIWYG experience that mirrored frontend output with zero layout drift.</p>\n\n\n\n<h2 class=\"wp-block-heading\">Key Highlights</h2>\n\n\n\n<ul class=\"wp-block-list\">\n<li><strong>Pixel-Perfect Execution:</strong> Translated intricate editorial design systems into responsive, fluid components matching design specifications down to exact spacing and typography scales.</li>\n\n\n\n<li><strong>Hybrid Modern Architecture:</strong> Combined the power of React and lightweight Svelte components with the WordPress Block API to ensure optimal editor performance and clean, decoupled frontend markup.</li>\n\n\n\n<li><strong>Streamlined Content Authoring:</strong> Empowered editorial teams to assemble dynamic layouts independently while programmatically safeguarding brand consistency and layout integrity.</li>\n\n\n\n<li><strong>Seamless Theme Integration:</strong> Built modular, decoupled components engineered to integrate cleanly into the client’s existing WordPress theme architecture and deployment pipeline.</li>\n</ul>\n",
+      "modified": "2026-10-25T05:16:53",
+      "language": {
+        "code": "EN"
+      },
+      "projects": {
+        "projectTagline": "Custom WordPress blocks for the theme",
+        "githuburl": null,
+        "websiteurl": "https://www.christianitytoday.com/"
+      },
+      "featuredImage": {
+        "node": {
+          "databaseId": 142,
+          "sourceUrl": "https://content.alexcuadra.dev/wp-content/uploads/2026/01/Screenshot-2025-11-28-at-8.01.15-PM-scaled.png"
+        }
+      },
+      "tags": {
+        "nodes": []
+      },
+      "translations": [
+        {
+          "databaseId": 196,
+          "slug": "christianitytoday-com-2",
+          "status": "publish",
+          "isRestricted": false,
+          "hasPassword": false,
+          "language": {
+            "code": "ES"
+          }
+        }
+      ]
+    },
+    {
+      "databaseId": 196,
+      "title": "christianitytoday.com",
+      "slug": "christianitytoday-com-2",
+      "status": "publish",
+      "isRestricted": false,
+      "hasPassword": false,
+      "content": "\n<p class=\"wp-block-paragraph\"><strong>Rol:</strong> Desarrollador frontend (contratista externo)</p>\n\n\n\n<p class=\"wp-block-paragraph\"><strong>Tecnologías:</strong> Editor de bloques de WordPress (Gutenberg), React, Svelte, Advanced Custom Fields (ACF Pro), API REST de WordPress, CSS moderno y SCSS.</p>\n\n\n\n<h2 class=\"wp-block-heading\">Resumen</h2>\n\n\n\n<p class=\"wp-block-paragraph\">Desarrollé un conjunto de bloques personalizados listo para producción para la plataforma de publicación digital de Christianity Today, convirtiendo especificaciones de diseño complejas y detalladas en componentes editoriales flexibles y reutilizables dentro del editor de bloques de WordPress.</p>\n\n\n\n<h2 class=\"wp-block-heading\">El reto</h2>\n\n\n\n<p class=\"wp-block-paragraph\">La publicación necesitaba herramientas editoriales modernas para crear reportajes extensos y páginas de destino con una presentación visual elaborada. El objetivo principal era reproducir con precisión las especificaciones del sistema de diseño en Figma y, al mismo tiempo, mantener una experiencia de edición intuitiva, eficiente y resistente a errores de composición en distintos tamaños de pantalla.</p>\n\n\n\n<h2 class=\"wp-block-heading\">La solución</h2>\n\n\n\n<p class=\"wp-block-paragraph\">Como contratista externo de frontend, desarrollé bloques personalizados con React, Svelte y ACF Pro, integrados con la API de bloques de WordPress. Establecí una arquitectura modular de estilos y propiedades estrictas de los componentes para aplicar los tokens de diseño —tipografía, espaciado y comportamiento de la rejilla adaptable— directamente en el editor. Esto ofrecía a los creadores de contenido una experiencia WYSIWYG que reflejaba la presentación del sitio sin desviaciones de composición.</p>\n\n\n\n<h2 class=\"wp-block-heading\">Puntos clave</h2>\n\n\n\n<ul class=\"wp-block-list\">\n<li><strong>Fidelidad al diseño:</strong> Convertí sistemas de diseño editorial detallados en componentes fluidos y adaptables que reproducían las especificaciones de espaciado y las escalas tipográficas.</li>\n\n<li><strong>Arquitectura híbrida:</strong> Combiné React y componentes ligeros de Svelte con la API de bloques de WordPress para favorecer el rendimiento del editor y generar un marcado frontend limpio y desacoplado.</li>\n\n<li><strong>Edición de contenido más sencilla:</strong> Los equipos editoriales podían componer diseños dinámicos de forma independiente, con controles programáticos para conservar la coherencia de marca y la integridad de la composición.</li>\n\n<li><strong>Integración con el tema:</strong> Construí componentes modulares y desacoplados para integrarse con la arquitectura del tema de WordPress existente y su proceso de despliegue.</li>\n</ul>\n",
+      "modified": "2026-10-25T05:17:42",
+      "language": {
+        "code": "ES"
+      },
+      "projects": {
+        "projectTagline": "Bloques personalizados de WordPress para el tema",
+        "githuburl": null,
+        "websiteurl": "https://www.christianitytoday.com/"
+      },
+      "featuredImage": {
+        "node": {
+          "databaseId": 142,
+          "sourceUrl": "https://content.alexcuadra.dev/wp-content/uploads/2026/01/Screenshot-2025-11-28-at-8.01.15-PM-scaled.png"
+        }
+      },
+      "tags": {
+        "nodes": []
+      },
+      "translations": [
+        {
+          "databaseId": 146,
+          "slug": "christianitytoday-com",
+          "status": "publish",
+          "isRestricted": false,
+          "hasPassword": false,
+          "language": {
+            "code": "EN"
+          }
+        }
+      ]
+    }
+  ]
+}
