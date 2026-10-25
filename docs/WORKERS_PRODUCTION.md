@@ -1,5 +1,7 @@
 # Migración de producción de Pages a Workers
 
+**Última publicación24octubre:** buscador/filtros editoriales activos en producción, versión `1e47a630-d7f3-4afa-a8b0-8bd39ed09db2`100%. [Recibo público](qa/REFERENCE_DIRECTORY_PRODUCTION_2026-10-24.md). Contacto desactivado,429 y aceptación integral pendientes; no repetir migración/DNS/credenciales por las instrucciones históricas inferiores.
+
 **Actualización 24 octubre 2026:** rediseño e inventario de referencias con caché publicados en `alexcuadra-dev`, versión `6c82a0d4-51b0-4f0e-a683-a8b2e65426b3` al100%. Formulario desactivado y autenticación CMS activa. [Recibo de publicación](qa/PRODUCTION_RELEASE_2026-10-24.md). El límite429 y la aceptación integral continúan abiertos. Las secciones de migración inferiores conservan el procedimiento histórico: no repetir creación del Worker, traslado de dominio, cambios de credenciales o restricción GraphQL por continuidad.
 
 Estado al 18 de octubre de 2026: Worker `alexcuadra-dev` creado, identidad de servicio confirmada y dominio `alexcuadra.dev` trasladado por Alex. Smoke público: favicon y siete rutas correctas; Home HTTP 200 con identidad verificada, canonical público correcto y sin noindex. Restricción global de WPGraphQL activa y validada: rechazo anónimo y smoke autenticado correcto en producción, staging y local. Pages se conserva como respaldo. Pendientes revisión visual, seguimiento de disponibilidad y coordinación de main.

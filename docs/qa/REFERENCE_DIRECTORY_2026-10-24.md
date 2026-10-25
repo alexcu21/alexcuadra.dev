@@ -1,5 +1,7 @@
 # Archivo editorial con búsqueda y filtros — 24 octubre 2026
 
+**Actualización:** el incremento se promovió después a producción, versión `1e47a630-d7f3-4afa-a8b0-8bd39ed09db2`. [Recibo público y alcance](REFERENCE_DIRECTORY_PRODUCTION_2026-10-24.md). La sección de entrega inferior conserva el estado de la publicación inicial en staging.
+
 ## Cambio
 
 `/articles/` conserva los canales y añade una lista de títulos públicos con enlace a sus fichas existentes. Búsqueda por título sin distinción de mayúsculas o acentos y filtro por canal combinables. Conteo con región de estado polite, mensaje sin resultados y limpieza que devuelve foco al buscador. No infiere autoría, fechas, destacados ni resultados de audiencia. Los títulos ausentes no se inventan: la referencia sigue contándose en su canal, pero no aparece en la lista por título.
