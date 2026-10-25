@@ -64,13 +64,22 @@ test('actual reference templates preserve HTTP, content and pagination contracts
     assert.match(html, /data-motion="hero"/);
     assert.match(html, /data-motion="reveal"/);
     assert.match(html, /profile-preview.svg/);
-    assert.match(html, /href="\/work\/case-study"/);
+    assert.match(html, path.includes('home-es') ? /href="\/es\/proyectos\/caso-de-estudio"/ : /href="\/work\/case-study"/);
+    if (path.includes('home-es')) {
+      assert.match(html, /Proyecto de demostración/);
+      assert.match(html, /href="\/es\/proyectos\/"/);
+      assert.doesNotMatch(html, /href="\/work\/case-study"|Fichas disponibles en inglés|Ver todos \(EN\)/);
+    }
     assert.doesNotMatch(html, /style="(?:opacity:\s*0|visibility:\s*hidden)/);
   }
   const emptyHome = await get('/preview/home?mode=projects-empty');
   assert.equal(emptyHome.response.status, 200);
   assert.doesNotMatch(emptyHome.html, /class="featured-preview"/);
   assert.match(emptyHome.html, /profile-preview.svg/);
+  const emptySpanishHome = await get('/preview/home-es?mode=projects-empty');
+  assert.equal(emptySpanishHome.response.status, 200);
+  assert.match(emptySpanishHome.html, /Todavía no hay proyectos publicados en español/);
+  assert.doesNotMatch(emptySpanishHome.html, /class="featured-preview"|href="\/work\/case-study"/);
   const homeLab = await get('/preview/home-es?mode=home-lab-reuse');
   assert.equal(homeLab.response.status, 200);
   assert.match(homeLab.html, /id="home-lab-title"/); assert.match(homeLab.html, /En desarrollo/);

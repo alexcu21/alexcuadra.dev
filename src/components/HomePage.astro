@@ -7,12 +7,12 @@ import { getProjectsInfo } from '../data/client';
 import { getReferenceCategoryCards } from '../data/reference-categories.js';
 import ReferenceChannelCard from './ReferenceChannelCard.astro';
 
-// Home currently promotes English case studies; translated editions have their own archive.
-const projectsData = await getProjectsInfo('en');
+const projectsData = await getProjectsInfo(locale);
 
 // Layout import — provides basic page elements: <head>, <nav>, <footer> etc.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { sortProjectsByModified } from '../data/projects.js';
+import { routeBase } from '../data/site-routes.js';
 
 // Component Imports
 import CallToAction from '../components/CallToAction.astro';
@@ -61,9 +61,9 @@ const hasSkills = [1, 2, 3].some(index => page.homePageFields.skills?.[`skillNam
           </div>
         </div>
         {(featured || photo) && <div class="hero-aside">
-          {featured && <section class="featured-preview" aria-label={spanish ? 'Una muestra de mi trabajo (en inglés)' : 'A sample of my work'}>
-            <p class="showcase-label">{spanish ? '// Del portafolio · EN' : '// From the portfolio'}</p>
-            <PortfolioPreview project={featured} displayLocale={locale} headingLevel="h2" variant="featured" />
+          {featured && <section class="featured-preview" aria-label={spanish ? 'Una muestra de mi trabajo' : 'A sample of my work'}>
+            <p class="showcase-label">{spanish ? '// Del portafolio' : '// From the portfolio'}</p>
+            <PortfolioPreview project={featured} locale={locale} headingLevel="h2" variant="featured" />
           </section>}
           {photo && <figure class="portrait">
             <img alt="Alex Cuadra" width="80" height="80" src={photo} />
@@ -83,7 +83,7 @@ const hasSkills = [1, 2, 3].some(index => page.homePageFields.skills?.[`skillNam
 			<section id="selected-work" class="section with-cta">
 				<header class="section-header stack gap-2 lg:gap-4">
 					<h2>{spanish ? 'Proyectos destacados' : 'Selected Work'}</h2>
-					<p>{spanish ? 'Algunos de mis proyectos destacados para clientes de los últimos años. Fichas disponibles en inglés.' : 'Take a look below at some of my featured work for clients from the past few years.'}</p>
+					<p>{projects.length === 0 ? (spanish ? 'Todavía no hay proyectos publicados en español.' : 'No projects are published in English yet.') : (spanish ? 'Algunos de mis proyectos destacados para clientes de los últimos años.' : 'Take a look below at some of my featured work for clients from the past few years.')}</p>
 				</header>
 
 				<div class="gallery">
@@ -91,7 +91,7 @@ const hasSkills = [1, 2, 3].some(index => page.homePageFields.skills?.[`skillNam
 						{
 							projects.map((project:any, index: number) => (
 								<li data-motion="reveal" data-motion-delay={(index % 4) * .06}>
-									<PortfolioPreview project={project} displayLocale={locale} />
+									<PortfolioPreview project={project} locale={locale} />
 								</li>
 							))
 						}
@@ -99,8 +99,8 @@ const hasSkills = [1, 2, 3].some(index => page.homePageFields.skills?.[`skillNam
 				</div>
 
 				<div class="cta">
-					<CallToAction href="/work/">
-						{spanish ? 'Ver todos (EN)' : 'View All'}
+					<CallToAction href={routeBase('projects', locale)}>
+						{spanish ? 'Ver todos' : 'View All'}
 						<Icon icon="arrow-right" size="1.2em" />
 					</CallToAction>
 				</div>

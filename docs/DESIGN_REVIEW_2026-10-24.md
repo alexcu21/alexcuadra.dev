@@ -1,5 +1,7 @@
 # Diferencias de diseño y siguiente entrega
 
+Actualización posterior24octubre: revisión local con contenido CMS real completada en alcance acotado. Corregida HomeES para usar fichas españolas existentes, sin fallback inglés ni consultas adicionales. La selección mantiene el orden reciente de cada idioma, por lo que EN y ES pueden destacar proyectos diferentes. [QA y preparación agrupada de staging](qa/REAL_CONTENT_RELEASE_REVIEW_2026-10-24.md).
+
 Actualización posterior24octubre: tarjetas de canales editoriales compartidas por Home/archivo y panel CTA implementados localmente, con conteos existentes, acceso a correo y proyectos del idioma. [QA y capturas](qa/CHANNELS_CTA_2026-10-24.md). Búsqueda, filtros de publicaciones y una lectura editorial más elaborada siguen siendo alcance posterior; esta entrega conserva el archivo por canales. Siguiente: revisión conjunta con contenido real y preparación agrupada para staging.
 
 Actualización posterior24octubre: especialidades y panel LAB implementados localmente usando el contenido disponible, sin cuarta especialidad ni métricas inventadas. [QA y coste de datos](qa/HOME_LAB_DISCIPLINES_2026-10-24.md). Siguiente prioridad:artículos/menciones y CTA.
