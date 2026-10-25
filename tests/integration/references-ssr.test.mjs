@@ -105,7 +105,7 @@ test('actual reference templates preserve HTTP, content and pagination contracts
     assert.ok(contact);
     assert.match(contact, path.includes('home-es') ? /href="\/es\/proyectos\/"/ : /href="\/work\/"/);
     assert.match(contact, path.includes('home-es') ? /Abre tu aplicación de correo/ : /Opens your email app/);
-    assert.doesNotMatch(html, /<form\b|turnstile\/v0\/api/);
+    assert.doesNotMatch(html, /data-contact-form|turnstile\/v0\/api/);
   }
   const referencesEmptyHome = await get('/preview/home?mode=references-empty');
   assert.equal(referencesEmptyHome.response.status, 200);
@@ -113,6 +113,13 @@ test('actual reference templates preserve HTTP, content and pagination contracts
   const referencesEmptyArchive = await get('/articles/?mode=references-empty');
   assert.equal(referencesEmptyArchive.response.status, 200);
   assert.match(referencesEmptyArchive.html, /No public references are available yet/);
+  assert.doesNotMatch(referencesEmptyArchive.html, /data-reference-directory/);
+  const referenceArchive = await get('/articles/');
+  assert.match(referenceArchive.html, /data-reference-controls[^>]*hidden/);
+  assert.match(referenceArchive.html, /Search titles/);
+  assert.match(referenceArchive.html, /role="status"/);
+  assert.equal([...referenceArchive.html.matchAll(/<li\b[^>]*data-reference-entry/g)].length, 2);
+  assert.match(referenceArchive.html, /href="\/articles\/category\/medium\/second"/);
   for (const [path, expected] of [
     ['/articles/', /Medium/],
     ['/articles/category/medium', /Second synthetic reference/],

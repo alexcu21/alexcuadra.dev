@@ -35,8 +35,9 @@ export async function request({ document, variables }) {
   }
   if (document.includes('query SitemapReferences')) {
     if (mode === 'references-empty') return { articles: connection([]) };
-    return { articles: connection([{ ...visible, slug: 'reference', categories: connection([category]) },
-      { ...visible, slug: 'second', categories: connection([category]) }]) };
+    return { articles: connection([{ ...visible, slug: 'reference', title: mode === 'directory' ? 'Diseño & WordPress' : 'Synthetic reference',
+      categories: connection(mode === 'directory' ? [category, {...category,slug:'other',name:'Other'}] : [category]) },
+      { ...visible, slug: 'second', title: 'Second synthetic reference', categories: connection([category]) }]) };
   }
   if (document.includes('query LabAvailability')) {
     if (['home-lab-reuse', 'home-lab-empty-reuse'].includes(mode)) throw Error('Home must reuse its LAB preview for navigation');

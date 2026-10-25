@@ -1,11 +1,16 @@
 import { request, cmsFailure } from './cms-request.js';
 import { publicCollection } from './content-visibility.js';
 
-// Cache only public routing metadata, never article bodies or service identity.
+// Cache only public titles/routing metadata, never article bodies or service identity.
 export function publicReferenceInventory(data) {
   const connection = data?.articles;
-  const safeSlug = value => typeof value === 'string' && value.length > 0
-    && !/[\s/\\?#\u0000-\u001f\u007f]/u.test(value) && !['.', '..'].includes(value);
+  const safeSlug = value => {
+    if (typeof value !== 'string' || !value) return false;
+    try {
+      const decoded = decodeURIComponent(value);
+      return !/[\s/\\?#\u0000-\u001f\u007f]/u.test(decoded) && !['.', '..'].includes(decoded);
+    } catch { return false; }
+  };
   if (!publicCollection(connection?.nodes) || typeof connection.pageInfo?.hasNextPage !== 'boolean'
     || (connection.pageInfo.hasNextPage && (typeof connection.pageInfo.endCursor !== 'string' || !connection.pageInfo.endCursor))
     || connection.nodes.some(node => !safeSlug(node.slug) || !Array.isArray(node.categories?.nodes)
@@ -13,7 +18,8 @@ export function publicReferenceInventory(data) {
       || node.categories.nodes.some(term => !safeSlug(term?.slug)))) return undefined;
   return { articles: {
     nodes: connection.nodes.map(node => ({ status: 'publish', isRestricted: false, hasPassword: false,
-      slug: node.slug, categories: { nodes: node.categories.nodes.map(term => ({ slug: term.slug })),
+      slug: node.slug, title: typeof node.title === 'string' ? node.title : null,
+      categories: { nodes: node.categories.nodes.map(term => ({ slug: term.slug })),
         pageInfo: { hasNextPage: false } } })),
     pageInfo: { hasNextPage: connection.pageInfo.hasNextPage,
       endCursor: typeof connection.pageInfo.endCursor === 'string' ? connection.pageInfo.endCursor : null },
@@ -27,7 +33,7 @@ export async function referenceInventory() {
   do {
     const data = await request('https://content.alexcuadra.dev/graphql', `query SitemapReferences($after: String) {
       articles(first: 100, after: $after, where: {status: PUBLISH, hasPassword: false}) {
-        nodes { status isRestricted hasPassword slug
+        nodes { status isRestricted hasPassword slug title
           categories(first: 100) { nodes { slug } pageInfo { hasNextPage } }
         } pageInfo { hasNextPage endCursor }
       }

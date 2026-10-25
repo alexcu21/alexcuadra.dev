@@ -3,9 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactCTA from '../components/ContactCTA.astro';
 import ReferenceChannelCard from '../components/ReferenceChannelCard.astro';
 import PageMotion from '../components/PageMotion.astro';
-import { getReferenceCategoryCards } from '../data/reference-categories.js';
+import ReferenceDirectory from '../components/ReferenceDirectory.astro';
+import { getReferenceArchive } from '../data/reference-categories.js';
 import '../styles/references.css';
-const categories = await getReferenceCategoryCards();
+const { channels: categories, entries } = await getReferenceArchive();
 ---
 <BaseLayout title="Articles and Mentions | Alex Cuadra" description="External publications and mentions featuring Alex Cuadra.">
   <main id="main-content" tabindex="-1" class="wrapper references">
@@ -14,6 +15,7 @@ const categories = await getReferenceCategoryCards();
     <ul class="reference-grid">
       {categories.map((category: any, index: number) => <li data-motion="reveal" data-motion-delay={(index % 4) * .06}><ReferenceChannelCard category={category} headingLevel="h2" /></li>)}
     </ul>
+    <ReferenceDirectory entries={entries} channels={categories} />
   </main>
   <ContactCTA />
   <PageMotion />

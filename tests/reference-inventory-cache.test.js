@@ -2,16 +2,18 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { publicReferenceInventory, referenceInventory } from '../src/data/reference-inventory.js';
 import { withCmsRequest } from '../src/data/cms-request.js';
-const node = { status: 'publish', isRestricted: false, hasPassword: false, slug: 'reference',
+const node = { status: 'publish', isRestricted: false, hasPassword: false, slug: 'reference', title: 'Public title',
   secret: 'PRIVATE', categories: { nodes: [{ slug: 'medium', secret: 'PRIVATE' }], pageInfo: { hasNextPage: false } } };
 const data = { viewer: { databaseId: 123 }, articles: { nodes: [node], pageInfo: { hasNextPage: false } } };
 test('reference cache projection is idempotent and strips identity and unrequested fields', () => {
   const projected = publicReferenceInventory(data);
   assert.deepEqual(publicReferenceInventory(projected), projected);
   assert.doesNotMatch(JSON.stringify(projected), /PRIVATE|viewer|databaseId/);
+  assert.equal(projected.articles.nodes[0].title, 'Public title');
 });
 for (const changes of [{status:'draft'}, {status:'private'}, {hasPassword:true}, {isRestricted:true},
-  {status:undefined}, {slug:'../private'}, {categories:{ nodes:[{slug:'bad/path'}], pageInfo:{hasNextPage:false} }},
+  {status:undefined}, {slug:'../private'}, {slug:'%2e%2e'}, {slug:'bad%2fpath'}, {slug:'%zz'},
+  {categories:{ nodes:[{slug:'bad/path'}], pageInfo:{hasNextPage:false} }},
   {categories:{ nodes:[], pageInfo:{hasNextPage:true} }}]) {
   test(`reference projection rejects unsafe inventory ${JSON.stringify(changes)}`, () => {
     assert.equal(publicReferenceInventory({ ...data, articles: { ...data.articles, nodes: [{ ...node, ...changes }] } }), undefined);

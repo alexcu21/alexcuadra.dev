@@ -2,6 +2,8 @@
 
 ## Alcance implementado
 
+**24 octubre 2026 — siguiente incremento editorial:** la consulta de inventario añade el título público para búsqueda/filtros de `/articles/`, sin nueva operación CMS. La proyección conserva ese texto junto a los slugs/cursores; excluye cuerpos e identidad. El documento GraphQL cambiado genera claves nuevas automáticamente. [Validación y estado de entrega](qa/REFERENCE_DIRECTORY_2026-10-24.md).
+
 **24 octubre 2026 — publicado en producción, staging conserva la versión anterior:** inventario `SitemapReferences` con caché de servicio 60s, proyección exclusiva de slugs/relaciones públicas/cursores y rechazo de contenido no público o paginación incompleta. Reutilizado en portada, canales y sitemap. No resuelve el limitador del hosting. [Validación](qa/CMS_AVAILABILITY_INCREMENT_2026-10-24.md) y [recibo de producción](qa/PRODUCTION_RELEASE_2026-10-24.md).
 
 **Actualización20 octubre2026:** `PageNavigation` cachea únicamente visibilidad/idioma del origen y metadatos de traducciones públicas para los enlaces del menú. No solicita ni almacena cuerpos, ACF o imágenes. Home ES del menú se decide desde la relación pública de Home EN ya leída, sin otra consulta editorial. Identidad Home sigue comprobándose en origen. TTL60s, aislamiento por credenciales/variables y bypass de peticiones entrantes se mantienen. Detalles/pruebas en [CMS_LOAD_STAGING_2026-10-20.md](qa/CMS_LOAD_STAGING_2026-10-20.md).
