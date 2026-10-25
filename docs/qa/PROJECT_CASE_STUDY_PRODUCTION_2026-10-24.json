@@ -1,0 +1,20 @@
+{
+  "recordedAt": "2026-10-25T05:32:04.278Z",
+  "scope": "First production postflight request failed; no retries or subsequent Spanish request. Upstream operation/status not correlated.",
+  "deployment": "7cb226e8-e23c-44c0-aae7-aff9424ca4b2",
+  "createdOn": "2026-10-25T05:27:50.041364Z",
+  "version": "79cb5e81-05e2-4747-9fd4-b450c855ee0c",
+  "percentage": 100,
+  "previousVersion": "1e47a630-d7f3-4afa-a8b0-8bd39ed09db2",
+  "sourceCommit": "e8d38ab897911796d2a077dba0f56c9aabbd54fd",
+  "postflight": "blocked",
+  "request": {
+    "path": "/work/christianitytoday-com",
+    "status": 503,
+    "retryAfter": "60"
+  },
+  "spanishRequestRun": false,
+  "cmsPublicationVerified": true,
+  "stagingBothLocalesVerified": true,
+  "rollbackPerformed": false
+}

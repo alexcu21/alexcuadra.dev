@@ -1,0 +1,23 @@
+{
+  "capturedAt": "2026-10-25T05:23:09.242Z",
+  "version": "05b5c8d8-6e4d-4566-8c27-04c1bfc2ec60",
+  "scope": "Two paced frontend GET requests, no retries. No stability guarantee.",
+  "result": [
+    {
+      "path": "/work/christianitytoday-com",
+      "status": 200,
+      "locale": "en",
+      "anchor": "the-solution",
+      "inlineScriptsChecked": 3,
+      "cmsAuth": "verified"
+    },
+    {
+      "path": "/es/proyectos/christianitytoday-com-2",
+      "status": 200,
+      "locale": "es",
+      "anchor": "la-solucion",
+      "inlineScriptsChecked": 3,
+      "cmsAuth": "verified"
+    }
+  ]
+}
