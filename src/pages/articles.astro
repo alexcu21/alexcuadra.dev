@@ -1,17 +1,23 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactCTA from '../components/ContactCTA.astro';
-import CountBadge from '../components/CountBadge.astro';
+import ReferenceChannelCard from '../components/ReferenceChannelCard.astro';
+import PageMotion from '../components/PageMotion.astro';
 import { getReferenceCategoryCards } from '../data/reference-categories.js';
 import '../styles/references.css';
 const categories = await getReferenceCategoryCards();
 ---
 <BaseLayout title="Articles and Mentions | Alex Cuadra" description="External publications and mentions featuring Alex Cuadra.">
   <main id="main-content" tabindex="-1" class="wrapper references">
-    <header><h1>Articles &amp; Mentions</h1><p class="intro">External publications and mentions.</p></header>
+    <header><p class="eyebrow">// Publications &amp; conversations</p><h1>Articles &amp; Mentions</h1><p class="intro">External publications and mentions.</p></header>
+    {categories.length === 0 && <p class="intro">No public references are available yet.</p>}
     <ul class="reference-grid">
-      {categories.map((category: any) => <li class="reference-card"><a href={`/articles/category/${category.slug}`}><h2>{category.name}</h2><CountBadge count={category.count} /></a></li>)}
+      {categories.map((category: any, index: number) => <li data-motion="reveal" data-motion-delay={(index % 4) * .06}><ReferenceChannelCard category={category} headingLevel="h2" /></li>)}
     </ul>
   </main>
   <ContactCTA />
+  <PageMotion />
 </BaseLayout>
+<style>
+  .eyebrow { margin-bottom: 1rem; color: var(--link-color); font: .75rem/1.5 var(--font-mono); text-transform: uppercase; letter-spacing: .08em; }
+</style>

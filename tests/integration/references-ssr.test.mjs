@@ -83,6 +83,27 @@ test('actual reference templates preserve HTTP, content and pagination contracts
   const partialSkills = await get('/preview/home?mode=skills-partial');
   assert.equal(partialSkills.response.status, 200); assert.match(partialSkills.html, /Only confirmed skill/);
   assert.equal((partialSkills.html.match(/class="skill-icon"/g) || []).length, 1);
+  for (const path of ['/preview/home', '/preview/home-es', '/articles/']) {
+    const { response, html } = await get(path);
+    assert.equal(response.status, 200);
+    const channel = html.match(/<a[^>]*class="channel-card"[\s\S]*?<\/a>/)?.[0];
+    assert.ok(channel, `${path}: reference channel card`);
+    assert.match(channel, /href="\/articles\/category\/medium"/);
+    assert.match(channel, /count-badge[^>]*>\s*2\s*</);
+    assert.equal((html.match(/id="contact-cta-title"/g) || []).length, 1);
+    assert.match(html, /href="mailto:fixture@example.test"/);
+    const contact = html.match(/<aside[^>]*id="contact-cta"[\s\S]*?<\/aside>/)?.[0];
+    assert.ok(contact);
+    assert.match(contact, path.includes('home-es') ? /href="\/es\/proyectos\/"/ : /href="\/work\/"/);
+    assert.match(contact, path.includes('home-es') ? /Abre tu aplicación de correo/ : /Opens your email app/);
+    assert.doesNotMatch(html, /<form\b|turnstile\/v0\/api/);
+  }
+  const referencesEmptyHome = await get('/preview/home?mode=references-empty');
+  assert.equal(referencesEmptyHome.response.status, 200);
+  assert.doesNotMatch(referencesEmptyHome.html, /id="articles"|class="channel-card"/);
+  const referencesEmptyArchive = await get('/articles/?mode=references-empty');
+  assert.equal(referencesEmptyArchive.response.status, 200);
+  assert.match(referencesEmptyArchive.html, /No public references are available yet/);
   for (const [path, expected] of [
     ['/articles/', /Medium/],
     ['/articles/category/medium', /Second synthetic reference/],

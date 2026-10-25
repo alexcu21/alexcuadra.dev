@@ -5,7 +5,7 @@ const spanish = locale === 'es';
 const alternates: {locale: 'en' | 'es'; path: string}[] = alternate ? [{locale:'en',path:'/'},{locale:'es',path:'/es/'}] : [];
 import { getProjectsInfo } from '../data/client';
 import { getReferenceCategoryCards } from '../data/reference-categories.js';
-import CountBadge from '../components/CountBadge.astro';
+import ReferenceChannelCard from './ReferenceChannelCard.astro';
 
 // Home currently promotes English case studies; translated editions have their own archive.
 const projectsData = await getProjectsInfo('en');
@@ -107,29 +107,25 @@ const hasSkills = [1, 2, 3].some(index => page.homePageFields.skills?.[`skillNam
 			</section>
 
       <HomeLab projects={labProjects} locale={locale} />
-			<section class="section"  id="articles">
+			{categories.length > 0 && <section class="section" id="articles">
 				<header class="section-header stack gap-2 lg:gap-4">
+          <p class="eyebrow">{spanish ? '// Publicaciones y conversaciones' : '// Publications & conversations'}</p>
 					<h2>{spanish ? 'Artículos y menciones' : 'Articles & Mentions'}</h2>
 					<p>
 						{spanish ? 'He escrito y creado contenido para la comunidad.' : 'I have been writing and creating content for the community.'}
 					</p>
 				</header>
 
-				<div class="gallery">
-					<Grid variant="small">
+          <ul class="channel-grid">
 						{
 							categories.map((category:any, index: number) => (
-								<li class="mention-card" data-motion="reveal" data-motion-delay={(index % 4) * .06}>
-									<a
-										href={`/articles/category/${category.slug}`}>{category.name}
-										<CountBadge count={category.count} />
-									</a>
+								<li data-motion="reveal" data-motion-delay={(index % 4) * .06}>
+                    <ReferenceChannelCard category={category} locale={locale} />
 								</li>
 							))
 						}
-					</Grid>
-				</div>
-			</section>
+          </ul>
+			</section>}
 		</div>
     </main>
 
@@ -168,9 +164,8 @@ const hasSkills = [1, 2, 3].some(index => page.homePageFields.skills?.[`skillNam
   .section-header { align-items: start; max-width: 58ch; color: var(--gray-300); }
   .section-header p { line-height: 1.7; }
   .gallery :global(.grid) { gap: 1.5rem; }
-  .mention-card { border: 1px solid var(--gray-800); border-radius: 1rem; background: var(--gray-900); }
-  .mention-card a { min-height: 7rem; padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; color: var(--gray-0); font-weight: 700; text-decoration: none; overflow-wrap: anywhere; }
-  .mention-card a:hover { color: var(--link-color); }
+  .channel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); gap: 1rem; padding: 0; list-style: none; }
+  .channel-grid > li { min-width: 0; }
   @media (min-width: 50em) {
     .home-main { gap: 6rem; }
     .home-flow { padding-top: 3rem; gap: 6rem; }

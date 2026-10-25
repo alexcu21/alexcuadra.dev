@@ -34,6 +34,7 @@ export async function request({ document, variables }) {
     ] } : null };
   }
   if (document.includes('query SitemapReferences')) {
+    if (mode === 'references-empty') return { articles: connection([]) };
     return { articles: connection([{ ...visible, slug: 'reference', categories: connection([category]) },
       { ...visible, slug: 'second', categories: connection([category]) }]) };
   }
