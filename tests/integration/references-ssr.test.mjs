@@ -224,6 +224,15 @@ test('actual reference templates preserve HTTP, content and pagination contracts
     assert.doesNotMatch(html, /PRIVATE_SCRIPT|javascript:|turnstile\/v0\/api|Synthetic quote/);
   }
   const lab = await get('/es/laboratorio/laboratorio');
+  // Follow the actual archive links: checking a hand-picked detail path alone
+  // misses fixture slugs that incorrectly point to another language's entry.
+  for (const base of ['/lab/', '/es/laboratorio/']) {
+    const archive = await get(base);
+    const paths = [...archive.html.matchAll(/href="([^"?#]+)"/g)]
+      .map(match => match[1]).filter(path => path.startsWith(base) && path !== base);
+    assert.ok(paths.length > 0, `${base}: archive has detail links`);
+    for (const path of new Set(paths)) assert.equal((await get(path)).response.status, 200, path);
+  }
   for (const expected of [/Objetivos de aprendizaje/, /Technical details/, /Quality details/, /Deployment details/,
     /19 de octubre de 2026/, /hreflang="en"[^>]*href="https:\/\/alexcuadra.dev\/lab\/training-lab"/]) assert.match(lab.html, expected);
   const minimalLab = await get('/lab/minimal');

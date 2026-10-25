@@ -57,13 +57,15 @@ export async function request({ document, variables }) {
     const code = document.includes('language: ES') ? 'ES' : 'EN';
     if (mode === 'lab-empty') return { labProjects: connection([]) };
     if (variables.after && mode === 'lab-late') upstreamFailure();
-    return { labProjects: connection([{ ...visible, language: { code }, slug: variables.after ? 'second-lab' : 'training-lab',
+    const slug = code === 'ES' ? (variables.after ? 'second-lab-es' : 'laboratorio')
+      : (variables.after ? 'second-lab' : 'training-lab');
+    return { labProjects: connection([{ ...visible, language: { code }, slug,
       title: 'Personal lab fixture', excerpt: '<p>LAB summary</p>', labProjectFields: { status: ['in_progress'], purpose: 'Synthetic learning purpose' },
       translations: [] }], !variables.after, variables.after ? null : 'next-lab') };
   }
   if (document.includes('query LabProject(')) {
     if (variables.slug === 'missing') return { labProject: null };
-    const code = variables.slug === 'laboratorio' ? 'ES' : 'EN';
+    const code = ['laboratorio', 'second-lab-es'].includes(variables.slug) ? 'ES' : 'EN';
     return { labProject: { ...visible, ...(mode === 'lab-private' ? { status: 'draft' } : {}), language: { code },
       slug: variables.slug, title: 'Personal lab fixture', content: '<p>Personal project body</p><script>PRIVATE_SCRIPT</script>',
       labProjectFields: variables.slug === 'minimal' ? null : { status: ['in_progress'], purpose: 'Synthetic learning purpose',
