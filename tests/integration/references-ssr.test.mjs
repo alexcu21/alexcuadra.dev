@@ -62,6 +62,15 @@ test('actual reference templates preserve HTTP, content and pagination contracts
   assert.match(projectDetail.html, /Synthetic project scope/);
   assert.match(projectDetail.html, /href="\/es\/proyectos\/caso-de-estudio"/);
   const projectMinimal = await get('/work/minimal');
+  assert.match(projectDetail.html, /href="\/work\/minimal"[^>]*rel="next"/);
+  assert.match(projectMinimal.html, /href="\/work\/case-study"[^>]*rel="prev"/);
+  assert.doesNotMatch(projectMinimal.html, /rel="next"/);
+  for (const path of ['/work/case-study','/es/proyectos/caso-de-estudio']) {
+    const page = await get(path);
+    const target = page.html.match(/href="([^"]+)"[^>]*rel="next"/)?.[1];
+    assert.ok(target, path);
+    assert.equal((await get(target)).response.status,200);
+  }
   assert.equal(projectMinimal.response.status, 200);
   assert.doesNotMatch(projectMinimal.html, /project-story-title|project-preview.svg|class="project-details"|Explore the project/);
   assert.doesNotMatch(projectMinimal.html, /class="editorial-toc"/);

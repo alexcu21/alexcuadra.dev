@@ -6,4 +6,4 @@ const projects = await getProjectsInfo('en');
 const project = projects.find((item: any) => item.slug === slug);
 if (!project) return new Response('Not found', { status: 404, headers: { 'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex' } });
 ---
-<ProjectPage project={project} locale="en" />
+<ProjectPage project={project} projects={projects} locale="en" />

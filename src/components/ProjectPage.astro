@@ -8,8 +8,10 @@ import Pill from './Pill.astro';
 import ProjectMedia from './ProjectMedia.astro';
 import { routeBase, contentPath } from '../data/site-routes.js';
 import { publicTranslationLinks } from '../data/content-language.js';
-interface Props { project: any; locale: 'en' | 'es'; }
-const { project, locale } = Astro.props;
+import { projectNavigation } from '../data/projects.js';
+interface Props { project: any; projects?: any[]; locale: 'en' | 'es'; }
+const { project, projects = [], locale } = Astro.props;
+const adjacent = projectNavigation(projects, project.slug, locale);
 const { title, content } = project;
 const { githuburl, projectTagline, websiteurl } = project.projects || {};
 const tags = (project.tags?.nodes || []).filter((tag: {name?: string}) => tag.name);
@@ -59,6 +61,16 @@ const alternates: {locale: 'en' | 'es'; path: string}[] = alternate ? [{locale, 
       <div class="story-content"><WordPressContent html={content} toc locale={locale} /></div>
     </section>}
     <nav class="project-end" aria-label={locale === 'es' ? 'Más proyectos' : 'More projects'}>
+      {(adjacent.previous || adjacent.next) && <div class="adjacent-projects">
+        {adjacent.previous && <a class="adjacent-link previous" href={adjacent.previous.path} rel="prev">
+          <span class="adjacent-label">← {locale === 'es' ? 'Proyecto anterior' : 'Previous project'}</span>
+          <span class="adjacent-title">{adjacent.previous.title}</span>
+        </a>}
+        {adjacent.next && <a class="adjacent-link next" href={adjacent.next.path} rel="next">
+          <span class="adjacent-label">{locale === 'es' ? 'Siguiente proyecto' : 'Next project'} →</span>
+          <span class="adjacent-title">{adjacent.next.title}</span>
+        </a>}
+      </div>}
       <a class="back-link" href={routeBase('projects', locale)}><Icon icon="arrow-left" /> {locale === 'es' ? 'Volver a proyectos' : 'Back to projects'}</a>
     </nav>
   </main>
@@ -84,7 +96,15 @@ const alternates: {locale: 'en' | 'es'; path: string}[] = alternate ? [{locale, 
   h2 { font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.2; letter-spacing: -.03em; }
   .story-content { min-width: 0; font-size: 1.0625rem; }
   .project-end { padding-top: 2.5rem; }
+  .adjacent-projects { display: grid; gap: 1rem; margin-bottom: 2rem; }
+  .adjacent-link { display: flex; flex-direction: column; gap: .75rem; min-width: 0; padding: 1.5rem; border: 1px solid var(--gray-800); border-radius: 1rem; background: var(--gradient-subtle); text-decoration: none; }
+  .adjacent-link:hover { border-color: var(--link-color); }
+  .adjacent-link:focus-visible { outline: 2px solid var(--link-color); outline-offset: 4px; }
+  .adjacent-label { color: var(--link-color); font: .75rem/1.5 var(--font-mono); }
+  .adjacent-title { color: var(--gray-0); font-size: 1.125rem; font-weight: 700; line-height: 1.5; overflow-wrap: anywhere; }
   @media (min-width: 50em) {
+    .adjacent-projects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .adjacent-link.next { grid-column: 2; text-align: right; }
     .project { padding-block: 3rem 5rem; }
     .project-nav { margin-bottom: 3rem; }
     .project-header { padding-bottom: 2.5rem; }

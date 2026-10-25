@@ -1,0 +1,43 @@
+{
+  "checkedAt": "2026-10-25T16:59:35.782Z",
+  "version": "8c3e82c6-1065-46fd-ae50-618a90538f0c",
+  "previousVersion": "712986be-0b19-4474-95b6-ab5816e0a91e",
+  "checks": [
+    {
+      "path": "/es/proyectos/christianitytoday-com-2",
+      "status": 200,
+      "auth": "verified",
+      "robots": null,
+      "csp": true,
+      "retryAfter": null,
+      "links": [
+        {
+          "path": "/es/proyectos/makersunite-eu-2",
+          "direction": "prev"
+        },
+        {
+          "path": "/es/proyectos/valexweb-com-2",
+          "direction": "next"
+        }
+      ]
+    },
+    {
+      "path": "/work/christianitytoday-com",
+      "status": 200,
+      "auth": "verified",
+      "robots": null,
+      "csp": true,
+      "retryAfter": null,
+      "links": [
+        {
+          "path": "/work/makersunite-eu",
+          "direction": "prev"
+        },
+        {
+          "path": "/work/valexweb-com",
+          "direction": "next"
+        }
+      ]
+    }
+  ]
+}
