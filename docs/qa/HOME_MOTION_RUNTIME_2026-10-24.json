@@ -1,0 +1,79 @@
+{
+  "context": "local synthetic fixture; Motion 14.6.0",
+  "heroDuringReplay": {
+    "hero": [
+      {
+        "opacity": "1",
+        "tag": "H1",
+        "transform": "matrix(1, 0, 0, 1, 0, 0.560191)"
+      },
+      {
+        "opacity": "1",
+        "tag": "P",
+        "transform": "matrix(1, 0, 0, 1, 0, 1.60076)"
+      },
+      {
+        "opacity": "1",
+        "tag": "DIV",
+        "transform": "matrix(1, 0, 0, 1, 0, 4.161)"
+      }
+    ],
+    "reducedMotion": false,
+    "width": 1280
+  },
+  "cardsDuringReplay": {
+    "cards": [
+      {
+        "opacity": "0.995505",
+        "transform": "matrix(1, 0, 0, 1, 0, 0.154117)"
+      },
+      {
+        "opacity": "0.978067",
+        "transform": "matrix(1, 0, 0, 1, 0, 0.751988)"
+      }
+    ]
+  },
+  "desktopLayout": {
+    "h1Count": 1,
+    "portraitGap": 16,
+    "scrollWidth": 1280,
+    "targets": [
+      {
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, 0, 0.200925)"
+      },
+      {
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, 0, 0.662317)"
+      },
+      {
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, 0, 1.86009)"
+      }
+    ],
+    "width": 1280
+  },
+  "mobileSettled": {
+    "h1Count": 1,
+    "hero": [
+      {
+        "inlineStyle": "",
+        "opacity": "1",
+        "transform": "none"
+      },
+      {
+        "inlineStyle": "",
+        "opacity": "1",
+        "transform": "none"
+      },
+      {
+        "inlineStyle": "",
+        "opacity": "1",
+        "transform": "none"
+      }
+    ],
+    "scrollWidth": 320,
+    "width": 320
+  },
+  "actualOsReducedMotionTested": false
+}

@@ -24,10 +24,13 @@ import PortfolioPreview from '../components/PortfolioPreview.astro';
 // Page section components
 import ContactCTA from '../components/ContactCTA.astro';
 import Skills from '../components/Skills.astro';
+import PageMotion from './PageMotion.astro';
 
 // Content Fetching: List four most recent work projects
 const projects = sortProjectsByModified(projectsData)
 	.slice(0, 4);
+const featured = projects[0];
+const photo = page.homePageFields.photo_field?.node?.sourceUrl;
 
 const data = [page]
 
@@ -40,23 +43,29 @@ const categories = await getReferenceCategoryCards();
 		<main id="main-content" tabindex="-1" class="stack home-main">
       <div class="wrapper stack intro">
 			{alternate && <nav aria-label={spanish ? 'Idioma de la página' : 'Page language'}><a href={spanish ? '/' : '/es/'} lang={spanish ? 'en' : 'es'}>{spanish ? 'English' : 'Español'}</a></nav>}
-      <header class="hero">
+      <header class:list={['hero', { 'hero-solo': !featured && !photo }]}>
         <div class="hero-copy">
           <p class="eyebrow">{data[0].homePageFields.role1_field}</p>
-          <h1><span>{spanish ? 'Hola, soy' : "Hello, I'm"}</span><strong>{data[0].homePageFields.name_field || 'Alex Cuadra'}</strong></h1>
-          <p class="lead">{data[0].homePageFields.tagLine_field}</p>
+          <h1 data-motion="hero"><span>{spanish ? 'Hola, soy' : "Hello, I'm"}</span><strong>{data[0].homePageFields.name_field || 'Alex Cuadra'}</strong></h1>
+          <p class="lead" data-motion="hero" data-motion-delay="0.06">{data[0].homePageFields.tagLine_field}</p>
           <div class="roles">
             {[data[0].homePageFields.role1_field, data[0].homePageFields.role2_field, data[0].homePageFields.role3_field].filter(Boolean).map(role => <Pill>{role}</Pill>)}
           </div>
-          <div class="hero-actions">
+          <div class="hero-actions" data-motion="hero" data-motion-delay="0.12">
             <CallToAction href="#selected-work">{spanish ? 'Explorar proyectos' : 'Explore projects'}<Icon icon="arrow-right" size="1.2em" /></CallToAction>
             <a class="secondary-link" href={spanish ? '/es/sobre-mi/' : '/about/'}>{spanish ? 'Sobre mí' : 'About me'} <span aria-hidden="true">↗</span></a>
           </div>
         </div>
-        {page.homePageFields.photo_field?.node?.sourceUrl && <figure class="portrait">
-          <img alt={spanish ? 'Alex Cuadra' : 'Alex Cuadra'} width="480" height="620" src={data[0].homePageFields.photo_field.node.sourceUrl} />
-          <figcaption>{data[0].homePageFields.name_field}<span>{data[0].homePageFields.role3_field}</span></figcaption>
-        </figure>}
+        {(featured || photo) && <div class="hero-aside">
+          {featured && <section class="featured-preview" aria-label={spanish ? 'Una muestra de mi trabajo (en inglés)' : 'A sample of my work'}>
+            <p class="showcase-label">{spanish ? '// Del portafolio · EN' : '// From the portfolio'}</p>
+            <PortfolioPreview project={featured} displayLocale={locale} headingLevel="h2" variant="featured" />
+          </section>}
+          {photo && <figure class="portrait">
+            <img alt="Alex Cuadra" width="80" height="80" src={photo} />
+            <figcaption>{data[0].homePageFields.name_field}<span>{data[0].homePageFields.role3_field}</span></figcaption>
+          </figure>}
+        </div>}
       </header>
       <section class="disciplines" aria-labelledby="disciplines-title">
         <h2 id="disciplines-title">{spanish ? 'Especialidades' : 'Core disciplines'}</h2>
@@ -75,8 +84,8 @@ const categories = await getReferenceCategoryCards();
 				<div class="gallery">
 					<Grid>
 						{
-							projects.map((project:any) => (
-								<li>
+							projects.map((project:any, index: number) => (
+								<li data-motion="reveal" data-motion-delay={(index % 4) * .06}>
 									<PortfolioPreview project={project} displayLocale={locale} />
 								</li>
 							))
@@ -103,8 +112,8 @@ const categories = await getReferenceCategoryCards();
 				<div class="gallery">
 					<Grid variant="small">
 						{
-							categories.map((category:any) => (
-								<li class="mention-card">
+							categories.map((category:any, index: number) => (
+								<li class="mention-card" data-motion="reveal" data-motion-delay={(index % 4) * .06}>
 									<a
 										href={`/articles/category/${category.slug}`}>{category.name}
 										<CountBadge count={category.count} />
@@ -120,6 +129,8 @@ const categories = await getReferenceCategoryCards();
 
 		<ContactCTA locale={locale} />
 	</div>
+  <slot name="preview-controls" />
+  <PageMotion />
 </BaseLayout>
 
 <style>
@@ -128,7 +139,7 @@ const categories = await getReferenceCategoryCards();
   .intro { gap: 4rem; }
   nav a { color: var(--gray-300); font-size: .875rem; text-underline-offset: .3em; }
   .hero { display: grid; gap: 2.5rem; align-items: center; }
-  .eyebrow { color: var(--link-color); text-transform: uppercase; letter-spacing: .14em; font-size: .75rem; font-weight: 700; margin-bottom: 1rem; }
+  .eyebrow { color: var(--link-color); text-transform: uppercase; letter-spacing: .08em; font: .75rem/1.5 var(--font-mono); margin-bottom: 1rem; }
   h1 { color: var(--gray-0); font-size: clamp(2.35rem, 5vw, 4.5rem); line-height: 1.1; letter-spacing: -.04em; overflow-wrap: anywhere; }
   h1 span, h1 strong { display: block; }
   h1 strong { color: var(--link-color); font-weight: 800; }
@@ -136,10 +147,14 @@ const categories = await getReferenceCategoryCards();
   .roles { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: 1.5rem; }
   .hero-actions { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; margin-top: 2rem; }
   .secondary-link { color: var(--gray-0); font-weight: 600; text-underline-offset: .3em; }
-  .portrait { background: var(--gray-900); border: 1px solid var(--gray-800); border-radius: 1.25rem; overflow: hidden; margin: 0; }
-  .portrait img { display: block; width: 100%; aspect-ratio: 1.15; object-fit: cover; object-position: center 25%; }
-  figcaption { padding: 1.2rem 1.5rem; color: var(--gray-0); font-weight: 700; }
-  figcaption span { display: block; color: var(--gray-400); font-weight: 400; font-size: .875rem; margin-top: .25rem; }
+  .hero-copy, .hero-aside { min-width: 0; }
+  .hero-aside { display: grid; gap: 1rem; }
+  .showcase-label { color: var(--link-color); font: .7rem/1.5 var(--font-mono); text-transform: uppercase; letter-spacing: .06em; margin-bottom: .75rem; }
+  .featured-preview { min-width: 0; }
+  .portrait { display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--gray-900); border: 1px solid var(--gray-800); border-radius: 1rem; margin: 0; }
+  .portrait img { display: block; flex: 0 0 4rem; width: 4rem; height: 4rem; border-radius: .75rem; object-fit: cover; object-position: center 25%; }
+  figcaption { min-width: 0; color: var(--gray-0); font-weight: 700; overflow-wrap: anywhere; }
+  figcaption span { display: block; color: var(--gray-300); font-weight: 400; font-size: .875rem; margin-top: .25rem; }
   .disciplines h2 { margin-bottom: 1.5rem; }
   h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); color: var(--gray-0); letter-spacing: -.035em; line-height: 1.2; }
   .home-sections { gap: 5rem; }
@@ -155,7 +170,7 @@ const categories = await getReferenceCategoryCards();
     .home-flow { padding-top: 3rem; gap: 6rem; }
     .intro { gap: 5rem; }
     .hero { grid-template-columns: 1.3fr 1fr; gap: 4rem; }
-    .portrait img { aspect-ratio: 1; }
+    .hero-solo { grid-template-columns: minmax(0, 1fr); }
     .section.with-cta { grid-template-columns: 1fr auto; }
     .with-cta .gallery { grid-column: 1 / -1; grid-row: 2; }
     .with-cta .cta { grid-column: 2; grid-row: 1; align-self: center; }

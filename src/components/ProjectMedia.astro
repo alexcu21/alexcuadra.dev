@@ -23,5 +23,5 @@ const { src, title, compact = false } = Astro.props;
   img { display: block; width: 100%; height: auto; }
   .compact { border-radius: .75rem; }
   .compact .media-bar { min-height: 2.25rem; padding: .5rem .75rem; }
-  .compact img { aspect-ratio: 16 / 10; object-fit: contain; }
+  .compact img { aspect-ratio: var(--project-preview-ratio, 16 / 10); object-fit: contain; }
 </style>

@@ -2,14 +2,14 @@
 
 import { contentPath } from '../data/site-routes.js';
 import ProjectMedia from './ProjectMedia.astro';
-const { project, locale = 'en', displayLocale = locale, headingLevel = 'h3' } = Astro.props;
+const { project, locale = 'en', displayLocale = locale, headingLevel = 'h3', variant = 'default' } = Astro.props;
 const Heading = headingLevel === 'h2' ? 'h2' : 'h3';
 const { title, slug } = project;
 const img = project.featuredImage?.node?.sourceUrl;
 const description = project.projects?.projectTagline;
 const tags = (project.tags?.nodes || []).filter((tag: {name?: string}) => tag.name).slice(0, 4);
 ---
-<a class="card" href={contentPath('projects', locale, slug)} hreflang={locale}>
+<a class:list={['card', { featured: variant === 'featured' }]} href={contentPath('projects', locale, slug)} hreflang={locale}>
   {img && <div class="media"><ProjectMedia src={img} title={title} compact /></div>}
   <div class="body">
     <Heading lang={locale}>{title}</Heading>
@@ -25,6 +25,9 @@ const tags = (project.tags?.nodes || []).filter((tag: {name?: string}) => tag.na
   .card:is(:hover, :focus-visible) { border-color: var(--accent-regular); box-shadow: var(--shadow-md); }
   .media { padding: .75rem .75rem 0; }
   .body { padding: 1.5rem; display: flex; flex-direction: column; gap: .75rem; flex: 1; }
+  .featured { --project-preview-ratio: 3 / 1; height: auto; }
+  .featured .body { padding: 1rem; gap: .5rem; }
+  .featured p { font-size: .875rem; }
   :is(h2, h3) { font-size: 1.25rem; line-height: 1.35; overflow-wrap: anywhere; letter-spacing: -.02em; }
   p { color: var(--gray-300); font-size: .95rem; line-height: 1.6; }
   .card-tags { display: flex; flex-wrap: wrap; gap: .4rem; list-style: none; padding: 0; }

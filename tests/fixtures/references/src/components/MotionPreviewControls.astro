@@ -1,0 +1,20 @@
+<aside class="preview-controls" aria-label="Controles de la vista de prueba">
+  <span>Vista local · contenido de prueba</span>
+  <button type="button" id="replay-motion">Repetir animación</button>
+  <button type="button" id="replay-cards">Ver tarjetas</button>
+</aside>
+<script>
+  document.getElementById('replay-motion')?.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    // Exercise the same cleanup/remount path as Astro page navigation.
+    document.dispatchEvent(new Event('astro:page-load'));
+  });
+  document.getElementById('replay-cards')?.addEventListener('click', () => {
+    document.getElementById('selected-work')?.scrollIntoView({ behavior: 'instant' });
+    document.dispatchEvent(new Event('astro:page-load'));
+  });
+</script>
+<style>
+  .preview-controls { position: fixed; z-index: 9999; bottom: 1rem; right: 1rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: end; gap: .5rem; max-width: calc(100% - 2rem); padding: .6rem; border: 1px solid var(--gray-700); border-radius: .75rem; background: var(--gray-999); box-shadow: var(--shadow-md); font-size: .7rem; }
+  button { border: 1px solid var(--accent-regular); border-radius: .5rem; padding: .5rem .75rem; background: var(--accent-regular); color: var(--accent-text-over); font: inherit; cursor: pointer; }
+</style>

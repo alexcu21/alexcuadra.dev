@@ -4,6 +4,7 @@ import { sortProjectsByModified } from '../data/projects.js';
 import ContactCTA from '../components/ContactCTA.astro';
 import PortfolioPreview from '../components/PortfolioPreview.astro';
 import Grid from '../components/Grid.astro';
+import PageMotion from './PageMotion.astro';
 
 import { getProjectsInfo } from '../data/client';
 
@@ -38,8 +39,8 @@ const projects = sortProjectsByModified(projectsData);
       </section>}
       <Grid>
 				{
-					projects.map((project:any) => (
-						<li>
+					projects.map((project:any, index: number) => (
+						<li data-motion="reveal" data-motion-delay={(index % 4) * .06}>
 							<PortfolioPreview project={project} locale={locale} headingLevel="h2" />
 						</li>
 					))
@@ -48,6 +49,7 @@ const projects = sortProjectsByModified(projectsData);
 		</main>
 		<ContactCTA locale={locale} />
 	</div>
+  <PageMotion />
 </BaseLayout>
 
 <style>

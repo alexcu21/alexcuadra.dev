@@ -55,6 +55,20 @@ test('actual reference templates preserve HTTP, content and pagination contracts
   assert.match(projectEmpty.html, /href="\/work\/"/);
   const projectMissing = await get('/work/missing');
   assert.equal(projectMissing.response.status, 404);
+  for (const path of ['/preview/home', '/preview/home-es']) {
+    const { response, html } = await get(path);
+    assert.equal(response.status, 200, path);
+    assert.equal((html.match(/<h1(?:\s|>)/g) || []).length, 1);
+    assert.match(html, /data-motion="hero"/);
+    assert.match(html, /data-motion="reveal"/);
+    assert.match(html, /profile-preview.svg/);
+    assert.match(html, /href="\/work\/case-study"/);
+    assert.doesNotMatch(html, /style="(?:opacity:\s*0|visibility:\s*hidden)/);
+  }
+  const emptyHome = await get('/preview/home?mode=projects-empty');
+  assert.equal(emptyHome.response.status, 200);
+  assert.doesNotMatch(emptyHome.html, /class="featured-preview"/);
+  assert.match(emptyHome.html, /profile-preview.svg/);
   for (const [path, expected] of [
     ['/articles/', /Medium/],
     ['/articles/category/medium', /Second synthetic reference/],

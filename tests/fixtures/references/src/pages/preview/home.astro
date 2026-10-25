@@ -1,0 +1,8 @@
+---
+import HomePage from '../../../../../../src/components/HomePage.astro';
+import { previewHome } from '../../../home-preview.mjs';
+import MotionPreviewControls from '../../components/MotionPreviewControls.astro';
+---
+<HomePage page={previewHome} locale="en" alternate={false}>
+  <MotionPreviewControls slot="preview-controls" />
+</HomePage>

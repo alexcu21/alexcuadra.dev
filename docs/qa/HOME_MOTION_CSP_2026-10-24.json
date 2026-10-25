@@ -1,0 +1,30 @@
+{
+  "context": "compiled public Motion chunk in isolated browser fixture",
+  "httpStatus": 200,
+  "contentSecurityPolicy": "script-src 'self' https://challenges.cloudflare.com; style-src 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; base-uri 'self'; object-src 'none'; form-action 'self'; frame-src https://challenges.cloudflare.com",
+  "externalScriptOnly": true,
+  "noViteInjection": true,
+  "servedChunkMatchesBuild": true,
+  "chunkBytes": 9794,
+  "sha256": "76b644c8a4677222d48e333fbd0def5b11628aa32ea32cd947630dd25ac7b2e6",
+  "browser": {
+    "elements": [
+      {
+        "kind": "hero",
+        "opacity": "1",
+        "style": "",
+        "transform": "none"
+      },
+      {
+        "kind": "reveal",
+        "opacity": "1",
+        "style": "",
+        "transform": "none"
+      }
+    ],
+    "scripts": [
+      "/preview/motion-bundle.js"
+    ]
+  },
+  "consoleWarningsAndErrors": []
+}

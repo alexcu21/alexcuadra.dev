@@ -1,5 +1,7 @@
 # Diferencias de diseño y siguiente entrega
 
+Actualización posterior24octubre: hero con proyecto real/perfil compacto y Motion14.6.0 ya implementados localmente. [QA, tamaños, CSP y vista interactiva](qa/HOME_MOTION_2026-10-24.md). Las comparaciones siguientes describen la revisión inicial; los estados nuevos se precisan aquí.
+
 Revisión del24octubre2026. Fuentes: las cuatro capturas originales y DESIGN.md de Obsidian Flow en docs/design-proposal (referencias locales, excluidas de Git), componentes actuales, Home real revisada en staging y una visita nueva a la ficha Christianity Today en staging. Para artículos se comparó maqueta con código; no se declara una revisión visual remota de esas rutas en esta sesión.
 
 La maqueta establece dirección visual, no hechos editoriales. Incluye resultados, proyectos, tecnologías, citas y datos profesionales que no están confirmados. La ficha publicada de Christianity Today contiene el alcance confirmado de bloques WordPress; no el proyecto de plataforma/SDET descrito en la imagen de referencia.
@@ -27,15 +29,15 @@ La maqueta establece dirección visual, no hechos editoriales. Incluye resultado
 
 GSAP ofrece timelines y ScrollTrigger para secuencias de scroll más complejas. No se identifica una necesidad de pinning/scrubbing para este portfolio que justifique elegirlo ahora. [ScrollTrigger oficial](https://gsap.com/docs/v3/Plugins/ScrollTrigger/). La elección de Motion es un juicio de encaje con el alcance, no un benchmark comparativo de rendimiento.
 
-La biblioteca está **propuesta, no instalada**. El incremento presente no modifica package.json ni lockfile. Los hovers simples usan CSS; no necesitan añadir JS. Si se incorpora Motion, fijar versión en el lockfile, servir el bundle propio y verificar CSP en el Worker compilado: las pruebas locales de CSS/SSR no certifican aún animaciones JavaScript con la CSP desplegada.
+La biblioteca está **instalada con versión exacta14.6.0**. El chunk de mini+inView/controlador mide3876B gzip y se sirve como asset propio. Los hovers simples conservan CSS. La ejecución del chunk compilado con reglas CSP equivalentes fue comprobada en fixture local; el postflight del Worker desplegado sigue pendiente. No se cambiaron las protecciones del producto.
 
 ## Animaciones propuestas
 
 | Elemento | Efecto y duración orientativa | Prioridad |
 | --- | --- | --- |
 | Tarjetas | Elevación4px y flecha2px durante200ms; borde y sombra suaves | Implementado con CSS en puntero fino/hover; sin desplazamiento con reduced-motion |
-| Hero | Entrada única de título, descripción y acciones: opacity+translateY de12px a0,350–450ms, separación60ms | Primera animación con Motion; no ocultar ni retrasar la imagen/LCP ni animar cada letra |
-| Rejillas | Entrada única al aparecer:12px y opacity,300ms; escalonado limitado a180ms por fila | Tras cerrar composición; no reiniciar cada vez que se hace scroll |
+| Hero | Entrada única de título, descripción y acciones: opacity+translateY de12px a0,350–450ms, separación60ms | Implementado:420ms y escalonado60ms, con opacity1 durante toda la entrada; no se anima cada letra ni se oculta el título |
+| Rejillas | Entrada única al aparecer:12px y opacity,300ms; escalonado limitado a180ms por fila | Implementado en Home/archivo:320ms y delay limitado180ms, una vez por elemento |
 | Menú móvil | Aparición breve de panel, opacity+translateY de6px,150–180ms | Mantener foco/Escape inmediatos y estado hidden correcto; nunca retrasar acceso al teclado |
 | Bloques de lectura/CTA | Entrada discreta de8px,250–300ms una vez | Opcional; conservar la lectura estable de textos largos |
 | Tema | Transición corta de colores del control/superficies | Conservar200ms existentes; evitar animar todos los descendientes |
@@ -44,4 +46,4 @@ Con prefers-reduced-motion: reduce se omiten desplazamientos y secuencias; todo 
 
 ## Criterio de cierre
 
-El siguiente incremento útil es el hero/Home y su relación con los proyectos, seguido de LAB y tarjetas editoriales. No es necesario terminar el sistema MCP ni certificar todas sus variantes para avanzar con el diseño. El presente código se conserva local, listo para revisión; staging y producción no recibieron cambios. Publicar una edición en WordPress sigue siendo una acción distinta del diseño frontend.
+El hero/Home ya recibió una primera adaptación con proyecto real y perfil compacto. El siguiente incremento útil es especialidades/LAB y tarjetas editoriales/CTA. No es necesario terminar el sistema MCP ni certificar todas sus variantes para avanzar con el diseño. El presente código se conserva local, listo para revisión; staging y producción no recibieron cambios. Publicar una edición en WordPress sigue siendo una acción distinta del diseño frontend.
