@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-10-25T16:52:36.115Z",
+  "version": "712986be-0b19-4474-95b6-ab5816e0a91e",
+  "previousVersion": "a20d636d-93df-4be8-af8e-8140c393dc0a",
+  "checks": [
+    {
+      "path": "/es/proyectos/",
+      "status": 200,
+      "auth": "verified",
+      "robots": null,
+      "csp": true,
+      "retryAfter": null,
+      "entries": 6,
+      "controls": true
+    },
+    {
+      "path": "/work/",
+      "status": 200,
+      "auth": "verified",
+      "robots": null,
+      "csp": true,
+      "retryAfter": null,
+      "entries": 6,
+      "controls": true
+    }
+  ]
+}

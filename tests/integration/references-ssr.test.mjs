@@ -50,6 +50,11 @@ test('actual reference templates preserve HTTP, content and pagination contracts
   }
   const projectDetail = await get('/work/case-study');
   const manyTerms = await get('/es/proyectos/?mode=project-many-terms');
+  assert.match(manyTerms.html, /<form[^>]*data-project-controls[^>]*hidden/);
+  assert.match(manyTerms.html, /<option value="Svelte"[^>]*>Svelte<\/option>/);
+  assert.match(manyTerms.html, /data-technologies="[^\"]*Svelte/);
+  assert.match(manyTerms.html, /Buscar por título/);
+  assert.match(manyTerms.html, /data-project-entry/);
   assert.equal(manyTerms.response.status, 200);
   assert.match(manyTerms.html, /aria-label="2 más en la ficha"/);
   const allTerms = await get('/es/proyectos/caso-de-estudio?mode=project-many-terms');
