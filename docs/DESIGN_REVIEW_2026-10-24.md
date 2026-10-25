@@ -1,5 +1,7 @@
 # Diferencias de diseño y siguiente entrega
 
+Actualización posterior24octubre: especialidades y panel LAB implementados localmente usando el contenido disponible, sin cuarta especialidad ni métricas inventadas. [QA y coste de datos](qa/HOME_LAB_DISCIPLINES_2026-10-24.md). Siguiente prioridad:artículos/menciones y CTA.
+
 Actualización posterior24octubre: hero con proyecto real/perfil compacto y Motion14.6.0 ya implementados localmente. [QA, tamaños, CSP y vista interactiva](qa/HOME_MOTION_2026-10-24.md). Las comparaciones siguientes describen la revisión inicial; los estados nuevos se precisan aquí.
 
 Revisión del24octubre2026. Fuentes: las cuatro capturas originales y DESIGN.md de Obsidian Flow en docs/design-proposal (referencias locales, excluidas de Git), componentes actuales, Home real revisada en staging y una visita nueva a la ficha Christianity Today en staging. Para artículos se comparó maqueta con código; no se declara una revisión visual remota de esas rutas en esta sesión.
@@ -46,4 +48,4 @@ Con prefers-reduced-motion: reduce se omiten desplazamientos y secuencias; todo 
 
 ## Criterio de cierre
 
-El hero/Home ya recibió una primera adaptación con proyecto real y perfil compacto. El siguiente incremento útil es especialidades/LAB y tarjetas editoriales/CTA. No es necesario terminar el sistema MCP ni certificar todas sus variantes para avanzar con el diseño. El presente código se conserva local, listo para revisión; staging y producción no recibieron cambios. Publicar una edición en WordPress sigue siendo una acción distinta del diseño frontend.
+El hero/Home ya recibió una primera adaptación con proyecto real y perfil compacto. Especialidades y LAB también están implementados localmente. El siguiente incremento útil son las tarjetas editoriales y el CTA. No es necesario terminar el sistema MCP ni certificar todas sus variantes para avanzar con el diseño. El presente código se conserva local, listo para revisión; staging y producción no recibieron cambios. Publicar una edición en WordPress sigue siendo una acción distinta del diseño frontend.

@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { getLabProjects, getLabProject, hasLabProjects, labStatus, labLink } from '../src/data/lab-content.js';
+import { getLabProjects, getLabProject, hasLabProjects, getHomeLabProjects, labStatus, labLink } from '../src/data/lab-content.js';
 import { withCmsRequest } from '../src/data/cms-request.js';
 const node = (code = 'EN', changes = {}) => ({ status: 'publish', isRestricted: false, hasPassword: false,
   title: 'Training lab', slug: 'training-lab', content: '<p>Personal project</p>', language: { code }, translations: [],
@@ -23,6 +23,50 @@ test('LAB uses its own paginated type and sorts only after completing the invent
   });
   assert.deepEqual((await getLabProjects('es')).map(item => item.slug), ['second', 'training-lab']);
   assert.deepEqual(calls, [null, 'next']);
+});
+
+test('Home LAB uses one bounded localized preview and projects only public overview fields', async t => {
+  const fetch = harness(t, ({ query }) => {
+    assert.match(query, /labProjects\(first: 3,/); assert.match(query, /language: ES/);
+    assert.doesNotMatch(query, /\$after|\bcontent\b|repositoryUrl|demoUrl/);
+    return page([node('ES', { content: 'DO_NOT_EXPORT', privateExtra: 'DO_NOT_EXPORT' })], true, 'not-followed');
+  });
+  const items = await getHomeLabProjects('es');
+  assert.equal(fetch.mock.callCount(), 1); assert.equal(items[0].state.label, 'En desarrollo');
+  assert.doesNotMatch(JSON.stringify(items), /DO_NOT_EXPORT|repositoryUrl|content/);
+});
+
+test('Home LAB rejects private, protected, wrong-language and oversized previews', async t => {
+  let nodes = [];
+  harness(t, () => page(nodes));
+  assert.deepEqual(await getHomeLabProjects('en'), []);
+  for (const invalid of [[node('ES')], [node('EN', { status: 'draft' })], [node('EN', { hasPassword: true })],
+    [node('EN', { isRestricted: true })], [node(), node(), node(), node()]]) {
+    nodes = invalid; await assert.rejects(getHomeLabProjects('en'), { code: 'CMS_LAB_CONTRACT' });
+  }
+});
+
+test('Home LAB shares only its public projection with60s cache and locale/credential partitions', async t => {
+  t.mock.method(console, 'info', () => {});
+  const entries = new Map();
+  const edgeCache = { match: async key => entries.get(key.url)?.clone(),
+    put: async (key, response) => entries.set(key.url, response.clone()) };
+  const fetch = harness(t, ({ query }) => page([node(query.includes('language: ES') ? 'ES' : 'EN', {
+    privateExtra: 'DO_NOT_CACHE', content: 'DO_NOT_CACHE', labProjectFields: { status: ['beta'], purpose: 'Public purpose', privateExtra: 'DO_NOT_CACHE' },
+  })]));
+  const call = async (locale, password = 'synthetic') => {
+    const response = await withCmsRequest(async () => Response.json(await getHomeLabProjects(locale)), {
+      edgeCache, cacheOrigin: 'https://example.test', cmsConfig: { WPGRAPHQL_AUTH_ENABLED: 'true',
+        WPGRAPHQL_USERNAME: 'reader', WPGRAPHQL_APPLICATION_PASSWORD: password },
+    });
+    assert.equal(response.status, 200); return response.json();
+  };
+  assert.deepEqual(await call('en'), await call('en')); assert.equal(fetch.mock.callCount(), 1);
+  await call('es'); await call('en', 'rotated'); assert.equal(fetch.mock.callCount(), 3);
+  for (const [key, response] of entries) {
+    assert.doesNotMatch(key, /synthetic|reader/); assert.equal(response.headers.get('cache-control'), 'public, max-age=60');
+    assert.doesNotMatch(await response.clone().text(), /DO_NOT_CACHE|privateExtra|content/);
+  }
 });
 
 for (const changes of [{ status: 'draft' }, { hasPassword: true }, { isRestricted: true },

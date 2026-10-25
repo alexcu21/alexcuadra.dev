@@ -8,14 +8,14 @@ import Icon from './Icon.astro';
 import ThemeToggle from './ThemeToggle.astro';
 import type { iconPaths } from './IconPaths';
 
-interface Props { locale?: 'en' | 'es'; }
-const { locale = 'en' } = Astro.props;
+interface Props { locale?: 'en' | 'es'; labAvailable?: boolean; }
+const { locale = 'en', labAvailable } = Astro.props;
 const spanish = locale === 'es';
 const data = await getHomeInfo('en');
 const spanishHome = spanish && publicTranslationLinks(data[0]).some((target: { locale: 'en' | 'es' }) => target.locale === 'es');
 const spanishAbout = spanish && await hasPageTranslation(68, 'es');
 const showBlog = await hasBlogPosts(locale);
-const showLab = await hasLabProjects(locale);
+const showLab = labAvailable ?? await hasLabProjects(locale);
 /** Main menu items */
 const textLinks: { label: string; href: string }[] = [
 	{ label: spanishHome ? 'Inicio' : spanish ? 'Inicio (EN)' : 'Home', href: spanishHome ? '/es/' : '/' },

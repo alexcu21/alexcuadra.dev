@@ -1,0 +1,25 @@
+{
+  "context": "local synthetic preview",
+  "desktop": {
+    "h1Count": 1,
+    "labLinks": [
+      "/lab/",
+      "/lab/training-lab"
+    ],
+    "scrollWidth": 1280,
+    "skillsCount": 3,
+    "width": 1280
+  },
+  "mobile": {
+    "labWidth": 272.0028381347656,
+    "links": [
+      "/es/laboratorio/",
+      "/es/laboratorio/laboratorio"
+    ],
+    "scrollWidth": 320,
+    "width": 320
+  },
+  "detailLinkOpened": true,
+  "lightAndDarkObserved": true,
+  "fullAccessibilityMatrixCertified": false
+}

@@ -38,9 +38,19 @@ export async function request({ document, variables }) {
       { ...visible, slug: 'second', categories: connection([category]) }]) };
   }
   if (document.includes('query LabAvailability')) {
+    if (['home-lab-reuse', 'home-lab-empty-reuse'].includes(mode)) throw Error('Home must reuse its LAB preview for navigation');
     if (mode === 'lab-availability-outage') upstreamFailure();
     const code = document.includes('language: ES') ? 'ES' : 'EN';
     return { labProjects: { nodes: mode === 'lab-empty' ? [] : [{ ...visible, language: { code } }] } };
+  }
+  if (document.includes('query HomeLabProjects')) {
+    if (['lab-empty', 'home-lab-empty-reuse'].includes(mode)) return { labProjects: { nodes: [] } };
+    const es = document.includes('language: ES');
+    return { labProjects: { nodes: [
+      { ...visible, language: { code: es ? 'ES' : 'EN' }, title: es ? 'Laboratorio de prueba' : 'Personal lab fixture',
+        slug: es ? 'laboratorio' : 'training-lab', excerpt: '<p>LAB summary</p>',
+        labProjectFields: { status: ['in_progress'], purpose: es ? 'Propósito de aprendizaje de demostración.' : 'Synthetic learning purpose.' } },
+    ] } };
   }
   if (document.includes('query LabProjects(')) {
     const code = document.includes('language: ES') ? 'ES' : 'EN';

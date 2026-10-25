@@ -2,7 +2,9 @@
 import HomePage from '../../../../../../src/components/HomePage.astro';
 import { previewHome } from '../../../home-preview.mjs';
 import MotionPreviewControls from '../../components/MotionPreviewControls.astro';
+const mode = Astro.url.searchParams.get('mode');
+const page = { homePageFields: { ...previewHome.homePageFields, skills: mode === 'skills-empty' ? null : mode === 'skills-partial' ? { skillName2: 'Only confirmed skill' } : previewHome.homePageFields.skills } };
 ---
-<HomePage page={previewHome} locale="en" alternate={false}>
+<HomePage page={page} locale="en" alternate={false}>
   <MotionPreviewControls slot="preview-controls" />
 </HomePage>

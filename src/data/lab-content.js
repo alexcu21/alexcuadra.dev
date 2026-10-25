@@ -61,6 +61,38 @@ export async function hasLabProjects(locale) {
   return data.labProjects.nodes.length > 0;
 }
 
+// Home needs a small preview, not a paginated archive or full project bodies.
+function homeLabProjection(data, locale) {
+  const nodes = data?.labProjects?.nodes;
+  if (!publicLocalizedCollection(nodes, locale) || nodes.length > 3) return undefined;
+  const items = nodes.map(node => project(node, locale));
+  if (items.some(item => !item)) return undefined;
+  return { labProjects: { nodes: items.map(item => ({
+    status: 'publish', isRestricted: false, hasPassword: false, language: { code: graphqlLanguage(locale) },
+    title: item.title, slug: item.slug, excerpt: item.excerpt,
+    labProjectFields: { purpose: item.purpose, status: item.state ? [item.state.value] : null },
+  })) } };
+}
+
+export async function getHomeLabProjects(locale) {
+  const language = graphqlLanguage(locale);
+  const data = await request(endpoint, `query HomeLabProjects {
+    labProjects(first: 3, where: {language: ${language}, status: PUBLISH, hasPassword: false,
+      orderby: {field: DATE, order: DESC}}) {
+      nodes { title slug excerpt ${visibility} language { code } labProjectFields { status purpose } }
+    }
+  }`, {}, { publicCache: true, servicePublicProjection: data => homeLabProjection(data, locale),
+    validatePublicData: data => Boolean(homeLabProjection(data, locale)),
+    validateServiceData: data => Boolean(homeLabProjection(data, locale)) });
+  const nodes = data?.labProjects?.nodes;
+  if (!publicLocalizedCollection(nodes, locale) || nodes.length > 3) throw cmsFailure('CMS_LAB_CONTRACT', 'HomeLabProjects');
+  return nodes.map(node => {
+    const item = project(node, locale);
+    if (!item) throw cmsFailure('CMS_LAB_CONTRACT', 'HomeLabProjects');
+    return { title: item.title, slug: item.slug, excerpt: item.excerpt, purpose: item.purpose, state: item.state };
+  });
+}
+
 export async function getLabProjects(locale) {
   const language = graphqlLanguage(locale);
   const projects = await collectCmsPages(async after => {

@@ -5,9 +5,11 @@ import { fileURLToPath } from 'node:url';
 import { setTimeout } from 'node:timers/promises';
 
 test('actual reference templates preserve HTTP, content and pagination contracts', { timeout: 60000 }, async t => {
+  const port = Number(process.env.REFERENCES_SSR_PORT || 4398);
+  assert.ok(Number.isInteger(port) && port >= 1024 && port <= 65535, 'valid fixture port');
   const root = fileURLToPath(new URL('../../', import.meta.url));
   const server = spawn(process.execPath, ['node_modules/astro/bin/astro.mjs', 'dev', '--root',
-    'tests/fixtures/references', '--host', '127.0.0.1', '--port', '4398', '--ignore-lock'],
+    'tests/fixtures/references', '--host', '127.0.0.1', '--port', String(port), '--ignore-lock'],
   { cwd: root, stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, ASTRO_TELEMETRY_DISABLED: '1' } });
   let output = '';
   for (const stream of [server.stdout, server.stderr]) stream.on('data', chunk => { output += chunk; });
@@ -17,7 +19,7 @@ test('actual reference templates preserve HTTP, content and pagination contracts
     server.kill('SIGTERM');
     await exited;
   });
-  const base = 'http://127.0.0.1:4398';
+  const base = `http://127.0.0.1:${port}`;
   let ready = false;
   for (let attempt = 0; attempt < 200; attempt++) {
     if (server.exitCode !== null) throw Error(`Fixture startup failed: ${output.slice(-3000)}`);
@@ -69,6 +71,18 @@ test('actual reference templates preserve HTTP, content and pagination contracts
   assert.equal(emptyHome.response.status, 200);
   assert.doesNotMatch(emptyHome.html, /class="featured-preview"/);
   assert.match(emptyHome.html, /profile-preview.svg/);
+  const homeLab = await get('/preview/home-es?mode=home-lab-reuse');
+  assert.equal(homeLab.response.status, 200);
+  assert.match(homeLab.html, /id="home-lab-title"/); assert.match(homeLab.html, /En desarrollo/);
+  assert.match(homeLab.html, /href="\/es\/laboratorio\/laboratorio"/);
+  const noHomeLab = await get('/preview/home?mode=home-lab-empty-reuse');
+  assert.equal(noHomeLab.response.status, 200);
+  assert.doesNotMatch(noHomeLab.html, /id="home-lab-title"|href="\/lab\/"/);
+  const noSkills = await get('/preview/home?mode=skills-empty');
+  assert.equal(noSkills.response.status, 200); assert.doesNotMatch(noSkills.html, /id="disciplines-title"/);
+  const partialSkills = await get('/preview/home?mode=skills-partial');
+  assert.equal(partialSkills.response.status, 200); assert.match(partialSkills.html, /Only confirmed skill/);
+  assert.equal((partialSkills.html.match(/class="skill-icon"/g) || []).length, 1);
   for (const [path, expected] of [
     ['/articles/', /Medium/],
     ['/articles/category/medium', /Second synthetic reference/],
