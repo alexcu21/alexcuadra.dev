@@ -43,9 +43,17 @@ test('actual reference templates preserve HTTP, content and pagination contracts
     assert.ok(html.includes(title), path);
     assert.equal((html.match(/<h1(?:\s|>)/g) || []).length, 1);
     assert.match(html, /project-preview.svg/);
+    assert.match(html, /aria-label="(?:Project categories|Categorías del proyecto)"/);
+    assert.ok(html.includes(path.startsWith('/es/') ? 'Sitio WordPress' : 'WordPress Site'));
+    assert.match(html, /aria-label="(?:Technologies and practice areas|Tecnologías y áreas de trabajo)"/);
     assert.doesNotMatch(html, /PRIVATE_SCRIPT|99\.9%|450\+|testimonial/);
   }
   const projectDetail = await get('/work/case-study');
+  const manyTerms = await get('/es/proyectos/?mode=project-many-terms');
+  assert.equal(manyTerms.response.status, 200);
+  assert.match(manyTerms.html, /aria-label="2 más en la ficha"/);
+  const allTerms = await get('/es/proyectos/caso-de-estudio?mode=project-many-terms');
+  assert.match(allTerms.html, /Svelte/);
   assert.match(projectDetail.html, /Synthetic project scope/);
   assert.match(projectDetail.html, /href="\/es\/proyectos\/caso-de-estudio"/);
   const projectMinimal = await get('/work/minimal');

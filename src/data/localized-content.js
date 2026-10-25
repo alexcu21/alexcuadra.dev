@@ -2,12 +2,13 @@ import { request, cmsFailure } from './cms-request.js';
 import { graphqlLanguage, contentLocale, publicLocalizedCollection, publicTranslationLinks } from './content-language.js';
 import { isPublicContent } from './content-visibility.js';
 import { publicProjects } from './public-projects.js';
+import { projectTaxonomyFields, publicProjectTaxonomies } from './project-taxonomies.js';
 
 const endpoint = 'https://content.alexcuadra.dev/graphql';
 const visibility = 'status isRestricted hasPassword';
 const languageFields = `language { code } translations { databaseId slug ${visibility} language { code } }`;
 const projectFields = `title content slug modified projects { githuburl projectTagline websiteurl }
-  tags { nodes { name } } featuredImage { node { sourceUrl } }`;
+  ${projectTaxonomyFields} featuredImage { node { sourceUrl } }`;
 const articleFields = `id title content slug featuredImage { node { sourceUrl } }
   categories { nodes { id name slug } } articlesFields { quote }`;
 const text = value => typeof value === 'string' ? value : null;
@@ -29,6 +30,8 @@ export function localizedProjection(data, type, locale) {
   const pageInfo = data[type].pageInfo;
   if (typeof pageInfo?.hasNextPage !== 'boolean'
     || (pageInfo.hasNextPage && (typeof pageInfo.endCursor !== 'string' || !pageInfo.endCursor))) return undefined;
+  const taxonomies = type === 'projects' ? nodes.map(node => publicProjectTaxonomies(node, locale)) : [];
+  if (taxonomies.some(terms => !terms)) return undefined;
   const projected = type === 'projects' ? publicProjects(data).projects.nodes : nodes.map(node => ({
     status: 'publish', isRestricted: false, hasPassword: false,
     id: text(node.id), title: text(node.title), content: text(node.content), slug: text(node.slug),
@@ -37,7 +40,8 @@ export function localizedProjection(data, type, locale) {
       ? node.categories.nodes.map(term => ({ id: text(term.id), name: text(term.name), slug: text(term.slug) })) : [] },
     articlesFields: node.articlesFields ? { quote: text(node.articlesFields.quote) } : null,
   }));
-  return { [type]: { nodes: projected.map((node, index) => ({ ...node, ...publicLanguageMetadata(nodes[index]) })),
+  return { [type]: { nodes: projected.map((node, index) => ({ ...node,
+    ...(type === 'projects' ? taxonomies[index] : {}), ...publicLanguageMetadata(nodes[index]) })),
     pageInfo: { hasNextPage: pageInfo.hasNextPage, endCursor: text(pageInfo.endCursor) } } };
 }
 

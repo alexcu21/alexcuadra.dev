@@ -16,7 +16,8 @@ async function main() {
         pageInfo { hasNextPage }
         nodes { databaseId slug status title content excerpt date modified uri
           featuredImage { node { databaseId sourceUrl } }
-          categories { nodes { databaseId slug } } tags { nodes { databaseId slug } }
+          categories: projectCategories(first: 100) { nodes { databaseId slug } }
+          tags: projectTechnologies(first: 100) { nodes { databaseId slug } }
           projects { projectTagline githuburl websiteurl }
         }
       }

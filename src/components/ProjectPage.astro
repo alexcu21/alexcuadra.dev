@@ -13,6 +13,7 @@ const { project, locale } = Astro.props;
 const { title, content } = project;
 const { githuburl, projectTagline, websiteurl } = project.projects || {};
 const tags = (project.tags?.nodes || []).filter((tag: {name?: string}) => tag.name);
+const categories = (project.categories?.nodes || []).filter((term: {name?: string}) => term.name);
 const img = project.featuredImage?.node?.sourceUrl;
 const hasBody = typeof content === 'string' && content.trim().length > 0;
 const targetLocale = locale === 'en' ? 'es' : 'en';
@@ -31,10 +32,16 @@ const alternates: {locale: 'en' | 'es'; path: string}[] = alternate ? [{locale, 
       <h1>{title}</h1>
       {projectTagline && <p class="description">{projectTagline}</p>}
     </header>
-    {(tags.length > 0 || githuburl || websiteurl) && <div class="project-details">
+    {(categories.length > 0 || tags.length > 0 || githuburl || websiteurl) && <div class="project-details">
+      {categories.length > 0 && <div class="detail-group">
+        <p class="detail-label">{locale === 'es' ? 'Categorías del proyecto' : 'Project categories'}</p>
+        <ul class="tags" aria-label={locale === 'es' ? 'Categorías del proyecto' : 'Project categories'}>
+          {categories.map((term: {name: string}) => <li><Pill>{term.name}</Pill></li>)}
+        </ul>
+      </div>}
       {tags.length > 0 && <div class="detail-group">
-        <p class="detail-label">{locale === 'es' ? 'Etiquetas del proyecto' : 'Project tags'}</p>
-        <ul class="tags" aria-label={locale === 'es' ? 'Etiquetas del proyecto' : 'Project tags'}>
+        <p class="detail-label">{locale === 'es' ? 'Tecnologías y áreas de trabajo' : 'Technologies and practice areas'}</p>
+        <ul class="tags" aria-label={locale === 'es' ? 'Tecnologías y áreas de trabajo' : 'Technologies and practice areas'}>
           {(tags as { name: string }[]).map(tag => <li><Pill>{tag.name}</Pill></li>)}
         </ul>
       </div>}

@@ -7,15 +7,22 @@ const Heading = headingLevel === 'h2' ? 'h2' : 'h3';
 const { title, slug } = project;
 const img = project.featuredImage?.node?.sourceUrl;
 const description = project.projects?.projectTagline;
-const tags = (project.tags?.nodes || []).filter((tag: {name?: string}) => tag.name).slice(0, 4);
+const allTags = (project.tags?.nodes || []).filter((tag: {name?: string}) => tag.name);
+const tags = allTags.slice(0, 4);
+const remainingTags = allTags.length - tags.length;
+const categories = (project.categories?.nodes || []).filter((term: {name?: string}) => term.name);
 ---
 <a class:list={['card', { featured: variant === 'featured' }]} href={contentPath('projects', locale, slug)} hreflang={locale}>
   {img && <div class="media"><ProjectMedia src={img} title={title} compact /></div>}
   <div class="body">
     <Heading lang={locale}>{title}</Heading>
+    {categories.length > 0 && <ul class="card-categories" aria-label={displayLocale === 'es' ? 'Categorías del proyecto' : 'Project categories'}>
+      {categories.map((term: {name: string}) => <li>{term.name}</li>)}
+    </ul>}
     {description && <p lang={locale}>{description}</p>}
-    {tags.length > 0 && <ul class="card-tags" aria-label={displayLocale === 'es' ? 'Etiquetas del proyecto' : 'Project tags'}>
+    {tags.length > 0 && <ul class="card-tags" aria-label={displayLocale === 'es' ? 'Tecnologías y áreas de trabajo' : 'Technologies and practice areas'}>
       {tags.map((tag: {name: string}) => <li>{tag.name}</li>)}
+      {remainingTags > 0 && <li aria-label={displayLocale === 'es' ? `${remainingTags} más en la ficha` : `${remainingTags} more in the project details`}>+{remainingTags}</li>}
     </ul>}
     <span class="action">{displayLocale === 'es' ? 'Ver proyecto' : 'View project'} <span aria-hidden="true">↗</span></span>
   </div>
@@ -31,6 +38,7 @@ const tags = (project.tags?.nodes || []).filter((tag: {name?: string}) => tag.na
   :is(h2, h3) { font-size: 1.25rem; line-height: 1.35; overflow-wrap: anywhere; letter-spacing: -.02em; }
   p { color: var(--gray-300); font-size: .95rem; line-height: 1.6; }
   .card-tags { display: flex; flex-wrap: wrap; gap: .4rem; list-style: none; padding: 0; }
+  .card-categories { display: flex; flex-wrap: wrap; gap: .4rem .75rem; list-style: none; padding: 0; color: var(--link-color); font: .7rem/1.5 var(--font-mono); overflow-wrap: anywhere; }
   .card-tags li { padding: .2rem .45rem; border: 1px solid var(--gray-800); border-radius: .3rem; color: var(--gray-300); font: .65rem/1.5 var(--font-mono); overflow-wrap: anywhere; }
   .action { display: flex; align-items: center; justify-content: space-between; color: var(--link-color); font-size: .875rem; font-weight: 700; margin-top: auto; padding-top: .5rem; }
   .action > span { transition: transform .2s; }

@@ -33,7 +33,10 @@ export async function request({ document, variables }) {
         : spanish ? 'Diseño y desarrollo de una experiencia web' : 'Design and development of a web experience',
         websiteurl: casePreview ? 'https://www.christianitytoday.com/' : 'https://example.test/', githuburl: null },
       featuredImage: slug === 'minimal' ? null : { node: { sourceUrl: '/project-preview.svg' } },
-      tags: { nodes: slug === 'minimal' ? [] : [{ name: 'WordPress' }, { name: 'React' }] },
+      tags: connection(slug === 'minimal' ? [] : (mode === 'project-many-terms'
+        ? ['WordPress', 'React', 'CSS', 'SCSS', 'ACF Pro', 'Svelte'] : ['WordPress', 'React'])
+        .map(name => ({ name, language: { code } }))),
+      categories: connection(slug === 'minimal' ? [] : [{ name: spanish ? 'Sitio WordPress' : 'WordPress Site', language: { code } }]),
       translations: slug === 'minimal' ? [] : [{ ...visible, databaseId: 900,
         slug: spanish ? 'case-study' : 'caso-de-estudio', language: { code: spanish ? 'EN' : 'ES' } }],
     }))) };

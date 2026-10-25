@@ -1,0 +1,26 @@
+{
+  "checkedAt": "2026-10-25T15:44:24.857Z",
+  "version": "43c88691-2f4c-4e68-b045-56398276b4c6",
+  "checks": [
+    {
+      "path": "/es/proyectos/",
+      "status": 200,
+      "retryAfter": null,
+      "auth": "verified",
+      "robots": null,
+      "category": true,
+      "technology": true,
+      "csp": true
+    },
+    {
+      "path": "/work/christianitytoday-com",
+      "status": 200,
+      "retryAfter": null,
+      "auth": "verified",
+      "robots": null,
+      "category": true,
+      "technology": true,
+      "csp": true
+    }
+  ]
+}

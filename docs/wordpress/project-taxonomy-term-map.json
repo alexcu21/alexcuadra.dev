@@ -1,0 +1,102 @@
+{
+  "categories": {
+    "frontend-app": {
+      "en": 64,
+      "es": 66
+    },
+    "wordpress-site": {
+      "en": 68,
+      "es": 70
+    },
+    "technical-support": {
+      "en": 72,
+      "es": 74
+    },
+    "wordpress-blocks": {
+      "en": 76,
+      "es": 78
+    }
+  },
+  "technologies": {
+    "wordpress": {
+      "en": 80,
+      "es": 82
+    },
+    "astro": {
+      "en": 84,
+      "es": 86
+    },
+    "javascript": {
+      "en": 88,
+      "es": 90
+    },
+    "acf": {
+      "en": 92,
+      "es": 94
+    },
+    "cpt": {
+      "en": 96,
+      "es": 98
+    },
+    "block-themes": {
+      "en": 100,
+      "es": 102
+    },
+    "custom-blocks": {
+      "en": 104,
+      "es": 106
+    },
+    "react": {
+      "en": 108,
+      "es": 110
+    },
+    "svelte": {
+      "en": 112,
+      "es": 114
+    },
+    "acf-pro": {
+      "en": 116,
+      "es": 118
+    },
+    "wordpress-rest-api": {
+      "en": 120,
+      "es": 122
+    },
+    "css": {
+      "en": 124,
+      "es": 126
+    },
+    "scss": {
+      "en": 128,
+      "es": 130
+    },
+    "divi": {
+      "en": 132,
+      "es": 134
+    },
+    "dns": {
+      "en": 136,
+      "es": 138
+    },
+    "seo": {
+      "en": 140,
+      "es": 142
+    },
+    "themes": {
+      "en": 144,
+      "es": 146
+    },
+    "optimization": {
+      "en": 148,
+      "es": 150
+    },
+    "security": {
+      "en": 152,
+      "es": 154
+    },
+    "gutenberg": {
+      "en": 156,
+      "es": 158
+    }
+  }
+}

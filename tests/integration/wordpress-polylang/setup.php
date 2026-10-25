@@ -2,7 +2,7 @@
 if (wp_get_environment_type() !== 'local') { throw new RuntimeException('Local lab only'); }
 if (get_option('portfolio_lab_manifest')) { echo "Fixtures already exist.\n"; return; }
 PLL()->options->set('post_types', ['project', 'articles']);
-PLL()->options->set('taxonomies', ['category', 'post_tag']);
+PLL()->options->set('taxonomies', ['category', 'post_tag', 'project_category', 'project_technology']);
 PLL()->options->save_all();
 foreach ([['en', 'en_US', 'English'], ['es', 'es_ES', 'Español']] as $lang) {
     $result = PLL()->model->add_language(['name' => $lang[2], 'slug' => $lang[0],

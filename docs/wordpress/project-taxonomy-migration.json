@@ -1,0 +1,269 @@
+{
+  "status": "completed",
+  "authorization": "User chose project-only categories and technologies; supplied Makers and alextecuenta terms in this chat.",
+  "registration": {
+    "category": {
+      "key": "project_category",
+      "acfId": 237,
+      "graphql": "projectCategories",
+      "hierarchical": true
+    },
+    "technology": {
+      "key": "project_technology",
+      "acfId": 238,
+      "graphql": "projectTechnologies",
+      "hierarchical": false
+    }
+  },
+  "categories": [
+    {
+      "key": "frontend-app",
+      "en": "Frontend App",
+      "es": "Aplicación frontend",
+      "enSlug": "frontend-app",
+      "esSlug": "aplicacion-frontend"
+    },
+    {
+      "key": "wordpress-site",
+      "en": "WordPress Site",
+      "es": "Sitio WordPress",
+      "enSlug": "wordpress-site",
+      "esSlug": "sitio-wordpress"
+    },
+    {
+      "key": "technical-support",
+      "en": "Technical Support",
+      "es": "Soporte técnico",
+      "enSlug": "technical-support",
+      "esSlug": "soporte-tecnico"
+    },
+    {
+      "key": "wordpress-blocks",
+      "en": "Custom WordPress Blocks",
+      "es": "Bloques personalizados de WordPress",
+      "enSlug": "wordpress-blocks",
+      "esSlug": "bloques-wordpress"
+    }
+  ],
+  "technologies": [
+    {
+      "key": "wordpress",
+      "en": "WordPress",
+      "es": "WordPress",
+      "enSlug": "wordpress",
+      "esSlug": "wordpress-es"
+    },
+    {
+      "key": "astro",
+      "en": "Astro",
+      "es": "Astro",
+      "enSlug": "astro",
+      "esSlug": "astro-es"
+    },
+    {
+      "key": "javascript",
+      "en": "JavaScript",
+      "es": "JavaScript",
+      "enSlug": "javascript",
+      "esSlug": "javascript-es"
+    },
+    {
+      "key": "acf",
+      "en": "ACF",
+      "es": "ACF",
+      "enSlug": "acf",
+      "esSlug": "acf-es"
+    },
+    {
+      "key": "cpt",
+      "en": "CPT",
+      "es": "CPT",
+      "enSlug": "cpt",
+      "esSlug": "cpt-es"
+    },
+    {
+      "key": "block-themes",
+      "en": "Block Themes",
+      "es": "Temas de bloques",
+      "enSlug": "block-themes",
+      "esSlug": "block-themes-es"
+    },
+    {
+      "key": "custom-blocks",
+      "en": "Custom Blocks",
+      "es": "Bloques personalizados",
+      "enSlug": "custom-blocks",
+      "esSlug": "custom-blocks-es"
+    },
+    {
+      "key": "react",
+      "en": "React",
+      "es": "React",
+      "enSlug": "react",
+      "esSlug": "react-es"
+    },
+    {
+      "key": "svelte",
+      "en": "Svelte",
+      "es": "Svelte",
+      "enSlug": "svelte",
+      "esSlug": "svelte-es"
+    },
+    {
+      "key": "acf-pro",
+      "en": "ACF Pro",
+      "es": "ACF Pro",
+      "enSlug": "acf-pro",
+      "esSlug": "acf-pro-es"
+    },
+    {
+      "key": "wordpress-rest-api",
+      "en": "WordPress REST API",
+      "es": "API REST de WordPress",
+      "enSlug": "wordpress-rest-api",
+      "esSlug": "wordpress-rest-api-es"
+    },
+    {
+      "key": "css",
+      "en": "CSS",
+      "es": "CSS",
+      "enSlug": "css",
+      "esSlug": "css-es"
+    },
+    {
+      "key": "scss",
+      "en": "SCSS",
+      "es": "SCSS",
+      "enSlug": "scss",
+      "esSlug": "scss-es"
+    },
+    {
+      "key": "divi",
+      "en": "Divi",
+      "es": "Divi",
+      "enSlug": "divi",
+      "esSlug": "divi-es"
+    },
+    {
+      "key": "dns",
+      "en": "DNS",
+      "es": "DNS",
+      "enSlug": "dns",
+      "esSlug": "dns-es"
+    },
+    {
+      "key": "seo",
+      "en": "SEO",
+      "es": "SEO",
+      "enSlug": "seo",
+      "esSlug": "seo-es"
+    },
+    {
+      "key": "themes",
+      "en": "Themes",
+      "es": "Temas",
+      "enSlug": "themes",
+      "esSlug": "themes-es"
+    },
+    {
+      "key": "optimization",
+      "en": "Optimization",
+      "es": "Optimización",
+      "enSlug": "optimization",
+      "esSlug": "optimization-es"
+    },
+    {
+      "key": "security",
+      "en": "Security",
+      "es": "Seguridad",
+      "enSlug": "security",
+      "esSlug": "security-es"
+    },
+    {
+      "key": "gutenberg",
+      "en": "WordPress Block Editor (Gutenberg)",
+      "es": "Editor de bloques (Gutenberg)",
+      "enSlug": "gutenberg",
+      "esSlug": "gutenberg-es"
+    }
+  ],
+  "projects": [
+    {
+      "en": 50,
+      "es": 195,
+      "category": "frontend-app",
+      "technologies": [
+        "astro",
+        "javascript",
+        "wordpress"
+      ]
+    },
+    {
+      "en": 42,
+      "es": 198,
+      "category": "wordpress-site",
+      "technologies": [
+        "acf",
+        "cpt",
+        "wordpress"
+      ]
+    },
+    {
+      "en": 43,
+      "es": 197,
+      "category": "wordpress-site",
+      "technologies": [
+        "block-themes",
+        "custom-blocks",
+        "wordpress"
+      ]
+    },
+    {
+      "en": 146,
+      "es": 196,
+      "category": "wordpress-blocks",
+      "technologies": [
+        "wordpress",
+        "gutenberg",
+        "react",
+        "svelte",
+        "acf-pro",
+        "wordpress-rest-api",
+        "css",
+        "scss"
+      ]
+    },
+    {
+      "en": 137,
+      "es": 199,
+      "category": "technical-support",
+      "technologies": [
+        "divi",
+        "dns",
+        "seo"
+      ]
+    },
+    {
+      "en": 144,
+      "es": 200,
+      "category": "technical-support",
+      "technologies": [
+        "dns",
+        "themes",
+        "optimization",
+        "security"
+      ]
+    }
+  ],
+  "notes": [
+    "Existing public assignments are migrated; technologies for Christianity Today use the user-approved case.",
+    "JavaScritp is corrected to JavaScript only in the new project taxonomy; original blog tag is not renamed.",
+    "No global term deletion or change to post/article relationships. Old project connections stay until readers have migrated."
+  ],
+  "completedAt": "2026-10-25",
+  "deployment": {
+    "staging": "a67ef581-766b-46d3-997d-aa1d18e55b1e",
+    "production": "43c88691-2f4c-4e68-b045-56398276b4c6"
+  },
+  "legacyBindingRemoved": true
+}

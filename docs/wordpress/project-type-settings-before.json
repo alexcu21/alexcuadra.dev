@@ -1,0 +1,418 @@
+{
+  "settings": [
+    {
+      "id": "acf_post_type-labels-name",
+      "value": "Projects"
+    },
+    {
+      "id": "acf_post_type-labels-singular_name",
+      "value": "Project"
+    },
+    {
+      "id": "acf_post_type-post_type",
+      "value": "project"
+    },
+    {
+      "id": "acf_post_type-taxonomies-input",
+      "value": ""
+    },
+    {
+      "id": "acf_post_type-taxonomies",
+      "value": "category"
+    },
+    {
+      "checked": true,
+      "id": "acf_post_type-public",
+      "value": "1"
+    },
+    {
+      "checked": false,
+      "id": "acf_post_type-hierarchical",
+      "value": "1"
+    },
+    {
+      "checked": true,
+      "id": "acf_post_type-advanced_configuration",
+      "value": "1"
+    },
+    {
+      "checked": true,
+      "id": "acf_post_type-supports-title",
+      "value": "title"
+    },
+    {
+      "checked": true,
+      "id": "acf_post_type-supports-editor",
+      "value": "editor"
+    },
+    {
+      "checked": false,
+      "id": "acf_post_type-supports-notes",
+      "value": "notes"
+    },
+    {
+      "checked": true,
+      "id": "acf_post_type-supports-thumbnail",
+      "value": "thumbnail"
+    },
+    {
+      "checked": false,
+      "id": "acf_post_type-supports-author",
+      "value": "author"
+    },
+    {
+      "checked": false,
+      "id": "acf_post_type-supports-trackbacks",
+      "value": "trackbacks"
+    },
+    {
+      "checked": false,
+      "id": "acf_post_type-supports-revisions",
+      "value": "revisions"
+    },
+    {
+      "checked": true,
+      "id": "acf_post_type-supports-custom-fields",
+      "value": "custom-fields"
+    },
+    {
+      "checked": false,
+      "id": "acf_post_type-supports-comments",
+      "value": "comments"
+    },
+    {
+      "checked": true,
+      "id": "acf_post_type-supports-excerpt",
+      "value": "excerpt"
+    },
+    {
+      "checked": false,
+      "id": "acf_post_type-supports-page-attributes",
+      "value": "page-attributes"
+    },
+    {
+      "checked": false,
+      "id": "acf_post_type-supports-post-formats",
+      "value": "post-formats"
+    },
+    {
+      "id": "acf_post_type-description",
+      "value": ""
+    },
+    {
+      "checked": true,
+      "id": "acf_post_type-active",
+      "value": "1"
+    },
+    {
+      "id": "acf_post_type-labels-menu_name",
+      "value": "Projects"
+    },
+    {
+      "id": "acf_post_type-labels-all_items",
+      "value": "All Projects"
+    },
+    {
+      "id": "acf_post_type-labels-edit_item",
+      "value": "Edit Project"
+    },
+    {
+      "id": "acf_post_type-labels-view_item",
+      "value": "View Project"
+    },
+    {
+      "id": "acf_post_type-labels-view_items",
+      "value": "View Projects"
+    },
+    {
+      "id": "acf_post_type-labels-add_new_item",
+      "value": "Add New Project"
+    },
+    {
+      "id": "acf_post_type-labels-add_new",
+      "value": "Add New Project"
+    },
+    {
+      "id": "acf_post_type-labels-new_item",
+      "value": "New Project"
+    },
+    {
+      "id": "acf_post_type-labels-parent_item_colon",
+      "value": "Parent Project:"
+    },
+    {
+      "id": "acf_post_type-labels-search_items",
+      "value": "Search Projects"
+    },
+    {
+      "id": "acf_post_type-labels-not_found",
+      "value": "No projects found"
+    },
+    {
+      "id": "acf_post_type-labels-not_found_in_trash",
+      "value": "No projects found in Trash"
+    },
+    {
+      "id": "acf_post_type-labels-archives",
+      "value": "Project Archives"
+    },
+    {
+      "id": "acf_post_type-labels-attributes",
+      "value": "Project Attributes"
+    },
+    {
+      "id": "acf_post_type-labels-featured_image",
+      "value": ""
+    },
+    {
+      "id": "acf_post_type-labels-set_featured_image",
+      "value": ""
+    },
+    {
+      "id": "acf_post_type-labels-remove_featured_image",
+      "value": ""
+    },
+    {
+      "id": "acf_post_type-labels-use_featured_image",
+      "value": ""
+    },
+    {
+      "id": "acf_post_type-labels-insert_into_item",
+      "value": "Insert into project"
+    },
+    {
+      "id": "acf_post_type-labels-uploaded_to_this_item",
+      "value": "Uploaded to this project"
+    },
+    {
+      "id": "acf_post_type-labels-filter_items_list",
+      "value": "Filter projects list"
+    },
+    {
+      "id": "acf_post_type-labels-filter_by_date",
+      "value": "Filter projects by date"
+    },
+    {
+      "id": "acf_post_type-labels-items_list_navigation",
+      "value": "Projects list navigation"
+    },
+    {
+      "id": "acf_post_type-labels-items_list",
+      "value": "Projects list"
+    },
+    {
+      "id": "acf_post_type-labels-item_published",
+      "value": "Project published."
+    },
+    {
+      "id": "acf_post_type-labels-item_published_privately",
+      "value": "Project published privately."
+    },
+    {
+      "id": "acf_post_type-labels-item_reverted_to_draft",
+      "value": "Project reverted to draft."
+    },
+    {
+      "id": "acf_post_type-labels-item_scheduled",
+      "value": "Project scheduled."
+    },
+    {
+      "id": "acf_post_type-labels-item_updated",
+      "value": "Project updated."
+    },
+    {
+      "id": "acf_post_type-labels-item_link",
+      "value": "Project Link"
+    },
+    {
+      "id": "acf_post_type-labels-item_link_description",
+      "value": "A link to a project."
+    },
+    {
+      "id": "acf_post_type-enter_title_here",
+      "value": ""
+    },
+    {
+      "checked": true,
+      "id": "acf_post_type-show_ui",
+      "value": "1"
+    },
+    {
+      "checked": true,
+      "id": "acf_post_type-show_in_menu",
+      "value": "1"
+    },
+    {
+      "id": "acf_post_type-admin_menu_parent",
+      "value": ""
+    },
+    {
+      "id": "acf_post_type-menu_position",
+      "value": "5"
+    },
+    {
+      "id": "acf_post_type-register_meta_box_cb",
+      "value": ""
+    },
+    {
+      "checked": true,
+      "id": "acf_post_type-show_in_admin_bar",
+      "value": "1"
+    },
+    {
+      "checked": true,
+      "id": "acf_post_type-show_in_nav_menus",
+      "value": "1"
+    },
+    {
+      "checked": false,
+      "id": "acf_post_type-exclude_from_search",
+      "value": "1"
+    },
+    {
+      "id": "acf_post_type-rewrite-permalink_rewrite",
+      "value": "post_type_key"
+    },
+    {
+      "id": "acf_post_type-rewrite-slug",
+      "value": ""
+    },
+    {
+      "checked": true,
+      "id": "acf_post_type-rewrite-with_front",
+      "value": "1"
+    },
+    {
+      "checked": true,
+      "id": "acf_post_type-rewrite-feeds",
+      "value": "1"
+    },
+    {
+      "checked": true,
+      "id": "acf_post_type-rewrite-pages",
+      "value": "1"
+    },
+    {
+      "checked": true,
+      "id": "acf_post_type-has_archive",
+      "value": "1"
+    },
+    {
+      "id": "acf_post_type-has_archive_slug",
+      "value": "project"
+    },
+    {
+      "checked": true,
+      "id": "acf_post_type-publicly_queryable",
+      "value": "1"
+    },
+    {
+      "id": "acf_post_type-query_var",
+      "value": "post_type_key"
+    },
+    {
+      "id": "acf_post_type-query_var_name",
+      "value": ""
+    },
+    {
+      "checked": true,
+      "id": "acf_post_type-rename_capabilities",
+      "value": "1"
+    },
+    {
+      "id": "acf_post_type-singular_capability_name",
+      "value": "page"
+    },
+    {
+      "id": "acf_post_type-plural_capability_name",
+      "value": "pages"
+    },
+    {
+      "checked": true,
+      "id": "acf_post_type-can_export",
+      "value": "1"
+    },
+    {
+      "checked": false,
+      "id": "acf_post_type-delete_with_user",
+      "value": "1"
+    },
+    {
+      "checked": true,
+      "id": "acf_post_type-show_in_rest",
+      "value": "1"
+    },
+    {
+      "id": "acf_post_type-rest_base",
+      "value": ""
+    },
+    {
+      "id": "acf_post_type-rest_namespace",
+      "value": "wp/v2"
+    },
+    {
+      "id": "acf_post_type-rest_controller_class",
+      "value": "WP_REST_Posts_Controller"
+    },
+    {
+      "checked": true,
+      "id": "acf_post_type-show_in_graphql",
+      "value": "1"
+    },
+    {
+      "id": "acf_post_type-graphql_single_name",
+      "value": "project"
+    },
+    {
+      "id": "acf_post_type-graphql_plural_name",
+      "value": "projects"
+    }
+  ],
+  "taxonomyOptions": [
+    {
+      "label": "Format",
+      "selected": false,
+      "value": "post_format"
+    },
+    {
+      "label": "Tag (language)",
+      "selected": false,
+      "value": "language"
+    },
+    {
+      "label": " (post_translations)",
+      "selected": false,
+      "value": "post_translations"
+    },
+    {
+      "label": " (term_language)",
+      "selected": false,
+      "value": "term_language"
+    },
+    {
+      "label": " (term_translations)",
+      "selected": false,
+      "value": "term_translations"
+    },
+    {
+      "label": "Project Category",
+      "selected": false,
+      "value": "project_category"
+    },
+    {
+      "label": "Project Technology",
+      "selected": false,
+      "value": "project_technology"
+    },
+    {
+      "label": "Category",
+      "selected": true,
+      "value": "category"
+    },
+    {
+      "label": "Tag (post_tag)",
+      "selected": true,
+      "value": "post_tag"
+    }
+  ]
+}

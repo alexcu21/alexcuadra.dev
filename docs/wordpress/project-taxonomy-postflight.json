@@ -1,0 +1,2151 @@
+{
+  "checkedAt": "2026-10-25T15:45:06.169Z",
+  "success": true,
+  "projectCount": 12,
+  "nonTaxonomyFieldsPreserved": true,
+  "dedicatedAssignmentsAndTranslationsPreserved": true,
+  "editorialRelationshipsPreserved": true,
+  "posts": {
+    "pageInfo": {
+      "hasNextPage": false
+    },
+    "nodes": [
+      {
+        "databaseId": 228,
+        "slug": "como-contribuir-a-wordpress-parte-1",
+        "status": "publish",
+        "isRestricted": false,
+        "hasPassword": false,
+        "categories": {
+          "nodes": [
+            {
+              "databaseId": 46,
+              "name": "OpenSource",
+              "slug": "opensource",
+              "language": {
+                "code": "EN"
+              }
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        },
+        "tags": {
+          "nodes": [
+            {
+              "databaseId": 3,
+              "name": "WordPress",
+              "slug": "wordpress",
+              "language": {
+                "code": "EN"
+              }
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        }
+      },
+      {
+        "databaseId": 204,
+        "slug": "como-estructurar-un-caso-de-prueba",
+        "status": "publish",
+        "isRestricted": false,
+        "hasPassword": false,
+        "categories": {
+          "nodes": [
+            {
+              "databaseId": 52,
+              "name": "Testing",
+              "slug": "testing-es",
+              "language": {
+                "code": "ES"
+              }
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        },
+        "tags": {
+          "nodes": [
+            {
+              "databaseId": 55,
+              "name": "Vibecoding",
+              "slug": "vibecoding-es",
+              "language": {
+                "code": "ES"
+              }
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        }
+      }
+    ]
+  },
+  "articles": {
+    "pageInfo": {
+      "hasNextPage": false
+    },
+    "nodes": [
+      {
+        "databaseId": 97,
+        "slug": "la-experiencia-valex-en-el-wordcamp-bogota-2024",
+        "status": "publish",
+        "isRestricted": false,
+        "hasPassword": false,
+        "categories": {
+          "nodes": [
+            {
+              "databaseId": 12,
+              "name": "ValexWeb",
+              "slug": "valexweb",
+              "language": {
+                "code": "EN"
+              }
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        },
+        "tags": {
+          "nodes": [],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        }
+      },
+      {
+        "databaseId": 95,
+        "slug": "episodio-4-especial-wordcamp-guatemala",
+        "status": "publish",
+        "isRestricted": false,
+        "hasPassword": false,
+        "categories": {
+          "nodes": [
+            {
+              "databaseId": 14,
+              "name": "Podcast",
+              "slug": "podcast",
+              "language": {
+                "code": "EN"
+              }
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        },
+        "tags": {
+          "nodes": [],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        }
+      },
+      {
+        "databaseId": 93,
+        "slug": "descubriendo-playground-la-herramienta-para-hacer-demos",
+        "status": "publish",
+        "isRestricted": false,
+        "hasPassword": false,
+        "categories": {
+          "nodes": [
+            {
+              "databaseId": 13,
+              "name": "WordPress.TV",
+              "slug": "wordpress-tv",
+              "language": {
+                "code": "EN"
+              }
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        },
+        "tags": {
+          "nodes": [],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        }
+      },
+      {
+        "databaseId": 91,
+        "slug": "talkcreando-un-bloque-de-gutenberg-dinamico-a-partir-de-un-shortcode",
+        "status": "publish",
+        "isRestricted": false,
+        "hasPassword": false,
+        "categories": {
+          "nodes": [
+            {
+              "databaseId": 13,
+              "name": "WordPress.TV",
+              "slug": "wordpress-tv",
+              "language": {
+                "code": "EN"
+              }
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        },
+        "tags": {
+          "nodes": [],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        }
+      },
+      {
+        "databaseId": 87,
+        "slug": "talkno-todo-en-wordpress-es-codigo",
+        "status": "publish",
+        "isRestricted": false,
+        "hasPassword": false,
+        "categories": {
+          "nodes": [
+            {
+              "databaseId": 13,
+              "name": "WordPress.TV",
+              "slug": "wordpress-tv",
+              "language": {
+                "code": "EN"
+              }
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        },
+        "tags": {
+          "nodes": [],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        }
+      },
+      {
+        "databaseId": 84,
+        "slug": "podcast-hablemos-de-opensource-y-comunidad",
+        "status": "publish",
+        "isRestricted": false,
+        "hasPassword": false,
+        "categories": {
+          "nodes": [
+            {
+              "databaseId": 14,
+              "name": "Podcast",
+              "slug": "podcast",
+              "language": {
+                "code": "EN"
+              }
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        },
+        "tags": {
+          "nodes": [],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        }
+      },
+      {
+        "databaseId": 82,
+        "slug": "podcast-hablemos-del-2024",
+        "status": "publish",
+        "isRestricted": false,
+        "hasPassword": false,
+        "categories": {
+          "nodes": [
+            {
+              "databaseId": 14,
+              "name": "Podcast",
+              "slug": "podcast",
+              "language": {
+                "code": "EN"
+              }
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        },
+        "tags": {
+          "nodes": [],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        }
+      },
+      {
+        "databaseId": 80,
+        "slug": "charla-el-camino-del-desarrollador-wordpress",
+        "status": "publish",
+        "isRestricted": false,
+        "hasPassword": false,
+        "categories": {
+          "nodes": [
+            {
+              "databaseId": 13,
+              "name": "WordPress.TV",
+              "slug": "wordpress-tv",
+              "language": {
+                "code": "EN"
+              }
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        },
+        "tags": {
+          "nodes": [],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        }
+      },
+      {
+        "databaseId": 78,
+        "slug": "como-dar-mantenimiento-a-tus-sitios-wordpress-con-wp-cli",
+        "status": "publish",
+        "isRestricted": false,
+        "hasPassword": false,
+        "categories": {
+          "nodes": [
+            {
+              "databaseId": 12,
+              "name": "ValexWeb",
+              "slug": "valexweb",
+              "language": {
+                "code": "EN"
+              }
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        },
+        "tags": {
+          "nodes": [],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        }
+      },
+      {
+        "databaseId": 75,
+        "slug": "how-to-build-a-custom-dynamic-gutenberg-block-step-by-step",
+        "status": "publish",
+        "isRestricted": false,
+        "hasPassword": false,
+        "categories": {
+          "nodes": [
+            {
+              "databaseId": 10,
+              "name": "Medium",
+              "slug": "medium",
+              "language": {
+                "code": "EN"
+              }
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        },
+        "tags": {
+          "nodes": [],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        }
+      }
+    ]
+  },
+  "projectSchema": {
+    "fields": [
+      {
+        "name": "aboutPage"
+      },
+      {
+        "name": "articlesFields"
+      },
+      {
+        "name": "content"
+      },
+      {
+        "name": "contentType"
+      },
+      {
+        "name": "contentTypeName"
+      },
+      {
+        "name": "databaseId"
+      },
+      {
+        "name": "date"
+      },
+      {
+        "name": "dateGmt"
+      },
+      {
+        "name": "desiredSlug"
+      },
+      {
+        "name": "editingLockedBy"
+      },
+      {
+        "name": "enclosure"
+      },
+      {
+        "name": "enqueuedScripts"
+      },
+      {
+        "name": "enqueuedStylesheets"
+      },
+      {
+        "name": "excerpt"
+      },
+      {
+        "name": "featuredImage"
+      },
+      {
+        "name": "featuredImageDatabaseId"
+      },
+      {
+        "name": "featuredImageId"
+      },
+      {
+        "name": "guid"
+      },
+      {
+        "name": "hasPassword"
+      },
+      {
+        "name": "homePageFields"
+      },
+      {
+        "name": "id"
+      },
+      {
+        "name": "isComment"
+      },
+      {
+        "name": "isContentNode"
+      },
+      {
+        "name": "isFrontPage"
+      },
+      {
+        "name": "isPostsPage"
+      },
+      {
+        "name": "isPreview"
+      },
+      {
+        "name": "isRestricted"
+      },
+      {
+        "name": "isTermNode"
+      },
+      {
+        "name": "language"
+      },
+      {
+        "name": "lastEditedBy"
+      },
+      {
+        "name": "link"
+      },
+      {
+        "name": "modified"
+      },
+      {
+        "name": "modifiedGmt"
+      },
+      {
+        "name": "password"
+      },
+      {
+        "name": "preview"
+      },
+      {
+        "name": "previewRevisionDatabaseId"
+      },
+      {
+        "name": "previewRevisionId"
+      },
+      {
+        "name": "projectCategories"
+      },
+      {
+        "name": "projectTechnologies"
+      },
+      {
+        "name": "projects"
+      },
+      {
+        "name": "slug"
+      },
+      {
+        "name": "status"
+      },
+      {
+        "name": "template"
+      },
+      {
+        "name": "terms"
+      },
+      {
+        "name": "title"
+      },
+      {
+        "name": "translation"
+      },
+      {
+        "name": "translations"
+      },
+      {
+        "name": "uri"
+      }
+    ]
+  },
+  "projects": {
+    "pageInfo": {
+      "hasNextPage": false
+    },
+    "nodes": [
+      {
+        "databaseId": 200,
+        "title": "alextecuenta.com",
+        "slug": "alextecuenta-com-2",
+        "content": "\n<p class=\"wp-block-paragraph\">Brindé soporte técnico, gestioné el SEO e implementé medidas de seguridad para alextecuenta.</p>\n",
+        "modified": "2026-10-25T06:00:34",
+        "status": "publish",
+        "isRestricted": false,
+        "hasPassword": false,
+        "language": {
+          "code": "ES"
+        },
+        "translations": [
+          {
+            "databaseId": 144,
+            "slug": "alextecuenta-com",
+            "status": "publish",
+            "isRestricted": false,
+            "hasPassword": false,
+            "language": {
+              "code": "EN"
+            }
+          }
+        ],
+        "projects": {
+          "projectTagline": "Soporte técnico, SEO y seguridad",
+          "githuburl": null,
+          "websiteurl": "https://alextecuenta.com/"
+        },
+        "featuredImage": {
+          "node": {
+            "databaseId": 141,
+            "sourceUrl": "https://content.alexcuadra.dev/wp-content/uploads/2026/01/Screenshot-2025-11-28-at-5.55.23-PM-scaled.png"
+          }
+        },
+        "projectCategories": {
+          "nodes": [
+            {
+              "databaseId": 74,
+              "name": "Soporte técnico",
+              "slug": "soporte-tecnico",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 72,
+                  "slug": "technical-support",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        },
+        "projectTechnologies": {
+          "nodes": [
+            {
+              "databaseId": 138,
+              "name": "DNS",
+              "slug": "dns-es",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 136,
+                  "slug": "dns",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 150,
+              "name": "Optimización",
+              "slug": "optimization-es",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 148,
+                  "slug": "optimization",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 154,
+              "name": "Seguridad",
+              "slug": "security-es",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 152,
+                  "slug": "security",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 146,
+              "name": "Temas",
+              "slug": "themes-es",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 144,
+                  "slug": "themes",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        }
+      },
+      {
+        "databaseId": 199,
+        "title": "makersunite.eu",
+        "slug": "makersunite-eu-2",
+        "content": "\n<p class=\"wp-block-paragraph\">Implementé el rediseño y configuré el hosting de Makers Unite.</p>\n",
+        "modified": "2026-10-25T06:00:26",
+        "status": "publish",
+        "isRestricted": false,
+        "hasPassword": false,
+        "language": {
+          "code": "ES"
+        },
+        "translations": [
+          {
+            "databaseId": 137,
+            "slug": "makersunite-eu",
+            "status": "publish",
+            "isRestricted": false,
+            "hasPassword": false,
+            "language": {
+              "code": "EN"
+            }
+          }
+        ],
+        "projects": {
+          "projectTagline": "Implementación del rediseño y configuración de hosting",
+          "githuburl": null,
+          "websiteurl": "https://www.makersunite.eu/"
+        },
+        "featuredImage": {
+          "node": {
+            "databaseId": 138,
+            "sourceUrl": "https://content.alexcuadra.dev/wp-content/uploads/2026/01/Screenshot-2025-11-28-at-5.45.47-PM-scaled.png"
+          }
+        },
+        "projectCategories": {
+          "nodes": [
+            {
+              "databaseId": 74,
+              "name": "Soporte técnico",
+              "slug": "soporte-tecnico",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 72,
+                  "slug": "technical-support",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        },
+        "projectTechnologies": {
+          "nodes": [
+            {
+              "databaseId": 134,
+              "name": "Divi",
+              "slug": "divi-es",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 132,
+                  "slug": "divi",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 138,
+              "name": "DNS",
+              "slug": "dns-es",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 136,
+                  "slug": "dns",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 142,
+              "name": "SEO",
+              "slug": "seo-es",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 140,
+                  "slug": "seo",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        }
+      },
+      {
+        "databaseId": 198,
+        "title": "norceca.info",
+        "slug": "norceca-info-2",
+        "content": "\n<p class=\"wp-block-paragraph\">Este sitio web utiliza numerosas personalizaciones con ACF.</p>\n",
+        "modified": "2026-10-25T06:00:09",
+        "status": "publish",
+        "isRestricted": false,
+        "hasPassword": false,
+        "language": {
+          "code": "ES"
+        },
+        "translations": [
+          {
+            "databaseId": 42,
+            "slug": "norceca-info",
+            "status": "publish",
+            "isRestricted": false,
+            "hasPassword": false,
+            "language": {
+              "code": "EN"
+            }
+          }
+        ],
+        "projects": {
+          "projectTagline": "Un sitio web complejo para una organización deportiva",
+          "githuburl": "https://github.com/alexcu21/alexcu21",
+          "websiteurl": "https://norceca.info"
+        },
+        "featuredImage": {
+          "node": {
+            "databaseId": 51,
+            "sourceUrl": "https://content.alexcuadra.dev/wp-content/uploads/2024/12/norceca_FI.png"
+          }
+        },
+        "projectCategories": {
+          "nodes": [
+            {
+              "databaseId": 70,
+              "name": "Sitio WordPress",
+              "slug": "sitio-wordpress",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 68,
+                  "slug": "wordpress-site",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        },
+        "projectTechnologies": {
+          "nodes": [
+            {
+              "databaseId": 94,
+              "name": "ACF",
+              "slug": "acf-es",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 92,
+                  "slug": "acf",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 98,
+              "name": "CPT",
+              "slug": "cpt-es",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 96,
+                  "slug": "cpt",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 82,
+              "name": "WordPress",
+              "slug": "wordpress-es",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 80,
+                  "slug": "wordpress",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        }
+      },
+      {
+        "databaseId": 197,
+        "title": "valexweb.com",
+        "slug": "valexweb-com-2",
+        "content": "\n<p class=\"wp-block-paragraph\">Este proyecto está desarrollado con WordPress e incluye numerosas personalizaciones, como un tema basado en bloques y un bloque personalizado. Esto permite a los usuarios personalizar las páginas y las páginas de destino.</p>\n",
+        "modified": "2026-10-25T06:00:13",
+        "status": "publish",
+        "isRestricted": false,
+        "hasPassword": false,
+        "language": {
+          "code": "ES"
+        },
+        "translations": [
+          {
+            "databaseId": 43,
+            "slug": "valexweb-com",
+            "status": "publish",
+            "isRestricted": false,
+            "hasPassword": false,
+            "language": {
+              "code": "EN"
+            }
+          }
+        ],
+        "projects": {
+          "projectTagline": "El reto de crear mi propio negocio",
+          "githuburl": "https://github.com/alexcu21/wplabtheme",
+          "websiteurl": "https://valexweb.com"
+        },
+        "featuredImage": {
+          "node": {
+            "databaseId": 53,
+            "sourceUrl": "https://content.alexcuadra.dev/wp-content/uploads/2024/12/valexweb_FI.png"
+          }
+        },
+        "projectCategories": {
+          "nodes": [
+            {
+              "databaseId": 70,
+              "name": "Sitio WordPress",
+              "slug": "sitio-wordpress",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 68,
+                  "slug": "wordpress-site",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        },
+        "projectTechnologies": {
+          "nodes": [
+            {
+              "databaseId": 106,
+              "name": "Bloques personalizados",
+              "slug": "custom-blocks-es",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 104,
+                  "slug": "custom-blocks",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 102,
+              "name": "Temas de bloques",
+              "slug": "block-themes-es",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 100,
+                  "slug": "block-themes",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 82,
+              "name": "WordPress",
+              "slug": "wordpress-es",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 80,
+                  "slug": "wordpress",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        }
+      },
+      {
+        "databaseId": 196,
+        "title": "christianitytoday.com",
+        "slug": "christianitytoday-com-2",
+        "content": "\n<p class=\"wp-block-paragraph\"><strong>Rol:</strong> Desarrollador frontend (contratista externo)</p>\n\n\n\n<p class=\"wp-block-paragraph\"><strong>Tecnologías:</strong> Editor de bloques de WordPress (Gutenberg), React, Svelte, Advanced Custom Fields (ACF Pro), API REST de WordPress, CSS moderno y SCSS.</p>\n\n\n\n<h2 class=\"wp-block-heading\">Resumen</h2>\n\n\n\n<p class=\"wp-block-paragraph\">Desarrollé un conjunto de bloques personalizados listo para producción para la plataforma de publicación digital de Christianity Today, convirtiendo especificaciones de diseño complejas y detalladas en componentes editoriales flexibles y reutilizables dentro del editor de bloques de WordPress.</p>\n\n\n\n<h2 class=\"wp-block-heading\">El reto</h2>\n\n\n\n<p class=\"wp-block-paragraph\">La publicación necesitaba herramientas editoriales modernas para crear reportajes extensos y páginas de destino con una presentación visual elaborada. El objetivo principal era reproducir con precisión las especificaciones del sistema de diseño en Figma y, al mismo tiempo, mantener una experiencia de edición intuitiva, eficiente y resistente a errores de composición en distintos tamaños de pantalla.</p>\n\n\n\n<h2 class=\"wp-block-heading\">La solución</h2>\n\n\n\n<p class=\"wp-block-paragraph\">Como contratista externo de frontend, desarrollé bloques personalizados con React, Svelte y ACF Pro, integrados con la API de bloques de WordPress. Establecí una arquitectura modular de estilos y propiedades estrictas de los componentes para aplicar los tokens de diseño —tipografía, espaciado y comportamiento de la rejilla adaptable— directamente en el editor. Esto ofrecía a los creadores de contenido una experiencia WYSIWYG que reflejaba la presentación del sitio sin desviaciones de composición.</p>\n\n\n\n<h2 class=\"wp-block-heading\">Puntos clave</h2>\n\n\n\n<ul class=\"wp-block-list\">\n<li><strong>Fidelidad al diseño:</strong> Convertí sistemas de diseño editorial detallados en componentes fluidos y adaptables que reproducían las especificaciones de espaciado y las escalas tipográficas.</li>\n\n<li><strong>Arquitectura híbrida:</strong> Combiné React y componentes ligeros de Svelte con la API de bloques de WordPress para favorecer el rendimiento del editor y generar un marcado frontend limpio y desacoplado.</li>\n\n<li><strong>Edición de contenido más sencilla:</strong> Los equipos editoriales podían componer diseños dinámicos de forma independiente, con controles programáticos para conservar la coherencia de marca y la integridad de la composición.</li>\n\n<li><strong>Integración con el tema:</strong> Construí componentes modulares y desacoplados para integrarse con la arquitectura del tema de WordPress existente y su proceso de despliegue.</li>\n</ul>\n",
+        "modified": "2026-10-25T06:00:23",
+        "status": "publish",
+        "isRestricted": false,
+        "hasPassword": false,
+        "language": {
+          "code": "ES"
+        },
+        "translations": [
+          {
+            "databaseId": 146,
+            "slug": "christianitytoday-com",
+            "status": "publish",
+            "isRestricted": false,
+            "hasPassword": false,
+            "language": {
+              "code": "EN"
+            }
+          }
+        ],
+        "projects": {
+          "projectTagline": "Bloques personalizados de WordPress para el tema",
+          "githuburl": null,
+          "websiteurl": "https://www.christianitytoday.com/"
+        },
+        "featuredImage": {
+          "node": {
+            "databaseId": 142,
+            "sourceUrl": "https://content.alexcuadra.dev/wp-content/uploads/2026/01/Screenshot-2025-11-28-at-8.01.15-PM-scaled.png"
+          }
+        },
+        "projectCategories": {
+          "nodes": [
+            {
+              "databaseId": 78,
+              "name": "Bloques personalizados de WordPress",
+              "slug": "bloques-wordpress",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 76,
+                  "slug": "wordpress-blocks",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        },
+        "projectTechnologies": {
+          "nodes": [
+            {
+              "databaseId": 118,
+              "name": "ACF Pro",
+              "slug": "acf-pro-es",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 116,
+                  "slug": "acf-pro",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 122,
+              "name": "API REST de WordPress",
+              "slug": "wordpress-rest-api-es",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 120,
+                  "slug": "wordpress-rest-api",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 126,
+              "name": "CSS",
+              "slug": "css-es",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 124,
+                  "slug": "css",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 158,
+              "name": "Editor de bloques (Gutenberg)",
+              "slug": "gutenberg-es",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 156,
+                  "slug": "gutenberg",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 110,
+              "name": "React",
+              "slug": "react-es",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 108,
+                  "slug": "react",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 130,
+              "name": "SCSS",
+              "slug": "scss-es",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 128,
+                  "slug": "scss",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 114,
+              "name": "Svelte",
+              "slug": "svelte-es",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 112,
+                  "slug": "svelte",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 82,
+              "name": "WordPress",
+              "slug": "wordpress-es",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 80,
+                  "slug": "wordpress",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        }
+      },
+      {
+        "databaseId": 195,
+        "title": "alexcuadra.dev",
+        "slug": "alexcuadra-dev-2",
+        "content": "\n<p class=\"wp-block-paragraph\">Este es mi primer proyecto con <a href=\"https://astro.build/\">Astro</a>. Disfruto trabajar con este framework y he aprendido mucho al utilizarlo.</p>\n",
+        "modified": "2026-10-25T05:56:36",
+        "status": "publish",
+        "isRestricted": false,
+        "hasPassword": false,
+        "language": {
+          "code": "ES"
+        },
+        "translations": [
+          {
+            "databaseId": 50,
+            "slug": "alexcuadra-dev",
+            "status": "publish",
+            "isRestricted": false,
+            "hasPassword": false,
+            "language": {
+              "code": "EN"
+            }
+          }
+        ],
+        "projects": {
+          "projectTagline": "Un sitio de portfolio con Astro",
+          "githuburl": "https://github.com/alexcu21/alexcuadra.dev",
+          "websiteurl": "https://alexcuadra.dev"
+        },
+        "featuredImage": {
+          "node": {
+            "databaseId": 52,
+            "sourceUrl": "https://content.alexcuadra.dev/wp-content/uploads/2024/12/alexcuadra_FI.png"
+          }
+        },
+        "projectCategories": {
+          "nodes": [
+            {
+              "databaseId": 66,
+              "name": "Aplicación frontend",
+              "slug": "aplicacion-frontend",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 64,
+                  "slug": "frontend-app",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        },
+        "projectTechnologies": {
+          "nodes": [
+            {
+              "databaseId": 86,
+              "name": "Astro",
+              "slug": "astro-es",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 84,
+                  "slug": "astro",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 90,
+              "name": "JavaScript",
+              "slug": "javascript-es",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 88,
+                  "slug": "javascript",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 82,
+              "name": "WordPress",
+              "slug": "wordpress-es",
+              "language": {
+                "code": "ES"
+              },
+              "translations": [
+                {
+                  "databaseId": 80,
+                  "slug": "wordpress",
+                  "language": {
+                    "code": "EN"
+                  }
+                }
+              ]
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        }
+      },
+      {
+        "databaseId": 146,
+        "title": "christianitytoday.com",
+        "slug": "christianitytoday-com",
+        "content": "\n<p class=\"wp-block-paragraph\"><strong>Role:</strong> Frontend Developer (Contractor)</p>\n\n\n\n<p class=\"wp-block-paragraph\"><strong>Tech Stack:</strong> WordPress Block Editor (Gutenberg), React, Svelte, Advanced Custom Fields (ACF Pro), WordPress REST API, Modern CSS / SCSS</p>\n\n\n\n<h2 class=\"wp-block-heading\">Overview</h2>\n\n\n\n<p class=\"wp-block-paragraph\">Engineered a custom, production-ready block suite for Christianity Today’s digital publishing platform, translating complex, high-fidelity design specifications into flexible, reusable editorial components within the WordPress block editor.</p>\n\n\n\n<h2 class=\"wp-block-heading\">The Challenge</h2>\n\n\n\n<p class=\"wp-block-paragraph\">The publication required a modern editorial toolkit to create rich, visually sophisticated long-form stories and landing pages. The core objective was achieving pixel-perfect fidelity with strict Figma design systems while keeping the editing experience intuitive, performant, and resilient against layout breakage across different viewports.</p>\n\n\n\n<h2 class=\"wp-block-heading\">The Solution</h2>\n\n\n\n<p class=\"wp-block-paragraph\">Operating as an external frontend contractor, I developed custom blocks leveraging React, Svelte, and ACF Pro integrated with the WordPress Block API. I established modular styling architectures and strict component props to enforce design tokens (typography, spacing, responsive grid behaviors) directly in the editor canvas, providing content creators with a true WYSIWYG experience that mirrored frontend output with zero layout drift.</p>\n\n\n\n<h2 class=\"wp-block-heading\">Key Highlights</h2>\n\n\n\n<ul class=\"wp-block-list\">\n<li><strong>Pixel-Perfect Execution:</strong> Translated intricate editorial design systems into responsive, fluid components matching design specifications down to exact spacing and typography scales.</li>\n\n\n\n<li><strong>Hybrid Modern Architecture:</strong> Combined the power of React and lightweight Svelte components with the WordPress Block API to ensure optimal editor performance and clean, decoupled frontend markup.</li>\n\n\n\n<li><strong>Streamlined Content Authoring:</strong> Empowered editorial teams to assemble dynamic layouts independently while programmatically safeguarding brand consistency and layout integrity.</li>\n\n\n\n<li><strong>Seamless Theme Integration:</strong> Built modular, decoupled components engineered to integrate cleanly into the client’s existing WordPress theme architecture and deployment pipeline.</li>\n</ul>\n",
+        "modified": "2026-10-25T06:00:21",
+        "status": "publish",
+        "isRestricted": false,
+        "hasPassword": false,
+        "language": {
+          "code": "EN"
+        },
+        "translations": [
+          {
+            "databaseId": 196,
+            "slug": "christianitytoday-com-2",
+            "status": "publish",
+            "isRestricted": false,
+            "hasPassword": false,
+            "language": {
+              "code": "ES"
+            }
+          }
+        ],
+        "projects": {
+          "projectTagline": "Custom WordPress blocks for the theme",
+          "githuburl": null,
+          "websiteurl": "https://www.christianitytoday.com/"
+        },
+        "featuredImage": {
+          "node": {
+            "databaseId": 142,
+            "sourceUrl": "https://content.alexcuadra.dev/wp-content/uploads/2026/01/Screenshot-2025-11-28-at-8.01.15-PM-scaled.png"
+          }
+        },
+        "projectCategories": {
+          "nodes": [
+            {
+              "databaseId": 76,
+              "name": "Custom WordPress Blocks",
+              "slug": "wordpress-blocks",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 78,
+                  "slug": "bloques-wordpress",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        },
+        "projectTechnologies": {
+          "nodes": [
+            {
+              "databaseId": 116,
+              "name": "ACF Pro",
+              "slug": "acf-pro",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 118,
+                  "slug": "acf-pro-es",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 124,
+              "name": "CSS",
+              "slug": "css",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 126,
+                  "slug": "css-es",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 108,
+              "name": "React",
+              "slug": "react",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 110,
+                  "slug": "react-es",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 128,
+              "name": "SCSS",
+              "slug": "scss",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 130,
+                  "slug": "scss-es",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 112,
+              "name": "Svelte",
+              "slug": "svelte",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 114,
+                  "slug": "svelte-es",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 80,
+              "name": "WordPress",
+              "slug": "wordpress",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 82,
+                  "slug": "wordpress-es",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 156,
+              "name": "WordPress Block Editor (Gutenberg)",
+              "slug": "gutenberg",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 158,
+                  "slug": "gutenberg-es",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 120,
+              "name": "WordPress REST API",
+              "slug": "wordpress-rest-api",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 122,
+                  "slug": "wordpress-rest-api-es",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        }
+      },
+      {
+        "databaseId": 144,
+        "title": "alextecuenta.com",
+        "slug": "alextecuenta-com",
+        "content": "\n<p class=\"wp-block-paragraph\">I provided technical support, managed SEO and implemented security measures for alextecuenta.</p>\n",
+        "modified": "2026-10-25T06:00:32",
+        "status": "publish",
+        "isRestricted": false,
+        "hasPassword": false,
+        "language": {
+          "code": "EN"
+        },
+        "translations": [
+          {
+            "databaseId": 200,
+            "slug": "alextecuenta-com-2",
+            "status": "publish",
+            "isRestricted": false,
+            "hasPassword": false,
+            "language": {
+              "code": "ES"
+            }
+          }
+        ],
+        "projects": {
+          "projectTagline": "Technical support, SEO and security",
+          "githuburl": null,
+          "websiteurl": "https://alextecuenta.com/"
+        },
+        "featuredImage": {
+          "node": {
+            "databaseId": 141,
+            "sourceUrl": "https://content.alexcuadra.dev/wp-content/uploads/2026/01/Screenshot-2025-11-28-at-5.55.23-PM-scaled.png"
+          }
+        },
+        "projectCategories": {
+          "nodes": [
+            {
+              "databaseId": 72,
+              "name": "Technical Support",
+              "slug": "technical-support",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 74,
+                  "slug": "soporte-tecnico",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        },
+        "projectTechnologies": {
+          "nodes": [
+            {
+              "databaseId": 136,
+              "name": "DNS",
+              "slug": "dns",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 138,
+                  "slug": "dns-es",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 148,
+              "name": "Optimization",
+              "slug": "optimization",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 150,
+                  "slug": "optimization-es",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 152,
+              "name": "Security",
+              "slug": "security",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 154,
+                  "slug": "security-es",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 144,
+              "name": "Themes",
+              "slug": "themes",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 146,
+                  "slug": "themes-es",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        }
+      },
+      {
+        "databaseId": 137,
+        "title": "makersunite.eu",
+        "slug": "makersunite-eu",
+        "content": "\n<p class=\"wp-block-paragraph\">I implemented the redesign and configured the hosting for Makers Unite.</p>\n",
+        "modified": "2026-10-25T06:00:24",
+        "status": "publish",
+        "isRestricted": false,
+        "hasPassword": false,
+        "language": {
+          "code": "EN"
+        },
+        "translations": [
+          {
+            "databaseId": 199,
+            "slug": "makersunite-eu-2",
+            "status": "publish",
+            "isRestricted": false,
+            "hasPassword": false,
+            "language": {
+              "code": "ES"
+            }
+          }
+        ],
+        "projects": {
+          "projectTagline": "Redesign implementation and hosting configuration",
+          "githuburl": null,
+          "websiteurl": "https://www.makersunite.eu/"
+        },
+        "featuredImage": {
+          "node": {
+            "databaseId": 138,
+            "sourceUrl": "https://content.alexcuadra.dev/wp-content/uploads/2026/01/Screenshot-2025-11-28-at-5.45.47-PM-scaled.png"
+          }
+        },
+        "projectCategories": {
+          "nodes": [
+            {
+              "databaseId": 72,
+              "name": "Technical Support",
+              "slug": "technical-support",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 74,
+                  "slug": "soporte-tecnico",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        },
+        "projectTechnologies": {
+          "nodes": [
+            {
+              "databaseId": 132,
+              "name": "Divi",
+              "slug": "divi",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 134,
+                  "slug": "divi-es",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 136,
+              "name": "DNS",
+              "slug": "dns",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 138,
+                  "slug": "dns-es",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 140,
+              "name": "SEO",
+              "slug": "seo",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 142,
+                  "slug": "seo-es",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        }
+      },
+      {
+        "databaseId": 50,
+        "title": "alexcuadra.dev",
+        "slug": "alexcuadra-dev",
+        "content": "<p>This is my first <a href=\"https://astro.build/\">Astro</a> project, I enjoy it and learn a lot from this framework.</p>\n\n\n<p class=\"wp-block-paragraph\"></p>\n",
+        "modified": "2026-10-25T05:56:15",
+        "status": "publish",
+        "isRestricted": false,
+        "hasPassword": false,
+        "language": {
+          "code": "EN"
+        },
+        "translations": [
+          {
+            "databaseId": 195,
+            "slug": "alexcuadra-dev-2",
+            "status": "publish",
+            "isRestricted": false,
+            "hasPassword": false,
+            "language": {
+              "code": "ES"
+            }
+          }
+        ],
+        "projects": {
+          "projectTagline": "A portfolio website with Astro",
+          "githuburl": "https://github.com/alexcu21/alexcuadra.dev",
+          "websiteurl": "https://alexcuadra.dev"
+        },
+        "featuredImage": {
+          "node": {
+            "databaseId": 52,
+            "sourceUrl": "https://content.alexcuadra.dev/wp-content/uploads/2024/12/alexcuadra_FI.png"
+          }
+        },
+        "projectCategories": {
+          "nodes": [
+            {
+              "databaseId": 64,
+              "name": "Frontend App",
+              "slug": "frontend-app",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 66,
+                  "slug": "aplicacion-frontend",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        },
+        "projectTechnologies": {
+          "nodes": [
+            {
+              "databaseId": 84,
+              "name": "Astro",
+              "slug": "astro",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 86,
+                  "slug": "astro-es",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 88,
+              "name": "JavaScript",
+              "slug": "javascript",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 90,
+                  "slug": "javascript-es",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 80,
+              "name": "WordPress",
+              "slug": "wordpress",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 82,
+                  "slug": "wordpress-es",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        }
+      },
+      {
+        "databaseId": 42,
+        "title": "norceca.info",
+        "slug": "norceca-info",
+        "content": "\n<p class=\"wp-block-paragraph\"><strong>Role:</strong> Lead Developer</p>\n\n\n\n<p class=\"wp-block-paragraph\"><strong>Tech Stack:</strong> WordPress, PHP (OOP), Advanced Custom Fields (ACF Pro), JavaScript (Fetch / REST API), CSS3 / Sass</p>\n\n\n\n<h4 class=\"wp-block-heading\">Overview</h4>\n\n\n\n<p class=\"wp-block-paragraph\">A dynamic platform built for real-time sports tournament management and tracking, engineered to centralize live score publishing and participant documentation distribution.</p>\n\n\n\n<h4 class=\"wp-block-heading\">The Challenge</h4>\n\n\n\n<p class=\"wp-block-paragraph\">The client required an agile system capable of reflecting instant match scores and tournament standings during live events. The core priority was eliminating operational dependencies on technical staff for real-time score updates, bracket modifications, and documentation management.</p>\n\n\n\n<h4 class=\"wp-block-heading\">The Solution</h4>\n\n\n\n<p class=\"wp-block-paragraph\">As the Lead Developer, I architected a modular content structure using custom post types and custom fields, transforming the WordPress admin dashboard into an intuitive, error-proof editorial environment. For live scores and standings, I implemented a lightweight, decoupled data-fetching workflow via custom REST API endpoints, enabling instant client-side updates without triggering full page reloads or overloading server resources during high-traffic matches.</p>\n\n\n\n<h4 class=\"wp-block-heading\">Key Highlights</h4>\n\n\n\n<ul class=\"wp-block-list\">\n<li><strong>Real-Time Score &amp; Standings Tracking:</strong> Instant updates to scoreboards and tournament tables with zero page refreshes.</li>\n\n\n\n<li><strong>Autonomous Editorial Workflow:</strong> Structured input validation that prevents human error and removes developer overhead during live matches.</li>\n\n\n\n<li><strong>Centralized Document Hub:</strong> Secure, organized repository for tournament rules, registration forms, and guidelines.</li>\n\n\n\n<li><strong>High-Concurrency Performance:</strong> Optimized queries and data payload caching built to withstand traffic surges on competition days.</li>\n</ul>\n\n\n\n<p class=\"wp-block-paragraph\"></p>\n\n\n\n<p class=\"wp-block-paragraph\"></p>\n",
+        "modified": "2026-10-25T06:00:08",
+        "status": "publish",
+        "isRestricted": false,
+        "hasPassword": false,
+        "language": {
+          "code": "EN"
+        },
+        "translations": [
+          {
+            "databaseId": 198,
+            "slug": "norceca-info-2",
+            "status": "publish",
+            "isRestricted": false,
+            "hasPassword": false,
+            "language": {
+              "code": "ES"
+            }
+          }
+        ],
+        "projects": {
+          "projectTagline": "A complex web for a sport organization",
+          "githuburl": "https://github.com/alexcu21/alexcu21",
+          "websiteurl": "https://norceca.info"
+        },
+        "featuredImage": {
+          "node": {
+            "databaseId": 51,
+            "sourceUrl": "https://content.alexcuadra.dev/wp-content/uploads/2024/12/norceca_FI.png"
+          }
+        },
+        "projectCategories": {
+          "nodes": [
+            {
+              "databaseId": 68,
+              "name": "WordPress Site",
+              "slug": "wordpress-site",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 70,
+                  "slug": "sitio-wordpress",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        },
+        "projectTechnologies": {
+          "nodes": [
+            {
+              "databaseId": 92,
+              "name": "ACF",
+              "slug": "acf",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 94,
+                  "slug": "acf-es",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 96,
+              "name": "CPT",
+              "slug": "cpt",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 98,
+                  "slug": "cpt-es",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 80,
+              "name": "WordPress",
+              "slug": "wordpress",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 82,
+                  "slug": "wordpress-es",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        }
+      },
+      {
+        "databaseId": 43,
+        "title": "valexweb.com",
+        "slug": "valexweb-com",
+        "content": "<p>This is a project made on WordPress that includes a lot of customizations, like a block based theme and custom block. That allow to any users get more customized the pages and landing pages.</p>\n",
+        "modified": "2026-10-25T06:00:11",
+        "status": "publish",
+        "isRestricted": false,
+        "hasPassword": false,
+        "language": {
+          "code": "EN"
+        },
+        "translations": [
+          {
+            "databaseId": 197,
+            "slug": "valexweb-com-2",
+            "status": "publish",
+            "isRestricted": false,
+            "hasPassword": false,
+            "language": {
+              "code": "ES"
+            }
+          }
+        ],
+        "projects": {
+          "projectTagline": "The challenge of create my own bussiness.",
+          "githuburl": "https://github.com/alexcu21/wplabtheme",
+          "websiteurl": "https://valexweb.com"
+        },
+        "featuredImage": {
+          "node": {
+            "databaseId": 53,
+            "sourceUrl": "https://content.alexcuadra.dev/wp-content/uploads/2024/12/valexweb_FI.png"
+          }
+        },
+        "projectCategories": {
+          "nodes": [
+            {
+              "databaseId": 68,
+              "name": "WordPress Site",
+              "slug": "wordpress-site",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 70,
+                  "slug": "sitio-wordpress",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        },
+        "projectTechnologies": {
+          "nodes": [
+            {
+              "databaseId": 100,
+              "name": "Block Themes",
+              "slug": "block-themes",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 102,
+                  "slug": "block-themes-es",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 104,
+              "name": "Custom Blocks",
+              "slug": "custom-blocks",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 106,
+                  "slug": "custom-blocks-es",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            },
+            {
+              "databaseId": 80,
+              "name": "WordPress",
+              "slug": "wordpress",
+              "language": {
+                "code": "EN"
+              },
+              "translations": [
+                {
+                  "databaseId": 82,
+                  "slug": "wordpress-es",
+                  "language": {
+                    "code": "ES"
+                  }
+                }
+              ]
+            }
+          ],
+          "pageInfo": {
+            "hasNextPage": false
+          }
+        }
+      }
+    ]
+  }
+}

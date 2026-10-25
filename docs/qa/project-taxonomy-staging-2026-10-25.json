@@ -1,0 +1,28 @@
+{
+  "checkedAt": "2026-10-25T15:41:43.670Z",
+  "version": "a67ef581-766b-46d3-997d-aa1d18e55b1e",
+  "checks": [
+    {
+      "path": "/es/proyectos/",
+      "status": 200,
+      "retryAfter": null,
+      "auth": "verified",
+      "robots": "noindex, nofollow",
+      "categories": true,
+      "technologies": true,
+      "dedicated": true,
+      "gutenberg": true
+    },
+    {
+      "path": "/es/proyectos/christianitytoday-com-2",
+      "status": 200,
+      "retryAfter": null,
+      "auth": "verified",
+      "robots": "noindex, nofollow",
+      "categories": true,
+      "technologies": true,
+      "dedicated": true,
+      "gutenberg": true
+    }
+  ]
+}

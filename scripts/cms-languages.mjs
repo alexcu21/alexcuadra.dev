@@ -35,8 +35,8 @@ async function main() {
     const inventory = await run(`query PublishedLanguageInventory {
       projects(first: 100, where: {language: ALL, status: PUBLISH, hasPassword: false}) {
         pageInfo { hasNextPage } nodes { databaseId slug language { code }
-          categories { nodes { databaseId slug language { code } } }
-          tags { nodes { databaseId slug language { code } } }
+          categories: projectCategories(first: 100) { nodes { databaseId slug language { code } } }
+          tags: projectTechnologies(first: 100) { nodes { databaseId slug language { code } } }
         }
       }
       posts(first: 100, where: {language: ALL, status: PUBLISH, hasPassword: false}) {

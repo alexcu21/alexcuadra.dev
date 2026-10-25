@@ -6,7 +6,9 @@ import { withCmsRequest } from '../src/data/cms-request.js';
 
 const node = (code, overrides = {}) => ({ status: 'publish', isRestricted: false, hasPassword: false,
   databaseId: 1, id: 'public', slug: 'public', title: 'Public', content: 'Published body',
-  language: { code }, translations: [], ...overrides });
+  language: { code }, translations: [],
+  categories: { nodes: [], pageInfo: { hasNextPage: false } },
+  tags: { nodes: [], pageInfo: { hasNextPage: false } }, ...overrides });
 const page = (type, nodes, hasNextPage = false, endCursor = null) => ({
   [type]: { nodes, pageInfo: { hasNextPage, endCursor } },
 });

@@ -86,7 +86,7 @@ export const getProjectsInfo = async (locale) => {
                             projectTagline
                             websiteurl
                         }
-                    tags {
+                    tags: projectTechnologies(first: 100) {
                         nodes {
                         name
                         }

@@ -4,13 +4,19 @@ if (wp_get_environment_type() !== 'local') { return; }
 add_filter('wp_is_application_passwords_available', '__return_true');
 add_action('after_setup_theme', function () { add_theme_support('post-thumbnails'); });
 add_action('init', function () {
+    foreach (['project_category' => ['projectCategory', 'projectCategories', true],
+        'project_technology' => ['projectTechnology', 'projectTechnologies', false]] as $taxonomy => $args) {
+        register_taxonomy($taxonomy, ['project'], ['public' => true, 'show_in_rest' => true,
+            'show_in_graphql' => true, 'graphql_single_name' => $args[0],
+            'graphql_plural_name' => $args[1], 'hierarchical' => $args[2]]);
+    }
     foreach (['project' => ['project', 'projects'], 'articles' => ['article', 'articles']] as $key => $names) {
         register_post_type($key, [
             'label' => 'Synthetic ' . $names[1], 'public' => true, 'show_in_rest' => true,
             'show_in_graphql' => true, 'graphql_single_name' => $names[0],
             'capability_type' => $key === 'project' ? 'page' : 'post',
             'graphql_plural_name' => $names[1], 'supports' => ['title', 'editor', 'excerpt', 'custom-fields', 'thumbnail'],
-            'taxonomies' => ['category', 'post_tag'],
+            'taxonomies' => $key === 'project' ? ['project_category', 'project_technology'] : ['category', 'post_tag'],
         ]);
     }
 }, 0);

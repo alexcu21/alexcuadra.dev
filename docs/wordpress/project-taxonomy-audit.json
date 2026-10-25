@@ -1,0 +1,528 @@
+{
+  "capturedAt": "2026-10-25T05:39:47.578Z",
+  "scope": "Read-only public project taxonomy inventory; no source or term changes.",
+  "projects": [
+    {
+      "databaseId": 200,
+      "title": "alextecuenta.com",
+      "slug": "alextecuenta-com-2",
+      "status": "publish",
+      "isRestricted": false,
+      "hasPassword": false,
+      "language": {
+        "code": "ES"
+      },
+      "translations": [
+        {
+          "databaseId": 144,
+          "slug": "alextecuenta-com",
+          "status": "publish",
+          "isRestricted": false,
+          "hasPassword": false,
+          "language": {
+            "code": "EN"
+          }
+        }
+      ],
+      "categories": {
+        "nodes": [],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      },
+      "tags": {
+        "nodes": [],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      }
+    },
+    {
+      "databaseId": 199,
+      "title": "makersunite.eu",
+      "slug": "makersunite-eu-2",
+      "status": "publish",
+      "isRestricted": false,
+      "hasPassword": false,
+      "language": {
+        "code": "ES"
+      },
+      "translations": [
+        {
+          "databaseId": 137,
+          "slug": "makersunite-eu",
+          "status": "publish",
+          "isRestricted": false,
+          "hasPassword": false,
+          "language": {
+            "code": "EN"
+          }
+        }
+      ],
+      "categories": {
+        "nodes": [],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      },
+      "tags": {
+        "nodes": [],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      }
+    },
+    {
+      "databaseId": 198,
+      "title": "norceca.info",
+      "slug": "norceca-info-2",
+      "status": "publish",
+      "isRestricted": false,
+      "hasPassword": false,
+      "language": {
+        "code": "ES"
+      },
+      "translations": [
+        {
+          "databaseId": 42,
+          "slug": "norceca-info",
+          "status": "publish",
+          "isRestricted": false,
+          "hasPassword": false,
+          "language": {
+            "code": "EN"
+          }
+        }
+      ],
+      "categories": {
+        "nodes": [],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      },
+      "tags": {
+        "nodes": [],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      }
+    },
+    {
+      "databaseId": 197,
+      "title": "valexweb.com",
+      "slug": "valexweb-com-2",
+      "status": "publish",
+      "isRestricted": false,
+      "hasPassword": false,
+      "language": {
+        "code": "ES"
+      },
+      "translations": [
+        {
+          "databaseId": 43,
+          "slug": "valexweb-com",
+          "status": "publish",
+          "isRestricted": false,
+          "hasPassword": false,
+          "language": {
+            "code": "EN"
+          }
+        }
+      ],
+      "categories": {
+        "nodes": [],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      },
+      "tags": {
+        "nodes": [],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      }
+    },
+    {
+      "databaseId": 196,
+      "title": "christianitytoday.com",
+      "slug": "christianitytoday-com-2",
+      "status": "publish",
+      "isRestricted": false,
+      "hasPassword": false,
+      "language": {
+        "code": "ES"
+      },
+      "translations": [
+        {
+          "databaseId": 146,
+          "slug": "christianitytoday-com",
+          "status": "publish",
+          "isRestricted": false,
+          "hasPassword": false,
+          "language": {
+            "code": "EN"
+          }
+        }
+      ],
+      "categories": {
+        "nodes": [],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      },
+      "tags": {
+        "nodes": [],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      }
+    },
+    {
+      "databaseId": 195,
+      "title": "alexcuadra.dev",
+      "slug": "alexcuadra-dev-2",
+      "status": "publish",
+      "isRestricted": false,
+      "hasPassword": false,
+      "language": {
+        "code": "ES"
+      },
+      "translations": [
+        {
+          "databaseId": 50,
+          "slug": "alexcuadra-dev",
+          "status": "publish",
+          "isRestricted": false,
+          "hasPassword": false,
+          "language": {
+            "code": "EN"
+          }
+        }
+      ],
+      "categories": {
+        "nodes": [],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      },
+      "tags": {
+        "nodes": [],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      }
+    },
+    {
+      "databaseId": 146,
+      "title": "christianitytoday.com",
+      "slug": "christianitytoday-com",
+      "status": "publish",
+      "isRestricted": false,
+      "hasPassword": false,
+      "language": {
+        "code": "EN"
+      },
+      "translations": [
+        {
+          "databaseId": 196,
+          "slug": "christianitytoday-com-2",
+          "status": "publish",
+          "isRestricted": false,
+          "hasPassword": false,
+          "language": {
+            "code": "ES"
+          }
+        }
+      ],
+      "categories": {
+        "nodes": [],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      },
+      "tags": {
+        "nodes": [],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      }
+    },
+    {
+      "databaseId": 144,
+      "title": "alextecuenta.com",
+      "slug": "alextecuenta-com",
+      "status": "publish",
+      "isRestricted": false,
+      "hasPassword": false,
+      "language": {
+        "code": "EN"
+      },
+      "translations": [
+        {
+          "databaseId": 200,
+          "slug": "alextecuenta-com-2",
+          "status": "publish",
+          "isRestricted": false,
+          "hasPassword": false,
+          "language": {
+            "code": "ES"
+          }
+        }
+      ],
+      "categories": {
+        "nodes": [],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      },
+      "tags": {
+        "nodes": [],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      }
+    },
+    {
+      "databaseId": 137,
+      "title": "makersunite.eu",
+      "slug": "makersunite-eu",
+      "status": "publish",
+      "isRestricted": false,
+      "hasPassword": false,
+      "language": {
+        "code": "EN"
+      },
+      "translations": [
+        {
+          "databaseId": 199,
+          "slug": "makersunite-eu-2",
+          "status": "publish",
+          "isRestricted": false,
+          "hasPassword": false,
+          "language": {
+            "code": "ES"
+          }
+        }
+      ],
+      "categories": {
+        "nodes": [
+          {
+            "databaseId": 62,
+            "name": "Tech Support",
+            "slug": "tech-support",
+            "language": {
+              "code": "EN"
+            }
+          }
+        ],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      },
+      "tags": {
+        "nodes": [],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      }
+    },
+    {
+      "databaseId": 50,
+      "title": "alexcuadra.dev",
+      "slug": "alexcuadra-dev",
+      "status": "publish",
+      "isRestricted": false,
+      "hasPassword": false,
+      "language": {
+        "code": "EN"
+      },
+      "translations": [
+        {
+          "databaseId": 195,
+          "slug": "alexcuadra-dev-2",
+          "status": "publish",
+          "isRestricted": false,
+          "hasPassword": false,
+          "language": {
+            "code": "ES"
+          }
+        }
+      ],
+      "categories": {
+        "nodes": [
+          {
+            "databaseId": 60,
+            "name": "Frontend App",
+            "slug": "frontend-app",
+            "language": {
+              "code": "EN"
+            }
+          }
+        ],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      },
+      "tags": {
+        "nodes": [
+          {
+            "databaseId": 8,
+            "name": "Astro",
+            "slug": "astro",
+            "language": {
+              "code": "EN"
+            }
+          },
+          {
+            "databaseId": 9,
+            "name": "JavaScritp",
+            "slug": "javascritp",
+            "language": {
+              "code": "EN"
+            }
+          },
+          {
+            "databaseId": 3,
+            "name": "WordPress",
+            "slug": "wordpress",
+            "language": {
+              "code": "EN"
+            }
+          }
+        ],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      }
+    },
+    {
+      "databaseId": 42,
+      "title": "norceca.info",
+      "slug": "norceca-info",
+      "status": "publish",
+      "isRestricted": false,
+      "hasPassword": false,
+      "language": {
+        "code": "EN"
+      },
+      "translations": [
+        {
+          "databaseId": 198,
+          "slug": "norceca-info-2",
+          "status": "publish",
+          "isRestricted": false,
+          "hasPassword": false,
+          "language": {
+            "code": "ES"
+          }
+        }
+      ],
+      "categories": {
+        "nodes": [
+          {
+            "databaseId": 58,
+            "name": "WordPress Site",
+            "slug": "wordpress-site",
+            "language": {
+              "code": "EN"
+            }
+          }
+        ],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      },
+      "tags": {
+        "nodes": [
+          {
+            "databaseId": 6,
+            "name": "ACF",
+            "slug": "acf",
+            "language": {
+              "code": "EN"
+            }
+          },
+          {
+            "databaseId": 7,
+            "name": "CPT",
+            "slug": "cpt",
+            "language": {
+              "code": "EN"
+            }
+          },
+          {
+            "databaseId": 3,
+            "name": "WordPress",
+            "slug": "wordpress",
+            "language": {
+              "code": "EN"
+            }
+          }
+        ],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      }
+    },
+    {
+      "databaseId": 43,
+      "title": "valexweb.com",
+      "slug": "valexweb-com",
+      "status": "publish",
+      "isRestricted": false,
+      "hasPassword": false,
+      "language": {
+        "code": "EN"
+      },
+      "translations": [
+        {
+          "databaseId": 197,
+          "slug": "valexweb-com-2",
+          "status": "publish",
+          "isRestricted": false,
+          "hasPassword": false,
+          "language": {
+            "code": "ES"
+          }
+        }
+      ],
+      "categories": {
+        "nodes": [],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      },
+      "tags": {
+        "nodes": [
+          {
+            "databaseId": 5,
+            "name": "Block Based Theme",
+            "slug": "block-based-theme",
+            "language": {
+              "code": "EN"
+            }
+          },
+          {
+            "databaseId": 4,
+            "name": "Custom Blocks",
+            "slug": "custom-blocks",
+            "language": {
+              "code": "EN"
+            }
+          },
+          {
+            "databaseId": 3,
+            "name": "WordPress",
+            "slug": "wordpress",
+            "language": {
+              "code": "EN"
+            }
+          }
+        ],
+        "pageInfo": {
+          "hasNextPage": false
+        }
+      }
+    }
+  ]
+}
