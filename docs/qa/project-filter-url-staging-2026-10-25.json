@@ -1,0 +1,26 @@
+{
+  "checkedAt": "2026-10-26T01:06:01.527Z",
+  "version": "d852564e-a888-40d7-b47a-7f0b846c0722",
+  "checks": [
+    {
+      "path": "/es/proyectos/?technology=Svelte",
+      "status": 200,
+      "auth": "verified",
+      "robots": "noindex, nofollow",
+      "csp": true,
+      "retryAfter": null,
+      "canonical": "https://alexcuadra.dev/es/proyectos/",
+      "ssrEntries": 6
+    },
+    {
+      "path": "/work/?technology=Svelte",
+      "status": 200,
+      "auth": "verified",
+      "robots": "noindex, nofollow",
+      "csp": true,
+      "retryAfter": null,
+      "canonical": "https://alexcuadra.dev/work/",
+      "ssrEntries": 6
+    }
+  ]
+}

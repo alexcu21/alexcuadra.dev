@@ -62,6 +62,21 @@ test('actual reference templates preserve HTTP, content and pagination contracts
     const html=await error.text();assert.match(html,/<h1>/);assert.doesNotMatch(html,/PRIVATE|Synthetic|<script/);
   }
   const manyTerms = await get('/es/proyectos/?mode=project-many-terms');
+  const sharedFilters = await get('/es/proyectos/?mode=project-many-terms&q=demostracion&technology=Svelte');
+  assert.equal(sharedFilters.response.status,200);
+  assert.match(sharedFilters.html, /rel="canonical" href="https:\/\/alexcuadra.dev\/es\/proyectos\/"/);
+  assert.match(sharedFilters.html, /<form[^>]*data-project-controls[^>]*hidden/);
+  assert.match(sharedFilters.html, /Minimal project/);
+  const filteredDetail = await get('/es/proyectos/caso-de-estudio?category=Sitio+WordPress&technology=React');
+  assert.match(filteredDetail.html, /Volver a resultados/);
+  assert.doesNotMatch(filteredDetail.html, /rel="(?:prev|next)"/);
+  assert.match(filteredDetail.html, /href="\/es\/proyectos\/\?category=Sitio\+WordPress&amp;technology=React"/);
+  assert.match(filteredDetail.html, /rel="canonical" href="https:\/\/alexcuadra.dev\/es\/proyectos\/caso-de-estudio"/);
+  const invalidDetailFilters = await get('/es/proyectos/caso-de-estudio?category=Unknown&technology=Unknown');
+  assert.doesNotMatch(invalidDetailFilters.html, /Volver a resultados|href="[^"]*Unknown/);
+  const sharedNeighbors = await get('/work/case-study?q=project');
+  assert.match(sharedNeighbors.html, /href="\/work\/minimal\?q=project"[^>]*rel="next"/);
+  assert.equal((await get('/work/minimal?q=project')).response.status,200);
   assert.match(manyTerms.html, /<form[^>]*data-project-controls[^>]*hidden/);
   assert.match(manyTerms.html, /<option value="Svelte"[^>]*>Svelte<\/option>/);
   assert.match(manyTerms.html, /data-technologies="[^\"]*Svelte/);

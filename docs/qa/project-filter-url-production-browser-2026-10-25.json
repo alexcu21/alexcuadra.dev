@@ -1,0 +1,28 @@
+{
+  "checkedAt": "2026-10-26T01:09:10.520Z",
+  "version": "0b29d496-2bfa-4035-9aa1-0e1e1c774696",
+  "observations": [
+    {
+      "scenario": "shared URL",
+      "status": "1 de 6 proyectos",
+      "technology": "Svelte",
+      "url": "https://alexcuadra.dev/es/proyectos/?technology=Svelte"
+    },
+    {
+      "scenario": "return link",
+      "status": "1 de 6 proyectos",
+      "url": "https://alexcuadra.dev/es/proyectos/?technology=Svelte"
+    },
+    {
+      "focus": "project-search",
+      "scenario": "clear",
+      "status": "6 de 6 proyectos",
+      "url": "https://alexcuadra.dev/es/proyectos/"
+    },
+    {
+      "scenario": "back after clear",
+      "status": "1 de 6 proyectos",
+      "url": "https://alexcuadra.dev/es/proyectos/?technology=Svelte"
+    }
+  ]
+}

@@ -9,9 +9,21 @@ import ProjectMedia from './ProjectMedia.astro';
 import { routeBase, contentPath } from '../data/site-routes.js';
 import { publicTranslationLinks } from '../data/content-language.js';
 import { projectNavigation } from '../data/projects.js';
+import { matchesProject, projectFilterOptions, projectFilterState, projectFilterUrl } from '../scripts/project-filter.js';
 interface Props { project: any; projects?: any[]; locale: 'en' | 'es'; }
 const { project, projects = [], locale } = Astro.props;
-const adjacent = projectNavigation(projects, project.slug, locale);
+const filterContext = projectFilterState(Astro.url.searchParams,
+  projectFilterOptions(projects,'categories',locale),projectFilterOptions(projects,'tags',locale));
+const hasFilterContext = !!(filterContext.query || filterContext.category || filterContext.technology);
+const navigationProjects = hasFilterContext ? projects.filter(candidate => matchesProject({title:candidate.title,
+  categories:(candidate.categories?.nodes || []).map((term:{name:string})=>term.name),
+  technologies:(candidate.tags?.nodes || []).map((term:{name:string})=>term.name)},
+  filterContext.query,filterContext.category,filterContext.technology)) : projects;
+const adjacent = projectNavigation(navigationProjects, project.slug, locale);
+const withFilterContext = (path: string) => {
+  const url = projectFilterUrl(new URL(path,Astro.url),filterContext);
+  return url.pathname + url.search;
+};
 const { title, content } = project;
 const { githuburl, projectTagline, websiteurl } = project.projects || {};
 const tags = (project.tags?.nodes || []).filter((tag: {name?: string}) => tag.name);
@@ -62,16 +74,18 @@ const alternates: {locale: 'en' | 'es'; path: string}[] = alternate ? [{locale, 
     </section>}
     <nav class="project-end" aria-label={locale === 'es' ? 'Más proyectos' : 'More projects'}>
       {(adjacent.previous || adjacent.next) && <div class="adjacent-projects">
-        {adjacent.previous && <a class="adjacent-link previous" href={adjacent.previous.path} rel="prev">
+        {adjacent.previous && <a class="adjacent-link previous" href={withFilterContext(adjacent.previous.path)} rel="prev">
           <span class="adjacent-label">← {locale === 'es' ? 'Proyecto anterior' : 'Previous project'}</span>
           <span class="adjacent-title">{adjacent.previous.title}</span>
         </a>}
-        {adjacent.next && <a class="adjacent-link next" href={adjacent.next.path} rel="next">
+        {adjacent.next && <a class="adjacent-link next" href={withFilterContext(adjacent.next.path)} rel="next">
           <span class="adjacent-label">{locale === 'es' ? 'Siguiente proyecto' : 'Next project'} →</span>
           <span class="adjacent-title">{adjacent.next.title}</span>
         </a>}
       </div>}
-      <a class="back-link" href={routeBase('projects', locale)}><Icon icon="arrow-left" /> {locale === 'es' ? 'Volver a proyectos' : 'Back to projects'}</a>
+      <a class="back-link" href={withFilterContext(routeBase('projects', locale))}><Icon icon="arrow-left" /> {hasFilterContext
+        ? (locale === 'es' ? 'Volver a resultados' : 'Back to results')
+        : (locale === 'es' ? 'Volver a proyectos' : 'Back to projects')}</a>
     </nav>
   </main>
   <ContactCTA locale={locale} />

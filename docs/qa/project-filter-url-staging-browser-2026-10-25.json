@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-10-26T01:05:04.936Z",
+  "version": "d852564e-a888-40d7-b47a-7f0b846c0722",
+  "observations": [
+    {
+      "scenario": "shared URL",
+      "status": "1 de 6 proyectos",
+      "url": "https://alexcuadra-dev-staging.alexcu21.workers.dev/es/proyectos/?technology=Svelte"
+    },
+    {
+      "canonical": "https://alexcuadra.dev/es/proyectos/christianitytoday-com-2",
+      "neighbors": 0,
+      "returnPath": "/es/proyectos/?technology=Svelte",
+      "scenario": "detail"
+    },
+    {
+      "scenario": "return link",
+      "status": "1 de 6 proyectos",
+      "url": "https://alexcuadra-dev-staging.alexcu21.workers.dev/es/proyectos/?technology=Svelte"
+    },
+    {
+      "scenario": "reload",
+      "status": "1 de 6 proyectos",
+      "url": "https://alexcuadra-dev-staging.alexcu21.workers.dev/es/proyectos/?technology=Svelte"
+    }
+  ]
+}

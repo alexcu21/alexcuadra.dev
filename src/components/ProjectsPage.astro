@@ -42,7 +42,7 @@ const technologies = projectFilterOptions(projects, 'tags', locale);
       </section>}
       {projects.length > 0 && <section class="project-discovery" aria-label={spanish ? 'Explorar proyectos' : 'Browse projects'}>
         <form role="search" aria-label={spanish ? 'Buscar proyectos' : 'Find projects'} class="project-filters" data-project-controls hidden>
-          <div><label for="project-search">{spanish ? 'Buscar por título' : 'Search titles'}</label><input id="project-search" type="search" autocomplete="off" aria-controls="project-results" /></div>
+          <div><label for="project-search">{spanish ? 'Buscar por título' : 'Search titles'}</label><input id="project-search" type="search" maxlength="200" autocomplete="off" aria-controls="project-results" /></div>
           <div><label for="project-category">{spanish ? 'Categoría' : 'Category'}</label><select id="project-category" data-project-category aria-controls="project-results"><option value="">{spanish ? 'Todas las categorías' : 'All categories'}</option>{categories.map(name => <option value={name}>{name}</option>)}</select></div>
           <div><label for="project-technology">{spanish ? 'Tecnología o área' : 'Technology or practice area'}</label><select id="project-technology" data-project-technology aria-controls="project-results"><option value="">{spanish ? 'Todas las tecnologías y áreas' : 'All technologies and areas'}</option>{technologies.map(name => <option value={name}>{name}</option>)}</select></div>
           <button type="button">{spanish ? 'Limpiar filtros' : 'Clear filters'}</button>

@@ -1,0 +1,43 @@
+{
+  "checkedAt": "2026-10-26T01:07:53.488Z",
+  "version": "0b29d496-2bfa-4035-9aa1-0e1e1c774696",
+  "previousVersion": "7d26d563-47ac-4084-9597-d37233f244d9",
+  "checks": [
+    {
+      "path": "/es/proyectos/?technology=Svelte",
+      "status": 200,
+      "auth": "verified",
+      "robots": null,
+      "csp": true,
+      "retryAfter": null,
+      "canonical": "https://alexcuadra.dev/es/proyectos/",
+      "ssrEntries": 6,
+      "returnToResults": false,
+      "returnFilter": false
+    },
+    {
+      "path": "/work/?technology=Svelte",
+      "status": 200,
+      "auth": "verified",
+      "robots": null,
+      "csp": true,
+      "retryAfter": null,
+      "canonical": "https://alexcuadra.dev/work/",
+      "ssrEntries": 6,
+      "returnToResults": false,
+      "returnFilter": false
+    },
+    {
+      "path": "/es/proyectos/christianitytoday-com-2?technology=Svelte",
+      "status": 200,
+      "auth": "verified",
+      "robots": null,
+      "csp": true,
+      "retryAfter": null,
+      "canonical": "https://alexcuadra.dev/es/proyectos/christianitytoday-com-2",
+      "ssrEntries": 0,
+      "returnToResults": true,
+      "returnFilter": true
+    }
+  ]
+}
