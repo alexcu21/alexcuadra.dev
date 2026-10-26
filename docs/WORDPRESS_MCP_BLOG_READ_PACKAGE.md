@@ -7,13 +7,17 @@ Paquete **0.1.0-rc.1**, preparado y probado; pendiente de comprobación en el CM
 - [Manifiesto de archivos](../artifacts/wordpress/alexcuadra-editorial-blog-read-0.1.0-rc.1.manifest.json) y [pruebas](qa/MCP_BLOG_READ_PACKAGE_2026-10-26.md).
 - [Diagnóstico independiente](../wordpress/operations/editorial-blog-read-preflight.php), fuera del ZIP y del directorio público del servidor.
 
+**Cierre real:** las cuatro fases ya pasaron y las dos herramientas funcionan mediante MCP con EN/ES. [Evidencia final](qa/MCP_BLOG_READ_LIVE_2026-10-26.md). Los pasos siguientes quedan como registro del procedimiento; no repetir instalación/activación/grants.
+
 ## Paso actual: comprobar antes de instalar
 
-Alex ejecuta los comandos del hosting; el agente no abre SSH. Copiar únicamente el diagnóstico PHP a un directorio privado de la cuenta, fuera de public_html. Desde la raíz correcta de WordPress, usando el mismo PHP y WP-CLI del sitio, ejecutar lo siguiente sustituyendo la ruta por la ubicación real del archivo:
+Alex ejecuta los comandos del hosting; el agente no abre SSH. Raíz del CMS confirmada por Alex: `/home/u776991923/domains/alexcuadra.dev/public_html/content`. El public_html superior corresponde a otra instalación y no es el destino. El diagnóstico reside fuera del directorio público, en private-tools.
 
 ```sh
-wp eval-file /ruta/privada/editorial-blog-read-preflight.php 2 before
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content eval-file /home/u776991923/domains/alexcuadra.dev/private-tools/editorial-blog-read-preflight.php 2 before
 ```
+
+**Recibo real recibido:** ready=true, 14 checks correctos, WordPress7.1.3/PHP8.5.12, dependencias exactas activas. Usuario2 subscriber/read conserva sus scopes anteriores de proyectos, sin scope nuevo de blog ni permisos amplios. [Salida aportada por Alex](qa/editorial-blog-read-destination-before-2026-10-26.json). PHP es un parche posterior al laboratorio8.5.11; el criterio probado comprueba la rama8.5 y no certifica identidad del entorno completo. Instalación inactiva completada posteriormente: recibo after-install ready=true/14 checks, archivos exactos y sin scope nuevo. [Recibo de instalación](qa/editorial-blog-read-destination-after-install-2026-10-26.json). Activación comprobada posteriormente: after-enable ready=true/14 checks, guard activo y dos abilities registradas, usuario2 todavía sin scope blog. [Recibo de activación](qa/editorial-blog-read-destination-after-enable-2026-10-26.json). Siguiente: conceder solo alexcuadra_read_public_posts directamente al usuario2 y comprobar after-scope; no alterar su rol ni los permisos anteriores.
 
 Compartir la línea `EDITORIAL_BLOG_PREFLIGHT_RESULT=...` completa y cualquier error. No compartir credenciales, wp-config.php ni un volcado de la base de datos. No instalar todavía ni añadir la constante de activación para hacer pasar un fallo.
 

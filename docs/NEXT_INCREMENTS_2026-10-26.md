@@ -1,6 +1,6 @@
 # Incrementos pendientes — estado consolidado al 26 octubre 2026
 
-**Actualización 26 octubre:** paquete MCP del blog 0.1.0-rc.1 y preflight de destino preparados; 75 contratos, nueve guards, cuatro fases válidas y retirada correctos, además de 34 pruebas funcionales y 37 HTTP con el ZIP instalado en laboratorio. [Evidencia](qa/MCP_BLOG_READ_PACKAGE_2026-10-26.md). Siguiente: ejecutar únicamente el diagnóstico de destino `2 before`, siguiendo el [procedimiento](WORDPRESS_MCP_BLOG_READ_PACKAGE.md); revisar el recibo antes de instalación y primer scope reales.
+**26 octubre — lector MCP del blog operativo:** Alex aporta after-scope ready=true/14checks; usuario2 añade solo el scope de lectura blog, conservando subscriber/read y permisos anteriores sin edición/admin. Verificación independiente por conector: catálogo13abilities, dos nuevas; list EN/ES devuelve2entradas por idioma y traducciones recíprocas239↔228/241↔204 con categorías/etiquetas por idioma; get239EN/228ES coincide y239ES se rechaza sin código HTTP expuesto.8llamadas MCP de lectura,0mutaciones. [Cierre y límites](qa/MCP_BLOG_READ_LIVE_2026-10-26.md). No repetir instalación/activación/grants ni pruebas del piloto. Siguiente: diseñar propuestas privadas para posts/traducciones; edición pública sigue fuera del alcance concedido.
 
 Este inventario sustituye las listas de próximos pasos históricas de los informes anteriores. No declara resueltos los429delCMS ni acepta cambios de producción por el hecho de estar en staging.
 
@@ -28,9 +28,8 @@ Descubrimiento nativo de solo lectura actual:11abilities visibles (tres core, do
 
 | Prioridad | Incremento concreto | Criterio de cierre |
 | --- | --- | --- |
-| 1 | Comprobar el destino e incorporar el lector MCP del blog | Paquete y preflight ya preparados y probados. Recibir diagnóstico `before` del hosting; revisar instalación del ZIP exacto y primer scope separado. Comprobar las fases y lecturas del conector real sin permisos amplios. |
 | 2 | Propuestas editoriales para posts y traducciones | Diff privado de cuerpo/título/extracto/clasificaciones; control de versión/base e idempotencia. Creación de traducciones explícita, sin duplicar grupos. Separar proponer/aprobar/aplicar/recuperar. No reciclar la revisión1 caducada. |
-| 3 | Ampliar clasificación editorial MCP de proyectos | Lectura y propuestas para categorías/tecnologías propias de proyectos, con IDs/idiomas exactos y sin reutilizar categorías del blog. El nuevo lector de posts solo cubre category/post_tag asignados. |
+| 3 | Ampliar clasificación editorial MCP de proyectos | Lectura y propuestas para categorías/tecnologías propias de proyectos, con IDs/idiomas exactos y sin reutilizar categorías del blog. El lector de posts ya operativo solo cubre category/post_tag asignados. |
 | 4 | Promover el conjunto reciente de staging a producción | Revisar caché/contacto/EN/ES y publicar el código manteniendo contacto false; postflight real y reversión. No requiere activar el formulario ni reenviar un piloto. |
 | 5 | Preparar contacto en producción | Añadir entrypoint/export del coordinador, bindings, rate limiter independiente, origen, remitente, widget/hostname y tres secretos. Revisar alcance/configuración antes de crearlos; no basta con activar el flag. |
 | 6 | Activación permanente del contacto | Decisión explícita tras la configuración real, navegación/campos EN/ES y privacidad. El piloto de entrega ya está validado; no repetirlo automáticamente. |
@@ -52,4 +51,4 @@ Los booleanos prueban coincidencia con la configuración requerida, no el valor 
 - Bandeja interna de mensajes: **no es un requisito acordado**. Alex preguntó dónde se guardan; actualmente no existe esa bandeja. Añadirla exige definir finalidad, acceso y conservación antes de persistir mensajes.
 - Comprobar ajuste Email preview de Cloudflare y mantener el procedimiento manual30días en Gmail; no se automatiza el borrado sin una petición específica.
 
-No se desplegó frontend ni se cambió CMS/DNS/contacto/permisos en este incremento de inventario/candidato. Siguiente trabajo concreto: prioridad1, diagnóstico de solo lectura `before` del destino; el paquete y sus pruebas están completados.
+No se desplegó frontend ni se cambió CMS/DNS/contacto/permisos en este incremento de inventario/candidato. Siguiente trabajo concreto: prioridad2, diseño y pruebas locales de propuestas privadas para posts y traducciones. Lector de metadatos blog completado en el conector real; no repetir instalación/grants.

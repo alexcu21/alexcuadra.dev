@@ -1,0 +1,910 @@
+{
+  "evidenceSource": "live-wordpress-MCP-connector",
+  "date": "2026-10-26",
+  "calls": {
+    "discover": 1,
+    "info": 2,
+    "list": 2,
+    "get": 3,
+    "mutations": 0
+  },
+  "catalog": {
+    "abilities": [
+      {
+        "name": "core/get-site-info",
+        "label": "Get Site Information",
+        "description": "Returns site information configured in WordPress. By default returns all fields, or optionally a filtered subset."
+      },
+      {
+        "name": "core/get-user-info",
+        "label": "Get User Information",
+        "description": "Returns profile details for the current authenticated user to support personalization, auditing, and access-aware behavior. By default returns all fields, or optionally a filtered subset."
+      },
+      {
+        "name": "core/get-environment-info",
+        "label": "Get Environment Info",
+        "description": "Returns core details about the site's runtime context for diagnostics and compatibility (environment, PHP runtime, database server info, WordPress version). By default returns all fields, or optionally a filtered subset."
+      },
+      {
+        "name": "alexcuadra/list-public-posts",
+        "label": "List public blog posts",
+        "description": "Read native post metadata, reciprocal translations and assigned categories/tags. No bodies or writes."
+      },
+      {
+        "name": "alexcuadra/get-public-post",
+        "label": "Read public blog post metadata",
+        "description": "Read one native published post in the exact language; no body, ACF, private data or writes."
+      },
+      {
+        "name": "alexcuadra/create-project-change",
+        "label": "create-project-change",
+        "description": "Prepare, inspect history or restore a private owned proposal as a new version. Never modifies the source project or publishes content."
+      },
+      {
+        "name": "alexcuadra/get-project-change",
+        "label": "get-project-change",
+        "description": "Prepare, inspect history or restore a private owned proposal as a new version. Never modifies the source project or publishes content."
+      },
+      {
+        "name": "alexcuadra/update-project-change",
+        "label": "update-project-change",
+        "description": "Prepare, inspect history or restore a private owned proposal as a new version. Never modifies the source project or publishes content."
+      },
+      {
+        "name": "alexcuadra/list-project-change-revisions",
+        "label": "list-project-change-revisions",
+        "description": "Prepare, inspect history or restore a private owned proposal as a new version. Never modifies the source project or publishes content."
+      },
+      {
+        "name": "alexcuadra/get-project-change-revision",
+        "label": "get-project-change-revision",
+        "description": "Prepare, inspect history or restore a private owned proposal as a new version. Never modifies the source project or publishes content."
+      },
+      {
+        "name": "alexcuadra/restore-project-change-revision",
+        "label": "restore-project-change-revision",
+        "description": "Prepare, inspect history or restore a private owned proposal as a new version. Never modifies the source project or publishes content."
+      },
+      {
+        "name": "alexcuadra/list-public-projects",
+        "label": "List public portfolio projects",
+        "description": "List public project IDs, titles, slugs, language and reciprocal public translations. Search titles and paginate in ID order."
+      },
+      {
+        "name": "alexcuadra/get-public-project",
+        "label": "Get public portfolio project",
+        "description": "Read one public project by ID and exact language, including reciprocal public translation metadata."
+      }
+    ]
+  },
+  "abilityInfo": [
+    {
+      "name": "alexcuadra/list-public-posts",
+      "label": "List public blog posts",
+      "description": "Read native post metadata, reciprocal translations and assigned categories/tags. No bodies or writes.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "locale"
+        ],
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "es"
+            ]
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "per_page": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20
+          },
+          "search": {
+            "type": "string",
+            "maxLength": 100
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "slug": {
+                  "type": "string"
+                },
+                "locale": {
+                  "type": "string",
+                  "enum": [
+                    "en",
+                    "es"
+                  ]
+                },
+                "translations": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "slug": {
+                        "type": "string"
+                      },
+                      "locale": {
+                        "type": "string",
+                        "enum": [
+                          "en",
+                          "es"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "slug",
+                      "locale"
+                    ]
+                  }
+                },
+                "categories": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "slug": {
+                        "type": "string"
+                      },
+                      "taxonomy": {
+                        "type": "string",
+                        "enum": [
+                          "category",
+                          "post_tag"
+                        ]
+                      },
+                      "locale": {
+                        "type": "string",
+                        "enum": [
+                          "en",
+                          "es"
+                        ]
+                      },
+                      "translations": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "id": {
+                              "type": "integer"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "slug": {
+                              "type": "string"
+                            },
+                            "locale": {
+                              "type": "string",
+                              "enum": [
+                                "en",
+                                "es"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "name",
+                            "slug",
+                            "locale"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "slug",
+                      "taxonomy",
+                      "locale",
+                      "translations"
+                    ]
+                  }
+                },
+                "tags": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "slug": {
+                        "type": "string"
+                      },
+                      "taxonomy": {
+                        "type": "string",
+                        "enum": [
+                          "category",
+                          "post_tag"
+                        ]
+                      },
+                      "locale": {
+                        "type": "string",
+                        "enum": [
+                          "en",
+                          "es"
+                        ]
+                      },
+                      "translations": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "id": {
+                              "type": "integer"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "slug": {
+                              "type": "string"
+                            },
+                            "locale": {
+                              "type": "string",
+                              "enum": [
+                                "en",
+                                "es"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "name",
+                            "slug",
+                            "locale"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "slug",
+                      "taxonomy",
+                      "locale",
+                      "translations"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "slug",
+                "locale",
+                "translations",
+                "categories",
+                "tags"
+              ]
+            }
+          },
+          "next_page": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "next_page"
+        ]
+      },
+      "meta": {
+        "annotations": {
+          "readonly": true,
+          "destructive": false,
+          "idempotent": true
+        },
+        "public": false,
+        "show_in_rest": false,
+        "mcp": {
+          "public": true,
+          "type": "tool"
+        }
+      }
+    },
+    {
+      "name": "alexcuadra/get-public-post",
+      "label": "Read public blog post metadata",
+      "description": "Read one native published post in the exact language; no body, ACF, private data or writes.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "es"
+            ]
+          },
+          "id": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "locale",
+          "id"
+        ]
+      },
+      "output_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "es"
+            ]
+          },
+          "translations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "slug": {
+                  "type": "string"
+                },
+                "locale": {
+                  "type": "string",
+                  "enum": [
+                    "en",
+                    "es"
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "slug",
+                "locale"
+              ]
+            }
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "slug": {
+                  "type": "string"
+                },
+                "taxonomy": {
+                  "type": "string",
+                  "enum": [
+                    "category",
+                    "post_tag"
+                  ]
+                },
+                "locale": {
+                  "type": "string",
+                  "enum": [
+                    "en",
+                    "es"
+                  ]
+                },
+                "translations": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "slug": {
+                        "type": "string"
+                      },
+                      "locale": {
+                        "type": "string",
+                        "enum": [
+                          "en",
+                          "es"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "slug",
+                      "locale"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "slug",
+                "taxonomy",
+                "locale",
+                "translations"
+              ]
+            }
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "slug": {
+                  "type": "string"
+                },
+                "taxonomy": {
+                  "type": "string",
+                  "enum": [
+                    "category",
+                    "post_tag"
+                  ]
+                },
+                "locale": {
+                  "type": "string",
+                  "enum": [
+                    "en",
+                    "es"
+                  ]
+                },
+                "translations": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "slug": {
+                        "type": "string"
+                      },
+                      "locale": {
+                        "type": "string",
+                        "enum": [
+                          "en",
+                          "es"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "slug",
+                      "locale"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "slug",
+                "taxonomy",
+                "locale",
+                "translations"
+              ]
+            }
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "slug",
+          "locale",
+          "translations",
+          "categories",
+          "tags"
+        ]
+      },
+      "meta": {
+        "annotations": {
+          "readonly": true,
+          "destructive": false,
+          "idempotent": true
+        },
+        "public": false,
+        "show_in_rest": false,
+        "mcp": {
+          "public": true,
+          "type": "tool"
+        }
+      }
+    }
+  ],
+  "lists": [
+    {
+      "items": [
+        {
+          "id": 239,
+          "title": "How to Contribute to WordPress | Part 1",
+          "slug": "how-to-contribute-to-wordpress-part-1",
+          "locale": "en",
+          "translations": [
+            {
+              "id": 228,
+              "slug": "como-contribuir-a-wordpress-parte-1",
+              "locale": "es"
+            }
+          ],
+          "categories": [
+            {
+              "id": 46,
+              "name": "OpenSource",
+              "slug": "opensource",
+              "taxonomy": "category",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 160,
+                  "name": "OpenSource",
+                  "slug": "opensource-es",
+                  "locale": "es"
+                }
+              ]
+            }
+          ],
+          "tags": [
+            {
+              "id": 3,
+              "name": "WordPress",
+              "slug": "wordpress",
+              "taxonomy": "post_tag",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 163,
+                  "name": "WordPress",
+                  "slug": "wordpress-es",
+                  "locale": "es"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 241,
+          "title": "How to Structure Test Cases for a Vibe-Coded Application",
+          "slug": "how-to-structure-test-cases-for-a-vibe-coded-application",
+          "locale": "en",
+          "translations": [
+            {
+              "id": 204,
+              "slug": "como-estructurar-un-caso-de-prueba",
+              "locale": "es"
+            }
+          ],
+          "categories": [
+            {
+              "id": 48,
+              "name": "Testing",
+              "slug": "testing",
+              "taxonomy": "category",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 52,
+                  "name": "Testing",
+                  "slug": "testing-es",
+                  "locale": "es"
+                }
+              ]
+            }
+          ],
+          "tags": [
+            {
+              "id": 50,
+              "name": "Vibecoding",
+              "slug": "vibecoding",
+              "taxonomy": "post_tag",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 55,
+                  "name": "Vibecoding",
+                  "slug": "vibecoding-es",
+                  "locale": "es"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "next_page": null
+    },
+    {
+      "items": [
+        {
+          "id": 204,
+          "title": "Cómo estructurar los casos de prueba en una aplicación vibecodeada",
+          "slug": "como-estructurar-un-caso-de-prueba",
+          "locale": "es",
+          "translations": [
+            {
+              "id": 241,
+              "slug": "how-to-structure-test-cases-for-a-vibe-coded-application",
+              "locale": "en"
+            }
+          ],
+          "categories": [
+            {
+              "id": 52,
+              "name": "Testing",
+              "slug": "testing-es",
+              "taxonomy": "category",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 48,
+                  "name": "Testing",
+                  "slug": "testing",
+                  "locale": "en"
+                }
+              ]
+            }
+          ],
+          "tags": [
+            {
+              "id": 55,
+              "name": "Vibecoding",
+              "slug": "vibecoding-es",
+              "taxonomy": "post_tag",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 50,
+                  "name": "Vibecoding",
+                  "slug": "vibecoding",
+                  "locale": "en"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 228,
+          "title": "Como contribuir a WordPress | Parte 1",
+          "slug": "como-contribuir-a-wordpress-parte-1",
+          "locale": "es",
+          "translations": [
+            {
+              "id": 239,
+              "slug": "how-to-contribute-to-wordpress-part-1",
+              "locale": "en"
+            }
+          ],
+          "categories": [
+            {
+              "id": 160,
+              "name": "OpenSource",
+              "slug": "opensource-es",
+              "taxonomy": "category",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 46,
+                  "name": "OpenSource",
+                  "slug": "opensource",
+                  "locale": "en"
+                }
+              ]
+            }
+          ],
+          "tags": [
+            {
+              "id": 163,
+              "name": "WordPress",
+              "slug": "wordpress-es",
+              "taxonomy": "post_tag",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 3,
+                  "name": "WordPress",
+                  "slug": "wordpress",
+                  "locale": "en"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "next_page": null
+    }
+  ],
+  "publicGets": [
+    {
+      "id": 239,
+      "title": "How to Contribute to WordPress | Part 1",
+      "slug": "how-to-contribute-to-wordpress-part-1",
+      "locale": "en",
+      "translations": [
+        {
+          "id": 228,
+          "slug": "como-contribuir-a-wordpress-parte-1",
+          "locale": "es"
+        }
+      ],
+      "categories": [
+        {
+          "id": 46,
+          "name": "OpenSource",
+          "slug": "opensource",
+          "taxonomy": "category",
+          "locale": "en",
+          "translations": [
+            {
+              "id": 160,
+              "name": "OpenSource",
+              "slug": "opensource-es",
+              "locale": "es"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        {
+          "id": 3,
+          "name": "WordPress",
+          "slug": "wordpress",
+          "taxonomy": "post_tag",
+          "locale": "en",
+          "translations": [
+            {
+              "id": 163,
+              "name": "WordPress",
+              "slug": "wordpress-es",
+              "locale": "es"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 228,
+      "title": "Como contribuir a WordPress | Parte 1",
+      "slug": "como-contribuir-a-wordpress-parte-1",
+      "locale": "es",
+      "translations": [
+        {
+          "id": 239,
+          "slug": "how-to-contribute-to-wordpress-part-1",
+          "locale": "en"
+        }
+      ],
+      "categories": [
+        {
+          "id": 160,
+          "name": "OpenSource",
+          "slug": "opensource-es",
+          "taxonomy": "category",
+          "locale": "es",
+          "translations": [
+            {
+              "id": 46,
+              "name": "OpenSource",
+              "slug": "opensource",
+              "locale": "en"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        {
+          "id": 163,
+          "name": "WordPress",
+          "slug": "wordpress-es",
+          "taxonomy": "post_tag",
+          "locale": "es",
+          "translations": [
+            {
+              "id": 3,
+              "name": "WordPress",
+              "slug": "wordpress",
+              "locale": "en"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "wrongLocale": {
+    "request": {
+      "locale": "es",
+      "id": 239
+    },
+    "isError": true,
+    "message": "Public blog read unavailable.",
+    "httpStatusExposed": false
+  },
+  "checks": {
+    "catalogHas13Abilities": true,
+    "twoBlogAbilitiesPresent": true,
+    "twoPostsPerLocale": true,
+    "completeFirstPages": true,
+    "exactMetadataFields": true,
+    "reciprocalPostTranslations": true,
+    "classificationLocalesAndTaxonomies": true,
+    "detailMatchesInventory": true,
+    "wrongLocaleRejected": true
+  },
+  "limits": [
+    "No HTTP status exposed for rejection.",
+    "No global database fingerprint or preservation claim.",
+    "No new write, permission-revocation or private-record tests on the hosting.",
+    "Metadata read scope only; no body editing, translation creation or project taxonomy proposals."
+  ]
+}

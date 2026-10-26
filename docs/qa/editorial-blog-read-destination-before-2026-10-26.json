@@ -1,0 +1,75 @@
+{
+  "evidenceSource": "user-pasted-hosting-WP-CLI-output",
+  "wordpressRoot": "/home/u776991923/domains/alexcuadra.dev/public_html/content",
+  "result": {
+    "format": "editorial-blog-read-preflight-v1",
+    "phase": "before",
+    "userId": 2,
+    "packageSha256": "d8f8fcb1dcc83962036a70c3fb0e3a57e44dbeb96b5556e8abe1dcb7fbd205e6",
+    "readOnly": true,
+    "wordpress": "7.1.3",
+    "php": "8.5.12",
+    "dependencies": {
+      "polylang/polylang.php": {
+        "version": "3.9.1",
+        "active": true,
+        "matches": true
+      },
+      "mcp-adapter/mcp-adapter.php": {
+        "version": "0.7.1",
+        "active": true,
+        "matches": true
+      }
+    },
+    "checks": {
+      "testedRuntime": true,
+      "testedDependencies": true,
+      "publicTranslatedTaxonomies": true,
+      "languages": true,
+      "subscriberOnly": true,
+      "read": true,
+      "noBroadPermissions": true,
+      "noRoleWideGrant": true,
+      "expectedScope": true,
+      "scopeOwners": true,
+      "expectedFiles": true,
+      "expectedActivation": true,
+      "expectedGuard": true,
+      "expectedRegistration": true
+    },
+    "ready": true,
+    "effectiveCapabilityNames": [
+      "alexcuadra_apply_project_changes",
+      "alexcuadra_prepare_project_changes",
+      "alexcuadra_read_public_projects",
+      "alexcuadra_recover_project_changes",
+      "level_0",
+      "read",
+      "subscriber"
+    ],
+    "broadPermissionsDenied": {
+      "manage_options": true,
+      "install_plugins": true,
+      "activate_plugins": true,
+      "update_plugins": true,
+      "edit_users": true,
+      "promote_users": true,
+      "delete_users": true,
+      "create_users": true,
+      "edit_posts": true,
+      "edit_pages": true,
+      "edit_others_posts": true,
+      "edit_others_pages": true,
+      "publish_posts": true,
+      "publish_pages": true,
+      "delete_posts": true,
+      "delete_pages": true
+    },
+    "sourceContentInspected": false,
+    "applicationPasswordsRequested": false,
+    "mutationsRequested": false
+  },
+  "installationPerformed": false,
+  "newScopeGranted": false,
+  "limits": "User-supplied receipt; not an independent server observation or global database preservation audit."
+}
