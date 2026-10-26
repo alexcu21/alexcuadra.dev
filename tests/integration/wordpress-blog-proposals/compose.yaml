@@ -1,0 +1,17 @@
+services:
+  wordpress:
+    environment: &proposal-env
+      BLOG_READ_SKIP_CANDIDATE: "1"
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_ENVIRONMENT_TYPE', 'local');
+        define('AC_BLOG_PROPOSALS_WORDPRESS_LAB', true);
+        define('WP_DEBUG_DISPLAY', false);
+        define('DISABLE_WP_CRON', true);
+        define('WP_HTTP_BLOCK_EXTERNAL', true);
+        define('WP_ACCESSIBLE_HOSTS', 'wordpress');
+    volumes: &proposal-volumes
+      - ../../../wordpress/experimental/editorial-blog-proposals:/blog-proposals:ro
+      - ../wordpress-blog-proposals:/proposal-lab:ro
+  cli:
+    environment: *proposal-env
+    volumes: *proposal-volumes

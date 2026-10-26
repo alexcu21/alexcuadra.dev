@@ -23,10 +23,16 @@ Implementado repository.php, separado del planificador, con guard de laboratorio
 
 93pruebas de BD real, incluyendo procesos concurrentes y SIGKILL antes/después de commit;82regresiones del planificador correctas. Conserva sin poda automática bajo cuotas acotadas. [Resultados, política y límites](qa/MCP_BLOG_PROPOSAL_STORAGE_2026-10-26.md). SQLite es un ensayo de contrato: el adaptador del CMS real usará su conexión/transacciones MariaDB y no este archivo de almacenamiento.
 
+## Incremento 3: WordPress/MariaDB/Polylang de laboratorio
+
+Implementados wordpress-source.php y wordpress-repository.php con guard de sitio local, identidad actual WordPress, scope de preparación privado y conexión wpdb global. Proyección de campos actuales y grupo Polylang completo con reciprocidad; destinos vinculados no públicos bloquean otra traducción sin exponer sus cuerpos. Repositorio separado de proyectos, cuatro tablas InnoDB con claves foráneas y lock por propietario antes de replay/cuotas/versión.
+
+72comprobaciones nativas correctas: privacidad entre usuarios, revocación, proyecciones/idiomas/términos reales, versiones/replay, dos carreras entre procesos WP-CLI, cuotas y rollback por fallo del recibo.82+93regresiones previas correctas. [Evidencia, corrección de Unicode y límites](qa/MCP_BLOG_PROPOSAL_WORDPRESS_2026-10-26.md). Es ensayo CLI: todavía sin autenticación por transporte, paquete o scopes nuevos en el CMS.
+
 ## Siguientes capas
 
-1. Adaptar almacenamiento y proyecciones a WordPress/MariaDB/Polylang en laboratorio, con grupo completo y reciprocidad real, IDs/idiomas/taxonomías contrastados, incluyendo destinos vinculados no públicos. No copiar tablas/revisiones de proyectos sin contrato/migración propios. Revalidar snapshot bajo coordinación con escritores y diseñar locking de MariaDB.
-2. Pruebas reales de autenticación/privacidad entre propietarios, concurrencia, versiones/replay/fallos y transporte. Política de archivo/retención/backups antes de paquete privado instalable. No reutilizar el lector público para cuerpos o relaciones ocultas.
-3. Aprobación, aplicación y recuperación con scopes y recibos independientes. Política HTML/bloques/hooks/efectos y revalidación al aplicar. Una traducción debe impedir duplicación de grupo y publicación implícita; crear un borrador no autoriza publicarlo. No reaprovechar propuesta227, revisión1 o grants de proyectos.
+1. Transporte MCP/HTTP y fallos de proceso/conexión sobre wpdb/MariaDB en laboratorio. Comprobar autenticación, sesiones/otros propietarios y revocación por ese transporte; barrera de identidad de conexión y tratamiento de reconexión/commit ambiguo. Los SIGKILL SQLite anteriores no certifican MariaDB.
+2. Admisión del esquema/operador y política de archivo/retención/backups antes de paquete privado instalable. Completar perfil real de plugins/MU/contextos/caché. No trasladar directamente la instalación DDL de laboratorio al hosting ni reutilizar las tablas de proyectos.
+3. Aprobación, aplicación y recuperación con scopes y recibos independientes. Fuente/grupo requieren snapshot/revalidación coordinados con escritores externos; las APIs/cache Polylang de la proyección no certifican esa atomicidad. Validar HTML/bloques/hooks/efectos al aplicar y revisar nuevamente cualquier saneamiento que altere el diff. Impedir duplicación de grupo/publicación implícita; crear borrador no autoriza publicarlo. No reaprovechar propuesta227, revisión1 o grants de proyectos.
 
-No hay nuevas herramientas MCP instaladas ni comandos pendientes para Alex. Siguiente trabajo concreto: integración de almacenamiento y proyecciones en laboratorio WordPress/MariaDB/Polylang; no repetir instalación/grants del lector existente.
+No hay nuevas herramientas MCP instaladas ni comandos pendientes para Alex. Siguiente trabajo concreto: transporte y barrera/fallos de conexión en laboratorio; no repetir instalación/grants del lector existente.
