@@ -17,11 +17,16 @@ Clasificación exclusivamente category/post_tag y en el idioma destino. No reuti
 
 HTML/bloques se conservan como texto literal de propuesta. Toda vista debe escapar los valores; no incrustar el documento como HTML. No se considera saneamiento de publicación: cualquier normalización futura que cambie el contenido revisado exige nueva revisión y aprobación. Se rechazan UTF-8 inválido, controles no permitidos y tamaños excesivos, conservando acentos/emoji/código.
 
+## Incremento 2: almacenamiento privado en SQLite
+
+Implementado repository.php, separado del planificador, con guard de laboratorio CLI y sin WordPress. Creación/get/listado privados, historia inmutable, compare-and-swap y replay durable por propietario/petición. Reintentar devuelve la revisión original; reutilizar clave con otra operación/versión/payload falla. Permisos actuales se comprueban antes de leer recibos. Actualizar reemplaza el patch completo, con base explícita, preservando versiones anteriores.
+
+93pruebas de BD real, incluyendo procesos concurrentes y SIGKILL antes/después de commit;82regresiones del planificador correctas. Conserva sin poda automática bajo cuotas acotadas. [Resultados, política y límites](qa/MCP_BLOG_PROPOSAL_STORAGE_2026-10-26.md). SQLite es un ensayo de contrato: el adaptador del CMS real usará su conexión/transacciones MariaDB y no este archivo de almacenamiento.
+
 ## Siguientes capas
 
-1. Repositorio privado aislado, lecturas por propietario y cuotas/retención. Idempotencia durable por owner/request_id con conflicto si cambia request_hash, y compare-and-swap de versión. No copiar tablas o revisiones de proyectos sin una migración propia revisada.
-2. Adaptador WordPress/Polylang con grupo completo y reciprocidad real, IDs/idiomas/taxonomías contrastados, incluyendo destinos vinculados no públicos. Lecturas y creación concurrentes con transacción/locks y revalidación de base; un snapshot del lector público no detecta todo eso.
-3. Pruebas reales de almacenamiento y transporte en laboratorio; acceso entre propietarios, revocación, concurrencia, replay y fallos. Después paquete de propuestas privadas, separado de publicación.
-4. Aprobación, aplicación y recuperación con scopes y recibos independientes. Política HTML/bloques/hooks/efectos y revalidación al aplicar. Una traducción debe impedir duplicación de grupo y publicación implícita. No reaprovechar la propuesta227, revisión1 o grants de proyectos.
+1. Adaptar almacenamiento y proyecciones a WordPress/MariaDB/Polylang en laboratorio, con grupo completo y reciprocidad real, IDs/idiomas/taxonomías contrastados, incluyendo destinos vinculados no públicos. No copiar tablas/revisiones de proyectos sin contrato/migración propios. Revalidar snapshot bajo coordinación con escritores y diseñar locking de MariaDB.
+2. Pruebas reales de autenticación/privacidad entre propietarios, concurrencia, versiones/replay/fallos y transporte. Política de archivo/retención/backups antes de paquete privado instalable. No reutilizar el lector público para cuerpos o relaciones ocultas.
+3. Aprobación, aplicación y recuperación con scopes y recibos independientes. Política HTML/bloques/hooks/efectos y revalidación al aplicar. Una traducción debe impedir duplicación de grupo y publicación implícita; crear un borrador no autoriza publicarlo. No reaprovechar propuesta227, revisión1 o grants de proyectos.
 
-Estas capas no están implementadas por la versión inicial. No hay nuevas tablas, borradores, credenciales, herramientas MCP o instalación pendientes de ejecutar por Alex para este incremento. Siguiente trabajo concreto: repositorio y versionado privados en laboratorio; no repetir comandos del lector ya instalado.
+No hay nuevas herramientas MCP instaladas ni comandos pendientes para Alex. Siguiente trabajo concreto: integración de almacenamiento y proyecciones en laboratorio WordPress/MariaDB/Polylang; no repetir instalación/grants del lector existente.

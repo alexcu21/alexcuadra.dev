@@ -1,6 +1,6 @@
-# Propuestas de blog: planificador local
+# Propuestas de blog: planificador y repositorio de laboratorio
 
-Primer componente del contrato de propuestas privadas para posts y traducciones. PHP puro, sin registro de plugin/abilities, WordPress, BD, archivos, red ni cambios de permisos. No es instalable ni amplía el lector de metadatos sellado. No incluir este archivo desde el CMS real.
+El planificador es el primer componente del contrato de propuestas privadas para posts y traducciones: PHP puro, sin registro de plugin/abilities, WordPress, BD, archivos, red ni cambios de permisos. El repositorio separado añade persistencia solo en una base SQLite de laboratorio. No es instalable ni amplía el lector de metadatos sellado. No incluir este archivo desde el CMS real.
 
 `prepare(actor, source, termRows, request)` devuelve un documento determinista de versión1 con before/after por campo, propietario, identidad de petición, base y hash del documento. Requiere la capacidad nueva propuesta `alexcuadra_prepare_post_changes`: read_public_posts, scopes de proyectos o administrador por sí solos no sirven. El actor y las proyecciones de fuente/términos serán internos y fiables; jamás argumentos suministrados por el cliente MCP.
 
@@ -12,6 +12,12 @@ Texto UTF-8 acotado; admite HTML, bloques Gutenberg y código como texto literal
 
 base_hash liga campos completos permitidos, identidad/estado/contraseña/idioma/grupo y catálogo de términos recibido. El adaptador futuro debe proporcionar el grupo completo, contrastar reciprocidad con los otros posts y construir un catálogo relevante y estable, incluyendo cualquier destino existente privado. Este planificador solo comprueba coherencia interna de la proyección; no consulta Polylang ni demuestra visibilidad real. Nombres/atributos no incluidos en la proyección no están ligados por la huella.
 
-Falta repositorio privado separado de proyectos, autenticación real, cuotas/retención, ownership en lecturas, compare-and-swap de versión, replay durable por owner/request_id con rechazo de reutilización distinta, carreras al crear traducciones y límites de transacción/efectos. request_hash y salida estable permiten diseñarlo, **no garantizan idempotencia persistente**. No hay actualización de propuestas, aprobación, aplicación o recuperación. Mantener esas fases y permisos separados; no reutilizar propuesta227/revisión1 o tablas/paquetes instalados de proyectos.
+Repositorio SQLite implementado aparte en repository.php: creación privada, versiones inmutables, get histórico/listado por propietario, compare-and-swap y replay durable por owner/request_id. Hash de recibo liga operación, propuesta, versión esperada y payload; revocación bloquea incluso replay. Las actualizaciones reemplazan el patch entero respecto a la fuente indicada, sin heredar campos omitidos. Rebase explícito produce una nueva revisión; no cambia fuente/idioma/operación. El replay devuelve la revisión original y no certifica vigencia de la fuente.
 
-Prueba: `/opt/homebrew/bin/php tests/editorial-blog-proposals/check.php`. APIs/proyecciones sintéticas, no integración con WordPress/Polylang/HTTP. Siguiente: repositorio privado y revisión/versionado/replay en laboratorio antes de cualquier paquete o primer scope real.
+Solo CLI/opt-in AC_BLOG_PROPOSALS_STORAGE_LAB=true/SQLite/sin ABSPATH. Instalación explícita en base dedicada vacía; ninguna carga en WordPress. BEGIN IMMEDIATE serializa transacciones; no migrar este locking literalmente a MariaDB.93casos reales SQLite cubren dos procesos, dos SIGKILL, rollback, privacidad y cuotas;82regresiones del planificador pasan. [Evidencia y límites](../../../docs/qa/MCP_BLOG_PROPOSAL_STORAGE_2026-10-26.md).
+
+Retiene todas las revisiones y recibos sin poda automática; rechaza por cuota:16propuestas/64revisiones/128peticiones/8MiB lógicos por propietario,16versiones por propuesta y786432bytes por documento. No mide ocupación física total. No hay creación de posts/borradores, aprobación, aplicación o recuperación. El ámbito real no cambia; no reutilizar propuesta227/revisión1 ni tablas/paquetes instalados de proyectos.
+
+Falta integración WordPress/MariaDB/Polylang, grupo completo/reciprocidad real, ownership/autenticación/HTTP reales, política operativa de archivo/retención/backups y empaquetado. El siguiente incremento debe adaptar y probar esa capa en laboratorio antes de registrar herramientas o conceder scopes reales.
+
+Prueba: `/opt/homebrew/bin/php tests/editorial-blog-proposals/check.php`. El planificador usa proyecciones sintéticas; el repositorio sí usa SQLite real. Ninguno integra WordPress/Polylang/HTTP. Prueba de almacenamiento: `/opt/homebrew/bin/php tests/editorial-blog-proposals/storage-check.php`. No subir el repositorio experimental al hosting.

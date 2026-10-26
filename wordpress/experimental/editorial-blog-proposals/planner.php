@@ -66,6 +66,29 @@ function fields(array $fields, $language, array $terms) {
     }
     return $result;
 }
+function authorize_actor(array $actor) {
+    exact($actor, ['id', 'authenticated', 'capabilities']);
+    if (!positive($actor['id']) || $actor['authenticated'] !== true || !is_array($actor['capabilities'])
+        || ($actor['capabilities'][PREPARE_SCOPE] ?? false) !== true) { reject('forbidden'); }
+}
+/** Syntax normalization before durable replay, without consulting a changed source. */
+function normalize_request(array $request) {
+    exact($request, ['request_id', 'source_id', 'locale', 'base_hash', 'operation', 'fields']);
+    if (!is_string($request['request_id']) || !preg_match('/^[a-f0-9]{32}$/D', $request['request_id'])
+        || !is_string($request['base_hash']) || !preg_match('/^[a-f0-9]{64}$/D', $request['base_hash'])
+        || !positive($request['source_id']) || !is_array($request['fields'])
+        || !in_array($request['operation'], ['update-post', 'create-translation'], true)) { reject('input'); }
+    locale($request['locale']);
+    if (!$request['fields'] || array_diff(array_keys($request['fields']), FIELDS)) { reject('fields'); }
+    foreach ($request['fields'] as $field => $value) {
+        if (in_array($field, ['categories', 'tags'], true)) { $request['fields'][$field] = ids($value); }
+        else {
+            text($value, ['title' => 1000, 'content' => 262144, 'excerpt' => 8192][$field]);
+            if ($field === 'title' && trim($value) === '') { reject('title'); }
+        }
+    }
+    return $request;
+}
 function snapshot(array $source, array $terms) {
     exact($source, ['id', 'type', 'status', 'password', 'locale', 'title', 'content', 'excerpt', 'categories', 'tags', 'translations']);
     if (!positive($source['id']) || $source['type'] !== 'post' || $source['status'] !== 'publish' || $source['password'] !== '') { reject('source'); }
@@ -84,15 +107,8 @@ function base_hash(array $source, array $termRows) {
 }
 /** Produces version 1 only. Durable ownership, replay and revisions are not implemented here. */
 function prepare(array $actor, array $source, array $termRows, array $request) {
-    exact($actor, ['id', 'authenticated', 'capabilities']);
-    if (!positive($actor['id']) || $actor['authenticated'] !== true || !is_array($actor['capabilities'])
-        || ($actor['capabilities'][PREPARE_SCOPE] ?? false) !== true) { reject('forbidden'); }
-    exact($request, ['request_id', 'source_id', 'locale', 'base_hash', 'operation', 'fields']);
-    if (!is_string($request['request_id']) || !preg_match('/^[a-f0-9]{32}$/D', $request['request_id'])
-        || !is_string($request['base_hash']) || !preg_match('/^[a-f0-9]{64}$/D', $request['base_hash'])
-        || !positive($request['source_id']) || !is_array($request['fields'])
-        || !in_array($request['operation'], ['update-post', 'create-translation'], true)) { reject('input'); }
-    locale($request['locale']);
+    authorize_actor($actor);
+    $request = normalize_request($request);
     $terms = catalog($termRows); $source = snapshot($source, $terms);
     $base = base_hash($source, $termRows);
     if ($request['source_id'] !== $source['id']) { reject('source'); }
