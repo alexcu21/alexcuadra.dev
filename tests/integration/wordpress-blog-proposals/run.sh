@@ -1,5 +1,7 @@
 #!/bin/sh
 set -eu
+mode=${1:-cli}
+case "$mode" in cli|--transport) ;; *) exit 2 ;; esac
 project=${BLOG_PROPOSAL_LAB_PROJECT:-alexcuadra-blog-proposals-lab-20261026}
 case "$project" in alexcuadra-blog-proposals-lab-*) ;; *) exit 2 ;; esac
 compose(){ docker compose -p "$project" -f tests/integration/wordpress-blog-read/compose.yaml -f tests/integration/wordpress-blog-proposals/compose.yaml "$@"; }
@@ -12,8 +14,19 @@ fi
 compose run --rm --no-deps cli core install --url=http://wordpress --title=SyntheticBlogProposalLab \
   --admin_user=lab_admin --admin_password=synthetic-proposal-only --admin_email=admin@example.test --skip-email
 compose run --rm --no-deps --entrypoint sh cli /lab/install.sh
-report=$(compose run --rm --no-deps cli eval-file /proposal-lab/check.php)
-if ! printf '%s\n' "$report" | python3 tests/integration/wordpress-blog-read/verify-report.py EDITORIAL_BLOG_PROPOSAL_WP_RESULT=; then
-  printf '%s\n' "$report" >&2
-  exit 1
+if [ "$mode" = --transport ]; then
+  compose run --rm --no-deps --entrypoint sh cli -c 'cp /proposal-lab/http-plugin.php wp-content/mu-plugins/blog-proposals-http.php'
+fi
+phase(){
+  if ! report=$(compose run --rm --no-deps cli eval-file "/proposal-lab/$1.php"); then
+    printf '%s\n' "$report" >&2; exit 1
+  fi
+  if ! printf '%s\n' "$report" | python3 tests/integration/wordpress-blog-proposals/verify-report.py "$2"; then
+    printf '%s\n' "$report" >&2; exit 1
+  fi
+}
+phase check EDITORIAL_BLOG_PROPOSAL_WP_RESULT=
+if [ "$mode" = --transport ]; then
+  phase failures EDITORIAL_BLOG_PROPOSAL_FAULT_RESULT=
+  phase http EDITORIAL_BLOG_PROPOSAL_HTTP_RESULT=
 fi

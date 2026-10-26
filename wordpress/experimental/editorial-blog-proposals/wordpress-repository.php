@@ -2,6 +2,7 @@
 /** wpdb/InnoDB repository of private plans; no source writer, hooks or MCP tools. */
 namespace AlexCuadra\EditorialBlogProposalLab;
 require_once __DIR__.'/wordpress-source.php';
+require_once __DIR__.'/connection-fence.php';
 
 final class WordPressRepository {
     private $db;
@@ -61,14 +62,11 @@ final class WordPressRepository {
         }
     }
     private function transaction(int $owner,callable $fn) {
-        $this->outside();$this->tablesReady();$this->query('START TRANSACTION');
-        try {
+        $this->outside();$this->tablesReady();
+        return fenced_transaction($this->db,function()use($owner,$fn){
             if (!$this->row("SELECT owner_id FROM {$this->prefix}owners WHERE owner_id=%d FOR UPDATE",[$owner])) { reject('owner_not_ready'); }
-            $result=$fn();$this->query('COMMIT');return $result;
-        } catch (\Throwable $e) {
-            try {$this->query('ROLLBACK');}catch(\Throwable $ignored){}
-            throw $e;
-        }
+            return $fn();
+        });
     }
     private function head(int $owner,int $id): int {
         $r=$this->row("SELECT version FROM {$this->prefix}proposals WHERE owner_id=%d AND id=%d",[$owner,$id]);

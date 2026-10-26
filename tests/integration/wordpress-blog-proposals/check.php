@@ -1,5 +1,5 @@
 <?php
-require '/blog-proposals/wordpress-repository.php';
+require_once '/blog-proposals/wordpress-repository.php';
 use AlexCuadra\EditorialBlogProposalLab\WordPressRepository;
 use function AlexCuadra\EditorialBlogProposalLab\{wordpress_projection,base_hash};
 use const AlexCuadra\EditorialBlogProposalLab\PREPARE_SCOPE;
