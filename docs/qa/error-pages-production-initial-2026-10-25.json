@@ -1,0 +1,69 @@
+{
+  "checkedAt": "2026-10-26T00:02:17.936Z",
+  "version": "23f2bb92-d379-4533-8702-cb871b50f950",
+  "previousVersion": "afef64bc-4bb1-44f2-9cd8-eacd3030e426",
+  "success": false,
+  "checks": [
+    {
+      "path": "/blog/",
+      "expected": 200,
+      "status": 200,
+      "type": "text/html",
+      "auth": "verified",
+      "robots": null,
+      "cache": null,
+      "csp": "base-uri 'self';object-src 'none';form-action 'self';frame-src https://challenges.cloudflare.com; script-src 'self' https://challenges.cloudflare.com 'sha256-2JMGnYKJ3N+gaNNgVCI0ACW87gxHK7kQUYWClFfOHq8=' 'sha256-4dvEEiedW/gppMRF9OggrvAKnVAkUkphUfySxnWQZD4=' 'sha256-RmDbesAz7WOeiCIFAumriYPfTQ1+Ad8mrNwSaQ83eqI=' 'sha256-xIb/Pa7FUshAu4ihwjchYcQpyCI8eS8kt40GpOAYCz8=' 'sha256-1BvDVWLr3QCC20uHhUDi27eDFVJpk1uMQJGIWKUks2I=' 'sha256-kmZE/W8I1iuTnl1b3yqzv9/DQZenPngd3NjSKMQl7y0=' 'sha256-Y8t0ntteBwH+PqGKUyjWW3CAk+BNJKSoQc0xZ68FjhM=' 'sha256-0O7iB6zr9x0r6X6eWYITC9V5q+yWCGAoFvcysBGbY9Q='; style-src 'self' https://fonts.googleapis.com 'sha256-C5O9YoveNhPYf4Oil92mI32D/AExF2msLQjSTDfTUZY=' 'sha256-ByuWzrTVYkV0Ux+j2b997vJR88lKOzUNJJi+sP8WnzU=' 'sha256-U3KCZuw2sog+m7G+gQFRInLqB0FM2Sj2pIvMgiEu8wY=' 'sha256-1C4yl5QtONidSnVRQlhrLxdN7/1HpO10039KmALFobw=' 'sha256-q8TKk8N0f4qIbCIXp9DmL45U3ukZZvVCKMKPgCOhp+Y=' 'sha256-SoEe3cW9YcqkSwzh2TvKib2DeNbFjgOiJS0gyzNcCu8=' 'sha256-N7Uo+gyI9Cau8IR0Ry49qbYw5ubUrjB5QmhN24nbuz8=' 'sha256-4TzsgBFyDpc3kh7Y8ibT/Zm1KDTsHttGZ/lG+xcxhTA=' 'sha256-wXkfCmW/hUqYuf5T4Vb2erYT4bk9+zIOpk4eTl5sUr4=' 'sha256-J8SvNQO8n8oBM8Z5de2znm17lNQLnwjZi3QtdPdlFas=' 'sha256-8/ZbdH8Oyyrn57ZZD9nuCeOVh6r8ydrfHF36knSp4QE=' 'sha256-d20QBLmaLv4T35wtpEuuX5o2dftPK9+mDrbiqkgiStg=' 'sha256-oAFIBxIbpDrL01q7ivsvbNUt0gQ9hC8+0pyzqrct9NA=' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='; style-src-attr 'unsafe-inline';",
+      "retryAfter": null,
+      "h1": 1,
+      "spanish": false,
+      "contactDisabled": false,
+      "valid": true
+    },
+    {
+      "path": "/es/laboratorio/",
+      "expected": 200,
+      "status": 200,
+      "type": "text/html",
+      "auth": "verified",
+      "robots": null,
+      "cache": null,
+      "csp": "base-uri 'self';object-src 'none';form-action 'self';frame-src https://challenges.cloudflare.com; script-src 'self' https://challenges.cloudflare.com 'sha256-2JMGnYKJ3N+gaNNgVCI0ACW87gxHK7kQUYWClFfOHq8=' 'sha256-4dvEEiedW/gppMRF9OggrvAKnVAkUkphUfySxnWQZD4=' 'sha256-RmDbesAz7WOeiCIFAumriYPfTQ1+Ad8mrNwSaQ83eqI=' 'sha256-xIb/Pa7FUshAu4ihwjchYcQpyCI8eS8kt40GpOAYCz8=' 'sha256-1BvDVWLr3QCC20uHhUDi27eDFVJpk1uMQJGIWKUks2I=' 'sha256-kmZE/W8I1iuTnl1b3yqzv9/DQZenPngd3NjSKMQl7y0=' 'sha256-Y8t0ntteBwH+PqGKUyjWW3CAk+BNJKSoQc0xZ68FjhM=' 'sha256-0O7iB6zr9x0r6X6eWYITC9V5q+yWCGAoFvcysBGbY9Q='; style-src 'self' https://fonts.googleapis.com 'sha256-C5O9YoveNhPYf4Oil92mI32D/AExF2msLQjSTDfTUZY=' 'sha256-ByuWzrTVYkV0Ux+j2b997vJR88lKOzUNJJi+sP8WnzU=' 'sha256-U3KCZuw2sog+m7G+gQFRInLqB0FM2Sj2pIvMgiEu8wY=' 'sha256-1C4yl5QtONidSnVRQlhrLxdN7/1HpO10039KmALFobw=' 'sha256-q8TKk8N0f4qIbCIXp9DmL45U3ukZZvVCKMKPgCOhp+Y=' 'sha256-SoEe3cW9YcqkSwzh2TvKib2DeNbFjgOiJS0gyzNcCu8=' 'sha256-N7Uo+gyI9Cau8IR0Ry49qbYw5ubUrjB5QmhN24nbuz8=' 'sha256-4TzsgBFyDpc3kh7Y8ibT/Zm1KDTsHttGZ/lG+xcxhTA=' 'sha256-wXkfCmW/hUqYuf5T4Vb2erYT4bk9+zIOpk4eTl5sUr4=' 'sha256-J8SvNQO8n8oBM8Z5de2znm17lNQLnwjZi3QtdPdlFas=' 'sha256-8/ZbdH8Oyyrn57ZZD9nuCeOVh6r8ydrfHF36knSp4QE=' 'sha256-d20QBLmaLv4T35wtpEuuX5o2dftPK9+mDrbiqkgiStg=' 'sha256-oAFIBxIbpDrL01q7ivsvbNUt0gQ9hC8+0pyzqrct9NA=' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='; style-src-attr 'unsafe-inline';",
+      "retryAfter": null,
+      "h1": 1,
+      "spanish": false,
+      "contactDisabled": false,
+      "valid": true
+    },
+    {
+      "path": "/about/",
+      "expected": 200,
+      "status": 200,
+      "type": "text/html",
+      "auth": "verified",
+      "robots": null,
+      "cache": null,
+      "csp": "base-uri 'self';object-src 'none';form-action 'self';frame-src https://challenges.cloudflare.com; script-src 'self' https://challenges.cloudflare.com 'sha256-2JMGnYKJ3N+gaNNgVCI0ACW87gxHK7kQUYWClFfOHq8=' 'sha256-4dvEEiedW/gppMRF9OggrvAKnVAkUkphUfySxnWQZD4=' 'sha256-RmDbesAz7WOeiCIFAumriYPfTQ1+Ad8mrNwSaQ83eqI=' 'sha256-xIb/Pa7FUshAu4ihwjchYcQpyCI8eS8kt40GpOAYCz8=' 'sha256-1BvDVWLr3QCC20uHhUDi27eDFVJpk1uMQJGIWKUks2I=' 'sha256-kmZE/W8I1iuTnl1b3yqzv9/DQZenPngd3NjSKMQl7y0=' 'sha256-Y8t0ntteBwH+PqGKUyjWW3CAk+BNJKSoQc0xZ68FjhM=' 'sha256-0O7iB6zr9x0r6X6eWYITC9V5q+yWCGAoFvcysBGbY9Q='; style-src 'self' https://fonts.googleapis.com 'sha256-C5O9YoveNhPYf4Oil92mI32D/AExF2msLQjSTDfTUZY=' 'sha256-ByuWzrTVYkV0Ux+j2b997vJR88lKOzUNJJi+sP8WnzU=' 'sha256-U3KCZuw2sog+m7G+gQFRInLqB0FM2Sj2pIvMgiEu8wY=' 'sha256-1C4yl5QtONidSnVRQlhrLxdN7/1HpO10039KmALFobw=' 'sha256-q8TKk8N0f4qIbCIXp9DmL45U3ukZZvVCKMKPgCOhp+Y=' 'sha256-SoEe3cW9YcqkSwzh2TvKib2DeNbFjgOiJS0gyzNcCu8=' 'sha256-N7Uo+gyI9Cau8IR0Ry49qbYw5ubUrjB5QmhN24nbuz8=' 'sha256-4TzsgBFyDpc3kh7Y8ibT/Zm1KDTsHttGZ/lG+xcxhTA=' 'sha256-wXkfCmW/hUqYuf5T4Vb2erYT4bk9+zIOpk4eTl5sUr4=' 'sha256-J8SvNQO8n8oBM8Z5de2znm17lNQLnwjZi3QtdPdlFas=' 'sha256-8/ZbdH8Oyyrn57ZZD9nuCeOVh6r8ydrfHF36knSp4QE=' 'sha256-d20QBLmaLv4T35wtpEuuX5o2dftPK9+mDrbiqkgiStg=' 'sha256-oAFIBxIbpDrL01q7ivsvbNUt0gQ9hC8+0pyzqrct9NA=' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='; style-src-attr 'unsafe-inline';",
+      "retryAfter": null,
+      "h1": 1,
+      "spanish": false,
+      "contactDisabled": false,
+      "valid": true
+    },
+    {
+      "path": "/es/privacidad/",
+      "expected": 200,
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "auth": null,
+      "robots": "noindex",
+      "cache": "no-store",
+      "csp": "default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
+      "retryAfter": null,
+      "h1": 1,
+      "spanish": true,
+      "contactDisabled": false,
+      "valid": false
+    }
+  ],
+  "finding": "Spanish privacy404: production config did not specify CONTACT_PRIVACY_ES_PAGE_ID, while staging used published page182."
+}

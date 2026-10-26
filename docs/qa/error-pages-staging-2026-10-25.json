@@ -1,0 +1,47 @@
+{
+  "checkedAt": "2026-10-25T18:11:50.676Z",
+  "version": "5ac24c2f-d949-4c44-8167-165e98910b47",
+  "success": true,
+  "checks": [
+    {
+      "path": "/__qa_missing_page__",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "cache": "no-store",
+      "robots": "noindex, nofollow",
+      "csp": "default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
+      "spanish": false,
+      "contactDisabled": false
+    },
+    {
+      "path": "/es/__qa_missing_page__",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "cache": "no-store",
+      "robots": "noindex, nofollow",
+      "csp": "default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
+      "spanish": true,
+      "contactDisabled": false
+    },
+    {
+      "path": "/error-pages.css",
+      "status": 200,
+      "type": "text/css",
+      "cache": "public, max-age=0, must-revalidate",
+      "robots": null,
+      "csp": null,
+      "spanish": false,
+      "contactDisabled": false
+    },
+    {
+      "path": "/api/contact",
+      "status": 404,
+      "type": "application/json",
+      "cache": "no-store",
+      "robots": "noindex, nofollow",
+      "csp": null,
+      "spanish": false,
+      "contactDisabled": true
+    }
+  ]
+}

@@ -49,7 +49,8 @@
       "vars": {
         "WPGRAPHQL_AUTH_ENABLED": "true",
         "CONTACT_FORM_ENABLED": "false",
-        "CONTACT_PRIVACY_PAGE_ID": "180"
+        "CONTACT_PRIVACY_PAGE_ID": "180",
+        "CONTACT_PRIVACY_ES_PAGE_ID": "182"
       }
     }
   },

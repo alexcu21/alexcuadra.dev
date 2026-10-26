@@ -3,6 +3,7 @@ import { withCmsRequest } from './data/cms-request.js';
 import { allowsPublicCmsCache } from './data/cms-cache.js';
 import { env } from 'cloudflare:workers';
 import { isWordPressRestProbe } from './data/request-policy.js';
+import { presentDocumentError } from './data/error-document.js';
 
 export const onRequest = defineMiddleware(async (context, next) => {
   const requestId = crypto.randomUUID();
@@ -17,8 +18,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
   if (allowsPublicCmsCache(context.request)) {
     try { edgeCache = await caches.open('alexcuadra-public-cms'); } catch { /* Cache is optional. */ }
   }
-  const response = await withCmsRequest(next, { requestId, edgeCache, cacheOrigin: context.url.origin,
-    cmsConfig: env, bufferHtml: true });
+  const response = presentDocumentError(context.request, await withCmsRequest(next, { requestId, edgeCache, cacheOrigin: context.url.origin,
+    cmsConfig: env, bufferHtml: true }));
   const headers = new Headers(response.headers);
   headers.set('X-Request-ID', requestId);
   // Staging uses workers.dev; this is an indexing policy, not access control.

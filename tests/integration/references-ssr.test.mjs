@@ -49,6 +49,18 @@ test('actual reference templates preserve HTTP, content and pagination contracts
     assert.doesNotMatch(html, /PRIVATE_SCRIPT|99\.9%|450\+|testimonial/);
   }
   const projectDetail = await get('/work/case-study');
+  for (const path of ['/work/missing','/es/proyectos/missing','/__qa_missing_page__?mode=outage','/es/__qa_missing_page__?mode=outage']) {
+    const error = await fetch(`${base}${path}`,{headers:{accept:'text/html'}});
+    assert.equal(error.status,404);assert.equal(error.headers.get('cache-control'),'no-store');
+    const html=await error.text();assert.ok(html.includes(path.startsWith('/es/')?'No encontramos esta página':'Page not found'));
+    assert.match(html,/error-pages.css/);
+  }
+  for (const path of ['/blog/native-post?mode=outage','/es/laboratorio/laboratorio?mode=outage']) {
+    const error=await fetch(`${base}${path}`,{headers:{accept:'text/html'}});
+    assert.equal(error.status,503);assert.equal(error.headers.get('retry-after'),'120');
+    assert.equal(error.headers.get('cache-control'),'no-store');
+    const html=await error.text();assert.match(html,/<h1>/);assert.doesNotMatch(html,/PRIVATE|Synthetic|<script/);
+  }
   const manyTerms = await get('/es/proyectos/?mode=project-many-terms');
   assert.match(manyTerms.html, /<form[^>]*data-project-controls[^>]*hidden/);
   assert.match(manyTerms.html, /<option value="Svelte"[^>]*>Svelte<\/option>/);
