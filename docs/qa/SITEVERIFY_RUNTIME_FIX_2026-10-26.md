@@ -29,11 +29,13 @@ Diagnóstico opcional: si el observador falla, no cambia la validación. No se d
 - 320 pruebas unitarias: cinco regresiones nuevas sobre categorías Siteverify, lectura del cuerpo, códigos permitidos, discrepancias/observador y conexión al log del handler.
 - Seis integraciones de runtime correctas. La nueva usa fetch/URLSearchParams/AbortSignal nativos, con **todo el egreso interceptado** y valores sintéticos; verifica éxito, HTTP502, JSON inválido y redirección302 rechazada. Cuatro intentos interceptados exactos para cuatro verificaciones, sin reintentos ni seguimiento de redirects.
 - Antes de la corrección esa integración falló con503, diagnóstico transport y cero intentos interceptados; después pasa. Las cinco integraciones anteriores siguen pasando con email simulado.
-- Build previo al cambio de redirect pasó; build final y postflight de staging se registran al desplegar. Sin pruebas de envío real, validación de token real ni recepción/Reply-To confirmados.
+- Build final correcto con0errores/0advertencias. Sin pruebas de envío real, validación de token real ni recepción/Reply-To confirmados.
 
 ## Estado y siguiente acción
 
 Formulario desactivado; producción sin cambios. No se han cambiado claves, hostname del widget, DNS, cuotas, permisos, CMS o MCP. Este defecto de Siteverify es independiente de los429delCMS.
+
+Staging publicado desde `63a6403`, versión `843026f8-91b5-42b1-90e0-111d83501c76`, previa `53c8a833-af98-44f5-91a6-45bf6b7df7f7`. [GET posterior](siteverify-staging-2026-10-26.json):404 CONTACT_DISABLED/no-store. Este GET no valida Siteverify remoto; confirma que el formulario no quedó abierto. Producción permanece en `feba64f8-5406-4c69-8522-6c3753681a37`. Reversión: restaurar la versión previa de staging, sin cambiar secretos ni reservas. Sin push.
 
 Después del despliegue de staging: una única prueba autorizada con el formulario temporalmente activo, observación del HTTP/requestId y log Siteverify. Mensaje ficticio CONTACT-PILOT-2, nombre Alex Cuadra, Reply-To público alex@alexcuadra.dev, destinatario exclusivamente configurado en servidor; no modificarlo. Solicitar confirmación de recepción y Reply-To, cerrar ventana/desactivar. El piloto anterior fue aplazado; no interpretar continuidad genérica como autorización para ese nuevo envío ni reintentar resultados inciertos.
 
