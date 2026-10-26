@@ -1,0 +1,247 @@
+<!-- wp:paragraph -->
+<p>A vibe-coded application is built by describing what you want in natural language and letting AI generate the code. It is fast, but that code usually covers what you asked for and little else. It may pass basic checks while hiding inconsistencies, edge-case failures, and security risks that only appear under real conditions. A well-structured test case is the least expensive way to find them before your users do. <a href="https://testfort.com/?p=50578" target="_blank" rel="noopener">testfort</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Start with a clear objective</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>A test case describes a specific behavior you want to check. Record the objective, initial conditions, and necessary information before following the steps.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+<h4 class="wp-block-heading">An illustrative scenario</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Imagine a practice form with a required name field. The objective is to check what happens when that field is empty.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+<ol class="wp-block-list"><!-- wp:list-item -->
+<li>Open the practice form in its initial state.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Leave the name field empty and select <strong>Submit</strong>.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Check the expected result: a message explains that the name is required, and the form remains available so it can be corrected.</li>
+<!-- /wp:list-item --></ol>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":4} -->
+<h4 class="wp-block-heading">Record what happened</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Keep the observed result separate from the expected result. If they differ, describe the difference and the conditions needed to reproduce it. This example does not represent an executed test or a measured result.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Why a vibe-coded app needs its own approach</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>In traditional development, testing relies on code changing in a controlled way. Vibe coding disrupts that assumption: tests written against one version of generated code may fail when it is regenerated or updated, and it is not always clear whether the problem lies in the code, the prompt that created it, or the test itself. <a href="https://testrigor.com/blog/what-are-vibe-coding-tests/" target="_blank" rel="noopener">testrigor</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>That is why test cases for these apps should be anchored to what users see and do, rather than how the application is built internally. Because the code can change under the hood, relying on its internal structure is a weak strategy. <a href="https://testrigor.com/blog/what-are-vibe-coding-tests/" target="_blank" rel="noopener">testrigor</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>There is also a security reason. A 2025 Veracode analysis found that 45% of AI-generated code contains OWASP Top 10 vulnerabilities. That figure does not mean your app has them, but it justifies including access and authentication cases from the outset. <a href="https://www.frugaltesting.com/blog/how-to-test-vibe-coded-software-before-it-reaches-production" target="_blank" rel="noopener">frugaltesting</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Anatomy of a good test case</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>All cases should share the same structure. The usual fields are:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:table -->
+<figure class="wp-block-table"><table class="has-fixed-layout"><thead><tr><th>Field</th><th>What it should contain</th></tr></thead><tbody><tr><td><strong>ID and title</strong></td><td>A unique identifier and a title that states what is being checked (for example, “TC-FORM-003: Submit with an empty name”).</td></tr><tr><td><strong>Objective</strong></td><td>The specific behavior you want to check, in one sentence.</td></tr><tr><td><strong>Preconditions</strong></td><td>What must be true before starting: application state, user, and test data.</td></tr><tr><td><strong>Steps</strong></td><td>Brief actions, in the order a real person would perform them.</td></tr><tr><td><strong>Expected result</strong></td><td>What should happen, expressed in a verifiable way: an exact message, a redirect, or saved data.</td></tr><tr><td><strong>Observed result</strong></td><td>What actually happened when the case was executed (completed afterward).</td></tr><tr><td><strong>Status</strong></td><td>Passed or failed, depending on whether the observed and expected results match.</td></tr></tbody></table></figure>
+<!-- /wp:table -->
+
+<!-- wp:paragraph -->
+<p>A few rules improve any test case:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li><strong>One case, one behavior.</strong> If a case tries to test several things at once or has too many steps, split it into smaller cases, each focused on one function. <a href="https://testdevlab.com/blog/best-practices-for-writing-test-cases-an-introduction" target="_blank" rel="noopener">testdevlab</a></li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Define preconditions and test data.</strong> That way, whoever executes the case does not have to guess. Something like “use a valid test account” is enough, rather than a specific email address that may change.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>If there are several intermediate results, record them step by step.</strong> For complex steps, it makes sense to define the expected result after each step, rather than only at the end. <a href="https://www.testdevlab.com/center-of-excellence/test-management/best-practices/how-to-write-good-test-cases" target="_blank" rel="noopener">testdevlab</a></li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Be specific.</strong> “The name is saved” is vague. “A confirmation message appears and the profile shows the new name” can be checked.</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Explore first, then structure</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Writing formal cases too early is often a mistake when you do not know an app well. Starting with exploratory testing helps uncover unknown risks before investing time in structured cases or automation. Use the app as a real person would, note what surprises you, and turn important findings into repeatable cases. <a href="https://testfort.com/blog/vibe-testing" target="_blank" rel="noopener">testfort</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Which groups of test cases to cover first</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Not every feature deserves the same effort. Prioritize business-critical flows and organize cases by type of risk. These categories are often useful in AI-generated apps:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+<ol class="wp-block-list"><!-- wp:list-item -->
+<li><strong>Form validation.</strong> Empty fields, invalid formats, and boundary values. This is the example used in this article. An informal study of six public apps built with Bolt, Lovable, and Base44 found, among other problems, a financial calculator that returned an optimistic verdict from blank inputs. <a href="https://www.plushcap.com/content/testmu-ai/blog/testmu-ai-9-vibe-coding-risks-and-how-to-test-for-them" target="_blank" rel="noopener">plushcap</a></li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Persistence and reloads.</strong> Reload the page midway through a flow and check whether progress is lost. The same study found silent state loss after reloading in two of the six apps. <a href="https://www.plushcap.com/content/testmu-ai/blog/testmu-ai-9-vibe-coding-risks-and-how-to-test-for-them" target="_blank" rel="noopener">plushcap</a></li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Console and network errors.</strong> Open the browser's developer tools while running the cases. Errors visible there often do not appear on the page. In the cited study, five of the six apps had console or network errors. <a href="https://www.plushcap.com/content/testmu-ai/blog/testmu-ai-9-vibe-coding-risks-and-how-to-test-for-them" target="_blank" rel="noopener">plushcap</a></li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Access and permissions.</strong> What a user without a session can see, and what happens if one user tries to open another user's data. These are cases the original prompt almost never requested.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Edge cases and unexpected inputs.</strong> Very long text, special characters, interrupted connections, and double-clicking a button.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Basic security.</strong> Check that credentials are not hardcoded and that inputs are not handled unsafely. Models often embed API keys, database passwords, and tokens directly in generated code. This complements functional test cases, but does not replace a specialized security assessment. <a href="https://noqta.tn/en/blog/vibe-coding-security-gaps-2026" target="_blank" rel="noopener">noqta</a></li>
+<!-- /wp:list-item --></ol>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">A complete example using the template</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Using the structure above, the form scenario would look like this:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li><strong>ID and title:</strong> TC-FORM-003, Submit the form with an empty name.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Objective:</strong> Check that the name field is required.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Preconditions:</strong> The form is in its initial state, with no data entered.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Steps:</strong><!-- wp:list {"ordered":true} -->
+<ol class="wp-block-list"><!-- wp:list-item -->
+<li>Leave the name field empty.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Select <strong>Submit</strong>.</li>
+<!-- /wp:list-item --></ol>
+<!-- /wp:list --></li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Expected result:</strong> A message indicates that the name is required, no data is submitted, and the form remains available so it can be corrected.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Observed result:</strong> <em>(completed when the case is executed)</em></li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Status:</strong> <em>(pending)</em></li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>If the form submitted without a warning when you ran the case, you would record the difference like this: “Expected: required-field message. Observed: the form submits and displays the success screen. Always reproducible from the initial state with the field empty.” That wording is enough for whoever fixes the problem, or asks AI to fix it, to know exactly what needs correcting.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">How to keep test cases useful</h3>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li><strong>Run them again after every substantial prompting session.</strong> A small interface change can affect several parts of the app without you noticing.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Link each case to the requirement it protects.</strong> If the requirement changes, you will know which cases to review.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Avoid steps tied to details that change frequently.</strong> Write “select Submit” rather than relying on coordinates, colors, or secondary text.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Retire or update obsolete cases.</strong> A case that no longer describes the app produces false failures and undermines confidence.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Automate later, not first.</strong> Once a case becomes stable and is repeated often, it is a good candidate for automation, but start with the most critical ones.</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Common mistakes</h3>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li>Vague steps such as “test the form.”</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Cases without an expected result.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Long cases that combine several checks.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Assuming that if the demo works, everything works.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Writing only happy paths and overlooking empty, invalid, or unexpected inputs.</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Conclusion</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Well-structured test cases turn “it works for me” in a vibe-coded app into evidence others can reproduce. Define an objective, establish the initial conditions, write clear steps, separate expected from observed results, and prioritize by risk. You do not need to cover everything on day one: start with the flows that matter most and expand as the app grows.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><strong>Sources consulted:</strong> <a href="https://testfort.com/blog/vibe-testing">Vibe Testing (TestFort)</a> · <a href="https://testrigor.com/blog/what-are-vibe-coding-tests/">What are Vibe Coding Tests? (testRigor)</a> · <a href="https://www.frugaltesting.com/blog/how-to-test-vibe-coded-software-before-it-reaches-production">How to Test Vibe-Coded Software Before It Reaches Production (Frugal Testing)</a> · <a href="https://www.plushcap.com/content/testmu-ai/blog/testmu-ai-9-vibe-coding-risks-and-how-to-test-for-them">9 Vibe Coding Risks and How to Test for Them (TestMu AI)</a> · <a href="https://www.noqta.tn/blog/vibe-coding-security-gaps-2026">Why 45% of Vibe-Coded Apps Have Security Holes (Noqta)</a> · <a href="https://www.testdevlab.com/center-of-excellence/test-management/best-practices/how-to-write-good-test-cases">How to write good test cases (TestDevLab)</a> · <a href="https://testdevlab.com/blog/best-practices-for-writing-test-cases-an-introduction">Best Practices for Writing Test Cases (TestDevLab)</a></p>
+<!-- /wp:paragraph -->

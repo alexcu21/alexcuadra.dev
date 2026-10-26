@@ -1,0 +1,20 @@
+{
+  "checkedAt": "2026-10-26T01:56:31.347Z",
+  "checks": [
+    {
+      "sourceId": 204,
+      "segments": 74,
+      "structureAndLinksPreserved": true,
+      "codePreservedWithLocalizedPlaceholders": true,
+      "rawLength": 15017
+    },
+    {
+      "sourceId": 228,
+      "segments": 174,
+      "structureAndLinksPreserved": true,
+      "codePreservedWithLocalizedPlaceholders": true,
+      "rawLength": 32463
+    }
+  ],
+  "englishCopyEdit": "Core article numbering normalized to1–9; internal cross-references updated. Spanish sources unchanged."
+}

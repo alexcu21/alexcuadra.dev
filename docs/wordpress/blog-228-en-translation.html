@@ -1,0 +1,677 @@
+<!-- wp:paragraph -->
+<p><em>Revised and updated in October 2026 against the official documentation (the Core Handbook, Test Handbook, and wordpress-develop and Gutenberg repositories). Intended for people making their first code or testing contribution.</em><br></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading"><strong>1. Why contribute to Core</strong></h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>WordPress is free software, maintained by people and companies who give their time to the project. <strong>Five for the Future</strong>, proposed by Matt Mullenweg in 2014, recommends that organizations whose businesses depend on the ecosystem dedicate around 5% of their resources to WordPress. There is now an official page (wordpress.org/five-for-the-future) where companies and individuals register their commitment.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>For theme and plugin developers, contributing brings practical benefits: you understand the APIs your work depends on, learn about changes coming in each release earlier, and detect incompatibilities before they reach production. Every accepted contribution also receives recognition through <em>props</em> in the commit message and release credits.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>It is not all code. You can contribute by testing patches, writing automated tests, reviewing accessibility, or improving documentation. This guide focuses mainly on code and testing, two common ways to get started with Core and Gutenberg.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading"><strong>2. Checklist: what you need before starting</strong></h2>
+<!-- /wp:heading -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading"><strong>Accounts and communication</strong></h3>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li>A WordPress.org account (used for Trac, Slack, and the Make blogs).</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Access to the official Slack (make.wordpress.org/chat), and membership in #core, #core-test, and #core-editor. For accessibility questions, join #accessibility.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>A GitHub account linked to your WordPress.org profile (Profile → Account &amp; Security → Connections). Without this connection, your pull requests will not automatically earn you props.</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading"><strong>Tools on your computer</strong></h3>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li>Git installed (and optionally GitHub CLI). You only need SVN if you prefer working with the official Subversion repository.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Node.js 24 and npm 11 (the versions currently required by wordpress-develop). nvm is recommended for switching versions with nvm use.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Docker Desktop (or a compatible alternative such as OrbStack, Colima, or Rancher Desktop), installed and running.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Composer, required for PHPCS and Gutenberg's PHP tests.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>An editor with support for ESLint and PHP_CodeSniffer.</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading"><strong>Repositories</strong></h3>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li>A fork and clone of github.com/WordPress/wordpress-develop (Core).</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>A fork and clone of github.com/WordPress/gutenberg (the block editor).</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>A local environment started and working at least once (see section 3).</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading"><strong>Essential reading</strong></h3>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li>Core Contributor Handbook: make.wordpress.org/core/handbook.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>WordPress Coding Standards (PHP, JavaScript, CSS, HTML, and accessibility): developer.wordpress.org/coding-standards.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>The Trac guide: “How We Use Our Bug Tracker” in the Core Handbook.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>WordPress AI Guidelines, if you plan to use AI tools: make.wordpress.org/ai/handbook/ai-guidelines/.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>For Gutenberg: docs/contributors/code/getting-started-with-code-contribution.md and testing-overview.md in the repository.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Test Handbook: make.wordpress.org/test/handbook.</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading"><strong>3. Set up a local Core environment</strong></h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The development repository (wordpress-develop) is different from the WordPress package you download for a website. It includes automated tests, build-tool configuration, and source code in src/. JavaScript and CSS are generated through a build process (Grunt, run through npm).</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading"><strong>Recommended option: Git and the included Docker environment</strong></h3>
+<!-- /wp:heading -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>git clone https://github.com/&lt;your-username&gt;/wordpress-develop.git<br>cd wordpress-develop<br>npm install<br>npm run build:dev<br>npm run env:start<br>npm run env:install</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>The site becomes available at <em>http://localhost:8889</em> (username admin, password password). While working, run npm run dev to watch for changes and rebuild automatically. Other useful commands:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li>npm run env:cli -- &lt;command&gt;: runs WP-CLI inside the container.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>npm run env:stop, npm run env:restart: stop and restart the environment.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>npm run env:reset: resets the environment and <strong>deletes the database</strong>.</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>With this environment, wp-tests-config.php and the test database are created automatically. By default, the server serves the src/ directory (LOCAL_DIR=src in .env), which works correctly after npm run build:dev. To test the final built version, run npm run build and change LOCAL_DIR to build.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>If you use an Apple Silicon Mac with an older version of MySQL (5.7 or earlier) or MariaDB 5.5, the README instructs you to create a docker-compose.override.yml that sets the database platform to linux/amd64.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading"><strong>Alternative option: SVN and your own server</strong></h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>SVN remains the official version control system (committers submit changes there), and you can work with it:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>svn co https://develop.svn.wordpress.org/trunk/ wordpress-develop<br>cd wordpress-develop<br>npm install<br>npm run build:dev</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>If you use your own server (MAMP, Local, or LAMP), copy wp-config-sample.php to wp-config.php in the repository root and configure your database. For tests, copy wp-tests-config-sample.php to wp-tests-config.php and point it at a <strong>different</strong> database.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><strong>Warning:</strong> the PHPUnit suite drops and recreates tables (DROP TABLE / CREATE TABLE). If wp-tests-config.php points to your development site's database, you will lose all its data.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading"><strong>PHP version</strong></h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Since WordPress 7.0 (released in May 2026), the minimum supported PHP version is <strong>7.4</strong>; the recommended version is <strong>8.3</strong> or later. If your change involves PHP, avoid syntax unavailable in PHP 7.4 (such as match, named arguments, or union types, which arrived in PHP 8.0). The Docker environment lets you change versions through LOCAL_PHP in the .env file.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:table -->
+<figure class="wp-block-table"><table class="has-fixed-layout"><thead><tr><th>Tool / file</th><th>Command or location</th><th>Purpose</th></tr></thead><tbody><tr><td>Git / SVN</td><td>git clone from your fork or svn co https://develop.svn.wordpress.org/trunk/</td><td>Get and synchronize trunk's code.</td></tr><tr><td>Node.js / npm</td><td>npm install</td><td>JavaScript dependencies and build tools.</td></tr><tr><td>Grunt (through npm)</td><td>npm run build:dev, npm run build, npm run dev</td><td>Build, minify, and watch for changes. There is no need to install grunt-cli globally; you can use npm run grunt -- &lt;task&gt;.</td></tr><tr><td>Docker</td><td>npm run env:start</td><td>An isolated web server, PHP runtime, and database.</td></tr><tr><td>wp-config.php</td><td>Repository root</td><td>Local site configuration (automatic with Docker).</td></tr><tr><td>wp-tests-config.php</td><td>Repository root</td><td>An isolated database for PHPUnit (automatic with Docker).</td></tr></tbody></table></figure>
+<!-- /wp:table -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading"><strong>4. Find tickets in Trac</strong></h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Core work is organized in Trac (core.trac.wordpress.org). Each bug or enhancement is a ticket with a number, components, and keywords indicating its status. Before changing code, read “How We Use Our Bug Tracker” in the Core Handbook.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Useful reports to start with:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li><strong>Good First Bugs</strong> (good-first-bug): narrowly scoped tickets reviewed by the Core team as suitable for beginners. The “Unclaimed” view shows tickets nobody has taken. A common task is updating (“refreshing”) old patches that no longer apply to trunk.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Needs Patch</strong> (needs-patch): the problem is confirmed, but there is no proposed code change yet. Tickets targeted for the next release often receive review sooner.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Needs Unit Tests</strong> (needs-unit-tests): tests are needed to reproduce the bug or validate the patch. This is a good way to learn how the code works internally.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Needs Testing</strong> (needs-testing): a patch exists and someone needs to test it and report the result. Ideal for a first contribution.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Next Major / Next Minor Release</strong>: tickets in the next release cycle, filterable by workflow (PHP, JavaScript, documentation, or UI).</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Reports dashboard</strong> (/reports/ and /tickets/): includes personal views such as your pending patches and comments.</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>If you are unsure whether a ticket is still relevant or which approach is best, comment on the ticket or ask in #core on Slack. Asking questions is normal and saves work in the wrong direction.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Gutenberg changes do not go through Trac: they are managed as <em>issues</em> and <em>pull requests</em> on GitHub (github.com/WordPress/gutenberg). Good First Issue and Needs Testing labels serve the same purpose as their Trac equivalents.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading"><strong>5. Workflow: from a ticket to a patch or pull request</strong></h2>
+<!-- /wp:heading -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading"><strong>Before starting a new ticket</strong></h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Start from a clean, up-to-date trunk so your change does not include leftovers from other tickets.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>With Git:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>git status<br>git checkout trunk<br>git pull upstream trunk<br>git checkout -b 12345-short-description<br>npm run build:dev</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>With SVN:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>svn diff&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; # inspect local changes<br>svn revert -R . &nbsp; &nbsp; # discard all local changes<br>svn up&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; # update from the server<br>npm run build:dev</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading"><strong>Option A: a GitHub pull request (the most common approach today)</strong></h3>
+<!-- /wp:heading -->
+
+<!-- wp:list {"ordered":true} -->
+<ol class="wp-block-list"><!-- wp:list-item -->
+<li>Make your changes in a branch of your wordpress-develop fork and push it.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Open a pull request against WordPress/wordpress-develop. Include the full Trac ticket URL in the description (for example, Trac ticket: https://core.trac.wordpress.org/ticket/12345) and enable the option that allows maintainers to edit your branch.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>The PR will appear automatically on the Trac ticket. General PR comments are synchronized with Trac but do not notify ticket subscribers, so leave a comment on Trac as well.</li>
+<!-- /wp:list-item --></ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>PRs are not merged on GitHub: a committer applies the change in SVN. A PR without an associated Trac ticket will not be considered.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading"><strong>Option B: a patch file in Trac</strong></h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>To apply a patch someone else has uploaded to a ticket:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>npm run grunt -- patch:12345</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>The patch task (from the grunt-patch-wordpress package, created by Aaron Jorbin) queries Trac, lists the ticket's patches, and applies the one you choose. It also accepts a patch URL or a GitHub pull request URL. The manual alternative is to download the file and run patch -p0 &lt; 12345.diff from the repository root; -p0 is necessary because WordPress patches retain paths from the repository root (src/, tests/).</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>To create your patch:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>svn diff &gt; 12345.diff<br># or, with Git:<br>git diff trunk --no-prefix &gt; 12345.diff</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>Name the file after the ticket number (12345.diff or 12345.patch). If that name already exists, Trac renames it (12345.2.diff). Do not include generated files such as minified JavaScript or RTL CSS. Upload it using <strong>Attach file</strong> on the ticket.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading"><strong>Update the ticket</strong></h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>After uploading the patch or opening the PR, edit the ticket's keywords: remove needs-patch or needs-refresh and add has-patch (and needs-testing if someone needs to test it). Committers normally close or resolve tickets, so do not use resolution options unless instructed to do so.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading"><strong>6. AI agents and skills in the Gutenberg repository</strong></h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Gutenberg includes files intended for AI coding assistants. They use “progressive discovery”: the agent loads only the context needed for a task instead of reading everything at once.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li><strong>AGENTS.md in the root</strong>: general project rules and basic commands (installation, build, lint, and tests).</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>AGENTS.md by directory</strong>: for example, packages/components/AGENTS.md is read only when working in that folder.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Skills</strong> in .agents/skills/&lt;name&gt;/SKILL.md: procedures for specific tasks. Current examples include testing, defensive-data-design, package-runtime-compatibility, and several design-system skills.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>References</strong> within each skill (references/): longer documents the agent reads only when a step requires them. For example, the testing skill links to references/jest.md, php.md, and e2e.md.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>CLAUDE.md</strong>: contains only the line @AGENTS.md so Claude Code uses the same file.</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>The project's principle is that rules belong in public documentation (for example, docs/contributors/code/), and agent files only point to it. If a rule is useful to an agent, it is also useful to a person; duplicating it makes the copies drift apart.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Each SKILL.md starts with a YAML header containing name and description, with the description stating when to use it:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>---<br>name: testing<br>description: Use when writing, running, or debugging tests in the Gutenberg repository.<br>---</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>Among other requirements, Gutenberg's testing skill says not to make a test pass by weakening it (looser assertions, added waits, or skipped cases without disclosure). If you create or modify a skill, run:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>npm run agents:setup &nbsp; &nbsp; # regenerate the skill catalog for supported agents<br>npm run lint:md:docs &nbsp; &nbsp; # validate documentation Markdown formatting</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The rules for using AI in contributions and disclosing that use are in section 7.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading"><strong>7. Recommendations for using AI in contributions</strong></h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>WordPress allows AI tools (GitHub Copilot, Claude Code, Codex, ChatGPT, and similar tools) to assist with contributions. Since January 2026, the AI team's official <strong>AI Guidelines</strong> have been available (make.wordpress.org/ai/handbook/ai-guidelines/), and the wordpress-develop and Gutenberg pull request templates include a required “Use of AI Tools” section. The guidelines are an initial version (v0) and may change, so review them before each substantial contribution.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading"><strong>The five principles</strong></h3>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li><strong>You are responsible.</strong> AI can help, but it is not a contributor. Everything you submit is your responsibility, whether you wrote it or a tool generated it. Review AI output as you would code from someone you do not know.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Transparency.</strong> Disclose significant AI use in the PR description or a Trac ticket comment. Disclosure is not viewed negatively; it helps reviewers.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Compatible licensing.</strong> WordPress is GPLv2 or later. Do not use tools whose terms prevent you from using their output under the GPL, do not use AI to “rewrite” incompatibly licensed code, and never remove existing license headers or attributions.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>This also applies beyond code.</strong> Images, screenshots, documentation, and Learn materials must be GPL-compatible. CC0 is acceptable for media; avoid licenses requiring attribution or share-alike terms, or imposing noncommercial or no-derivatives restrictions.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Quality before quantity.</strong> The guidelines explicitly reject “AI slop”: generic descriptions, large blocks of unreviewed code, invented APIs, hooks, functions, or tickets, and overengineered code. Maintainers may close contributions that show little human involvement.</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading"><strong>How to disclose AI use</strong></h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Complete the “Use of AI Tools” section in the PR template. If you contribute a patch through Trac, include it in your comment. The Core template's example format is:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>AI assistance: Yes<br>Tool(s): Claude Code<br>Model(s): &lt;model used&gt;<br>Used for: Initial code skeleton and test suggestions; final implementation<br>and tests were reviewed and edited by me.</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>There is no need to disclose trivial assistance, such as suggesting a variable name or rearranging imports. If significant undisclosed use is discovered, the merge or commit may be delayed or blocked.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading"><strong>Recommended uses</strong></h3>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li>Understand unfamiliar code: ask for an explanation of a function, hook, or component flow before changing it.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Suggest a code skeleton, refactor, or alternative approach that you then evaluate yourself.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Generate boilerplate you can validate: test structure, data providers, and fixtures.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Suggest edge cases for testing and turn manual steps into automated tests.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Draft comments, inline documentation, dev notes, or PR descriptions that you then revise.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Translate text, always with review by someone fluent in the language.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Use Gutenberg's AGENTS.md files and skills (section 6), which already provide the project commands and rules.</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading"><strong>What to avoid</strong></h3>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li>Submitting changes you do not fully understand.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Dependencies, patterns, or APIs that do not follow WordPress standards.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Asking for “the same code as library X” or accepting output that resembles a known project with an incompatible license.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Tests that depend on imaginary APIs or unstable external services.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Links, citations, or ticket numbers you have not checked.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Bug reports generated without reproducing the problem in a real installation.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Using AI as the only reviewer: human review is required.</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading"><strong>Checklist before submitting an AI-assisted contribution</strong></h3>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li>I read every line and removed anything I cannot explain.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>The code meets WordPress coding, security, and performance standards, including the minimum PHP version (7.4).</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>I checked that the functions, hooks, and options used actually exist.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>I added or updated tests and reviewed the names and cases suggested by AI.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>I ran the relevant suites and included the commands in the PR description.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>The PR is small, with clear commits, and the description reflects what I actually did and tested.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>I completed the “Use of AI Tools” section.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>I can explain during review what AI generated and what I wrote myself.</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading"><strong>Practical tips for coding agents</strong></h3>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li>Give the agent specific context: the ticket number, affected file, and expected behavior. Ask it to read the code and propose a plan before editing.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Ask it to write a failing test that reproduces the bug first, so you can check that it understood the problem.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>In Gutenberg, keep agent-run E2E tests headless: interactive options such as --ui or --headed can leave the session blocked waiting for input.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Do not let it publish on your behalf: Trac comments, PRs, and review responses should come from you, in your own words and with your own judgment.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>If you are unsure whether a tool or its output is GPL-compatible, ask in #core-ai or #core on Slack before submitting.</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading"><strong>8. Contribute testing to Core and Gutenberg</strong></h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>There are two ways to contribute testing, and both are highly valued: <strong>manually testing</strong> other people's patches and PRs, and <strong>writing automated tests</strong>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading"><strong>Manually test patches and PRs</strong></h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>This is the quickest way to make a useful first contribution, and you do not need to write code.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+<ol class="wp-block-list"><!-- wp:list-item -->
+<li>Look for tickets marked needs-testing in Trac, or PRs labeled Needs Testing in Gutenberg.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Read the ticket or PR and its test instructions. Reproduce the bug <strong>without</strong> the patch first, to confirm it exists.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Apply the change using one of the options below.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Check that the patch fixes the problem, does not break nearby behavior, and works across browsers, themes, or keyboard and screen-reader use where relevant.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Publish a report on the ticket or PR. The Test Handbook provides a “Patch Testing” template and the Test Reports plugin, which fills in environment details. A report includes the patch or PR tested; the environment (operating system, browser, PHP and WordPress versions, theme, and plugins); steps followed; expected and observed results; and screenshots or video where useful.</li>
+<!-- /wp:list-item --></ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>Ways to apply the change you want to test:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li><strong>WordPress Playground</strong>: if the ticket has a PR, the bot leaves a Playground link on the PR that creates a disposable site with the change applied. You can also use playground.wordpress.net and its options for testing Core or Gutenberg PRs. No installation is required.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Local Core environment</strong>: npm run grunt -- patch:12345 or the PR URL.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Local Gutenberg environment</strong>: gh pr checkout &lt;number&gt;, then npm install and npm run build.</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>If the patch works, say so clearly. If it fails or no longer applies to trunk, explain what happened and suggest needs-refresh in Trac. Testing questions belong in #core-test.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading"><strong>9. Closing thoughts</strong></h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>WordPress powers more than 40% of websites, and every change to Core or Gutenberg reaches millions of installations. That is why careful work matters: a well-tested patch, a test that prevents a regression, or a component usable with a keyboard. A useful starting sequence is to prepare the environment, test a needs-testing patch, write a test for a needs-unit-tests ticket, and then take a good-first-bug. If you get stuck, ask in Slack.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading"><strong>Sources</strong></h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Gutenberg: AGENTS.md, .agents/skills/, and docs/contributors/code/testing-overview.md in github.com/WordPress/gutenberg</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Core Contributor Handbook: make.wordpress.org/core/handbook</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>wordpress-develop README: github.com/WordPress/wordpress-develop</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Working with Patches: make.wordpress.org/core/handbook/tutorials/working-with-patches/</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>GitHub Pull Requests for Code Review: make.wordpress.org/core/handbook/contribute/git/github-pull-requests-for-code-review/</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Dropping support for PHP 7.2 and 7.3 (January 2026): make.wordpress.org/core/2026/01/09/dropping-support-for-php-7-2-and-7-3/</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>AI Guidelines (WordPress AI team, January 2026): make.wordpress.org/ai/handbook/ai-guidelines/</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>wordpress-develop pull request template: github.com/WordPress/wordpress-develop/blob/trunk/.github/pull_request_template.md</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Accessibility Coding Standards: developer.wordpress.org/coding-standards/wordpress-coding-standards/accessibility/</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>WebAIM Screen Reader User Survey #10: webaim.org/projects/screenreadersurvey10/</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Test Handbook (Patch Testing, Test Core Tickets with Playground, Test Gutenberg with Playground): make.wordpress.org/test/handbook</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->

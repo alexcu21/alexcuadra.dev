@@ -1,0 +1,174 @@
+0	<em>Revised and updated in October 2026 against the official documentation (the Core Handbook, Test Handbook, and wordpress-develop and Gutenberg repositories). Intended for people making their first code or testing contribution.</em><br>
+1	<strong>1. Why contribute to Core</strong>
+2	WordPress is free software, maintained by people and companies who give their time to the project. <strong>Five for the Future</strong>, proposed by Matt Mullenweg in 2014, recommends that organizations whose businesses depend on the ecosystem dedicate around 5% of their resources to WordPress. There is now an official page (wordpress.org/five-for-the-future) where companies and individuals register their commitment.
+3	For theme and plugin developers, contributing brings practical benefits: you understand the APIs your work depends on, learn about changes coming in each release earlier, and detect incompatibilities before they reach production. Every accepted contribution also receives recognition through <em>props</em> in the commit message and release credits.
+4	It is not all code. You can contribute by testing patches, writing automated tests, reviewing accessibility, or improving documentation. This guide focuses mainly on code and testing, two common ways to get started with Core and Gutenberg.
+5	<strong>2. Checklist: what you need before starting</strong>
+6	<strong>Accounts and communication</strong>
+7	A WordPress.org account (used for Trac, Slack, and the Make blogs).
+8	Access to the official Slack (make.wordpress.org/chat), and membership in #core, #core-test, and #core-editor. For accessibility questions, join #accessibility.
+9	A GitHub account linked to your WordPress.org profile (Profile → Account &amp; Security → Connections). Without this connection, your pull requests will not automatically earn you props.
+10	<strong>Tools on your computer</strong>
+11	Git installed (and optionally GitHub CLI). You only need SVN if you prefer working with the official Subversion repository.
+12	Node.js 24 and npm 11 (the versions currently required by wordpress-develop). nvm is recommended for switching versions with nvm use.
+13	Docker Desktop (or a compatible alternative such as OrbStack, Colima, or Rancher Desktop), installed and running.
+14	Composer, required for PHPCS and Gutenberg's PHP tests.
+15	An editor with support for ESLint and PHP_CodeSniffer.
+16	<strong>Repositories</strong>
+17	A fork and clone of github.com/WordPress/wordpress-develop (Core).
+18	A fork and clone of github.com/WordPress/gutenberg (the block editor).
+19	A local environment started and working at least once (see section 3).
+20	<strong>Essential reading</strong>
+21	Core Contributor Handbook: make.wordpress.org/core/handbook.
+22	WordPress Coding Standards (PHP, JavaScript, CSS, HTML, and accessibility): developer.wordpress.org/coding-standards.
+23	The Trac guide: “How We Use Our Bug Tracker” in the Core Handbook.
+24	WordPress AI Guidelines, if you plan to use AI tools: make.wordpress.org/ai/handbook/ai-guidelines/.
+25	For Gutenberg: docs/contributors/code/getting-started-with-code-contribution.md and testing-overview.md in the repository.
+26	Test Handbook: make.wordpress.org/test/handbook.
+27	<strong>3. Set up a local Core environment</strong>
+28	The development repository (wordpress-develop) is different from the WordPress package you download for a website. It includes automated tests, build-tool configuration, and source code in src/. JavaScript and CSS are generated through a build process (Grunt, run through npm).
+29	<strong>Recommended option: Git and the included Docker environment</strong>
+30	The site becomes available at <em>http://localhost:8889</em> (username admin, password password). While working, run npm run dev to watch for changes and rebuild automatically. Other useful commands:
+31	npm run env:cli -- &lt;command&gt;: runs WP-CLI inside the container.
+32	npm run env:stop, npm run env:restart: stop and restart the environment.
+33	npm run env:reset: resets the environment and <strong>deletes the database</strong>.
+34	With this environment, wp-tests-config.php and the test database are created automatically. By default, the server serves the src/ directory (LOCAL_DIR=src in .env), which works correctly after npm run build:dev. To test the final built version, run npm run build and change LOCAL_DIR to build.
+35	If you use an Apple Silicon Mac with an older version of MySQL (5.7 or earlier) or MariaDB 5.5, the README instructs you to create a docker-compose.override.yml that sets the database platform to linux/amd64.
+36	<strong>Alternative option: SVN and your own server</strong>
+37	SVN remains the official version control system (committers submit changes there), and you can work with it:
+38	svn co https://develop.svn.wordpress.org/trunk/ wordpress-develop<br>cd wordpress-develop<br>npm install<br>npm run build:dev
+39	If you use your own server (MAMP, Local, or LAMP), copy wp-config-sample.php to wp-config.php in the repository root and configure your database. For tests, copy wp-tests-config-sample.php to wp-tests-config.php and point it at a <strong>different</strong> database.
+40	<strong>Warning:</strong> the PHPUnit suite drops and recreates tables (DROP TABLE / CREATE TABLE). If wp-tests-config.php points to your development site's database, you will lose all its data.
+41	<strong>PHP version</strong>
+42	Since WordPress 7.0 (released in May 2026), the minimum supported PHP version is <strong>7.4</strong>; the recommended version is <strong>8.3</strong> or later. If your change involves PHP, avoid syntax unavailable in PHP 7.4 (such as match, named arguments, or union types, which arrived in PHP 8.0). The Docker environment lets you change versions through LOCAL_PHP in the .env file.
+43	Tool / file
+44	Command or location
+45	Purpose
+46	Git / SVN
+47	git clone from your fork or svn co https://develop.svn.wordpress.org/trunk/
+48	Get and synchronize trunk's code.
+49	Node.js / npm
+50	npm install
+51	JavaScript dependencies and build tools.
+52	Grunt (through npm)
+53	npm run build:dev, npm run build, npm run dev
+54	Build, minify, and watch for changes. There is no need to install grunt-cli globally; you can use npm run grunt -- &lt;task&gt;.
+55	Docker
+56	npm run env:start
+57	An isolated web server, PHP runtime, and database.
+58	wp-config.php
+59	Repository root
+60	Local site configuration (automatic with Docker).
+61	wp-tests-config.php
+62	Repository root
+63	An isolated database for PHPUnit (automatic with Docker).
+64	<strong>4. Find tickets in Trac</strong>
+65	Core work is organized in Trac (core.trac.wordpress.org). Each bug or enhancement is a ticket with a number, components, and keywords indicating its status. Before changing code, read “How We Use Our Bug Tracker” in the Core Handbook.
+66	Useful reports to start with:
+67	<strong>Good First Bugs</strong> (good-first-bug): narrowly scoped tickets reviewed by the Core team as suitable for beginners. The “Unclaimed” view shows tickets nobody has taken. A common task is updating (“refreshing”) old patches that no longer apply to trunk.
+68	<strong>Needs Patch</strong> (needs-patch): the problem is confirmed, but there is no proposed code change yet. Tickets targeted for the next release often receive review sooner.
+69	<strong>Needs Unit Tests</strong> (needs-unit-tests): tests are needed to reproduce the bug or validate the patch. This is a good way to learn how the code works internally.
+70	<strong>Needs Testing</strong> (needs-testing): a patch exists and someone needs to test it and report the result. Ideal for a first contribution.
+71	<strong>Next Major / Next Minor Release</strong>: tickets in the next release cycle, filterable by workflow (PHP, JavaScript, documentation, or UI).
+72	<strong>Reports dashboard</strong> (/reports/ and /tickets/): includes personal views such as your pending patches and comments.
+73	If you are unsure whether a ticket is still relevant or which approach is best, comment on the ticket or ask in #core on Slack. Asking questions is normal and saves work in the wrong direction.
+74	Gutenberg changes do not go through Trac: they are managed as <em>issues</em> and <em>pull requests</em> on GitHub (github.com/WordPress/gutenberg). Good First Issue and Needs Testing labels serve the same purpose as their Trac equivalents.
+75	<strong>5. Workflow: from a ticket to a patch or pull request</strong>
+76	<strong>Before starting a new ticket</strong>
+77	Start from a clean, up-to-date trunk so your change does not include leftovers from other tickets.
+78	With Git:
+79	With SVN:
+80	<strong>Option A: a GitHub pull request (the most common approach today)</strong>
+81	Make your changes in a branch of your wordpress-develop fork and push it.
+82	Open a pull request against WordPress/wordpress-develop. Include the full Trac ticket URL in the description (for example, Trac ticket: https://core.trac.wordpress.org/ticket/12345) and enable the option that allows maintainers to edit your branch.
+83	The PR will appear automatically on the Trac ticket. General PR comments are synchronized with Trac but do not notify ticket subscribers, so leave a comment on Trac as well.
+84	PRs are not merged on GitHub: a committer applies the change in SVN. A PR without an associated Trac ticket will not be considered.
+85	<strong>Option B: a patch file in Trac</strong>
+86	To apply a patch someone else has uploaded to a ticket:
+87	The patch task (from the grunt-patch-wordpress package, created by Aaron Jorbin) queries Trac, lists the ticket's patches, and applies the one you choose. It also accepts a patch URL or a GitHub pull request URL. The manual alternative is to download the file and run patch -p0 &lt; 12345.diff from the repository root; -p0 is necessary because WordPress patches retain paths from the repository root (src/, tests/).
+88	To create your patch:
+89	Name the file after the ticket number (12345.diff or 12345.patch). If that name already exists, Trac renames it (12345.2.diff). Do not include generated files such as minified JavaScript or RTL CSS. Upload it using <strong>Attach file</strong> on the ticket.
+90	<strong>Update the ticket</strong>
+91	After uploading the patch or opening the PR, edit the ticket's keywords: remove needs-patch or needs-refresh and add has-patch (and needs-testing if someone needs to test it). Committers normally close or resolve tickets, so do not use resolution options unless instructed to do so.
+92	<strong>6. AI agents and skills in the Gutenberg repository</strong>
+93	Gutenberg includes files intended for AI coding assistants. They use “progressive discovery”: the agent loads only the context needed for a task instead of reading everything at once.
+94	<strong>AGENTS.md in the root</strong>: general project rules and basic commands (installation, build, lint, and tests).
+95	<strong>AGENTS.md by directory</strong>: for example, packages/components/AGENTS.md is read only when working in that folder.
+96	<strong>Skills</strong> in .agents/skills/&lt;name&gt;/SKILL.md: procedures for specific tasks. Current examples include testing, defensive-data-design, package-runtime-compatibility, and several design-system skills.
+97	<strong>References</strong> within each skill (references/): longer documents the agent reads only when a step requires them. For example, the testing skill links to references/jest.md, php.md, and e2e.md.
+98	<strong>CLAUDE.md</strong>: contains only the line @AGENTS.md so Claude Code uses the same file.
+99	The project's principle is that rules belong in public documentation (for example, docs/contributors/code/), and agent files only point to it. If a rule is useful to an agent, it is also useful to a person; duplicating it makes the copies drift apart.
+100	Each SKILL.md starts with a YAML header containing name and description, with the description stating when to use it:
+101	Among other requirements, Gutenberg's testing skill says not to make a test pass by weakening it (looser assertions, added waits, or skipped cases without disclosure). If you create or modify a skill, run:
+102	npm run agents:setup &nbsp; &nbsp; # regenerate the skill catalog for supported agents<br>npm run lint:md:docs &nbsp; &nbsp; # validate documentation Markdown formatting
+103	The rules for using AI in contributions and disclosing that use are in section 7.
+104	<strong>7. Recommendations for using AI in contributions</strong>
+105	WordPress allows AI tools (GitHub Copilot, Claude Code, Codex, ChatGPT, and similar tools) to assist with contributions. Since January 2026, the AI team's official <strong>AI Guidelines</strong> have been available (make.wordpress.org/ai/handbook/ai-guidelines/), and the wordpress-develop and Gutenberg pull request templates include a required “Use of AI Tools” section. The guidelines are an initial version (v0) and may change, so review them before each substantial contribution.
+106	<strong>The five principles</strong>
+107	<strong>You are responsible.</strong> AI can help, but it is not a contributor. Everything you submit is your responsibility, whether you wrote it or a tool generated it. Review AI output as you would code from someone you do not know.
+108	<strong>Transparency.</strong> Disclose significant AI use in the PR description or a Trac ticket comment. Disclosure is not viewed negatively; it helps reviewers.
+109	<strong>Compatible licensing.</strong> WordPress is GPLv2 or later. Do not use tools whose terms prevent you from using their output under the GPL, do not use AI to “rewrite” incompatibly licensed code, and never remove existing license headers or attributions.
+110	<strong>This also applies beyond code.</strong> Images, screenshots, documentation, and Learn materials must be GPL-compatible. CC0 is acceptable for media; avoid licenses requiring attribution or share-alike terms, or imposing noncommercial or no-derivatives restrictions.
+111	<strong>Quality before quantity.</strong> The guidelines explicitly reject “AI slop”: generic descriptions, large blocks of unreviewed code, invented APIs, hooks, functions, or tickets, and overengineered code. Maintainers may close contributions that show little human involvement.
+112	<strong>How to disclose AI use</strong>
+113	Complete the “Use of AI Tools” section in the PR template. If you contribute a patch through Trac, include it in your comment. The Core template's example format is:
+114	There is no need to disclose trivial assistance, such as suggesting a variable name or rearranging imports. If significant undisclosed use is discovered, the merge or commit may be delayed or blocked.
+115	<strong>Recommended uses</strong>
+116	Understand unfamiliar code: ask for an explanation of a function, hook, or component flow before changing it.
+117	Suggest a code skeleton, refactor, or alternative approach that you then evaluate yourself.
+118	Generate boilerplate you can validate: test structure, data providers, and fixtures.
+119	Suggest edge cases for testing and turn manual steps into automated tests.
+120	Draft comments, inline documentation, dev notes, or PR descriptions that you then revise.
+121	Translate text, always with review by someone fluent in the language.
+122	Use Gutenberg's AGENTS.md files and skills (section 6), which already provide the project commands and rules.
+123	<strong>What to avoid</strong>
+124	Submitting changes you do not fully understand.
+125	Dependencies, patterns, or APIs that do not follow WordPress standards.
+126	Asking for “the same code as library X” or accepting output that resembles a known project with an incompatible license.
+127	Tests that depend on imaginary APIs or unstable external services.
+128	Links, citations, or ticket numbers you have not checked.
+129	Bug reports generated without reproducing the problem in a real installation.
+130	Using AI as the only reviewer: human review is required.
+131	<strong>Checklist before submitting an AI-assisted contribution</strong>
+132	I read every line and removed anything I cannot explain.
+133	The code meets WordPress coding, security, and performance standards, including the minimum PHP version (7.4).
+134	I checked that the functions, hooks, and options used actually exist.
+135	I added or updated tests and reviewed the names and cases suggested by AI.
+136	I ran the relevant suites and included the commands in the PR description.
+137	The PR is small, with clear commits, and the description reflects what I actually did and tested.
+138	I completed the “Use of AI Tools” section.
+139	I can explain during review what AI generated and what I wrote myself.
+140	<strong>Practical tips for coding agents</strong>
+141	Give the agent specific context: the ticket number, affected file, and expected behavior. Ask it to read the code and propose a plan before editing.
+142	Ask it to write a failing test that reproduces the bug first, so you can check that it understood the problem.
+143	In Gutenberg, keep agent-run E2E tests headless: interactive options such as --ui or --headed can leave the session blocked waiting for input.
+144	Do not let it publish on your behalf: Trac comments, PRs, and review responses should come from you, in your own words and with your own judgment.
+145	If you are unsure whether a tool or its output is GPL-compatible, ask in #core-ai or #core on Slack before submitting.
+146	<strong>8. Contribute testing to Core and Gutenberg</strong>
+147	There are two ways to contribute testing, and both are highly valued: <strong>manually testing</strong> other people's patches and PRs, and <strong>writing automated tests</strong>.
+148	<strong>Manually test patches and PRs</strong>
+149	This is the quickest way to make a useful first contribution, and you do not need to write code.
+150	Look for tickets marked needs-testing in Trac, or PRs labeled Needs Testing in Gutenberg.
+151	Read the ticket or PR and its test instructions. Reproduce the bug <strong>without</strong> the patch first, to confirm it exists.
+152	Apply the change using one of the options below.
+153	Check that the patch fixes the problem, does not break nearby behavior, and works across browsers, themes, or keyboard and screen-reader use where relevant.
+154	Publish a report on the ticket or PR. The Test Handbook provides a “Patch Testing” template and the Test Reports plugin, which fills in environment details. A report includes the patch or PR tested; the environment (operating system, browser, PHP and WordPress versions, theme, and plugins); steps followed; expected and observed results; and screenshots or video where useful.
+155	Ways to apply the change you want to test:
+156	<strong>WordPress Playground</strong>: if the ticket has a PR, the bot leaves a Playground link on the PR that creates a disposable site with the change applied. You can also use playground.wordpress.net and its options for testing Core or Gutenberg PRs. No installation is required.
+157	<strong>Local Core environment</strong>: npm run grunt -- patch:12345 or the PR URL.
+158	<strong>Local Gutenberg environment</strong>: gh pr checkout &lt;number&gt;, then npm install and npm run build.
+159	If the patch works, say so clearly. If it fails or no longer applies to trunk, explain what happened and suggest needs-refresh in Trac. Testing questions belong in #core-test.
+160	<strong>9. Closing thoughts</strong>
+161	WordPress powers more than 40% of websites, and every change to Core or Gutenberg reaches millions of installations. That is why careful work matters: a well-tested patch, a test that prevents a regression, or a component usable with a keyboard. A useful starting sequence is to prepare the environment, test a needs-testing patch, write a test for a needs-unit-tests ticket, and then take a good-first-bug. If you get stuck, ask in Slack.
+162	<strong>Sources</strong>
+163	Gutenberg: AGENTS.md, .agents/skills/, and docs/contributors/code/testing-overview.md in github.com/WordPress/gutenberg
+164	Core Contributor Handbook: make.wordpress.org/core/handbook
+165	wordpress-develop README: github.com/WordPress/wordpress-develop
+166	Working with Patches: make.wordpress.org/core/handbook/tutorials/working-with-patches/
+167	GitHub Pull Requests for Code Review: make.wordpress.org/core/handbook/contribute/git/github-pull-requests-for-code-review/
+168	Dropping support for PHP 7.2 and 7.3 (January 2026): make.wordpress.org/core/2026/01/09/dropping-support-for-php-7-2-and-7-3/
+169	AI Guidelines (WordPress AI team, January 2026): make.wordpress.org/ai/handbook/ai-guidelines/
+170	wordpress-develop pull request template: github.com/WordPress/wordpress-develop/blob/trunk/.github/pull_request_template.md
+171	Accessibility Coding Standards: developer.wordpress.org/coding-standards/wordpress-coding-standards/accessibility/
+172	WebAIM Screen Reader User Survey #10: webaim.org/projects/screenreadersurvey10/
+173	Test Handbook (Patch Testing, Test Core Tickets with Playground, Test Gutenberg with Playground): make.wordpress.org/test/handbook
