@@ -1,0 +1,63 @@
+{
+  "before": {
+    "en": {
+      "heading": "Let's work together.",
+      "introduction": "I'm a QA Engineer, DevOps and AI Engineer.",
+      "name_label": "Your name",
+      "email_label": "Your email",
+      "message_label": "Your message",
+      "submit_label": "Let's Chat",
+      "sending_message": "Sending your message…",
+      "success_message": "Your message has been accepted for sending. Thank you.",
+      "validation_message": "Please check your name, email address and message.",
+      "challenge_message": "Complete the verification before sending. If it expires, verify again.",
+      "rate_limit_message": "Too many attempts. Please wait before trying again.",
+      "unavailable_message": "The form is temporarily unavailable. Please use the email alternative.",
+      "unknown_delivery_message": "We could not confirm whether your message was sent. Please do not resend it immediately; use the email alternative if you need to follow up.",
+      "privacy_text": "Your name, email address and message are used to respond to your enquiry. Messages are kept for 30 days.",
+      "privacy_link_label": "Read the contact privacy notice",
+      "privacy_url": "https://alexcuadra.dev/privacy/",
+      "alternative_label": "Contact me by email"
+    },
+    "es": {
+      "heading": "Let's work together.",
+      "introduction": "I'm a QA Engineer, DevOps and AI Engineer.",
+      "name_label": "Your name",
+      "email_label": "Your email",
+      "message_label": "Your message",
+      "submit_label": "Let's Chat",
+      "sending_message": "Sending your message…",
+      "success_message": "Your message has been accepted for sending. Thank you.",
+      "validation_message": "Please check your name, email address and message.",
+      "challenge_message": "Complete the verification before sending. If it expires, verify again.",
+      "rate_limit_message": "Too many attempts. Please wait before trying again.",
+      "unavailable_message": "The form is temporarily unavailable. Please use the email alternative.",
+      "unknown_delivery_message": "We could not confirm whether your message was sent. Please do not resend it immediately; use the email alternative if you need to follow up.",
+      "privacy_text": "Your name, email address and message are used to respond to your enquiry. Messages are kept for 30 days.",
+      "privacy_link_label": "Read the contact privacy notice",
+      "privacy_url": "https://alexcuadra.dev/privacy/",
+      "alternative_label": "Contact me by email"
+    }
+  },
+  "spanish": {
+    "heading": "Trabajemos juntos.",
+    "introduction": "Soy ingeniero de QA, DevOps e inteligencia artificial.",
+    "name_label": "Tu nombre",
+    "email_label": "Tu correo electrónico",
+    "message_label": "Tu mensaje",
+    "submit_label": "Hablemos",
+    "sending_message": "Enviando tu mensaje…",
+    "success_message": "Tu mensaje ha sido aceptado para su envío. Gracias.",
+    "validation_message": "Revisa tu nombre, correo electrónico y mensaje.",
+    "challenge_message": "Completa la verificación antes de enviar. Si caduca, vuelve a verificarte.",
+    "rate_limit_message": "Demasiados intentos. Espera antes de volver a intentarlo.",
+    "unavailable_message": "El formulario no está disponible temporalmente. Utiliza la alternativa por correo.",
+    "unknown_delivery_message": "No pudimos confirmar si tu mensaje se envió. No lo reenvíes inmediatamente; utiliza la alternativa por correo si necesitas dar seguimiento.",
+    "privacy_text": "Tu nombre, correo electrónico y mensaje se utilizan para responder a tu consulta. Los mensajes se conservan durante 30 días.",
+    "privacy_link_label": "Lee el aviso de privacidad del contacto",
+    "privacy_url": "https://alexcuadra.dev/es/privacidad/",
+    "alternative_label": "Contactarme por correo"
+  },
+  "pageId": 193,
+  "groupId": 160
+}

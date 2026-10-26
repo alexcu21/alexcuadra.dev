@@ -7,6 +7,7 @@ import { hasLabProjects } from '../data/lab-content.js';
 import Icon from './Icon.astro';
 import ThemeToggle from './ThemeToggle.astro';
 import type { iconPaths } from './IconPaths';
+import { routeBase } from '../data/site-routes.js';
 
 interface Props { locale?: 'en' | 'es'; labAvailable?: boolean; }
 const { locale = 'en', labAvailable } = Astro.props;
@@ -25,6 +26,7 @@ const textLinks: { label: string; href: string }[] = [
 ];
 if (showBlog) textLinks.push({ label: 'Blog', href: spanish ? '/es/blog/' : '/blog/' });
 if (showLab) textLinks.push({ label: 'LAB', href: spanish ? '/es/laboratorio/' : '/lab/' });
+textLinks.push({ label: spanish ? 'Contacto' : 'Contact', href: routeBase('contact', locale) });
 
 /** Icon links to social media — edit these with links to your profiles! */
 const iconLinks: { label: string; href: string; icon: keyof typeof iconPaths }[] = [

@@ -1,6 +1,7 @@
 import { scenario } from './scenario.mjs';
 import caseDrafts from '../../../docs/wordpress/project-case-study-drafts.json';
 import caseCurrent from '../../../docs/wordpress/project-case-study-current.json';
+import contactReview from '../../../docs/wordpress/contact-copy-review-2026-10-26.json';
 export const gql = (parts, ...values) => parts.reduce((result, part, i) => result + part + (values[i] ?? ''), '');
 const visible = { status: 'publish', isRestricted: false, hasPassword: false };
 const connection = (nodes, hasNextPage = false, endCursor = null) => ({ nodes, pageInfo: { hasNextPage, endCursor } });
@@ -13,6 +14,13 @@ function upstreamFailure() {
 export async function request({ document, variables }) {
   const mode = scenario.getStore();
   if (mode === 'outage') upstreamFailure();
+  if (document.includes('query ContactCopy')) {
+    const es = variables.id !== '19';
+    return { page: { ...visible, language: { code: es ? 'ES' : 'EN' },
+      translations: es ? [] : [{ ...visible, databaseId: 193, slug: 'inicio', language: { code: 'ES' } }],
+      contactForm: es ? contactReview.spanish : contactReview.before.en,
+    } };
+  }
   if (document.includes('query LocalizedProjects')) {
     const code = document.includes('language: ES') ? 'ES' : 'EN';
     const spanish = code === 'ES';

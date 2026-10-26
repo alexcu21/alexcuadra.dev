@@ -7,6 +7,8 @@ export default defineConfig({
   integrations: [{ name: 'actual-reference-routes', hooks: { 'astro:config:setup': ({ injectRoute }) => {
     for (const [pattern, file] of [
       ['/404', '../../../src/pages/404.astro'],
+      ['/contact', '../../../src/pages/contact.astro'],
+      ['/es/contacto', '../../../src/pages/es/contacto.astro'],
       ['/work', '../../../src/pages/work.astro'],
       ['/work/[...slug]', '../../../src/pages/work/[...slug].astro'],
       ['/es/proyectos', '../../../src/pages/es/proyectos/index.astro'],
@@ -23,6 +25,12 @@ export default defineConfig({
       ['/articles/category/[...slug]', '../../../src/pages/articles/category/[...slug].astro'],
       ['/articles/category/[categorySlug]/[articleSlug]', '../../../src/pages/articles/category/[categorySlug]/[articleSlug].astro'],
     ]) injectRoute({ pattern, entrypoint: here(file), prerender: false });
+  } } }, { name: 'local-contact-preview', hooks: { 'astro:config:setup': ({ injectScript }) => {
+    injectScript('head-inline', `if (new URL(location.href).searchParams.get('mode') === 'contact-enabled') {
+      window.turnstile = { render(element) { element.textContent = document.documentElement.lang === 'es'
+        ? 'Verificación simulada: vista local sin envío.' : 'Simulated verification: local preview without delivery.';
+        return 'local-preview'; }, reset() {} };
+    }`);
   } } }],
   vite: { resolve: { alias: {
     'graphql-request': here('./graphql-fixture.mjs'),

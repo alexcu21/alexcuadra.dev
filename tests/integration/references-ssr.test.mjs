@@ -34,6 +34,25 @@ test('actual reference templates preserve HTTP, content and pagination contracts
     const response = await fetch(base + path);
     return { response, html: await response.text() };
   };
+  for (const path of ['/contact/', '/es/contacto/']) {
+    const { response, html } = await get(path);
+    assert.equal(response.status, 200);
+    assert.equal((html.match(/<h1(?:\s|>)/g)||[]).length, 1);
+    assert.match(html, /mailto:fixture@example.test/);
+    assert.doesNotMatch(html, /<form[^>]*data-contact-form|<div[^>]*data-contact-challenge|<script[^>]*src="https:\/\/challenges\.cloudflare\.com/);
+    assert.ok(html.includes(path === '/contact/' ? '/es/contacto/' : '/contact/'));
+    const enabled = await get(path + '?mode=contact-enabled');
+    assert.equal(enabled.response.status, 200);
+    assert.match(enabled.html, /<form[^>]*data-contact-form/);
+    for (const name of ['name','email','message']) assert.match(enabled.html, new RegExp(`name="${name}"`));
+    assert.match(enabled.html, /maxlength="5000"/);
+    assert.ok(enabled.html.includes(path === '/contact/' ? 'All fields are required.' : 'Todos los campos son obligatorios.'));
+    assert.ok(enabled.html.includes(path === '/contact/' ? 'Your name' : 'Tu nombre'));
+  }
+  const homeWithContactEnabled = await get('/preview/home?mode=contact-enabled');
+  assert.equal(homeWithContactEnabled.response.status, 200);
+  assert.doesNotMatch(homeWithContactEnabled.html, /<form[^>]*data-contact-form/);
+  assert.match(homeWithContactEnabled.html, /href="\/contact\/"/);
   // Actual project routes: multilingual links and missing content must survive
   // the shared visual component changes, without inventing case-study sections.
   for (const [path, title] of [['/work/', 'Demonstration project'], ['/es/proyectos/', 'Proyecto de demostración'],
@@ -177,11 +196,10 @@ test('actual reference templates preserve HTTP, content and pagination contracts
     assert.match(channel, /href="\/articles\/category\/medium"/);
     assert.match(channel, /count-badge[^>]*>\s*2\s*</);
     assert.equal((html.match(/id="contact-cta-title"/g) || []).length, 1);
-    assert.match(html, /href="mailto:fixture@example.test"/);
     const contact = html.match(/<aside[^>]*id="contact-cta"[\s\S]*?<\/aside>/)?.[0];
     assert.ok(contact);
     assert.match(contact, path.includes('home-es') ? /href="\/es\/proyectos\/"/ : /href="\/work\/"/);
-    assert.match(contact, path.includes('home-es') ? /Abre tu aplicación de correo/ : /Opens your email app/);
+    assert.match(contact, path.includes('home-es') ? /href="\/es\/contacto\/"/ : /href="\/contact\/"/);
     assert.doesNotMatch(html, /data-contact-form|turnstile\/v0\/api/);
   }
   const referencesEmptyHome = await get('/preview/home?mode=references-empty');

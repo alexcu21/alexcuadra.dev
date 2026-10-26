@@ -1,7 +1,7 @@
 // Route bases are technical configuration; editorial slugs come from WordPress.
 const routes = {
-  en: { home: '/', about: '/about/', projects: '/work/', articles: '/articles/', blog: '/blog/', lab: '/lab/' },
-  es: { home: '/es/', about: '/es/sobre-mi/', projects: '/es/proyectos/', articles: '/es/articulos/', blog: '/es/blog/', lab: '/es/laboratorio/' },
+  en: { home: '/', about: '/about/', projects: '/work/', articles: '/articles/', blog: '/blog/', lab: '/lab/', contact: '/contact/' },
+  es: { home: '/es/', about: '/es/sobre-mi/', projects: '/es/proyectos/', articles: '/es/articulos/', blog: '/es/blog/', lab: '/es/laboratorio/', contact: '/es/contacto/' },
 };
 
 export function routeBase(section, locale) {

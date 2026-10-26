@@ -15,7 +15,7 @@ export function sitemapPaths({ pages, projects, references, blog = { en: [], es:
   if (!publicCollection(projects.en) || !publicCollection(projects.es) || !publicCollection(references)) {
     throw new TypeError('Sitemap requires public inventory');
   }
-  const paths = new Set(['/work/', '/es/proyectos/', '/articles/']);
+  const paths = new Set(['/work/', '/es/proyectos/', '/articles/', '/contact/', '/es/contacto/']);
   for (const [path, page] of Object.entries(pages)) if (page) paths.add(path);
   for (const locale of ['en', 'es']) {
     for (const project of projects[locale]) paths.add(contentPath('projects', locale, project.slug));

@@ -5,6 +5,7 @@ const { locale = 'en', sitekey, email, copy } = Astro.props;
 {copy && <section class="contact-form" aria-labelledby="contact-heading">
   <h2 id="contact-heading">{copy.heading}</h2>
   <p>{copy.introduction}</p>
+  <p class="required-note">{locale === 'es' ? 'Todos los campos son obligatorios.' : 'All fields are required.'}</p>
   <form method="post" action="/api/contact" data-contact-form data-sitekey={sitekey} data-locale={locale}
     data-sending={copy.sending_message} data-success={copy.success_message}
     data-invalid={copy.validation_message} data-challenge={copy.challenge_message}

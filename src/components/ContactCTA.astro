@@ -1,14 +1,10 @@
 ---
-import { getHomeInfo } from '../data/client';
 import CallToAction from './CallToAction.astro';
 import Icon from './Icon.astro';
-import ContactForm from './ContactForm.astro';
-import { env } from 'cloudflare:workers';
 import { routeBase } from '../data/site-routes.js';
 
 interface Props { locale?: 'en' | 'es'; }
 const { locale = 'en' } = Astro.props;
-const data = await getHomeInfo('en');
 ---
 
 <div class="wrapper contact-shell">
@@ -19,16 +15,14 @@ const data = await getHomeInfo('en');
       <p class="contact-intro">{locale === 'es' ? 'Cuéntame qué quieres construir o mejorar.' : "Tell me what you'd like to build or improve."}</p>
     </div>
     <div class="contact-actions">
-      <CallToAction href={`mailto:${data[0].homePageFields.email}`}>
+      <CallToAction href={routeBase('contact', locale)}>
         {locale === 'es' ? 'Envíame un mensaje' : 'Send Me a Message'}
         <Icon icon="paper-plane-tilt" size="1.2em" />
       </CallToAction>
-      <p class="mail-note">{locale === 'es' ? 'Abre tu aplicación de correo.' : 'Opens your email app.'}</p>
       <a class="work-link" href={routeBase('projects', locale)}>{locale === 'es' ? 'Explorar proyectos' : 'Explore projects'} <Icon icon="arrow-right" size="1.1em" /></a>
     </div>
   </aside>
 </div>
-{locale === 'en' && env.CONTACT_FORM_ENABLED === 'true' && env.TURNSTILE_SITE_KEY && <ContactForm sitekey={env.TURNSTILE_SITE_KEY} email={data[0].homePageFields.email} />}
 
 <style>
   .contact-shell { padding-block: 0 2rem; }
@@ -38,7 +32,6 @@ const data = await getHomeInfo('en');
   h2 { max-width: 20ch; font-size: clamp(1.75rem, 3.5vw, 3rem); line-height: 1.15; font-weight: 700; letter-spacing: -.035em; overflow-wrap: anywhere; }
   .contact-intro { max-width: 42ch; margin-top: 1.25rem; color: var(--gray-300); line-height: 1.7; }
   .contact-actions { display: flex; flex-direction: column; gap: .75rem; }
-  .mail-note { color: var(--gray-300); font-size: .75rem; line-height: 1.5; text-align: center; }
   .work-link { display: inline-flex; align-items: center; justify-content: center; gap: .75rem; min-height: 2.75rem; margin-top: .25rem; padding: .75rem 1rem; border: 1px solid var(--gray-700); border-radius: 999rem; color: var(--link-color); text-decoration: none; font-size: .875rem; font-weight: 600; }
   .work-link:is(:hover, :focus-visible) { border-color: var(--link-color); }
   @media (min-width: 50em) { .contact-panel { grid-template-columns: minmax(0, 1fr) minmax(14rem, 20rem); align-items: center; gap: 3rem; } }
