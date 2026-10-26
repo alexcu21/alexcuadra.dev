@@ -7,8 +7,24 @@ export function matchesReference(title, channels, query, channel) {
     && normalizedTitle(title).includes(normalizedTitle(query));
 }
 
+export function referenceFilterState(params, channels) {
+  const single = key => params.getAll(key).length === 1 ? params.get(key) : '';
+  const channel = single('channel');
+  return {query:single('q').slice(0,200),channel:channels.includes(channel) ? channel : ''};
+}
+
+export function referenceFilterUrl(current, state) {
+  const url = new URL(current);
+  for (const [key,value] of [['q',state.query],['channel',state.channel]]) {
+    if (value) url.searchParams.set(key,value);
+    else url.searchParams.delete(key);
+  }
+  return url;
+}
+
 export function mountReferenceFilter(root) {
   const controls = root.querySelector('[data-reference-controls]');
+  if (!controls || controls.dataset.mounted) return;
   const search = root.querySelector('input[type="search"]');
   const channel = root.querySelector('select');
   const clear = root.querySelector('[data-reference-clear]');
@@ -22,21 +38,38 @@ export function mountReferenceFilter(root) {
     for (const entry of entries) {
       const visible = matchesReference(entry.title, entry.channels, search.value, channel.value);
       entry.element.hidden = !visible;
+      const link = entry.element.querySelector('a');
+      if (link) link.href = referenceFilterUrl(link.href,{query:search.value,channel:channel.value}).href;
       if (visible) count++;
     }
     status.textContent = `${count} of ${entries.length} ${entries.length === 1 ? 'reference' : 'references'}`;
     empty.hidden = count !== 0;
     clear.disabled = !search.value && !channel.value;
   };
-  search.addEventListener('input', update);
-  channel.addEventListener('change', update);
+  const save = mode => {
+    const url = referenceFilterUrl(location.href,{query:search.value,channel:channel.value});
+    if ((search.value || channel.value) && !url.hash) url.hash='reference-directory-title';
+    if (url.href === location.href) return;
+    try { history[mode](history.state,'',url.href); } catch { /* Search remains usable without history access. */ }
+  };
+  const restore = () => {
+    const state=referenceFilterState(new URL(location.href).searchParams,[...channel.options].map(option=>option.value));
+    search.value=state.query;channel.value=state.channel;update();
+  };
+  search.addEventListener('input', () => {update();save('replaceState');});
+  channel.addEventListener('change', () => {update();save('pushState');});
   controls.addEventListener('submit', event => event.preventDefault());
   clear.addEventListener('click', () => {
     search.value = '';
     channel.value = '';
     update();
+    save('pushState');
     search.focus();
   });
-  update();
+  controls.dataset.mounted='true';
+  restore();
+  save('replaceState');
+  addEventListener('popstate',restore);
+  addEventListener('pageshow',restore);
   controls.hidden = false;
 }

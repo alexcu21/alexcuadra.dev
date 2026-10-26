@@ -6,9 +6,9 @@ interface Props {
 const { entries, channels } = Astro.props;
 ---
 {entries.length > 0 && <section class="directory" aria-labelledby="reference-directory-title" data-reference-directory>
-  <header><h2 id="reference-directory-title">Browse references</h2><p>Find a publication or mention by title and channel.</p></header>
+  <header><h2 id="reference-directory-title" tabindex="-1">Browse references</h2><p>Find a publication or mention by title and channel.</p></header>
   <form role="search" aria-label="Find references" class="filters" data-reference-controls hidden>
-    <div><label for="reference-search">Search titles</label><input id="reference-search" type="search" placeholder="Enter a title or keyword" autocomplete="off" aria-controls="reference-results" /></div>
+    <div><label for="reference-search">Search titles</label><input id="reference-search" type="search" maxlength="200" placeholder="Enter a title or keyword" autocomplete="off" aria-controls="reference-results" /></div>
     <div><label for="reference-channel">Channel</label><select id="reference-channel" aria-controls="reference-results"><option value="">All channels</option>{channels.map(channel => <option value={channel.slug}>{channel.name}</option>)}</select></div>
     <button type="button" data-reference-clear>Clear filters</button>
   </form>
@@ -27,6 +27,7 @@ const { entries, channels } = Astro.props;
 <style>
   .directory { margin-top: 4rem; min-width: 0; }
   .directory h2 { font-size: clamp(1.6rem, 4vw, 2.5rem); letter-spacing: -.03em; }
+  .directory h2:focus-visible { outline:2px solid var(--link-color); outline-offset:4px; }
   .directory header p { margin-top: .75rem; color: var(--gray-300); line-height: 1.6; }
   .filters { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; align-items: end; margin-block: 1.5rem; }
   .filters[hidden], [data-reference-entry][hidden], .empty[hidden] { display: none; }

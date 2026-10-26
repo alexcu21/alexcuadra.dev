@@ -1,0 +1,22 @@
+{
+  "checkedAt": "2026-10-26T01:20:12.756Z",
+  "version": "a9b314e7-aca3-4403-8038-4776ef215d6a",
+  "observations": [
+    {
+      "scenario": "shared URL",
+      "status": "1 of 10 references",
+      "url": "https://alexcuadra-dev-staging.alexcu21.workers.dev/articles/?q=Gutenberg&channel=medium#reference-directory-title"
+    },
+    {
+      "canonical": "https://alexcuadra.dev/articles/category/medium/how-to-build-a-custom-dynamic-gutenberg-block-step-by-step",
+      "returnPath": "/articles/?q=Gutenberg&channel=medium#reference-directory-title",
+      "scenario": "detail"
+    },
+    {
+      "focus": "reference-directory-title",
+      "scenario": "return link",
+      "status": "1 of 10 references",
+      "url": "https://alexcuadra-dev-staging.alexcu21.workers.dev/articles/?q=Gutenberg&channel=medium#reference-directory-title"
+    }
+  ]
+}

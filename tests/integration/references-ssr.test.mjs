@@ -192,6 +192,17 @@ test('actual reference templates preserve HTTP, content and pagination contracts
   assert.match(referencesEmptyArchive.html, /No public references are available yet/);
   assert.doesNotMatch(referencesEmptyArchive.html, /data-reference-directory/);
   const referenceArchive = await get('/articles/');
+  const sharedReferences = await get('/articles/?q=Synthetic&channel=medium');
+  assert.equal(sharedReferences.response.status,200);
+  assert.match(sharedReferences.html, /rel="canonical" href="https:\/\/alexcuadra.dev\/articles\/"/);
+  assert.match(sharedReferences.html, /id="reference-directory-title" tabindex="-1"/);
+  assert.equal([...sharedReferences.html.matchAll(/<li\b[^>]*data-reference-entry/g)].length,2);
+  const filteredReference = await get('/articles/category/medium/reference?q=Synthetic&channel=medium');
+  assert.match(filteredReference.html, /Back to results/);
+  assert.match(filteredReference.html, /href="\/articles\/\?q=Synthetic&amp;channel=medium#reference-directory-title"/);
+  assert.match(filteredReference.html, /rel="canonical" href="https:\/\/alexcuadra.dev\/articles\/category\/medium\/reference"/);
+  const invalidReferenceFilter = await get('/articles/category/medium/reference?channel=unknown');
+  assert.doesNotMatch(invalidReferenceFilter.html, /Back to results|href="[^"]*unknown/);
   assert.match(referenceArchive.html, /data-reference-controls[^>]*hidden/);
   assert.match(referenceArchive.html, /Search titles/);
   assert.match(referenceArchive.html, /role="status"/);

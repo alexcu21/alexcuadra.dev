@@ -11,6 +11,7 @@
 .reference-card h2 { font-size: 1.25rem; line-height: 1.5; }
 .references .reference-image { display: block; width: 100%; height: auto; border: 1px solid var(--gray-800); border-radius: 1rem; margin-block: 2rem; }
 .references .reference-body { max-width: 70ch; margin-inline: auto; min-width: 0; }
+.references .reference-return { margin-block:2rem 0; }
 .references blockquote { margin-top: 1.5rem; padding: 1rem 1.5rem; border-inline-start: 3px solid var(--accent-regular); color: var(--gray-300); line-height: 1.7; }
 @media (min-width: 50em) {
   .references { padding-block: 3rem 5rem; }

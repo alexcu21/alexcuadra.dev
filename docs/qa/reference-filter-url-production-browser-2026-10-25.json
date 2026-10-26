@@ -1,0 +1,29 @@
+{
+  "checkedAt": "2026-10-26T01:28:28.747Z",
+  "version": "feba64f8-5406-4c69-8522-6c3753681a37",
+  "observations": [
+    {
+      "channel": "medium",
+      "query": "Gutenberg",
+      "scenario": "shared URL",
+      "status": "1 of 10 references",
+      "url": "https://alexcuadra.dev/articles/?q=Gutenberg&channel=medium#reference-directory-title"
+    },
+    {
+      "focus": "reference-directory-title",
+      "scenario": "return link",
+      "status": "1 of 10 references"
+    },
+    {
+      "focus": "reference-search",
+      "scenario": "clear",
+      "status": "10 of 10 references",
+      "url": "https://alexcuadra.dev/articles/#reference-directory-title"
+    },
+    {
+      "scenario": "back after clear",
+      "status": "1 of 10 references",
+      "url": "https://alexcuadra.dev/articles/?q=Gutenberg&channel=medium#reference-directory-title"
+    }
+  ]
+}

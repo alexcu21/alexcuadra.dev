@@ -1,0 +1,28 @@
+{
+  "checkedAt": "2026-10-26T01:21:48.849Z",
+  "version": "a9b314e7-aca3-4403-8038-4776ef215d6a",
+  "checks": [
+    {
+      "path": "/articles/?q=Gutenberg&channel=medium",
+      "status": 200,
+      "auth": "verified",
+      "robots": "noindex, nofollow",
+      "csp": true,
+      "retryAfter": null,
+      "canonical": "https://alexcuadra.dev/articles/",
+      "ssrEntries": 10,
+      "returnToResults": false
+    },
+    {
+      "path": "/articles/category/medium/how-to-build-a-custom-dynamic-gutenberg-block-step-by-step?q=Gutenberg&channel=medium",
+      "status": 200,
+      "auth": "verified",
+      "robots": "noindex, nofollow",
+      "csp": true,
+      "retryAfter": null,
+      "canonical": "https://alexcuadra.dev/articles/category/medium/how-to-build-a-custom-dynamic-gutenberg-block-step-by-step",
+      "ssrEntries": 0,
+      "returnToResults": true
+    }
+  ]
+}

@@ -5,12 +5,17 @@ import Icon from '../../../../components/Icon.astro';
 import { referenceDetailPage, referenceNotFound } from '../../../../data/reference-pages.js';
 import '../../../../styles/references.css';
 import { referenceBreadcrumbs } from '../../../../data/reference-seo.js';
+import { referenceFilterState, referenceFilterUrl } from '../../../../scripts/reference-filter.js';
 const { categorySlug, articleSlug } = Astro.params;
 const page = await referenceDetailPage(categorySlug, articleSlug);
 if (!page) return referenceNotFound();
 const { article, category } = page;
 const quote = article.articlesFields?.quote;
 const image = article.featuredImage?.node?.sourceUrl;
+const filterContext=referenceFilterState(Astro.url.searchParams,(article.categories?.nodes || []).map((term:{slug:string})=>term.slug));
+const hasFilterContext=!!(filterContext.query || filterContext.channel);
+const returnUrl=referenceFilterUrl(new URL('/articles/',Astro.url),filterContext);
+returnUrl.hash='reference-directory-title';
 ---
 <BaseLayout title={article.title} description={quote || article.title} image={image}>
   <script is:inline type="application/ld+json" set:html={referenceBreadcrumbs(category, article)} />
@@ -22,5 +27,6 @@ const image = article.featuredImage?.node?.sourceUrl;
     </header>
     {image && <img class="reference-image" src={image} alt="" decoding="async" />}
     {article.content && <div class="reference-body"><WordPressContent html={article.content} /></div>}
+    {hasFilterContext && <nav class="reference-return" aria-label="Search results navigation"><a href={returnUrl.pathname+returnUrl.search+returnUrl.hash}><Icon icon="arrow-left" /> Back to results</a></nav>}
   </main>
 </BaseLayout>
