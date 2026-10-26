@@ -1,0 +1,46 @@
+{
+  "version": "04955ff1-65c3-4e9a-84a4-d08ea5d2ac0a",
+  "checkedAt": "2026-10-26T16:00:28.507Z",
+  "checks": [
+    {
+      "path": "/contact/",
+      "status": 200,
+      "requestId": "b0678675-b73b-4579-a72c-7a6d6bd78b2a",
+      "retryAfter": null,
+      "formAbsent": true,
+      "contactLink": true,
+      "spanishContactLink": true,
+      "canonical": "<link rel=\"canonical\" href=\"https://alexcuadra.dev/contact/\">",
+      "csp": true
+    },
+    {
+      "path": "/es/contacto/",
+      "status": 200,
+      "requestId": "f56b4d0a-a6ff-4723-af0c-b568872a0392",
+      "retryAfter": null,
+      "formAbsent": true,
+      "contactLink": true,
+      "spanishContactLink": true,
+      "canonical": "<link rel=\"canonical\" href=\"https://alexcuadra.dev/es/contacto/\">",
+      "csp": true
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "requestId": "28babada-9db2-40c1-bae1-61b93dd676c7",
+      "retryAfter": null,
+      "formAbsent": true,
+      "contactLink": true,
+      "spanishContactLink": false,
+      "canonical": "<link rel=\"canonical\" href=\"https://alexcuadra.dev/\">",
+      "csp": true
+    },
+    {
+      "path": "/api/contact",
+      "status": 404,
+      "requestId": "5f9e5be0-e8bd-4a6f-8ef6-e1396aafd028",
+      "retryAfter": null,
+      "disabled": true
+    }
+  ]
+}

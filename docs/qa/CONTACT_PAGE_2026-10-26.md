@@ -40,7 +40,7 @@ Se encontró que Inicio devolvía los defaults ingleses: la ubicación del grupo
 
 ## Despliegue y pendientes
 
-Staging se publica con CONTACT_FORM_ENABLED=false; se registrará versión/postflight al terminar. Producción sigue sin cambios frontend, en `feba64f8-5406-4c69-8522-6c3753681a37`. No se promete disponibilidad permanente del CMS ni entrega de un nuevo mensaje.
+Staging publicado desde `aab4166`, versión **`04955ff1-65c3-4e9a-84a4-d08ea5d2ac0a`**, previa `f1caee3b-a837-4db2-ae1e-4680cd8635e6`, con CONTACT_FORM_ENABLED=false. [Postflight](contact-page-staging-2026-10-26.json): contactoEN/ES y HomeEN200, canónicas/CSP, enlaces correctos, sin formulario; API404CONTACT_DISABLED. Build final0errores/0advertencias. Sin reintentos ni envíos. Servidor de preview detenido y pestañas temporales cerradas. Producción sigue sin cambios frontend, en `feba64f8-5406-4c69-8522-6c3753681a37`. No se promete disponibilidad permanente del CMS ni entrega de un nuevo mensaje. Sin push.
 
 Siguiente decisión de producto: mantener los tres campos o añadir solo los que ayuden a responder a las consultas. No se implementa almacenamiento adicional sin definir finalidad, acceso y retención. MCP editorial sigue en alcance.
 
