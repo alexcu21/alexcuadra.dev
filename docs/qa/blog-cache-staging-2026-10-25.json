@@ -1,0 +1,45 @@
+{
+  "version": "c8c8c2f3-9153-4a17-819d-31e1c9153cdd",
+  "checkedAt": "2026-10-26T02:39:53.621Z",
+  "checks": [
+    {
+      "path": "/blog/",
+      "status": 200,
+      "requestId": "d6fd4dd7-e88b-4e3b-a815-4c3881fc6d22",
+      "retryAfter": null,
+      "noindex": "noindex, nofollow",
+      "csp": true,
+      "englishPosts": true,
+      "spanishPosts": false
+    },
+    {
+      "path": "/blog/",
+      "status": 200,
+      "requestId": "795e10c9-e251-4b34-acd9-f626f45e1221",
+      "retryAfter": null,
+      "noindex": "noindex, nofollow",
+      "csp": true,
+      "englishPosts": true,
+      "spanishPosts": false
+    },
+    {
+      "path": "/es/blog/",
+      "status": 200,
+      "requestId": "4c387d23-f852-47ac-9ed7-f0af7638a656",
+      "retryAfter": null,
+      "noindex": "noindex, nofollow",
+      "csp": true,
+      "englishPosts": false,
+      "spanishPosts": true
+    },
+    {
+      "path": "/api/contact",
+      "status": 404,
+      "requestId": "b8dc6a4d-34c6-484a-8fe0-6d91705ea596",
+      "retryAfter": null,
+      "noindex": "noindex, nofollow",
+      "csp": false,
+      "disabled": true
+    }
+  ]
+}

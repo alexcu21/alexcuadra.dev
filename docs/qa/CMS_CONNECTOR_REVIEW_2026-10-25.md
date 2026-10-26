@@ -24,6 +24,8 @@ Las claves separan documentos/variables/origen/credenciales. La consulta del arc
 
 Limitación: cada render aún puede requerir otras lecturas. Esto reduce consultas de blog con caché caliente; no independiza el HTML completo del origen, no ofrece coordinación entre centros de datos y no demuestra que el limitador se haya resuelto.
 
+Desplegado en staging desde `bca256b`, versión `c8c8c2f3-9153-4a17-819d-31e1c9153cdd`, previa `a9b314e7-aca3-4403-8038-4776ef215d6a`. [Postflight HTTP](blog-cache-staging-2026-10-25.json): dos cargas EN200 y una ES200 con ambas entradas del idioma esperado, CSP/noindex; contacto404/desactivado. No hubo errores ni reintentos en esa pasada. Las respuestas HTTP no prueban HIT por sí solas: la reducción de consultas se comprueba en pruebas con contador de transportes; falta medir eventos HIT/MISS del Worker real. Producción permanece en `feba64f8-5406-4c69-8522-6c3753681a37`, sin este incremento. Rollback posible restaurando la versión anterior de staging, sin tocar CMS ni borrar datos. Sin push.
+
 Validación: 311 pruebas unitarias correctas y build con 0 errores/0 advertencias. Dos regresiones nuevas prueban reutilización entre peticiones, separación EN/ES, expiración, filtrado de extras y traducciones, rechazo de borradores/contraseñas/paginación inválida. La regresión SSR de streaming también pasa; el primer intento fue bloqueado por EPERM al abrir el puerto local del fixture y se repitió fuera del sandbox, no por un fallo del producto.
 
 ## Formulario: requisito activo
