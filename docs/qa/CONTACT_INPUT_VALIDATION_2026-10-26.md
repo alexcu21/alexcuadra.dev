@@ -35,7 +35,7 @@ No se rechaza todo Unicode ni se aplica normalización de compatibilidad: nombre
 
 ## Despliegue
 
-Pendiente de registrar la publicación de staging; CONTACT_FORM_ENABLED=false. Producción sigue en `feba64f8-5406-4c69-8522-6c3753681a37`. No se reabre el piloto ya confirmado ni se pide otra recepción.
+Publicado en staging desde `c2b965b`, versión **`b8e868a5-95d2-40a8-95b9-6ffd0101cb5d`**, previa `04955ff1-65c3-4e9a-84a4-d08ea5d2ac0a`, con CONTACT_FORM_ENABLED=false. [GET posterior](contact-input-staging-2026-10-26.json):404 CONTACT_DISABLED/no-store. Build final0errores/0advertencias. Esta comprobación no simula ataques remotos ni certifica nuevas entregas; la validación se ejercita localmente con el endpoint habilitado solo en tests. Producción sigue en `feba64f8-5406-4c69-8522-6c3753681a37`. No se reabre el piloto ya confirmado ni se pide otra recepción. Sin push.
 
 Reversión: versión previa del Worker de staging; no hay migración ni cambio de secretos. Texto legítimo normalizado de la misma forma mantiene su huella de deduplicación. La nueva canonicalización de separadores de párrafo solo afecta mensajes que los contengan; no se invalidan reservas globalmente.
 
