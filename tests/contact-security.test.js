@@ -61,7 +61,7 @@ test('Turnstile validation requires success, configured hostname and contact act
     assert.equal(url, 'https://challenges.cloudflare.com/turnstile/v0/siteverify');
     assert.equal(options.body.get('response'), 'token');
     assert.equal(options.body.get('secret'), 'synthetic-secret');
-    assert.equal(options.redirect, 'error');
+    assert.equal(options.redirect, 'manual');
     return Response.json({ success: true, hostname: 'example.test', action: 'contact' });
   } }), true);
 });
@@ -73,4 +73,65 @@ test('challenge outages and missing secrets fail closed without exposing upstrea
     assert.doesNotMatch(error.message, /PRIVATE_UPSTREAM_DETAILS/);
     return code('CONTACT_CHALLENGE_UNAVAILABLE')(error);
   });
+});
+
+test('Siteverify distinguishes transport, timeout, HTTP, JSON and response contract without leaking details', async () => {
+  const cases = [
+    ['transport', async () => { throw Error('PRIVATE network details'); }],
+    ['timeout', async () => { throw new DOMException('PRIVATE timeout', 'TimeoutError'); }],
+    ['timeout', async () => { throw new DOMException('PRIVATE abort', 'AbortError'); }],
+    ['http', async () => new Response('PRIVATE upstream body', { status: 503 })],
+    ['invalid_json', async () => new Response('<html>PRIVATE</html>')],
+    ['invalid_response', async () => Response.json({ secret: 'PRIVATE' })],
+    ['invalid_response', async () => Response.json(null)],
+    ['invalid_response', async () => Response.json({ success: 'true' })],
+  ];
+  for (const [reason, fetch] of cases) {
+    const events = []; let attempts = 0;
+    await assert.rejects(verifyContactTurnstile('PRIVATE token', { secret: 'PRIVATE secret', hostname: 'example.test',
+      fetch: (...args) => { attempts++; return fetch(...args); }, diagnose: event => events.push(event) }), code('CONTACT_CHALLENGE_UNAVAILABLE'));
+    assert.equal(events.length, 1);
+    assert.equal(events[0].reason, reason);
+    assert.equal(attempts, 1);
+    if (reason === 'http') assert.equal(events[0].httpStatus, 503);
+    assert.doesNotMatch(JSON.stringify(events), /PRIVATE|example.test/);
+  }
+});
+
+test('Siteverify distinguishes JSON body read timeout from invalid JSON', async () => {
+  const events = [];
+  await assert.rejects(verifyContactTurnstile('token', { secret: 'secret', hostname: 'example.test',
+    fetch: async () => ({ ok: true, status: 200, async json() { throw new DOMException('PRIVATE', 'AbortError'); } }),
+    diagnose: event => events.push(event) }), code('CONTACT_CHALLENGE_UNAVAILABLE'));
+  assert.equal(events[0].reason, 'timeout');
+  assert.equal(events[0].httpStatus, 200);
+});
+
+test('Siteverify diagnostics whitelist failure codes and do not expose response metadata', async () => {
+  const events = [];
+  await assert.rejects(verifyContactTurnstile('PRIVATE token', { secret: 'PRIVATE secret', hostname: 'example.test',
+    fetch: async () => Response.json({ success: false, hostname: 'PRIVATE', cdata: 'PRIVATE',
+      'error-codes': ['invalid-input-secret', 'timeout-or-duplicate', 'PRIVATE', 'invalid-input-secret', { private: true }] }),
+    diagnose: event => events.push(event) }), code('CONTACT_CHALLENGE_REJECTED'));
+  assert.deepEqual(events[0].errorCodes, ['invalid-input-secret', 'timeout-or-duplicate']);
+  assert.equal(events[0].reason, 'rejected');
+  assert.doesNotMatch(JSON.stringify(events), /PRIVATE|private|example.test/);
+});
+
+test('Siteverify mismatch diagnostics stay redacted and a failing observer cannot bypass validation', async () => {
+  for (const [result, reason] of [
+    [{ success: true, hostname: 'PRIVATE', action: 'contact' }, 'hostname_mismatch'],
+    [{ success: true, hostname: 'example.test', action: 'PRIVATE' }, 'action_mismatch'],
+  ]) {
+    const events = [];
+    await assert.rejects(verifyContactTurnstile('token', { secret: 'secret', hostname: 'example.test',
+      fetch: async () => Response.json(result), diagnose: event => events.push(event) }), code('CONTACT_CHALLENGE_REJECTED'));
+    assert.equal(events[0].reason, reason);
+    assert.doesNotMatch(JSON.stringify(events), /PRIVATE|example.test/);
+  }
+  const options = { secret: 'secret', hostname: 'example.test', diagnose: () => { throw Error('PRIVATE observer'); } };
+  assert.equal(await verifyContactTurnstile('token', { ...options,
+    fetch: async () => Response.json({ success: true, hostname: 'example.test', action: 'contact' }) }), true);
+  await assert.rejects(verifyContactTurnstile('token', { ...options,
+    fetch: async () => Response.json({ success: false }) }), code('CONTACT_CHALLENGE_REJECTED'));
 });

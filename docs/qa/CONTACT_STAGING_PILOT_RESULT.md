@@ -1,5 +1,7 @@
 # Piloto de contacto — 19 octubre 2026
 
+**25 octubre — evidencia histórica del piloto recuperada:** export aportado por Alex contiene37registros y el POST del19octubre10:31:18 Nicaragua(16:31:18UTC), versión e4db309c,503/CONTACT_CHALLENGE_UNAVAILABLE/requestId38a947b2-6487-42ee-b47e-938b3f6ad353/duración0ms. Falló Siteverify antes de reserva/email; explica ausencia de actividad de envío para ese intento. Causa exacta no registrada: código agrupa HTTPnoOK/red/timeout/JSON;0ms no identifica causa. [Recibo mínimo sin IP/cabeceras](contact-pilot-historical-result-2026-10-25.json). Siguiente: diagnóstico acotado de Siteverify, no investigar rebotes de un correo que esta petición no llegó a enviar. Sin nuevo envío ni activación.
+
 Alex autorizó una ventana temporal y un único mensaje ficticio con Reply-To público. Se realizó un solo clic de envío en staging; no se reintentó. Turnstile habilitó automáticamente el botón sin interacción manual con un challenge.
 
 - Versión temporal habilitada: `e4db309c-7ae9-4811-84de-99b07ba55d61`.

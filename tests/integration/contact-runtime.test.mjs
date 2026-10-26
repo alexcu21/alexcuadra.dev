@@ -6,8 +6,40 @@ import { fileURLToPath } from 'node:url';
 
 const bundle = await build({ entryPoints: [fileURLToPath(new URL('../fixtures/contact-runtime/worker.js', import.meta.url))],
   bundle: true, write: false, format: 'esm', platform: 'browser', target: 'es2022' });
+const siteverifyBundle = await build({ entryPoints: [fileURLToPath(new URL('../fixtures/contact-runtime/siteverify-worker.js', import.meta.url))],
+  bundle: true, write: false, format: 'esm', platform: 'browser', target: 'es2022' });
 const origin = 'https://contact.example.test';
 const payload = { name: 'Synthetic visitor', email: 'visitor@example.test', message: '<script>Literal synthetic text</script>', locale: 'en', turnstileToken: 'synthetic-token' };
+
+test('Siteverify uses native workerd fetch and reports intercepted HTTP/JSON outcomes without external access', async t => {
+  let mode = 'verified';
+  let attempts = 0;
+  const mf = new Miniflare(convertV4MiniflareOptions({ workers: [{ name: 'siteverify-transport-test', modules: true,
+    compatibilityDate: '2026-10-17', script: siteverifyBundle.outputFiles[0].text,
+    outboundService: async request => {
+      attempts++;
+      assert.equal(request.url, 'https://challenges.cloudflare.com/turnstile/v0/siteverify');
+      assert.equal(request.method, 'POST');
+      const body = new URLSearchParams(await request.text());
+      assert.equal(body.get('secret'), 'synthetic-secret');
+      assert.equal(body.get('response'), 'synthetic-token');
+      if (mode === 'http') return new Response('PRIVATE', { status: 502 });
+      if (mode === 'redirect') return new Response(null, { status: 302, headers: { Location: 'https://other.example.test/PRIVATE' } });
+      if (mode === 'invalid_json') return new Response('<html>PRIVATE</html>');
+      return Response.json({ success: true, hostname: 'contact.example.test', action: 'contact' });
+    },
+  }] }));
+  t.after(() => mf.dispose());
+  for (mode of ['verified', 'http', 'invalid_json', 'redirect']) {
+    const response = await mf.dispatchFetch(origin + '/verify');
+    const result = await response.json();
+    assert.equal(response.status, mode === 'verified' ? 200 : 503, JSON.stringify({ result, attempts }));
+    assert.equal(result.diagnostic.reason, mode === 'redirect' ? 'http' : mode);
+    if (mode === 'redirect') assert.equal(result.diagnostic.httpStatus, 302);
+    assert.doesNotMatch(JSON.stringify(result), /PRIVATE|synthetic-secret|synthetic-token/);
+  }
+  assert.equal(attempts, 4, 'one intercepted request per verification, no retries or redirects');
+});
 async function setup(t, overrides = {}) {
   let outboundAttempts = 0;
   const mf = new Miniflare(convertV4MiniflareOptions({ workers: [{ name: 'contact-runtime-test', modules: true,

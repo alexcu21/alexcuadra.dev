@@ -206,3 +206,20 @@ test('acceptance diagnostics do not claim delivery and optional logger failure c
   ctx.options.log = () => { throw Error('log unavailable'); };
   assert.equal((await handleContactRequest(req(), ctx.env, ctx.options)).status, 202);
 });
+
+test('Siteverify diagnostics reach server logs only and prevent reservation and email on failure', async () => {
+  const ctx = setup();
+  ctx.options.fetch = async () => new Response('PRIVATE response', { status: 502 });
+  const response = await handleContactRequest(req(), ctx.env, ctx.options);
+  const body = await response.text();
+  const event = JSON.parse(ctx.logs[0]);
+  assert.equal(response.status, 503);
+  assert.equal(JSON.parse(body).code, 'CONTACT_CHALLENGE_UNAVAILABLE');
+  assert.equal(event.stage, 'challenge');
+  assert.equal(event.deliveryStatus, 'not_attempted');
+  assert.equal(event.siteverify.reason, 'http');
+  assert.equal(event.siteverify.httpStatus, 502);
+  assert.deepEqual(ctx.calls, ['limit']);
+  assert.doesNotMatch(body, /siteverify|502|reason/);
+  assert.doesNotMatch(body + ctx.logs.join(''), /PRIVATE|private-secret|private-token|visitor@/);
+});

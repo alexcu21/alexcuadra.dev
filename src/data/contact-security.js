@@ -70,18 +70,56 @@ export async function readContactRequest(request, expectedOrigin) {
   } finally { clearTimeout(timer); reader.releaseLock(); }
 }
 
-export async function verifyContactTurnstile(token, { secret, hostname, fetch: transport = globalThis.fetch } = {}) {
+const siteverifyCodes = new Set(['missing-input-secret', 'invalid-input-secret', 'missing-input-response',
+  'invalid-input-response', 'bad-request', 'timeout-or-duplicate', 'internal-error']);
+const timedOut = error => error?.name === 'AbortError' || error?.name === 'TimeoutError';
+
+export async function verifyContactTurnstile(token, { secret, hostname, fetch: transport = globalThis.fetch, diagnose } = {}) {
   if (typeof secret !== 'string' || !secret.trim() || typeof hostname !== 'string' || !hostname.trim()) fail('CONTACT_CONFIG', 503);
   const checkedToken = text(token, 2048);
-  let result;
+  const started = Date.now();
+  const report = (reason, details = {}) => {
+    // Only fixed reasons, numeric status and allowlisted codes reach this callback.
+    try { diagnose?.({ reason, ...details, durationMs: Date.now() - started }); } catch { /* Optional diagnostics. */ }
+  };
+  let response;
   try {
-    const response = await transport('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-      method: 'POST', redirect: 'error',
+    response = await transport('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      // workerd does not implement redirect:error. Inspect 3xx manually so
+      // the secret and token are never followed to a different destination.
+      method: 'POST', redirect: 'manual',
       body: new URLSearchParams({ secret, response: checkedToken }), signal: AbortSignal.timeout(5000),
     });
-    if (!response.ok) fail('CONTACT_CHALLENGE_UNAVAILABLE', 503);
-    result = await response.json();
-  } catch { fail('CONTACT_CHALLENGE_UNAVAILABLE', 503); }
-  if (result?.success !== true || result.hostname !== hostname || result.action !== 'contact') fail('CONTACT_CHALLENGE_REJECTED', 403);
+  } catch (error) {
+    report(timedOut(error) ? 'timeout' : 'transport');
+    fail('CONTACT_CHALLENGE_UNAVAILABLE', 503);
+  }
+  const httpStatus = response.status;
+  if (!response.ok) {
+    report('http', { httpStatus });
+    void response.body?.cancel().catch(() => {});
+    fail('CONTACT_CHALLENGE_UNAVAILABLE', 503);
+  }
+  let result;
+  try { result = await response.json(); }
+  catch (error) {
+    report(timedOut(error) ? 'timeout' : error instanceof SyntaxError ? 'invalid_json' : 'transport', { httpStatus });
+    fail('CONTACT_CHALLENGE_UNAVAILABLE', 503);
+  }
+  if (!result || typeof result !== 'object' || Array.isArray(result) || typeof result.success !== 'boolean') {
+    report('invalid_response', { httpStatus });
+    fail('CONTACT_CHALLENGE_UNAVAILABLE', 503);
+  }
+  if (!result.success) {
+    const errorCodes = Array.isArray(result['error-codes'])
+      ? [...new Set(result['error-codes'].filter(code => siteverifyCodes.has(code)))] : [];
+    report('rejected', { httpStatus, errorCodes });
+    fail('CONTACT_CHALLENGE_REJECTED', 403);
+  }
+  if (result.hostname !== hostname || result.action !== 'contact') {
+    report(result.hostname !== hostname ? 'hostname_mismatch' : 'action_mismatch', { httpStatus });
+    fail('CONTACT_CHALLENGE_REJECTED', 403);
+  }
+  report('verified', { httpStatus });
   return true;
 }

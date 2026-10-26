@@ -1,0 +1,16 @@
+{
+  "source": "Export de Workers Logs aportado por Alex; no se conserva el export completo con cabeceras/IP.",
+  "recordsReviewed": 37,
+  "timestampUtc": "2026-10-19T16:31:18.942Z",
+  "timestampNicaragua": "2026-10-19 10:31:18 -06:00",
+  "worker": "alexcuadra-dev-staging",
+  "version": "e4db309c-7ae9-4811-84de-99b07ba55d61",
+  "event": {
+    "event": "contact_result",
+    "requestId": "38a947b2-6487-42ee-b47e-938b3f6ad353",
+    "code": "CONTACT_CHALLENGE_UNAVAILABLE",
+    "status": 503,
+    "durationMs": 0
+  },
+  "finding": "Fallo de verificación Siteverify anterior a la reserva y al envío; no identifica HTTP, red, timeout o JSON como causa exacta."
+}

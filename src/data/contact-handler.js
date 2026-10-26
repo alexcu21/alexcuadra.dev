@@ -65,6 +65,7 @@ export async function handleContactRequest(request, env, { fetch: transport = gl
   let stage = 'request';
   let deliveryStatus = 'not_attempted';
   let emailProviderCode;
+  let siteverify;
   try {
     if (request.method !== 'POST') throw new ContactError('CONTACT_METHOD', 405);
     stage = 'configuration';
@@ -82,7 +83,8 @@ export async function handleContactRequest(request, env, { fetch: transport = gl
     stage = 'validation';
     const input = await readContactRequest(request, env.CONTACT_ORIGIN);
     stage = 'challenge';
-    await verifyContactTurnstile(input.turnstileToken, { secret: env.TURNSTILE_SECRET_KEY, hostname: config.hostname, fetch: transport });
+    await verifyContactTurnstile(input.turnstileToken, { secret: env.TURNSTILE_SECRET_KEY, hostname: config.hostname,
+      fetch: transport, diagnose: result => { siteverify = result; } });
     stage = 'reservation';
     await reserveContact(input, env);
     stage = 'delivery';
@@ -106,6 +108,7 @@ export async function handleContactRequest(request, env, { fetch: transport = gl
   // Deliberately never serialize the request, payload, provider response or exception.
   try { log(JSON.stringify({ event: 'contact_result', requestId, status, code, stage,
     deliveryStatus, ...(emailProviderCode ? { providerCode: emailProviderCode } : {}),
+    ...(siteverify ? { siteverify } : {}),
     durationMs: Date.now() - started })); } catch { /* Logging is optional. */ }
   return response(status, code, requestId);
 }
