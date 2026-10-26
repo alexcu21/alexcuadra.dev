@@ -1,5 +1,7 @@
 # Incrementos pendientes — estado consolidado al 26 octubre 2026
 
+**Actualización26octubre:** integración real del lector MCP del blog completada:34funcionales+37HTTP, con credenciales sintéticas retiradas y laboratorio detenido. [Recibo](qa/MCP_BLOG_READ_INTEGRATION_2026-10-26.md). El siguiente paso es paquete/preflight de destino; no repetir el laboratorio por continuidad ni instalar sin revisión concreta.
+
 Este inventario sustituye las listas de próximos pasos históricas de los informes anteriores. No declara resueltos los429delCMS ni acepta cambios de producción por el hecho de estar en staging.
 
 ## Ya completado
@@ -18,7 +20,7 @@ Candidato local [Editorial Blog Read](../wordpress/experimental/editorial-blog-r
 
 Separa la capacidad `alexcuadra_read_public_posts` de la de proyectos. Rechaza acceso anónimo, administrador sin scope, permisos revocados, otros tipos/idiomas/estados, contraseñas y clasificaciones contradictorias. No incluye cuerpo, ACF, datos de contacto ni escritura. Guard local opt-in y entorno local; no registra herramientas en producción.
 
-Verificación: **75 comprobaciones de contrato y dos guards**, PHP8.5.11, lint correcto; [recibo](qa/editorial-blog-read-contract-2026-10-26.json). APIs simuladas explícitamente: sin WordPress real, BD, red, Docker, HTTP ni instalación. No se presenta como integración real o capacidad ya disponible en el conector. No se modifican los plugins/ZIP sellados existentes, la propuesta227 ni la revisión privada1.
+Verificación inicial: **75 comprobaciones de contrato y dos guards**, PHP8.5.11, lint correcto; [recibo](qa/editorial-blog-read-contract-2026-10-26.json). APIs simuladas explícitamente: sin WordPress real, BD, red, Docker, HTTP ni instalación. Esa primera fase no se presentó como integración real. La integración posterior de71casos está documentada en la actualización superior; la capacidad todavía no está disponible en el conector real. No se modifican los plugins/ZIP sellados existentes, la propuesta227 ni la revisión privada1.
 
 Descubrimiento nativo de solo lectura actual:11abilities visibles (tres core, dos de lectura de proyectos y seis de propuestas privadas). No aparecen herramientas nativas de posts, traducciones o taxonomías. No se ejecutaron propuestas, grants, apply, recover ni approve.
 
@@ -26,7 +28,7 @@ Descubrimiento nativo de solo lectura actual:11abilities visibles (tres core, do
 
 | Prioridad | Incremento concreto | Criterio de cierre |
 | --- | --- | --- |
-| 1 | Integrar el candidato MCP en laboratorio WordPress/Polylang/Abilities/MCP Adapter | Lectura y esquemas reales EN/ES; privacidad/rechazos por HTTP, sin mutaciones de fuentes. Después paquete/preflight revisables antes de instalación y primer scope real. |
+| 1 | Preparar paquete y preflight de destino del lector MCP del blog | Integración real EN/ES/HTTP ya completada. Revisar paquete, guard de sitio, permisos mínimos y preservación antes de autorizar instalación y primer scope real. |
 | 2 | Propuestas editoriales para posts y traducciones | Diff privado de cuerpo/título/extracto/clasificaciones; control de versión/base e idempotencia. Creación de traducciones explícita, sin duplicar grupos. Separar proponer/aprobar/aplicar/recuperar. No reciclar la revisión1 caducada. |
 | 3 | Ampliar clasificación editorial MCP de proyectos | Lectura y propuestas para categorías/tecnologías propias de proyectos, con IDs/idiomas exactos y sin reutilizar categorías del blog. El nuevo lector de posts solo cubre category/post_tag asignados. |
 | 4 | Promover el conjunto reciente de staging a producción | Revisar caché/contacto/EN/ES y publicar el código manteniendo contacto false; postflight real y reversión. No requiere activar el formulario ni reenviar un piloto. |
@@ -50,4 +52,4 @@ Los booleanos prueban coincidencia con la configuración requerida, no el valor 
 - Bandeja interna de mensajes: **no es un requisito acordado**. Alex preguntó dónde se guardan; actualmente no existe esa bandeja. Añadirla exige definir finalidad, acceso y conservación antes de persistir mensajes.
 - Comprobar ajuste Email preview de Cloudflare y mantener el procedimiento manual30días en Gmail; no se automatiza el borrado sin una petición específica.
 
-No se desplegó frontend ni se cambió CMS/DNS/contacto/permisos en este incremento de inventario/candidato. Siguiente trabajo concreto: prioridad1, integración real del lector MCP del blog.
+No se desplegó frontend ni se cambió CMS/DNS/contacto/permisos en este incremento de inventario/candidato. Siguiente trabajo concreto: prioridad1, paquete y preflight de destino del lector MCP del blog.

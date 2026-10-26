@@ -2,6 +2,8 @@
 
 Este primer incremento añade lectura de metadatos de entradas nativas. No reemplaza Editorial Read0.1.0 ni sus paquetes sellados. No está instalado ni disponible en el conector real.
 
+**26 octubre:** integración real WordPress/Polylang/Abilities/MCP Adapter completada:34comprobaciones funcionales+37HTTP. [Recibo y límites](../../../docs/qa/MCP_BLOG_READ_INTEGRATION_2026-10-26.md). El código candidato y su guard local se mantienen; falta preparar el paquete/preflight de destino antes de cualquier instalación o nuevo permiso real.
+
 Solo registra herramientas con `AC_EDITORIAL_BLOG_READ_LAB=true` y `wp_get_environment_type() === 'local'`. El guard se conserva hasta completar integración real y revisión del paquete de destino. No quitarlo para instalar el prototipo en el hosting.
 
 ## Contrato
@@ -30,11 +32,11 @@ Capacidad nueva y separada `alexcuadra_read_public_posts`, junto con usuario aut
 /opt/homebrew/bin/php tests/editorial-blog-read/check.php production
 ```
 
-El ejecutable PHP puede variar en otra máquina. La prueba usa dobles explícitos de las APIs de WordPress/Polylang/Abilities: comprueba el contrato y los callbacks reales del candidato, **sin WordPress, BD, HTTP, Docker ni red**. No demuestra integración con WP_Query real, filtros de Polylang o MCP Adapter. Ese es el siguiente ensayo antes de empaquetar/instalar o solicitar un permiso nuevo.
+El ejecutable PHP puede variar en otra máquina. Esa prueba de contrato usa dobles explícitos de las APIs de WordPress/Polylang/Abilities. La integración real se ejecuta separadamente con `sh tests/integration/wordpress-blog-read/run.sh`; sus resultados y requisitos se documentan en el recibo enlazado arriba.
 
 ## Siguientes fases
 
-1. Integración WordPress/Polylang/Abilities/MCP en laboratorio aislado y rechazo de accesos por HTTP. Mantener la separación de permisos.
+1. Completada la integración WordPress/Polylang/Abilities/MCP en laboratorio aislado y rechazo de accesos por HTTP. Mantener la separación de permisos.
 2. Revisar paquete y preflight de destino. La instalación y el primer grant real se autorizan sobre un resultado concreto; no se reutiliza el scope de proyectos ni se concede edit_posts.
 3. Contrato de propuestas privadas para posts, cuerpos/extractos y taxonomías, creación explícita/idempotente de traducciones y separación de aprobación/aplicación/recuperación. Los mecanismos operativos previos para proyectos no certifican por sí solos este nuevo tipo.
 
