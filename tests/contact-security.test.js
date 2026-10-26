@@ -15,6 +15,28 @@ test('contact input normalizes plain text without interpreting user markup as HT
   assert.equal(result.message, '<script>literal text</script>\nA < B');
   // Delivery must use provider text/plain, and any UI preview must escape this value.
 });
+test('contact normalization preserves multilingual names, emoji, code and punctuation as plain text', () => {
+  for (const name of ["Anne O’Connor", 'José García', '李明', 'مريم', 'Alex 👩🏽‍💻']) {
+    const result = validateContactInput({ ...payload, name: `  ${name}  `,
+      message: '  <img src=x onerror=alert(1)>\r\nA & B\u2028SQL: SELECT * FROM projects;\u2029\tFin  ' });
+    assert.equal(result.name, name);
+    assert.equal(result.message, '<img src=x onerror=alert(1)>\nA & B\nSQL: SELECT * FROM projects;\n\tFin');
+  }
+  assert.equal(validateContactInput({ ...payload, name: 'Jose\u0301' }).name, 'José');
+});
+
+test('contact rejects control characters and malformed Unicode before trimming', () => {
+  for (const field of ['name','email','message']) {
+    for (const character of ['\u0000','\u007f','\u0085','\u009f','\ud800','\udfff']) {
+      for (const value of [character + payload[field], payload[field] + character, 'A' + character + 'B']) {
+        assert.throws(() => validateContactInput({ ...payload, [field]: value }), code('CONTACT_INVALID_FIELDS'));
+      }
+    }
+  }
+  for (const field of ['name','email']) for (const character of ['\n','\r','\t','\u2028','\u2029']) {
+    assert.throws(() => validateContactInput({ ...payload, [field]: payload[field] + character }), code('CONTACT_INVALID_FIELDS'));
+  }
+});
 test('contact validation rejects extra destinations, header injection and oversized fields', () => {
   for (const input of [{ ...payload, to: 'attacker@example.test' }, { ...payload, name: 'Alex\r\nBcc: attacker' },
     { ...payload, message: 'x'.repeat(5001) }, { ...payload, email: 'a@b.test\r\nBcc: attacker' },

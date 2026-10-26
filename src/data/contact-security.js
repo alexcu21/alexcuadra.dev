@@ -7,11 +7,18 @@ const fail = (code, status = 400) => { throw new ContactError(code, status); };
 
 function text(value, max, multiline = false) {
   if (typeof value !== 'string') fail('CONTACT_INVALID_FIELDS');
-  const normalized = value.normalize('NFC').replace(/\r\n?/g, '\n').trim();
-  if (!normalized || normalized.length > max || (multiline ? /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/ : /[\u0000-\u001f\u007f]/).test(normalized)) {
+  const canonical = value.normalize('NFC').replace(/\r\n?/g, '\n');
+  const normalized = multiline ? canonical.replace(/[\u2028\u2029]/g, '\n') : canonical;
+  // Validate before trimming so forbidden controls cannot hide at the edges.
+  // The Unicode flag matches lone surrogates without rejecting valid emoji pairs.
+  if (/[\ud800-\udfff]/u.test(normalized) || (multiline
+    ? /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f-\u009f]/u
+    : /[\u0000-\u001f\u007f-\u009f\u2028\u2029]/u).test(normalized)) {
     fail('CONTACT_INVALID_FIELDS');
   }
-  return normalized;
+  const trimmed = normalized.trim();
+  if (!trimmed || trimmed.length > max) fail('CONTACT_INVALID_FIELDS');
+  return trimmed;
 }
 
 export function validateContactInput(input) {

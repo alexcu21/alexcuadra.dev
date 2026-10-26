@@ -41,6 +41,36 @@ test('accepted contact uses fixed delivery addresses and text-only structured fi
     assert.doesNotMatch(value, /personal-recipient|visitor@|Literal message|private-token|private-secret|internal-id|192\.0\.2\.1/);
   }
 });
+
+test('markup stays literal text and cannot become HTML, headers, a destination or a log entry', async () => {
+  const ctx = setup();
+  const message = '<img src=x onerror=alert(1)>\r\nBcc: other@example.test\u2028<script>run()</script>';
+  const response = await handleContactRequest(req({ ...input, name: "José O’Connor", message }), ctx.env, ctx.options);
+  assert.equal(response.status, 202);
+  const sent = ctx.messages[0];
+  assert.equal(sent.to, ctx.env.CONTACT_TO_EMAIL);
+  assert.equal(sent.from, ctx.env.CONTACT_FROM_EMAIL);
+  assert.equal(sent.replyTo, input.email);
+  assert.equal(sent.subject, 'Portfolio contact');
+  assert.equal(sent.html, undefined);
+  assert.equal(sent.headers, undefined);
+  assert.equal(sent.cc, undefined);
+  assert.equal(sent.bcc, undefined);
+  assert.equal(sent.text, "José O’Connor\nvisitor@example.test\n\n<img src=x onerror=alert(1)>\nBcc: other@example.test\n<script>run()</script>");
+  assert.doesNotMatch(await response.text() + ctx.logs.join(''), /onerror|run\(\)|other@example|José|visitor@/);
+});
+
+test('invalid Unicode and newline-bearing identity fields cannot reach challenge, storage or email', async () => {
+  for (const changes of [{ name: 'Visitor\n' }, { email: 'visitor@example.test\r\n' },
+    { message: 'hidden\u0085control' }, { name: 'broken\ud800' }]) {
+    const ctx = setup();
+    const response = await handleContactRequest(req({ ...input, ...changes }), ctx.env, ctx.options);
+    assert.equal(response.status, 400);
+    assert.equal((await response.json()).code, 'CONTACT_INVALID_FIELDS');
+    assert.deepEqual(ctx.calls, ['limit']);
+    assert.equal(ctx.messages.length, 0);
+  }
+});
 test('missing bindings, invalid config and methods never invoke delivery', async () => {
   for (const changes of [{ CONTACT_EMAIL: undefined }, { CONTACT_RATE_LIMITER: undefined },
     { CONTACT_COORDINATOR: undefined }, { CONTACT_DEDUP_SECRET: 'short' },

@@ -115,3 +115,22 @@ test('disabled endpoint, rejected origin/input and failed challenge never reach 
   const stats = await rejected.stats();
   assert.equal(stats.challenges, 1); assert.equal(stats.emailAttempts, 0);
 });
+
+test('native runtime rejects malformed text before challenge and sends valid Unicode as plain text only', async t => {
+  const ctx = await setup(t);
+  for (const changes of [{ name: 'Visitor\n' }, { message: 'hidden\u0085control' }, { message: 'broken\ud800' }]) {
+    const response = await ctx.send({ ...payload, ...changes });
+    assert.equal(response.status, 400);
+  }
+  const before = await ctx.stats();
+  assert.equal(before.challenges, 0);
+  assert.equal(before.emailAttempts, 0);
+  const response = await ctx.send({ ...payload, name: 'Jose\u0301 👩🏽‍💻', message: '<script>literal()</script>\u2028Bcc: other@example.test' });
+  assert.equal(response.status, 202);
+  const after = await ctx.stats();
+  assert.equal(after.emailAttempts, 1);
+  assert.equal(after.messages[0].html, undefined);
+  assert.equal(after.messages[0].bcc, undefined);
+  assert.equal(after.messages[0].text, 'José 👩🏽‍💻\nvisitor@example.test\n\n<script>literal()</script>\nBcc: other@example.test');
+  assert.doesNotMatch(after.logs.join(''), /literal\(\)|other@example|José|visitor@/);
+});
