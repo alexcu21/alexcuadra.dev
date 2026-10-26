@@ -1,0 +1,17 @@
+# Propuestas de blog: planificador local
+
+Primer componente del contrato de propuestas privadas para posts y traducciones. PHP puro, sin registro de plugin/abilities, WordPress, BD, archivos, red ni cambios de permisos. No es instalable ni amplía el lector de metadatos sellado. No incluir este archivo desde el CMS real.
+
+`prepare(actor, source, termRows, request)` devuelve un documento determinista de versión1 con before/after por campo, propietario, identidad de petición, base y hash del documento. Requiere la capacidad nueva propuesta `alexcuadra_prepare_post_changes`: read_public_posts, scopes de proyectos o administrador por sí solos no sirven. El actor y las proyecciones de fuente/términos serán internos y fiables; jamás argumentos suministrados por el cliente MCP.
+
+Dos operaciones: update-post en el idioma exacto del post nativo publicado/sin contraseña; create-translation solo cuando el idioma opuesto no está en el grupo. Esta última exige título, cuerpo, extracto, categorías y etiquetas explícitos en destino. No traduce automáticamente, reserva ID, enlaza grupos, crea un borrador ni publica. Un borrador traducido ya enlazado deberá figurar en la proyección interna y bloquear la creación, aunque el lector público no lo muestre.
+
+Campos propuestos: title/content/excerpt/categories/tags. Categorías y etiquetas se validan con IDs enteros únicos, taxonomía propia de blog, idioma y visibilidad contra catálogo interno. Colecciones ordenadas numéricamente para igualdad estable; vacío explícito significa retirar todas las asignaciones. Campos ausentes en update no cambian. Se rechazan slug, estado, autor, tipos, opciones, ACF, SQL, campos desconocidos, texto inválido y propuestas sin cambios.
+
+Texto UTF-8 acotado; admite HTML, bloques Gutenberg y código como texto literal de propuesta. **No es un sanitizador de contenido publicado.** No renderizar este documento como HTML: una futura vista debe escapar before/after. El adaptador de aplicación deberá validar permisos/política HTML de WordPress, efectos de bloques/hooks y repetir la revisión si saneamiento altera lo aprobado. Este componente no ejecuta HTML ni llama wp_update_post.
+
+base_hash liga campos completos permitidos, identidad/estado/contraseña/idioma/grupo y catálogo de términos recibido. El adaptador futuro debe proporcionar el grupo completo, contrastar reciprocidad con los otros posts y construir un catálogo relevante y estable, incluyendo cualquier destino existente privado. Este planificador solo comprueba coherencia interna de la proyección; no consulta Polylang ni demuestra visibilidad real. Nombres/atributos no incluidos en la proyección no están ligados por la huella.
+
+Falta repositorio privado separado de proyectos, autenticación real, cuotas/retención, ownership en lecturas, compare-and-swap de versión, replay durable por owner/request_id con rechazo de reutilización distinta, carreras al crear traducciones y límites de transacción/efectos. request_hash y salida estable permiten diseñarlo, **no garantizan idempotencia persistente**. No hay actualización de propuestas, aprobación, aplicación o recuperación. Mantener esas fases y permisos separados; no reutilizar propuesta227/revisión1 o tablas/paquetes instalados de proyectos.
+
+Prueba: `/opt/homebrew/bin/php tests/editorial-blog-proposals/check.php`. APIs/proyecciones sintéticas, no integración con WordPress/Polylang/HTTP. Siguiente: repositorio privado y revisión/versionado/replay en laboratorio antes de cualquier paquete o primer scope real.

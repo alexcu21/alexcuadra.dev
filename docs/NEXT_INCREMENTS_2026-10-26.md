@@ -1,6 +1,6 @@
 # Incrementos pendientes — estado consolidado al 26 octubre 2026
 
-**26 octubre — lector MCP del blog operativo:** Alex aporta after-scope ready=true/14checks; usuario2 añade solo el scope de lectura blog, conservando subscriber/read y permisos anteriores sin edición/admin. Verificación independiente por conector: catálogo13abilities, dos nuevas; list EN/ES devuelve2entradas por idioma y traducciones recíprocas239↔228/241↔204 con categorías/etiquetas por idioma; get239EN/228ES coincide y239ES se rechaza sin código HTTP expuesto.8llamadas MCP de lectura,0mutaciones. [Cierre y límites](qa/MCP_BLOG_READ_LIVE_2026-10-26.md). No repetir instalación/activación/grants ni pruebas del piloto. Siguiente: diseñar propuestas privadas para posts/traducciones; edición pública sigue fuera del alcance concedido.
+**26 octubre — propuestas de posts/traducciones, planificador local completado:** documento determinista before/after, propietario/versión1/base/request/document hashes, update-post y creación prevista de traducción con campos explícitos/idioma ausente.82pruebas PHP sintéticas correctas; permisos nuevos solo modelados, sin registrar/grant/guardar/escribir. [Contrato y siguiente capa](WORDPRESS_MCP_BLOG_PROPOSALS.md), [QA y límites](qa/MCP_BLOG_PROPOSAL_PLANNER_2026-10-26.md). No es plugin ni persistencia/idempotencia real. Siguiente repositorio privado/versionado/replay en laboratorio; lector MCP real permanece operativo. Sin CMS/SSH/deploy/envíos.
 
 Este inventario sustituye las listas de próximos pasos históricas de los informes anteriores. No declara resueltos los429delCMS ni acepta cambios de producción por el hecho de estar en staging.
 
@@ -14,21 +14,17 @@ Este inventario sustituye las listas de próximos pasos históricas de los infor
 
 Producción permanece en **feba64f8-5406-4c69-8522-6c3753681a37**, sin los últimos cambios frontend de contacto/caché y con formulario desactivado. Los cambios editoriales del CMS sí son compartidos por SSR; no confundir publicación CMS con despliegue del Worker.
 
-## Incremento realizado ahora: lectura editorial MCP del blog
+## MCP: estado actual
 
-Candidato local [Editorial Blog Read](../wordpress/experimental/editorial-blog-read/README.md): implementa list-public-posts y get-public-post. Incluye ID/título/slug/idioma, relaciones públicas recíprocas y categorías/etiquetas asignadas con sus idiomas/traducciones. Solo tipo nativo post; conserva la separación respecto a proyectos y artículos/menciones.
+El lector de metadatos del blog está instalado y verificado mediante el conector real:13abilities en catálogo, dos entradas por idioma y traducciones recíprocas239↔228/241↔204 con categorías/etiquetas. [Cierre real](qa/MCP_BLOG_READ_LIVE_2026-10-26.md). No repetir instalación/grants del lector.
 
-Separa la capacidad `alexcuadra_read_public_posts` de la de proyectos. Rechaza acceso anónimo, administrador sin scope, permisos revocados, otros tipos/idiomas/estados, contraseñas y clasificaciones contradictorias. No incluye cuerpo, ACF, datos de contacto ni escritura. Guard local opt-in y entorno local; no registra herramientas en producción.
-
-Verificación inicial: **75 comprobaciones de contrato y dos guards**, PHP8.5.11, lint correcto; [recibo](qa/editorial-blog-read-contract-2026-10-26.json). APIs simuladas explícitamente: sin WordPress real, BD, red, Docker, HTTP ni instalación. Esa primera fase no se presentó como integración real. La integración posterior de71casos está documentada en la actualización superior; la capacidad todavía no está disponible en el conector real. No se modifican los plugins/ZIP sellados existentes, la propuesta227 ni la revisión privada1.
-
-Descubrimiento nativo de solo lectura actual:11abilities visibles (tres core, dos de lectura de proyectos y seis de propuestas privadas). No aparecen herramientas nativas de posts, traducciones o taxonomías. No se ejecutaron propuestas, grants, apply, recover ni approve.
+El nuevo [planificador de propuestas](WORDPRESS_MCP_BLOG_PROPOSALS.md) prepara un diff local de título/cuerpo/extracto/clasificaciones y una intención explícita de traducción.82pruebas sintéticas correctas. No registra herramientas, guarda propuestas ni aplica contenido: falta repositorio privado, control durable de versiones/reintentos y adaptación WordPress/Polylang. La propuesta227/revisión1 y los paquetes existentes permanecen separados.
 
 ## Qué falta, en orden de trabajo
 
 | Prioridad | Incremento concreto | Criterio de cierre |
 | --- | --- | --- |
-| 2 | Propuestas editoriales para posts y traducciones | Diff privado de cuerpo/título/extracto/clasificaciones; control de versión/base e idempotencia. Creación de traducciones explícita, sin duplicar grupos. Separar proponer/aprobar/aplicar/recuperar. No reciclar la revisión1 caducada. |
+| 2 | Repositorio privado y versionado de propuestas de posts/traducciones | Planificador local ya probado. Falta persistencia con ownership/cuotas, compare-and-swap y replay durable; después adaptación WP/Polylang y transporte. Separar proponer/aprobar/aplicar/recuperar; no reciclar revisión1. |
 | 3 | Ampliar clasificación editorial MCP de proyectos | Lectura y propuestas para categorías/tecnologías propias de proyectos, con IDs/idiomas exactos y sin reutilizar categorías del blog. El lector de posts ya operativo solo cubre category/post_tag asignados. |
 | 4 | Promover el conjunto reciente de staging a producción | Revisar caché/contacto/EN/ES y publicar el código manteniendo contacto false; postflight real y reversión. No requiere activar el formulario ni reenviar un piloto. |
 | 5 | Preparar contacto en producción | Añadir entrypoint/export del coordinador, bindings, rate limiter independiente, origen, remitente, widget/hostname y tres secretos. Revisar alcance/configuración antes de crearlos; no basta con activar el flag. |
@@ -51,4 +47,4 @@ Los booleanos prueban coincidencia con la configuración requerida, no el valor 
 - Bandeja interna de mensajes: **no es un requisito acordado**. Alex preguntó dónde se guardan; actualmente no existe esa bandeja. Añadirla exige definir finalidad, acceso y conservación antes de persistir mensajes.
 - Comprobar ajuste Email preview de Cloudflare y mantener el procedimiento manual30días en Gmail; no se automatiza el borrado sin una petición específica.
 
-No se desplegó frontend ni se cambió CMS/DNS/contacto/permisos en este incremento de inventario/candidato. Siguiente trabajo concreto: prioridad2, diseño y pruebas locales de propuestas privadas para posts y traducciones. Lector de metadatos blog completado en el conector real; no repetir instalación/grants.
+No se desplegó frontend ni se cambió CMS/DNS/contacto/permisos en este incremento de inventario/candidato. Siguiente trabajo concreto: prioridad2, repositorio privado/versionado y replay durable en laboratorio. Planificador local completado y lector real operativo; no repetir instalación/grants.
