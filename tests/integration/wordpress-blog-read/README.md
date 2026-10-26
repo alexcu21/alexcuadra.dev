@@ -17,3 +17,7 @@ El runner detiene únicamente este proyecto al terminar o fallar. No poda Docker
 - `verify-report.py`: validación de los recibos del runner. No convierte logs crudos en evidencia de éxito si faltan marcadores.
 
 Esta prueba no instala nada en el hosting ni reproduce todos sus plugins, MU plugins, cachés y restricciones de red. El candidato conserva el guard de entorno local; la preparación del paquete y el preflight de destino son pasos posteriores.
+
+## Paquete de destino
+
+`release-run.sh` añade `compose.release.yaml`, instala el ZIP sellado y comprueba las cuatro fases del diagnóstico más retirada, antes y después de ejecutar las 34+37 pruebas existentes. Usa un proyecto distinto, sin datos del hosting. [Evidencia y límites](../../../docs/qa/MCP_BLOG_READ_PACKAGE_2026-10-26.md).

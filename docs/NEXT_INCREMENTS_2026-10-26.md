@@ -1,6 +1,6 @@
 # Incrementos pendientes — estado consolidado al 26 octubre 2026
 
-**Actualización26octubre:** integración real del lector MCP del blog completada:34funcionales+37HTTP, con credenciales sintéticas retiradas y laboratorio detenido. [Recibo](qa/MCP_BLOG_READ_INTEGRATION_2026-10-26.md). El siguiente paso es paquete/preflight de destino; no repetir el laboratorio por continuidad ni instalar sin revisión concreta.
+**Actualización 26 octubre:** paquete MCP del blog 0.1.0-rc.1 y preflight de destino preparados; 75 contratos, nueve guards, cuatro fases válidas y retirada correctos, además de 34 pruebas funcionales y 37 HTTP con el ZIP instalado en laboratorio. [Evidencia](qa/MCP_BLOG_READ_PACKAGE_2026-10-26.md). Siguiente: ejecutar únicamente el diagnóstico de destino `2 before`, siguiendo el [procedimiento](WORDPRESS_MCP_BLOG_READ_PACKAGE.md); revisar el recibo antes de instalación y primer scope reales.
 
 Este inventario sustituye las listas de próximos pasos históricas de los informes anteriores. No declara resueltos los429delCMS ni acepta cambios de producción por el hecho de estar en staging.
 
@@ -28,7 +28,7 @@ Descubrimiento nativo de solo lectura actual:11abilities visibles (tres core, do
 
 | Prioridad | Incremento concreto | Criterio de cierre |
 | --- | --- | --- |
-| 1 | Preparar paquete y preflight de destino del lector MCP del blog | Integración real EN/ES/HTTP ya completada. Revisar paquete, guard de sitio, permisos mínimos y preservación antes de autorizar instalación y primer scope real. |
+| 1 | Comprobar el destino e incorporar el lector MCP del blog | Paquete y preflight ya preparados y probados. Recibir diagnóstico `before` del hosting; revisar instalación del ZIP exacto y primer scope separado. Comprobar las fases y lecturas del conector real sin permisos amplios. |
 | 2 | Propuestas editoriales para posts y traducciones | Diff privado de cuerpo/título/extracto/clasificaciones; control de versión/base e idempotencia. Creación de traducciones explícita, sin duplicar grupos. Separar proponer/aprobar/aplicar/recuperar. No reciclar la revisión1 caducada. |
 | 3 | Ampliar clasificación editorial MCP de proyectos | Lectura y propuestas para categorías/tecnologías propias de proyectos, con IDs/idiomas exactos y sin reutilizar categorías del blog. El nuevo lector de posts solo cubre category/post_tag asignados. |
 | 4 | Promover el conjunto reciente de staging a producción | Revisar caché/contacto/EN/ES y publicar el código manteniendo contacto false; postflight real y reversión. No requiere activar el formulario ni reenviar un piloto. |
@@ -52,4 +52,4 @@ Los booleanos prueban coincidencia con la configuración requerida, no el valor 
 - Bandeja interna de mensajes: **no es un requisito acordado**. Alex preguntó dónde se guardan; actualmente no existe esa bandeja. Añadirla exige definir finalidad, acceso y conservación antes de persistir mensajes.
 - Comprobar ajuste Email preview de Cloudflare y mantener el procedimiento manual30días en Gmail; no se automatiza el borrado sin una petición específica.
 
-No se desplegó frontend ni se cambió CMS/DNS/contacto/permisos en este incremento de inventario/candidato. Siguiente trabajo concreto: prioridad1, paquete y preflight de destino del lector MCP del blog.
+No se desplegó frontend ni se cambió CMS/DNS/contacto/permisos en este incremento de inventario/candidato. Siguiente trabajo concreto: prioridad1, diagnóstico de solo lectura `before` del destino; el paquete y sus pruebas están completados.

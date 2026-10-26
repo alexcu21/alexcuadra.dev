@@ -12,6 +12,9 @@ class WP_Post { public function __construct(public $ID, public $post_type = 'pos
     public $public = true, public $post_content = 'PRIVATE_BODY', public $private = 'PRIVATE_META') {} }
 class WP_Term { public function __construct(public $term_id, public $taxonomy, public $name = 'Public term', public $slug = 'public-term') {} }
 function wp_get_environment_type() { global $mode; return $mode === 'production' ? 'production' : 'local'; }
+function home_url() { return 'http://wordpress'; }
+function site_url() { return 'http://wordpress'; }
+function is_multisite() { return false; }
 function is_wp_error($value) { return $value instanceof WP_Error; }
 function is_user_logged_in() { global $user; return $user > 0; }
 function current_user_can($cap, ...$args) { global $caps; return $caps[$cap] ?? false; }
@@ -49,7 +52,7 @@ class WP_Query {
 }
 function verify($condition, $name) { global $checks; if (!$condition) { throw new RuntimeException('FAILED:' . $name); } $checks[] = $name; }
 function error_is($result, $code, $status) { return is_wp_error($result) && $result->code === 'ac_blog_read_' . $code && $result->data['status'] === $status; }
-require __DIR__ . '/../../wordpress/experimental/editorial-blog-read/alexcuadra-editorial-blog-read.php';
+require $argv[2] ?? __DIR__ . '/../../wordpress/experimental/editorial-blog-read/alexcuadra-editorial-blog-read.php';
 if ($mode !== 'local') {
     verify($hooks === [], 'closed_outside_local_opt_in');
     echo json_encode(['mode' => $mode, 'checks' => count($checks), 'passed' => true]) . "\n"; exit;

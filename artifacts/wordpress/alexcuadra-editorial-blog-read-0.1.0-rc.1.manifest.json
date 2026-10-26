@@ -1,0 +1,31 @@
+{
+  "format": "editorial-blog-read-review-v1",
+  "version": "0.1.0-rc.1",
+  "targetSite": "https://content.alexcuadra.dev",
+  "decision": "hold",
+  "installationApproved": false,
+  "capabilityGrantApproved": false,
+  "sourceWritesIncluded": false,
+  "capability": "alexcuadra_read_public_posts",
+  "plannedUserId": 2,
+  "labSourceSha256": "a78ef3d34caf89c99de0c0f17d8bc29559b0a40f849a93080123e1915a1b8f63",
+  "sha256": "d8f8fcb1dcc83962036a70c3fb0e3a57e44dbeb96b5556e8abe1dcb7fbd205e6",
+  "zipBytes": 4649,
+  "files": [
+    {
+      "path": "alexcuadra-editorial-blog-read/alexcuadra-editorial-blog-read.php",
+      "bytes": 929,
+      "sha256": "7a50acba34429ec6cedcf467fbdcfae8e2702abf6420f170235f019664024f73"
+    },
+    {
+      "path": "alexcuadra-editorial-blog-read/reader.php",
+      "bytes": 9766,
+      "sha256": "debba438e59f368a060de45bf5fc1e98f3cc02a85e783e6ed426e6782b352b46"
+    },
+    {
+      "path": "alexcuadra-editorial-blog-read/README.md",
+      "bytes": 1878,
+      "sha256": "858668be3aa77093d163a2fb8134c4638f3275a03e3aee051993ae8f0c74fe9b"
+    }
+  ]
+}

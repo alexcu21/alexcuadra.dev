@@ -1,0 +1,18 @@
+services:
+  wordpress:
+    environment: &release-env
+      BLOG_LAB_ENABLED: "true"
+      BLOG_READ_SKIP_CANDIDATE: "1"
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_ENVIRONMENT_TYPE', 'local');
+        define('AC_EDITORIAL_BLOG_READ_LAB', getenv('BLOG_LAB_ENABLED') === 'true');
+        define('WP_DEBUG_DISPLAY', false);
+        define('DISABLE_WP_CRON', true);
+        define('WP_HTTP_BLOCK_EXTERNAL', true);
+        define('WP_ACCESSIBLE_HOSTS', 'wordpress');
+    volumes: &release-volumes
+      - ../../../artifacts/wordpress/alexcuadra-editorial-blog-read-0.1.0-rc.1.zip:/blog-release.zip:ro
+      - ../../../wordpress/operations/editorial-blog-read-preflight.php:/blog-preflight.php:ro
+  cli:
+    environment: *release-env
+    volumes: *release-volumes

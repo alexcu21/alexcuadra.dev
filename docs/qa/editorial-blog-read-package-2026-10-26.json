@@ -1,0 +1,607 @@
+{
+  "date": "2026-10-26",
+  "environment": "isolated-package-wordpress",
+  "realCmsChanged": false,
+  "productionChanged": false,
+  "decision": "hold-pending-destination-preflight",
+  "manifest": {
+    "format": "editorial-blog-read-review-v1",
+    "version": "0.1.0-rc.1",
+    "targetSite": "https://content.alexcuadra.dev",
+    "decision": "hold",
+    "installationApproved": false,
+    "capabilityGrantApproved": false,
+    "sourceWritesIncluded": false,
+    "capability": "alexcuadra_read_public_posts",
+    "plannedUserId": 2,
+    "labSourceSha256": "a78ef3d34caf89c99de0c0f17d8bc29559b0a40f849a93080123e1915a1b8f63",
+    "sha256": "d8f8fcb1dcc83962036a70c3fb0e3a57e44dbeb96b5556e8abe1dcb7fbd205e6",
+    "zipBytes": 4649,
+    "files": [
+      {
+        "path": "alexcuadra-editorial-blog-read/alexcuadra-editorial-blog-read.php",
+        "bytes": 929,
+        "sha256": "7a50acba34429ec6cedcf467fbdcfae8e2702abf6420f170235f019664024f73"
+      },
+      {
+        "path": "alexcuadra-editorial-blog-read/reader.php",
+        "bytes": 9766,
+        "sha256": "debba438e59f368a060de45bf5fc1e98f3cc02a85e783e6ed426e6782b352b46"
+      },
+      {
+        "path": "alexcuadra-editorial-blog-read/README.md",
+        "bytes": 1878,
+        "sha256": "858668be3aa77093d163a2fb8134c4638f3275a03e3aee051993ae8f0c74fe9b"
+      }
+    ]
+  },
+  "contract": {
+    "mode": "local",
+    "checks": 75,
+    "passed": true,
+    "database": false,
+    "network": false,
+    "cases": [
+      "two_exact_read_tools",
+      "callbacks_are_callable",
+      "read_only_annotations",
+      "not_anonymous_rest",
+      "closed_input_schema",
+      "callbacks_are_callable",
+      "read_only_annotations",
+      "not_anonymous_rest",
+      "closed_input_schema",
+      "anonymous_denied",
+      "project_scope_does_not_expand",
+      "admin_without_scope_denied",
+      "scope_has_no_edit_admin",
+      "exact_public_dto",
+      "reciprocal_post_translation",
+      "reciprocal_term_translation",
+      "native_taxonomies_separate",
+      "body_meta_and_database_details_absent",
+      "reads_preserve_source_and_permissions",
+      "bounded_public_native_query",
+      "title_search_stable_order",
+      "pagination_lookahead",
+      "bounded_public_native_query",
+      "title_search_stable_order",
+      "pagination_final_page",
+      "bounded_public_native_query",
+      "title_search_stable_order",
+      "exact_spanish_inventory",
+      "bounded_public_native_query",
+      "title_search_stable_order",
+      "search_does_not_read_body",
+      "invalid_list_parameters",
+      "invalid_list_parameters",
+      "invalid_list_parameters",
+      "invalid_list_parameters",
+      "invalid_list_parameters",
+      "invalid_list_parameters",
+      "invalid_list_parameters",
+      "invalid_list_parameters",
+      "invalid_list_parameters",
+      "invalid_get_parameters",
+      "invalid_get_parameters",
+      "invalid_get_parameters",
+      "bounded_public_native_query",
+      "title_search_stable_order",
+      "unicode_title_search",
+      "no_locale_fallback",
+      "nonpublic_not_found",
+      "nonpublic_not_found",
+      "nonpublic_not_found",
+      "nonpublic_not_found",
+      "nonviewable_post_not_found",
+      "unknown_post_language_not_found",
+      "other_types_not_found",
+      "other_types_not_found",
+      "other_types_not_found",
+      "other_types_not_found",
+      "password_not_found",
+      "object_read_denied",
+      "trashed_translation_hidden",
+      "nonreciprocal_relations_hidden",
+      "contradictory_term_language_fails_closed",
+      "term_error_sanitized",
+      "term_limit_not_silently_truncated",
+      "bounded_public_native_query",
+      "title_search_stable_order",
+      "contradictory_query_not_partial",
+      "bounded_public_native_query",
+      "title_search_stable_order",
+      "terminal_page_limit_explicit",
+      "private_taxonomy_dependency_denied",
+      "missing_translation_support_denied",
+      "invalid_source_relationship_contract",
+      "invalid_term_relationship_contract",
+      "revoked_scope_denies_next_call"
+    ]
+  },
+  "bootstrap": {
+    "guards": [
+      {
+        "case": "closed",
+        "registeredHooks": 0,
+        "passed": true
+      },
+      {
+        "case": "live",
+        "registeredHooks": 2,
+        "passed": true
+      },
+      {
+        "case": "wrong_flag",
+        "registeredHooks": 0,
+        "passed": true
+      },
+      {
+        "case": "wrong_home",
+        "registeredHooks": 0,
+        "passed": true
+      },
+      {
+        "case": "wrong_site",
+        "registeredHooks": 0,
+        "passed": true
+      },
+      {
+        "case": "multisite",
+        "registeredHooks": 0,
+        "passed": true
+      },
+      {
+        "case": "local",
+        "registeredHooks": 2,
+        "passed": true
+      },
+      {
+        "case": "lab_in_production",
+        "registeredHooks": 0,
+        "passed": true
+      },
+      {
+        "case": "lab_wrong_site",
+        "registeredHooks": 0,
+        "passed": true
+      }
+    ],
+    "deterministic": true
+  },
+  "results": {
+    "EDITORIAL_BLOG_PREFLIGHT_RESULT": [
+      {
+        "format": "editorial-blog-read-preflight-v1",
+        "phase": "before",
+        "userId": 2,
+        "packageSha256": "d8f8fcb1dcc83962036a70c3fb0e3a57e44dbeb96b5556e8abe1dcb7fbd205e6",
+        "readOnly": true,
+        "wordpress": "7.1.3",
+        "php": "8.5.11",
+        "dependencies": {
+          "polylang/polylang.php": {
+            "version": "3.9.1",
+            "active": true,
+            "matches": true
+          },
+          "mcp-adapter/mcp-adapter.php": {
+            "version": "0.7.1",
+            "active": true,
+            "matches": true
+          }
+        },
+        "checks": {
+          "testedRuntime": true,
+          "testedDependencies": true,
+          "publicTranslatedTaxonomies": true,
+          "languages": true,
+          "subscriberOnly": true,
+          "read": true,
+          "noBroadPermissions": true,
+          "noRoleWideGrant": true,
+          "expectedScope": true,
+          "scopeOwners": true,
+          "expectedFiles": true,
+          "expectedActivation": true,
+          "expectedGuard": true,
+          "expectedRegistration": true
+        },
+        "ready": true,
+        "effectiveCapabilityNames": [
+          "level_0",
+          "read",
+          "subscriber"
+        ],
+        "broadPermissionsDenied": {
+          "manage_options": true,
+          "install_plugins": true,
+          "activate_plugins": true,
+          "update_plugins": true,
+          "edit_users": true,
+          "promote_users": true,
+          "delete_users": true,
+          "create_users": true,
+          "edit_posts": true,
+          "edit_pages": true,
+          "edit_others_posts": true,
+          "edit_others_pages": true,
+          "publish_posts": true,
+          "publish_pages": true,
+          "delete_posts": true,
+          "delete_pages": true
+        },
+        "sourceContentInspected": false,
+        "applicationPasswordsRequested": false,
+        "mutationsRequested": false
+      },
+      {
+        "format": "editorial-blog-read-preflight-v1",
+        "phase": "after-install",
+        "userId": 2,
+        "packageSha256": "d8f8fcb1dcc83962036a70c3fb0e3a57e44dbeb96b5556e8abe1dcb7fbd205e6",
+        "readOnly": true,
+        "wordpress": "7.1.3",
+        "php": "8.5.11",
+        "dependencies": {
+          "polylang/polylang.php": {
+            "version": "3.9.1",
+            "active": true,
+            "matches": true
+          },
+          "mcp-adapter/mcp-adapter.php": {
+            "version": "0.7.1",
+            "active": true,
+            "matches": true
+          }
+        },
+        "checks": {
+          "testedRuntime": true,
+          "testedDependencies": true,
+          "publicTranslatedTaxonomies": true,
+          "languages": true,
+          "subscriberOnly": true,
+          "read": true,
+          "noBroadPermissions": true,
+          "noRoleWideGrant": true,
+          "expectedScope": true,
+          "scopeOwners": true,
+          "expectedFiles": true,
+          "expectedActivation": true,
+          "expectedGuard": true,
+          "expectedRegistration": true
+        },
+        "ready": true,
+        "effectiveCapabilityNames": [
+          "level_0",
+          "read",
+          "subscriber"
+        ],
+        "broadPermissionsDenied": {
+          "manage_options": true,
+          "install_plugins": true,
+          "activate_plugins": true,
+          "update_plugins": true,
+          "edit_users": true,
+          "promote_users": true,
+          "delete_users": true,
+          "create_users": true,
+          "edit_posts": true,
+          "edit_pages": true,
+          "edit_others_posts": true,
+          "edit_others_pages": true,
+          "publish_posts": true,
+          "publish_pages": true,
+          "delete_posts": true,
+          "delete_pages": true
+        },
+        "sourceContentInspected": false,
+        "applicationPasswordsRequested": false,
+        "mutationsRequested": false
+      },
+      {
+        "format": "editorial-blog-read-preflight-v1",
+        "phase": "after-enable",
+        "userId": 2,
+        "packageSha256": "d8f8fcb1dcc83962036a70c3fb0e3a57e44dbeb96b5556e8abe1dcb7fbd205e6",
+        "readOnly": true,
+        "wordpress": "7.1.3",
+        "php": "8.5.11",
+        "dependencies": {
+          "polylang/polylang.php": {
+            "version": "3.9.1",
+            "active": true,
+            "matches": true
+          },
+          "mcp-adapter/mcp-adapter.php": {
+            "version": "0.7.1",
+            "active": true,
+            "matches": true
+          }
+        },
+        "checks": {
+          "testedRuntime": true,
+          "testedDependencies": true,
+          "publicTranslatedTaxonomies": true,
+          "languages": true,
+          "subscriberOnly": true,
+          "read": true,
+          "noBroadPermissions": true,
+          "noRoleWideGrant": true,
+          "expectedScope": true,
+          "scopeOwners": true,
+          "expectedFiles": true,
+          "expectedActivation": true,
+          "expectedGuard": true,
+          "expectedRegistration": true
+        },
+        "ready": true,
+        "effectiveCapabilityNames": [
+          "level_0",
+          "read",
+          "subscriber"
+        ],
+        "broadPermissionsDenied": {
+          "manage_options": true,
+          "install_plugins": true,
+          "activate_plugins": true,
+          "update_plugins": true,
+          "edit_users": true,
+          "promote_users": true,
+          "delete_users": true,
+          "create_users": true,
+          "edit_posts": true,
+          "edit_pages": true,
+          "edit_others_posts": true,
+          "edit_others_pages": true,
+          "publish_posts": true,
+          "publish_pages": true,
+          "delete_posts": true,
+          "delete_pages": true
+        },
+        "sourceContentInspected": false,
+        "applicationPasswordsRequested": false,
+        "mutationsRequested": false
+      },
+      {
+        "format": "editorial-blog-read-preflight-v1",
+        "phase": "after-scope",
+        "userId": 2,
+        "packageSha256": "d8f8fcb1dcc83962036a70c3fb0e3a57e44dbeb96b5556e8abe1dcb7fbd205e6",
+        "readOnly": true,
+        "wordpress": "7.1.3",
+        "php": "8.5.11",
+        "dependencies": {
+          "polylang/polylang.php": {
+            "version": "3.9.1",
+            "active": true,
+            "matches": true
+          },
+          "mcp-adapter/mcp-adapter.php": {
+            "version": "0.7.1",
+            "active": true,
+            "matches": true
+          }
+        },
+        "checks": {
+          "testedRuntime": true,
+          "testedDependencies": true,
+          "publicTranslatedTaxonomies": true,
+          "languages": true,
+          "subscriberOnly": true,
+          "read": true,
+          "noBroadPermissions": true,
+          "noRoleWideGrant": true,
+          "expectedScope": true,
+          "scopeOwners": true,
+          "expectedFiles": true,
+          "expectedActivation": true,
+          "expectedGuard": true,
+          "expectedRegistration": true
+        },
+        "ready": true,
+        "effectiveCapabilityNames": [
+          "alexcuadra_read_public_posts",
+          "level_0",
+          "read",
+          "subscriber"
+        ],
+        "broadPermissionsDenied": {
+          "manage_options": true,
+          "install_plugins": true,
+          "activate_plugins": true,
+          "update_plugins": true,
+          "edit_users": true,
+          "promote_users": true,
+          "delete_users": true,
+          "create_users": true,
+          "edit_posts": true,
+          "edit_pages": true,
+          "edit_others_posts": true,
+          "edit_others_pages": true,
+          "publish_posts": true,
+          "publish_pages": true,
+          "delete_posts": true,
+          "delete_pages": true
+        },
+        "sourceContentInspected": false,
+        "applicationPasswordsRequested": false,
+        "mutationsRequested": false
+      },
+      {
+        "format": "editorial-blog-read-preflight-v1",
+        "phase": "after-install",
+        "userId": 2,
+        "packageSha256": "d8f8fcb1dcc83962036a70c3fb0e3a57e44dbeb96b5556e8abe1dcb7fbd205e6",
+        "readOnly": true,
+        "wordpress": "7.1.3",
+        "php": "8.5.11",
+        "dependencies": {
+          "polylang/polylang.php": {
+            "version": "3.9.1",
+            "active": true,
+            "matches": true
+          },
+          "mcp-adapter/mcp-adapter.php": {
+            "version": "0.7.1",
+            "active": true,
+            "matches": true
+          }
+        },
+        "checks": {
+          "testedRuntime": true,
+          "testedDependencies": true,
+          "publicTranslatedTaxonomies": true,
+          "languages": true,
+          "subscriberOnly": true,
+          "read": true,
+          "noBroadPermissions": true,
+          "noRoleWideGrant": true,
+          "expectedScope": true,
+          "scopeOwners": true,
+          "expectedFiles": true,
+          "expectedActivation": true,
+          "expectedGuard": true,
+          "expectedRegistration": true
+        },
+        "ready": true,
+        "effectiveCapabilityNames": [
+          "level_0",
+          "read",
+          "subscriber"
+        ],
+        "broadPermissionsDenied": {
+          "manage_options": true,
+          "install_plugins": true,
+          "activate_plugins": true,
+          "update_plugins": true,
+          "edit_users": true,
+          "promote_users": true,
+          "delete_users": true,
+          "create_users": true,
+          "edit_posts": true,
+          "edit_pages": true,
+          "edit_others_posts": true,
+          "edit_others_pages": true,
+          "publish_posts": true,
+          "publish_pages": true,
+          "delete_posts": true,
+          "delete_pages": true
+        },
+        "sourceContentInspected": false,
+        "applicationPasswordsRequested": false,
+        "mutationsRequested": false
+      }
+    ],
+    "EDITORIAL_BLOG_READ_RESULT": [
+      {
+        "environment": "isolated-wordpress",
+        "wordpress": "7.1.3",
+        "php": "8.5.11",
+        "polylang": "3.9.1",
+        "passed": 34,
+        "failed": 0,
+        "cases": [
+          "two_abilities_registered",
+          "activation_does_not_grant_capability",
+          "anonymous_denied",
+          "project_scope_cannot_read_posts",
+          "admin_without_scope_denied",
+          "reader_has_no_edit_or_admin",
+          "pagination_returns_complete_public_inventory",
+          "dto_has_only_public_metadata",
+          "post_translation_is_reciprocal",
+          "category_assignment_and_translation",
+          "tag_assignment_and_translation",
+          "body_meta_term_meta_not_exposed",
+          "spanish_terms_are_spanish",
+          "excluded_source_404_13",
+          "excluded_source_404_14",
+          "excluded_source_404_15",
+          "excluded_source_404_16",
+          "excluded_source_404_17",
+          "excluded_source_404_18",
+          "excluded_source_404_19",
+          "excluded_source_404_20",
+          "excluded_source_404_21",
+          "wrong_language_never_falls_back",
+          "invalid_schema_23",
+          "invalid_schema_24",
+          "invalid_schema_25",
+          "invalid_schema_26",
+          "invalid_schema_27",
+          "title_search_does_not_read_body",
+          "adapter_discovers_new_abilities",
+          "adapter_executes_authorized_read",
+          "reads_preserve_editorial_rows",
+          "revocation_denies_next_read",
+          "role_unchanged"
+        ],
+        "realCmsModified": false,
+        "realPermissionsChanged": false,
+        "emailSent": false
+      }
+    ],
+    "EDITORIAL_BLOG_HTTP_RESULT": [
+      {
+        "environment": "isolated-docker-http",
+        "httpTransportVerified": true,
+        "sharedCmsModified": false,
+        "sharedPermissionsModified": false,
+        "hostPortsPublished": false,
+        "emailSent": false,
+        "syntheticCredentialsRevoked": true,
+        "syntheticCapabilitiesRemoved": true,
+        "passed": 37,
+        "failed": 0,
+        "cases": [
+          "anonymous_http_initialization_denied",
+          "invalid_application_password_denied",
+          "subscriber_application_password_initializes_http_mcp",
+          "initialized_notification_accepted",
+          "missing_protocol_header_denied",
+          "mismatched_protocol_header_denied",
+          "default_server_lists_three_official_meta_tools",
+          "missing_session_header_denied",
+          "unknown_session_denied",
+          "session_cannot_be_reused_by_another_user",
+          "transport_access_does_not_grant_editorial_permission",
+          "editorial_reader_remains_subscriber_without_edit_or_admin",
+          "http_discovery_includes_two_editorial_abilities",
+          "http_ability_schema_restricts_inputs",
+          "http_pagination_returns_only_public_posts",
+          "http_read_returns_exact_public_fields",
+          "http_read_has_real_reciprocal_translation",
+          "http_category_and_tag_translations",
+          "http_read_excludes_private_body_and_meta",
+          "http_spanish_read_preserves_exact_language",
+          "http_private_post_denied",
+          "http_protected_post_denied",
+          "http_missing_post_denied",
+          "http_wrong_language_denied",
+          "http_unknown_fields_denied",
+          "http_unbounded_pagination_denied",
+          "capability_revocation_blocks_existing_http_session",
+          "plugin_deactivation_removes_http_abilities",
+          "deactivated_ability_cannot_execute",
+          "plugin_reactivation_restores_authorized_read",
+          "http_delete_closes_session",
+          "closed_session_cannot_be_reused",
+          "new_session_after_close_initializes",
+          "revoked_application_password_blocks_existing_session",
+          "http_reads_do_not_mutate_editorial_records",
+          "synthetic_credentials_removed_after_test",
+          "synthetic_capabilities_removed_after_test"
+        ]
+      }
+    ]
+  },
+  "cleanup": {
+    "containersStopped": true,
+    "networkInternal": true,
+    "publishedPorts": false,
+    "syntheticCredentialsRemoved": true,
+    "packageScopeRemoved": true,
+    "packageDeactivated": true
+  }
+}
