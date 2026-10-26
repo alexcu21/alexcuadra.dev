@@ -1,0 +1,36 @@
+{
+  "startedAt": "2026-10-26T15:23:19.060Z",
+  "events": [
+    {
+      "event": "contact_result",
+      "timestamp": "2026-10-26T15:25:10.349Z",
+      "requestId": "df7eb098-f915-4d25-9e04-7734fa71b0b0",
+      "status": 202,
+      "code": "CONTACT_ACCEPTED",
+      "stage": "delivery",
+      "deliveryStatus": "accepted",
+      "durationMs": 1959,
+      "siteverify": {
+        "reason": "verified",
+        "httpStatus": 200,
+        "durationMs": 15
+      }
+    }
+  ],
+  "rawLogsStored": false,
+  "connected": true,
+  "exitCode": 0,
+  "openVersion": "c8e5a165-afee-41ba-93f9-a394de0c532e",
+  "closedVersion": "f1caee3b-a837-4db2-ae1e-4680cd8635e6",
+  "sendAttemptsByAgent": 1,
+  "userConfirmedReceipt": true,
+  "userConfirmedReplyTo": true,
+  "replyTo": "alex@alexcuadra.dev",
+  "productionChanged": false,
+  "formEnabledAtEnd": false,
+  "browserHomeAfterClosure": {
+    "loaded": true,
+    "forms": 0,
+    "turnstileFrames": 0
+  }
+}
