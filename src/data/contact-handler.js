@@ -1,6 +1,22 @@
 import { ContactError, assertContactRequestHeaders, readContactRequest, validateContactInput, verifyContactTurnstile } from './contact-security.js';
 import { reserveContact } from './contact-reservation.js';
 
+// Only documented fixed codes may enter logs. Never log provider messages,
+// response objects, addresses or arbitrary exception properties.
+const providerCodes = new Set(['E_VALIDATION_ERROR', 'E_FIELD_MISSING', 'E_TOO_MANY_RECIPIENTS',
+  'E_TOO_MANY_ATTACHMENTS', 'E_SENDER_NOT_VERIFIED', 'E_RECIPIENT_NOT_ALLOWED', 'E_RECIPIENT_SUPPRESSED',
+  'E_ACCOUNT_SUSPENDED', 'E_SENDER_DOMAIN_NOT_AVAILABLE', 'E_CONTENT_TOO_LARGE', 'E_DELIVERY_FAILED',
+  'E_RATE_LIMIT_EXCEEDED', 'E_DAILY_LIMIT_EXCEEDED', 'E_INTERNAL_SERVER_ERROR', 'E_HEADER_NOT_ALLOWED',
+  'E_HEADER_USE_API_FIELD', 'E_HEADER_VALUE_INVALID', 'E_HEADER_VALUE_TOO_LONG', 'E_HEADER_NAME_INVALID',
+  'E_HEADERS_TOO_LARGE', 'E_HEADERS_TOO_MANY']);
+function providerCode(error) {
+  try {
+    const code = error?.code;
+    return typeof code === 'string' && providerCodes.has(code) ? code : 'OTHER';
+  }
+  catch { return 'OTHER'; }
+}
+
 function mailbox(value) {
   try {
     return validateContactInput({ name: 'config', email: value, message: 'config', locale: 'en', turnstileToken: 'config' }).email;
@@ -46,27 +62,40 @@ export async function handleContactRequest(request, env, { fetch: transport = gl
   const started = Date.now();
   let status = 202;
   let code = 'CONTACT_ACCEPTED';
+  let stage = 'request';
+  let deliveryStatus = 'not_attempted';
+  let emailProviderCode;
   try {
     if (request.method !== 'POST') throw new ContactError('CONTACT_METHOD', 405);
+    stage = 'configuration';
     const config = contactConfig(env);
+    stage = 'request';
     assertContactRequestHeaders(request, env.CONTACT_ORIGIN);
     // Cloudflare supplies this header at its trusted edge. No fallback to caller X-Forwarded-For.
     const ip = request.headers.get('cf-connecting-ip');
     if (!ip || ip.length > 64 || !/^[0-9a-f:.]+$/i.test(ip)) throw new ContactError('CONTACT_CLIENT_UNAVAILABLE', 503);
+    stage = 'rate_limit';
     let allowed;
     try { allowed = await env.CONTACT_RATE_LIMITER.limit({ key: `contact:${env.CONTACT_ORIGIN}:${ip}` }); }
     catch { throw new ContactError('CONTACT_LIMIT_UNAVAILABLE', 503); }
     if (allowed?.success !== true) throw new ContactError('CONTACT_RATE_LIMITED', 429);
+    stage = 'validation';
     const input = await readContactRequest(request, env.CONTACT_ORIGIN);
+    stage = 'challenge';
     await verifyContactTurnstile(input.turnstileToken, { secret: env.TURNSTILE_SECRET_KEY, hostname: config.hostname, fetch: transport });
+    stage = 'reservation';
     await reserveContact(input, env);
+    stage = 'delivery';
+    deliveryStatus = 'unknown';
     try {
       await sendWithDeadline(env.CONTACT_EMAIL, {
         to: config.to, from: config.from, replyTo: input.email,
         subject: 'Portfolio contact', text: `${input.name}\n${input.email}\n\n${input.message}`,
       });
+      deliveryStatus = 'accepted';
     } catch (error) {
       if (error instanceof ContactError) throw error;
+      emailProviderCode = providerCode(error);
       // A rejected transport does not prove the provider failed before acceptance.
       throw new ContactError('CONTACT_DELIVERY_UNKNOWN', 503);
     }
@@ -75,6 +104,8 @@ export async function handleContactRequest(request, env, { fetch: transport = gl
     code = error instanceof ContactError ? error.code : 'CONTACT_UNAVAILABLE';
   }
   // Deliberately never serialize the request, payload, provider response or exception.
-  try { log(JSON.stringify({ event: 'contact_result', requestId, status, code, durationMs: Date.now() - started })); } catch { /* Logging is optional. */ }
+  try { log(JSON.stringify({ event: 'contact_result', requestId, status, code, stage,
+    deliveryStatus, ...(emailProviderCode ? { providerCode: emailProviderCode } : {}),
+    durationMs: Date.now() - started })); } catch { /* Logging is optional. */ }
   return response(status, code, requestId);
 }

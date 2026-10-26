@@ -1,5 +1,7 @@
 # Formulario de contacto: Turnstile, validación y entrega
 
+**25 octubre — diagnóstico de contacto preparado:** handler registra fase, aceptación/incierto/sinintento y código fijo del proveedor, sinPII/messageId/mensajesdeerror y sin cambiar respuesta pública ni reintentos/reservas.315unitarias/build y15handler tras ajuste final correctos; 5integraciones runtime local correctas con email simulado/egreso bloqueado. Alex revisará Cloudflare aparte: instrucciones para evento del piloto19octubre entregadas, resultado histórico pendiente; no pedirle sesión en IAB otra vez. Sin envío ni activación; producción sin cambios. [Recibo y piloto concreto pendiente](qa/CONTACT_DIAGNOSTICS_2026-10-25.md). Siguiente: evaluar estado/hora/código aportados; MCP entradas/traducciones/taxonomías sigue en alcance.
+
 **25 octubre — prioridad retomada por Alex:** contacto y capacidad editorial MCP forman parte de los siguientes incrementos. [Estado actual, investigación y secuencia](qa/CMS_CONNECTOR_REVIEW_2026-10-25.md). Las pausas inferiores son históricas; no implican nuevas autorizaciones de envío, grants o aplicación pública.
 
 Requisito añadido por Alex el 18 de octubre de 2026. Forma parte del MVP del rediseño; sustituye la exclusión inicial del formulario. Mantener email/perfiles como alternativa accesible cuando el formulario no esté disponible. Categorías e idiomas del CMS no se modifican para implementarlo.

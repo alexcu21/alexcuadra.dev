@@ -99,6 +99,9 @@ test('delivery timeout returns an uncertain result without retrying the provider
   const response = await pending;
   assert.equal(response.status, 503);
   assert.equal((await response.json()).code, 'CONTACT_DELIVERY_UNKNOWN');
+  assert.equal(JSON.parse(ctx.logs[0]).stage, 'delivery');
+  assert.equal(JSON.parse(ctx.logs[0]).deliveryStatus, 'unknown');
+  assert.equal(JSON.parse(ctx.logs[0]).providerCode, undefined);
 });
 
 test('coordinator duplicates, global quota and unavailability never reach email', async () => {
@@ -131,4 +134,75 @@ test('coordinator transport failure fails closed', async () => {
   ctx.env.CONTACT_COORDINATOR.get = () => ({ async fetch() { throw Error('private'); } });
   assert.equal((await handleContactRequest(req(), ctx.env, ctx.options)).status, 503);
   assert.equal(ctx.messages.length, 0);
+});
+
+test('contact diagnostics distinguish failure stages without claiming a send was attempted', async () => {
+  const cases = [
+    ['configuration', ctx => { ctx.env.CONTACT_EMAIL = undefined; }],
+    ['request', () => {}, { origin: 'https://other.test' }],
+    ['rate_limit', ctx => { ctx.env.CONTACT_RATE_LIMITER.limit = async () => ({ success: false }); }],
+    ['validation', () => {}, {}, { ...input, to: 'other@example.test' }],
+    ['challenge', ctx => { ctx.options.fetch = async () => Response.json({ success: false }); }],
+    ['reservation', ctx => { ctx.env.CONTACT_COORDINATOR.get = () => ({ fetch: async () => new Response(null, { status: 409 }) }); }],
+  ];
+  for (const [stage, configure, headers, payload] of cases) {
+    const ctx = setup(); configure(ctx);
+    const result = await handleContactRequest(req(payload, headers), ctx.env, ctx.options);
+    assert.ok(result.status >= 400);
+    const event = JSON.parse(ctx.logs[0]);
+    assert.equal(event.stage, stage);
+    assert.equal(event.deliveryStatus, 'not_attempted');
+    assert.equal(event.providerCode, undefined);
+    assert.equal(ctx.messages.length, 0);
+  }
+});
+
+test('provider diagnostics allow only fixed error codes and preserve the uncertain public response', async () => {
+  for (const code of ['E_SENDER_NOT_VERIFIED', 'E_RECIPIENT_SUPPRESSED', 'E_RATE_LIMIT_EXCEEDED',
+    'PRIVATE recipient@example.test', { secret: 'PRIVATE' }, undefined]) {
+    const ctx = setup(); let attempts = 0;
+    ctx.env.CONTACT_EMAIL.send = async () => {
+      attempts++;
+      throw Object.assign(new Error('PRIVATE provider body recipient@example.test'), { code, response: { token: 'PRIVATE' } });
+    };
+    const result = await handleContactRequest(req(), ctx.env, ctx.options);
+    const body = await result.text();
+    const event = JSON.parse(ctx.logs[0]);
+    assert.equal(result.status, 503);
+    assert.equal(event.stage, 'delivery');
+    assert.equal(event.deliveryStatus, 'unknown');
+    assert.equal(event.providerCode, typeof code === 'string' && code.startsWith('E_') ? code : 'OTHER');
+    assert.equal(JSON.parse(body).code, 'CONTACT_DELIVERY_UNKNOWN');
+    assert.equal(attempts, 1);
+    assert.doesNotMatch(body + ctx.logs.join(''), /PRIVATE|recipient@|private-token|private-secret/);
+    assert.equal(JSON.parse(body).providerCode, undefined);
+  }
+});
+
+test('provider error property failures cannot interrupt redacted diagnostics', async () => {
+  const ctx = setup();
+  ctx.env.CONTACT_EMAIL.send = async () => { throw Object.defineProperty(new Error('PRIVATE'), 'code', { get() { throw Error('PRIVATE getter'); } }); };
+  assert.equal((await handleContactRequest(req(), ctx.env, ctx.options)).status, 503);
+  assert.equal(JSON.parse(ctx.logs[0]).providerCode, 'OTHER');
+  assert.doesNotMatch(ctx.logs.join(''), /PRIVATE/);
+  let reads = 0;
+  ctx.env.CONTACT_EMAIL.send = async () => { throw Object.defineProperty(new Error('PRIVATE'), 'code', {
+    get() { return ++reads === 1 ? 'E_INTERNAL_SERVER_ERROR' : 'PRIVATE address@example.test'; },
+  }); };
+  assert.equal((await handleContactRequest(req(), ctx.env, ctx.options)).status, 503);
+  assert.equal(reads, 1);
+  assert.equal(JSON.parse(ctx.logs[1]).providerCode, 'E_INTERNAL_SERVER_ERROR');
+  assert.doesNotMatch(ctx.logs.join(''), /PRIVATE|address@/);
+});
+
+test('acceptance diagnostics do not claim delivery and optional logger failure cannot change success', async () => {
+  const ctx = setup();
+  assert.equal((await handleContactRequest(req(), ctx.env, ctx.options)).status, 202);
+  const event = JSON.parse(ctx.logs[0]);
+  assert.equal(event.stage, 'delivery');
+  assert.equal(event.deliveryStatus, 'accepted');
+  assert.equal(event.providerCode, undefined);
+  assert.doesNotMatch(ctx.logs.join(''), /internal-id|visitor@|personal-recipient/);
+  ctx.options.log = () => { throw Error('log unavailable'); };
+  assert.equal((await handleContactRequest(req(), ctx.env, ctx.options)).status, 202);
 });
