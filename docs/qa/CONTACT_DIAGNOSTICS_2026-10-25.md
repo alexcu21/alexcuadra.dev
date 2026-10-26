@@ -4,6 +4,8 @@
 
 El handler mantiene su contrato público y añade diagnóstico estructurado al evento `contact_result`. No se envió correo real ni se habilitó el formulario. La causa histórica del piloto del 19 de octubre sigue sin determinarse.
 
+Desplegado en staging desde `3bb638f`, versión `53c8a833-af98-44f5-91a6-45bf6b7df7f7`, previa `c8c8c2f3-9153-4a17-819d-31e1c9153cdd`. Build final 0 errores/0 advertencias. [Postflight GET](contact-diagnostics-staging-2026-10-25.json): 404 CONTACT_DISABLED/no-store; sin POST ni envío. No se afirma verificación remota de los diagnósticos de entrega mientras el endpoint está desactivado. Producción continúa en `feba64f8-5406-4c69-8522-6c3753681a37`. Rollback: restaurar la versión previa de staging; no cambia reservas ni secretos. Sin push.
+
 La pestaña auxiliar de Cloudflare en IAB llegó al acceso, sin sesión disponible. Alex eligió iniciar Cloudflare por su cuenta y pidió instrucciones; se cerró la pestaña auxiliar, sin usar sus otras pestañas ni obtener credenciales. La revisión del registro histórico queda a cargo de Alex. No afirmar evento ausente, rebote ni fallo de autenticación sin su resultado.
 
 ## Evidencia que debe buscar Alex
