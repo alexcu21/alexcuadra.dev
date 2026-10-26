@@ -87,3 +87,60 @@ test('dates use real GMT values only, reject invalid calendar values and preserv
   assert.equal(blogDate('2026-10-19T00:00:00', 'en').iso, '2026-10-19T00:00:00Z');
   assert.match(blogDate('2026-10-19T00:00:00', 'es').label, /19.*octubre.*2026/);
 });
+
+test('public blog cache reuses archives and details, isolates languages, expires and strips authenticated extras', async t => {
+  const entries = new Map();
+  let now = 0;
+  const edgeCache = {
+    async match(key) { const entry = entries.get(key.url); return entry && entry.until > now ? entry.response.clone() : undefined; },
+    async put(key, response) {
+      assert.equal(response.headers.get('cache-control'), 'public, max-age=60');
+      entries.set(key.url, { response: response.clone(), until: now + 60000 });
+    },
+  };
+  const config = { edgeCache, cacheOrigin: 'https://portfolio.test', cmsConfig: {
+    WPGRAPHQL_AUTH_ENABLED: 'true', WPGRAPHQL_USERNAME: 'reader', WPGRAPHQL_APPLICATION_PASSWORD: 'PRIVATE-CREDENTIAL',
+  } };
+  const fetch = harness(t, ({ query }) => {
+    const node = post(query.includes('language: ES') ? 'ES' : 'EN', {
+      extraPrivate: 'PRIVATE-FIELD', translations: [post('ES', { databaseId: 9, slug: 'prueba', content: 'PRIVATE-TRANSLATION' })],
+    });
+    return query.includes('query BlogPosts(') ? page([node]) : { post: node };
+  });
+  const run = async task => {
+    let value;
+    const response = await withCmsRequest(async () => { value = await task(); return new Response('ok'); }, config);
+    assert.equal(response.status, 200);
+    return value;
+  };
+  assert.deepEqual(await run(() => getBlogPosts('en')), await run(() => getBlogPosts('en')));
+  assert.equal(fetch.mock.callCount(), 1);
+  await run(() => getBlogPosts('es'));
+  assert.equal(fetch.mock.callCount(), 2);
+  const detail = await run(() => getBlogPost('real-post', 'en'));
+  assert.deepEqual(detail, await run(() => getBlogPost('real-post', 'en')));
+  assert.deepEqual(detail.translations, [{ databaseId: 9, slug: 'prueba', locale: 'es' }]);
+  assert.equal(await run(() => getBlogPost('real-post', 'es')), null, 'wrong language remains a missing page on a cache hit');
+  assert.equal(fetch.mock.callCount(), 3);
+  for (const [key, entry] of entries) assert.doesNotMatch(key + await entry.response.clone().text(), /PRIVATE-/);
+  now = 60001;
+  await run(() => getBlogPosts('en'));
+  assert.equal(fetch.mock.callCount(), 4);
+});
+
+test('authenticated nonpublic blog data and invalid pagination never enter shared cache', async t => {
+  let payload = page([post('EN', { status: 'draft' })]);
+  harness(t, () => payload);
+  let writes = 0;
+  const config = { cacheOrigin: 'https://portfolio.test', edgeCache: { async match() {}, async put() { writes++; } },
+    cmsConfig: { WPGRAPHQL_AUTH_ENABLED: 'true', WPGRAPHQL_USERNAME: 'reader', WPGRAPHQL_APPLICATION_PASSWORD: 'PRIVATE' } };
+  for (const invalid of [payload, page([post()], true, null), { post: post('EN', { hasPassword: true }) }]) {
+    payload = invalid;
+    const response = await withCmsRequest(async () => {
+      await (Object.hasOwn(payload, 'posts') ? getBlogPosts('en') : getBlogPost('real-post', 'en'));
+      return new Response('unexpected');
+    }, config);
+    assert.equal(response.status, 503);
+  }
+  assert.equal(writes, 0);
+});

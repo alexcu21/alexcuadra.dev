@@ -1,5 +1,7 @@
 # Formulario de contacto: Turnstile, validación y entrega
 
+**25 octubre — prioridad retomada por Alex:** contacto y capacidad editorial MCP forman parte de los siguientes incrementos. [Estado actual, investigación y secuencia](qa/CMS_CONNECTOR_REVIEW_2026-10-25.md). Las pausas inferiores son históricas; no implican nuevas autorizaciones de envío, grants o aplicación pública.
+
 Requisito añadido por Alex el 18 de octubre de 2026. Forma parte del MVP del rediseño; sustituye la exclusión inicial del formulario. Mantener email/perfiles como alternativa accesible cuando el formulario no esté disponible. Categorías e idiomas del CMS no se modifican para implementarlo.
 
 ## Estado y decisiones pendientes

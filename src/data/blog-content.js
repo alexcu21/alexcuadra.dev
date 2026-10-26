@@ -4,6 +4,7 @@ import { contentLocale, graphqlLanguage, publicLocalizedCollection, publicTransl
 import { isPublicContent } from './content-visibility.js';
 import { sanitizeWordPressHtml } from './wordpress-html.js';
 import { publicAvailabilityOptions } from './cms-public-availability.js';
+import { publicLanguageMetadata } from './localized-content.js';
 
 const endpoint = 'https://content.alexcuadra.dev/graphql';
 const visibility = 'status isRestricted hasPassword';
@@ -32,6 +33,38 @@ function postProjection(node, locale) {
     translations: publicTranslationLinks(node) };
 }
 
+// Cache the public GraphQL shape, not the authenticated response. Reapplying
+// this projection on a cache hit must preserve visibility and translation checks.
+function publicPost(node) {
+  const locale = contentLocale(node);
+  const projected = locale && postProjection(node, locale);
+  if (!projected) return undefined;
+  return { ...projected, status: 'publish', isRestricted: false, hasPassword: false,
+    ...publicLanguageMetadata(node) };
+}
+
+function publicBlogArchive(data, locale) {
+  const connection = data?.posts;
+  if (!publicLocalizedCollection(connection?.nodes, locale)) return undefined;
+  const info = connection.pageInfo;
+  if (typeof info?.hasNextPage !== 'boolean'
+    || (info.hasNextPage && (typeof info.endCursor !== 'string' || !info.endCursor))) return undefined;
+  const nodes = connection.nodes.map(publicPost);
+  if (nodes.some(node => !node)) return undefined;
+  return { posts: { nodes, pageInfo: { hasNextPage: info.hasNextPage, endCursor: text(info.endCursor) } } };
+}
+
+function publicBlogDetail(data) {
+  if (data?.post === null) return { post: null };
+  const post = publicPost(data?.post);
+  return post ? { post } : undefined;
+}
+
+function publicBlogCache(project) {
+  return { publicCache: true, servicePublicProjection: project,
+    validatePublicData: data => Boolean(project(data)), validateServiceData: data => Boolean(project(data)) };
+}
+
 // Uses only WordPress's native post type; never articles or projects.
 export async function getBlogPosts(locale) {
   const language = graphqlLanguage(locale);
@@ -41,7 +74,7 @@ export async function getBlogPosts(locale) {
         orderby: {field: DATE, order: DESC}}) {
         nodes { ${fields} } pageInfo { hasNextPage endCursor }
       }
-    }`, { after }, { validateServiceData: data => publicLocalizedCollection(data?.posts?.nodes, locale) });
+    }`, { after }, publicBlogCache(data => publicBlogArchive(data, locale)));
     if (!publicLocalizedCollection(data?.posts?.nodes, locale)) throw cmsFailure('CMS_BLOG_CONTRACT', 'BlogPosts');
     const nodes = data.posts.nodes.map(node => postProjection(node, locale));
     if (nodes.some(node => !node)) throw cmsFailure('CMS_BLOG_CONTRACT', 'BlogPosts');
@@ -54,7 +87,7 @@ export async function getBlogPost(slug, locale) {
   if (typeof slug !== 'string' || !slug || /[\s/\\?#\u0000-\u001f\u007f]/u.test(slug)) return null;
   const data = await request(endpoint, `query BlogPost($slug: ID!) {
     post(id: $slug, idType: SLUG) { ${fields} content }
-  }`, { slug }, { validateServiceData: data => data?.post === null || isPublicContent(data?.post) });
+  }`, { slug }, publicBlogCache(publicBlogDetail));
   if (data?.post === null) return null;
   if (!isPublicContent(data?.post)) throw cmsFailure('CMS_BLOG_CONTRACT', 'BlogPost');
   if (!contentLocale(data.post)) throw cmsFailure('CMS_BLOG_CONTRACT', 'BlogPost');
