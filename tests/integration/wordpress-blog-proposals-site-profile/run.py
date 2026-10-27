@@ -2,6 +2,7 @@
 """Boot the verified code profile with fresh synthetic data; never contact the hosting."""
 import hashlib
 import argparse
+import base64
 import importlib.util
 import json
 import os
@@ -28,7 +29,7 @@ def command(argv,**kwargs):
     return result.stdout
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--functional',action='store_true');parser.add_argument('--release',choices=['functional','lifecycle']);options=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--functional',action='store_true');parser.add_argument('--release',choices=['functional','lifecycle','recovery']);options=parser.parse_args()
     if options.release:options.functional=True
     os.umask(0o077)
     if not re.fullmatch(r'alexcuadra-blog-site-profile-[a-z0-9-]+',PROJECT):raise ValueError('OWN_PROFILE_PROJECT_REQUIRED')
@@ -96,6 +97,9 @@ $_SERVER['HTTP_HOST']='content.alexcuadra.dev';$_SERVER['HTTPS']='on';$_SERVER['
     if options.functional:volumes.extend([str(candidate)+':/site-candidate:ro',str(testdir)+':/site-tests:ro'])
     settings={'services':{name:{'environment':env,'volumes':volumes}for name in ['wordpress','cli']},
         'networks':{'default':{'external':True,'name':NETWORK}},'volumes':{'wp-data':{'driver_opts':{'o':'size=768m'}}}}
+    if options.release=='recovery':
+        for service in ['wordpress','cli']:settings['services'][service]['volumes'].append('recovery-private:/recovery-private')
+        settings['volumes']['recovery-private']={'driver_opts':{'type':'tmpfs','device':'tmpfs','o':'size=64m'}}
     config=work/'compose.json';config.write_text(json.dumps(settings))
     base=['docker','compose','-p',PROJECT,'-f',str(BASE),'-f',str(config)]
     def compose(*args):return command(base+list(args))
@@ -157,6 +161,40 @@ $_SERVER['HTTP_HOST']='content.alexcuadra.dev';$_SERVER['HTTPS']='on';$_SERVER['
             if options.release=='lifecycle':preflight('after-install',False)
             cli('plugin','activate','alexcuadra-editorial-blog-proposals')
             reports={}
+            if options.release=='recovery':
+                compose('run','--rm','--no-deps','--user','0:0','--entrypoint','sh','cli','-ec','chmod 700 /recovery-private; chown 33:33 /recovery-private')
+                fixture('install-storage');fixture('enroll')
+                output=cli('eval-file','/site-profile-lab/recovery-check.php')
+                prefix='BLOG_PROPOSAL_RECOVERY_TEST_RESULT='
+                items=[l[len(prefix):]for l in output.splitlines()if l.startswith(prefix)]
+                if len(items)!=1:raise ValueError('RECOVERY_TEST_RECEIPT_MISSING')
+                checked=json.loads(items[0])
+                if checked['failed']!=0 or checked['passed']!=len(set(checked['cases'])) or checked['passed']<30:raise ValueError('RECOVERY_CASES_INCOMPLETE')
+                def operator(*args,expected=True,restore_prefix=None):
+                    invocation=['eval-file','/release-operations/blog-proposal-backup.php',*args]
+                    if restore_prefix:
+                        if restore_prefix!='recovery_cli_':raise ValueError('OWN_TEST_PREFIX_REQUIRED')
+                        encoded=base64.b64encode(json.dumps(args).encode()).decode()
+                        invocation=['eval',"$GLOBALS['wpdb']->prefix='recovery_cli_';$args=json_decode(base64_decode('"+encoded+"'),true);require '/release-operations/blog-proposal-backup.php';"]
+                    proc=subprocess.run(base+['run','--rm','--no-deps','cli','--user=1',*invocation],capture_output=True,text=True)
+                    marker='BLOG_PROPOSAL_BACKUP_RESULT='
+                    records=[l[len(marker):]for l in proc.stdout.splitlines()if l.startswith(marker)]
+                    if len(records)!=1:raise ValueError('RECOVERY_CLI_RECEIPT_MISSING:'+proc.stdout[:1000]+proc.stderr[:1000])
+                    data=json.loads(records[0])
+                    if data['ready']!=expected or (proc.returncode==0)!=expected:raise ValueError('RECOVERY_CLI_STATUS_UNEXPECTED:'+json.dumps(data))
+                    return data
+                exported=operator('export','/recovery-private','writers-stopped')
+                verified=operator('verify','/recovery-private/'+exported['backupDirectory'],exported['manifestSha256'])
+                restored=operator('restore-empty','/recovery-private/'+exported['backupDirectory'],exported['manifestSha256'],'writers-stopped',restore_prefix='recovery_cli_')
+                occupied=operator('restore-empty','/recovery-private/'+exported['backupDirectory'],exported['manifestSha256'],'writers-stopped',expected=False)
+                invalid=operator('export','/recovery-private','not-paused',expected=False)
+                result['recoveryTests']=checked;result['operatorCli']=[exported,verified,restored,occupied,invalid]
+                result['toolFileSha256']={p.name:digest(p)for p in (ROOT/'wordpress/operations/blog-proposal-rc2').glob('*.php')}
+                result['testFixtureSha256']=digest(HERE/'recovery-check.php');result['releaseManifest']=release_manifest
+                result['restoredApiReplayTested']=True;result['sourceTablesRestored']=False;result['realCmsChanged']=False
+                (ROOT/'docs/qa/blog-proposal-recovery-2026-10-27.json').write_text(json.dumps(result,indent=2)+'\n')
+                print(json.dumps({'recoveryChecks':checked['passed'],'operatorCliChecks':5,'failed':0}),flush=True)
+                return
             if options.release=='lifecycle':
                 preflight('after-enable',True);fixture('profile-negatives')
                 fixture('install-storage');preflight('after-storage',True)

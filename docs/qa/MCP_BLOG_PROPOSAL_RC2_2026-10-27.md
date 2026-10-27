@@ -37,3 +37,7 @@ Alex aportó el [before rc.2](blog-proposal-rc2-destination-before-2026-10-27.js
 ## Propietario real verificado
 
 [After-owner de Alex](blog-proposal-rc2-destination-after-owner-2026-10-27.json): ready=true, 15 comprobaciones principales/11 del perfil correctas, propietario2 exacto según check de fase, otras tres tablas vacías y ocho capacidades previas intactas. No se consultaron cuerpos ni hubo verificación remota independiente del agente. Siguiente procedimiento operativo de respaldo/recuperación específico de cuatro tablas; el genérico histórico exige otro perfil y no se reutiliza. Nuevo scope todavía pendiente, sin repetir enroll/install.
+
+## Respaldo y recuperación operativos preparados
+
+[Herramientas y procedimiento](../WORDPRESS_MCP_BLOG_PROPOSAL_RECOVERY.md), [39pruebas y5recorridos CLI](MCP_BLOG_PROPOSAL_RECOVERY_2026-10-27.md). La restauración ahora también se verifica mediante get/list/replay de create/update en datos sintéticos. Esto amplía la evidencia previa, que solo comparaba filas/hashes después de restaurar. No se modifica rc.2, no se ejecutó backup/restauración del hosting ni se concede el scope por esta prueba. Siguiente primera exportación real privada de cuatro tablas.

@@ -1,0 +1,24 @@
+{
+  "format": "blog-proposal-recovery-operator-tools-v1",
+  "version": "0.1.0",
+  "packageSha256": "7e5bc2b3213a8497dc47426b4565bbf528400d69f4e4f3e57f40f6119d4d6def",
+  "plannedOperatorUserId": 1,
+  "ownerId": 2,
+  "automaticGrant": false,
+  "sourceWriterIncluded": false,
+  "restoreRequiresAllOwnTablesAbsent": true,
+  "realBackupPerformed": false,
+  "realRestorePerformed": false,
+  "files": [
+    {
+      "path": "wordpress/operations/blog-proposal-rc2/blog-proposal-backup.php",
+      "bytes": 1416,
+      "sha256": "89fdafdadca689510bc98ecc596b13cabedca6ff2aad4c0d1f77471dcddb8e58"
+    },
+    {
+      "path": "wordpress/operations/blog-proposal-rc2/recovery.php",
+      "bytes": 12592,
+      "sha256": "55fcca6cb7ad29adcd4636639a983c652e5d6fc2535fce717286f766bc5534e5"
+    }
+  ]
+}

@@ -18,3 +18,7 @@ El modo de arranque también prueba el nuevo diagnóstico autocontenido de huell
 ## Candidato rc.2
 
 `scripts/package-editorial-blog-proposals-site.py` deriva un candidato distribuible separado del ZIP rc.1, conservando el original. `--release functional` verifica149casos de operaciones/fallos/HTTP más29contratos y10casos de admisión real simulada. `--release lifecycle` instala el ZIP con WP-CLI y prueba nueve preflights/30checks, respaldo privado sintético y restauración a prefijo separado. No copiar los fixtures al hosting. Usar un proyecto propio nuevo; runner exige red interna vacía y detiene solo su proyecto. [Procedimiento](../../../docs/WORDPRESS_MCP_BLOG_PROPOSAL_RC2.md).
+
+## Recuperación operativa
+
+`--release recovery` instala el ZIP rc.2, crea tablas/propietario sintéticos y monta un volumen privado tmpfs64MiB fuera del document root. Prueba39casos de la biblioteca y5recorridos del CLI (export/verify/restore exitoso/destino ocupado/pausa ausente); guarda recibo separado sin artefactos privados. Los prefijos aislados los establece solo el harness, no una opción del helper desplegable. Red interna vacía requerida, sin puertos/correo/egreso; al terminar detiene solo su proyecto, sin prune. [Procedimiento](../../../docs/WORDPRESS_MCP_BLOG_PROPOSAL_RECOVERY.md).

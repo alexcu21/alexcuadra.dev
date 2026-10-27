@@ -1,5 +1,7 @@
 # Propuestas privadas: candidato 0.1.0-rc.2
 
+**27 octubre — respaldo/recuperación operativos preparados y ensayados:** dos PHP externos al plugin;39pruebas de recuperación y5recorridos CLI correctos, incluida restauración exitosa en prefijo aislado y get/list/replay originales. Exportación nativa READ ONLY/REPEATABLE READ, archivos privados/manifiesto/hashes, destino ocupado rechazado, rollback de filas ante fallo sin reintento de DDL. [Procedimiento vigente](WORDPRESS_MCP_BLOG_PROPOSAL_RECOVERY.md), [QA/límites](qa/MCP_BLOG_PROPOSAL_RECOVERY_2026-10-27.md). ZIP rc.2 intacto; laboratorios propios detenidos/red interna vacía. Siguiente: Alex sube solo blog-proposal-backup.php y recovery.php a private-tools/blog-proposal-rc2, crea carpeta0700 y ejecuta primera exportación con scope ausente. No se ha hecho backup/restauración/grant real desde el agente; revisar recibo antes del nuevo permiso.
+
 **27 octubre — propietario real de rc.2 verificado:** Alex aporta after-owner ready=true, 15 comprobaciones principales y 11 del perfil correctas. El check de esta fase exige únicamente propietario2; propuestas/revisiones/recibos siguen vacíos y las ocho capacidades anteriores se conservan. [Recibo](qa/blog-proposal-rc2-destination-after-owner-2026-10-27.json). Siguiente: preparar y probar exportación/restauración operativas limitadas a las cuatro tablas antes de grant. No repetir enroll/install ni conceder alexcuadra_prepare_post_changes todavía. El respaldo genérico histórico está fijado a otro perfil y no se reutiliza para este módulo. Ningún comando adicional requerido ahora a Alex.
 
 **27 octubre — almacenamiento real de rc.2 verificado:** Alex aporta after-storage ready=true, 15 comprobaciones principales/11 del perfil correctas. Cuatro tablas completas InnoDB/utf8mb4_bin con esquema exacto, sin propietarios ni propuestas/revisiones/recibos. Ocho capacidades previas conservadas y scope nuevo ausente. [Recibo](qa/blog-proposal-rc2-destination-after-storage-2026-10-27.json). El rechazo de install no requiere reparar/recrear; no se conoce el momento ni la ejecución que creó las tablas. Siguiente: enroll(2) mediante operador1 existente y after-owner, sin grant. Respaldo operativo antes de habilitar escritura de propuestas sigue pendiente.
@@ -20,7 +22,11 @@ La excepción de pruebas exige entorno local, DB_HOST=db, URL exacta y marca de 
 
 Las huellas principales coinciden con el servidor; no verifican árboles completos. El laboratorio usa PHP8.5.11/MariaDB11.8.9 y configuración/datos sintéticos; servidor PHP8.5.12. No certifica opciones reales de hosting, preview, cachés externas, restauración ante pérdida del servidor ni escritura pública.
 
-## Paso actual: respaldo y recuperación operativos antes de grant
+## Paso actual: primera exportación real antes de grant
+
+El procedimiento específico y sus dos PHP ya están preparados y probados: [respaldo/recuperación](WORDPRESS_MCP_BLOG_PROPOSAL_RECOVERY.md), [39pruebas y5recorridos CLI](qa/MCP_BLOG_PROPOSAL_RECOVERY_2026-10-27.md). La primera exportación real debe conservar únicamente propietario2 y las otras tres tablas vacías. Subir los dos nuevos PHP, crear carpeta privada y ejecutar export según ese procedimiento; compartir BLOG_PROPOSAL_BACKUP_RESULT. No conceder todavía el scope ni restaurar sobre el CMS vivo. No hay que repetir enroll, install, guard o activación.
+
+## Histórico: preparación operativa que motivó este incremento
 
 El [after-owner aportado por Alex](qa/blog-proposal-rc2-destination-after-owner-2026-10-27.json) pasa las 15 comprobaciones principales y las 11 del perfil. expectedOwners en esta fase exige exactamente propietario2; las otras tres tablas permanecen vacías. Se conservan las ocho capacidades previas y sigue ausente alexcuadra_prepare_post_changes. No repetir enroll, install, activación o diagnósticos iniciales.
 
