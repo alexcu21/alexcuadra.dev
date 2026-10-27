@@ -14,7 +14,31 @@ La excepción de pruebas exige entorno local, DB_HOST=db, URL exacta y marca de 
 
 Las huellas principales coinciden con el servidor; no verifican árboles completos. El laboratorio usa PHP8.5.11/MariaDB11.8.9 y configuración/datos sintéticos; servidor PHP8.5.12. No certifica opciones reales de hosting, preview, cachés externas, restauración ante pérdida del servidor ni escritura pública.
 
-## Siguiente paso real: preflight rc.2 de solo lectura
+## Paso actual: instalación inactiva y after-install
+
+Alex aportó el [before real](qa/blog-proposal-rc2-destination-before-2026-10-27.json): ready=true, las 15 comprobaciones principales y las 11 de perfil son correctas. El SHA coincide con este ZIP. El paquete, guard, tablas y nuevo scope todavía están ausentes. schema.ready=false es lo esperado en before porque aún no existen las cuatro tablas; no indica un fallo de esta fase. Se conservan las ocho capacidades previas.
+
+Alex realiza la instalación por SSH. Subir únicamente el ZIP rc.2 a `/home/u776991923/domains/alexcuadra.dev/private-tools/blog-proposal-rc2/`, donde ya están los dos diagnósticos. Verificar primero:
+
+```sh
+sha256sum /home/u776991923/domains/alexcuadra.dev/private-tools/blog-proposal-rc2/alexcuadra-editorial-blog-proposals-0.1.0-rc.2.zip
+```
+
+Debe devolver exactamente `7e5bc2b3213a8497dc47426b4565bbf528400d69f4e4f3e57f40f6119d4d6def`. Solo si coincide, instalar inactivo:
+
+```sh
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content plugin install /home/u776991923/domains/alexcuadra.dev/private-tools/blog-proposal-rc2/alexcuadra-editorial-blog-proposals-0.1.0-rc.2.zip
+```
+
+Sin --activate ni --force. Si indica que el plugin ya existe o falla, detenerse y compartir el error; no sustituir archivos. Tras instalación correcta:
+
+```sh
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content eval-file /home/u776991923/domains/alexcuadra.dev/private-tools/blog-proposal-rc2/blog-proposal-preflight.php 2 after-install
+```
+
+Compartir BLOG_PROPOSAL_PREFLIGHT_RESULT antes de continuar. Esta fase exige archivos exactos del paquete y que siga inactivo, sin guard, tablas, propietario ni nuevo scope. La ejecución real de instalación permanece pendiente; no se ha instalado nada desde el agente ni se cambió el manifiesto sellado para atribuir autorización o ejecución a este recibo. Activación y posteriores fases se revisan por separado. Falta procedimiento operativo de respaldo/recuperación del hosting antes de habilitar escritura privada real.
+
+## Histórico: preflight rc.2 de solo lectura ya completado
 
 Los diagnósticos rc.1 anteriores quedan como históricos. Para este ZIP se preparó una pareja nueva, probada junto al ZIP exacto. Alex puede crear `/home/u776991923/domains/alexcuadra.dev/private-tools/blog-proposal-rc2/` y subir **solo**:
 

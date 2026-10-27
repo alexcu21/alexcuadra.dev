@@ -17,3 +17,7 @@ El ZIP se generó dos veces con SHA idéntico. Fuentes y diagnósticos PHP revis
 Se usa código de perfil previamente verificado, con configuración y datos nuevos sintéticos; sin SQL/wp-config/cuentas reales. PHP8.5.11 del laboratorio difiere del8.5.12 reportado por el servidor. Las huellas principales reales coinciden; no son una auditoría de árboles completos ni de opciones/cachés del hosting.
 
 No hay aprobación de instalación, grant, escritor público o publicación; la nueva versión permanece candidata. Siguiente: preflight rc.2 real de solo lectura con su pareja de PHP separada; revisar antes de instalación inactiva. El procedimiento de respaldo/recuperación específico del hosting sigue pendiente antes de conceder escritura privada. Sin SSH del agente, deploy, correo real, auditorías históricas repetidas ni operación sobre propuesta227/revisión1.
+
+## Recibo before real revisado
+
+Alex aportó el [before rc.2](blog-proposal-rc2-destination-before-2026-10-27.json): ready=true, 15 comprobaciones principales y 11 del perfil correctas; SHA del ZIP coincide. Ausencia esperada de paquete/tablas/guard/scope, ocho capacidades previas conservadas y 16 permisos amplios denegados. No se hizo una nueva consulta remota independiente ni instalación. Siguiente: Alex instala el ZIP exacto inactivo y comparte after-install; no repetir before o fingerprint.
