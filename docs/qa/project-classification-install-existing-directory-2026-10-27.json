@@ -1,0 +1,22 @@
+{
+  "format": "project-classification-install-observation-v1",
+  "evidenceSource": "user-pasted-hosting-WP-CLI-output",
+  "receivedDate": "2026-10-27",
+  "wordpressRoot": "/home/u776991923/domains/alexcuadra.dev/public_html/content",
+  "archiveSha256": "48d0734c5fcb0876171c3fd7ad8d291d7310b624ebb45a18a52b9dc32a4dfe2d",
+  "archiveChecksumReportedOk": true,
+  "commandUsedForce": false,
+  "installationReportedSuccess": false,
+  "reportedReason": "Destination folder already exists",
+  "destination": "wp-content/plugins/alexcuadra-editorial-project-classification/",
+  "additionalMessages": [
+    "Success: Purged all caches successfully.",
+    "Plugin installation failed.",
+    "Error: No plugins installed."
+  ],
+  "preflightExecutedByChainedCommand": false,
+  "existingFilesVerified": false,
+  "existingActivationKnown": false,
+  "causeOfExistingDirectoryKnown": false,
+  "nextAction": "Read-only classifier-installed preflight with original history SHA; no reinstall/force/delete/activation/scope restoration"
+}

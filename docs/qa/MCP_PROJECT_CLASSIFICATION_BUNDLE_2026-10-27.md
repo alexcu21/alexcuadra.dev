@@ -48,3 +48,7 @@ Instalación aún no aprobada. El nuevo paquete no migra esquema, concede permis
 ## Rc.3 real activo y preservación verificada
 
 [proposal-upgraded de Alex](project-classification-upgrade-destination-proposal-upgraded-2026-10-27.json): ready=true/19checks; paquete rc.3 exacto/activo, historia/documento/conteos originales y ocho capacidades previas intactos. Scope privado pausado y lector nuevo ausente. No hubo actualización remota ejecutada por el agente ni lectura nueva de cuerpos. Siguiente instalación inactiva del lector exacto y classifier-installed, sin --force o activación.
+
+## Rechazo de instalación del lector por carpeta existente
+
+[Salida aportada por Alex](project-classification-install-existing-directory-2026-10-27.json): SHA del ZIP correcto y rechazo de instalación sin --force por destino existente; preflight encadenado no ejecutado. Estado/integridad/activación de la carpeta pendientes de conocer. Se observó purga de cachés del hosting; no se afirma conservación global de BD/caché. Siguiente diagnóstico classifier-installed ya preparado, de solo lectura y con historySha original; no borrar/forzar/reactivar o restaurar scopes.

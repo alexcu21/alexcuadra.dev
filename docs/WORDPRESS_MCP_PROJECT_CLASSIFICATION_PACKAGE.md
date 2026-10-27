@@ -1,5 +1,7 @@
 # Paquete coordinado de clasificación de proyectos
 
+**27 octubre — instalación del lector detenida por carpeta existente:** SHA del ZIP48d0734c…a4dfe2d correcto; WP-CLI rechaza destino ya existente sin --force y la cadena no ejecuta preflight. [Observación](qa/project-classification-install-existing-directory-2026-10-27.json). No se conocen aún integridad/activación de esa carpeta ni su origen; no asumir instalación correcta o parcial. Siguiente solo classifier-installed de lectura con historySHA75a0aa5f…60c7835a, manteniendo scope pausado. No reintentar, forzar, borrar, activar o restaurar permisos. Se observó mensaje de purga de cachés; no se afirma ausencia global de efectos del instalador/plugins.
+
 **27 octubre — propuestas rc.3 activas y conservadas en el hosting:** Alex aporta proposal-upgraded ready=true/19checks, ZIP exacto SHA581dc9a0…cb00df. HistorySHA75a0aa5f…60c7835a/documentoSHA54945c84…7f6b3d/conteos1/1/1/1 intactos; ocho capacidades previas y scope privado pausado. [Recibo](qa/project-classification-upgrade-destination-proposal-upgraded-2026-10-27.json). Siguiente: instalar inactivo solo lector rc.1 SHA48d0734c…a4dfe2d, sin --force/activación, y classifier-installed con SHA de historia original. No repetir actualización de propuestas, DDL, enroll o backup.
 
 **27 octubre — respaldo actualizado real verificado:** Alex aporta verify ready=true/integrityVerified=true y conteos1/1/1/1 del artefacto deb1593d…ab76110. [Recibo](qa/project-classification-upgrade-backup-verify-2026-10-27.json). Mantener scope privado pausado. Siguiente: revisar/subir ZIP exacto de propuestas rc.3, comprobar SHA581dc9a0…cb00df, desactivar únicamente propuestas rc.2, sustituir código mediante actualización explícita de esa versión conocida, reactivar y proposal-upgraded con historySHA75a0aa5f…60c7835a. Aún sin lector nuevo, DDL, enrolamientos o restauración de permisos. Actualización real pendiente de Alex.
@@ -25,7 +27,19 @@ Propuestas rc.3 cambia solo versión/main, admisión del lector exacto y README.
 
 Los dos PHP de recuperación nuevos, en project-classification-upgrade/, validan los archivos de rc.3 y aceptan únicamente artefactos con SHA de paquete rc.2 o rc.3: el esquema/DTO de historia no cambió. Se probó recuperar un artefacto creado por rc.2 y leer/repetir su plan desde rc.3. Se conservan las herramientas/ZIP anteriores para rollback; no se sobrescriben sus fuentes o manifiestos.
 
-## Paso actual: lector instalado inactivo y classifier-installed
+## Paso actual: diagnosticar la carpeta existente, sin reinstalar
+
+Alex aportó un [rechazo por carpeta existente](qa/project-classification-install-existing-directory-2026-10-27.json). El archivo ZIP sí coincidió con el SHA esperado. La instalación no informó éxito y, por la cadena &&, no se ejecutó classifier-installed. No se conoce todavía el estado/integridad de los tres archivos o su activación; no se deduce instalación parcial, éxito previo o causa concreta.
+
+Ejecutar únicamente el diagnóstico ya disponible:
+
+```sh
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content eval-file /home/u776991923/domains/alexcuadra.dev/private-tools/project-classification-upgrade/preflight.php --use-include classifier-installed 75a0aa5fdaab48206bf72e8e70eb274dd75c5b12af81d8b04963aff160c7835a
+```
+
+Compartir PROJECT_CLASSIFICATION_UPGRADE_RESULT incluso si ready=false. Comprueba conjunto exacto de archivos/hashes, inactividad del lector y ausencia de sus herramientas, rc.3/perfil, permisos pausados e historia original. No modifica la carpeta o sus asignaciones. Mantener el scope privado ausente; no usar --force, borrar/renombrar archivos, reintentar instalación, activar o restaurar permisos por continuidad. El instalador mostró una purga de cachés: no se certifica ausencia global de efectos por ese error.
+
+## Histórico: instalación inactiva solicitada, pendiente de conciliación
 
 El [proposal-upgraded real de Alex](qa/project-classification-upgrade-destination-proposal-upgraded-2026-10-27.json) pasa19checks: rc.3 exacto/activo y misma historia/documento/conteos. El usuario2 mantiene las ocho capacidades previas con scope privado ausente; lector nuevo todavía ausente. No repetir sustitución de propuestas o restaurar permisos.
 
