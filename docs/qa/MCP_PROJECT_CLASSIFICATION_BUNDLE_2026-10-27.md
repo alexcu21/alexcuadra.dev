@@ -32,3 +32,7 @@ Doce contenedores propios detenidos y red externa interna reutilizada vacía, si
 Subir solo el preflight nuevo, ejecutar --use-include before y revisar perfil, forma1/v1 y pilotDocumentSha256 contra el documento real ya observado. Captura únicamente metadatos de las cuatro tablas nuevas, no baseline de fuentes/postmeta ni reconstrucción del incidente histórico. historySha debe permanecer idéntico en fases sucesivas. Sigue pendiente un respaldo actualizado del plan real antes de cambiar código/permisos.
 
 Instalación aún no aprobada. El nuevo paquete no migra esquema, concede permisos, edita clasificaciones o publica posts. El catálogo público, temporalidad de lecturas y rama PHP del hosting conservan los límites descritos en el procedimiento. No se certifica toda la BD u opciones/cachés/árboles completos del servidor ni aceptación de accesibilidad/frontend/contacto/CMS429.
+
+## Before real recibido y contrastado
+
+[Recibo de Alex](project-classification-upgrade-destination-before-2026-10-27.json): ready=true/19checks, rc.2 exacto y lector ausente. SHA del documento coincide con MCP; SHA de historia también coincide con el derivado local de petición original, propietario2 y metadatos del plan1/v1/recibo. No se efectuó una nueva lectura MCP o SQL remota independiente. Siguiente pausa solo del scope privado y respaldo nuevo con helper rc.2 existente; no instalar paquetes ni recapturar baseline.

@@ -1,5 +1,7 @@
 # Paquete coordinado de clasificación de proyectos
 
+**27 octubre — before real del paquete coordinado correcto:**19checks, rc.2 exacto/activo, lector nuevo ausente y nueve capacidades originales. [Recibo](qa/project-classification-upgrade-destination-before-2026-10-27.json). Documento SHA54945c84…7f6b3d coincide con pilotoMCP; historySha75a0aa5f…60c7835a también coincide con el derivado de su petición/recibo originales.1propietario/1propuesta/1revisión/1recibo. Conservar este SHA en todas las fases; no recapturarlo. Siguiente: Alex retira solo alexcuadra_prepare_post_changes y exporta un respaldo nuevo con los helpers rc.2 existentes; sin instalar ZIPs o cambiar otros permisos todavía. Pausa/exportación real aún pendientes.
+
 Preparado y probado en laboratorio con el perfil completo de código del sitio. **Instalación real pendiente**; el CMS conserva propuestas rc.2, catálogo18 y el piloto privado1/v1. No hay nuevos grants o migraciones de tablas.
 
 | Componente | Paquete | Bytes | SHA256 |
@@ -17,7 +19,29 @@ Propuestas rc.3 cambia solo versión/main, admisión del lector exacto y README.
 
 Los dos PHP de recuperación nuevos, en project-classification-upgrade/, validan los archivos de rc.3 y aceptan únicamente artefactos con SHA de paquete rc.2 o rc.3: el esquema/DTO de historia no cambió. Se probó recuperar un artefacto creado por rc.2 y leer/repetir su plan desde rc.3. Se conservan las herramientas/ZIP anteriores para rollback; no se sobrescriben sus fuentes o manifiestos.
 
-## Paso actual: una comprobación real de solo lectura
+## Paso actual: pausa del único scope privado y respaldo actualizado
+
+El [before real de Alex](qa/project-classification-upgrade-destination-before-2026-10-27.json) pasa19checks. La huella del documento coincide con el piloto leído por MCP; el historySha coincide también con el calculado desde su petición original y metadatos conocidos. Lector nuevo ausente y sin actualización de código todavía. Los checks de presencia/activación de clasificación en before significan ausencia/inactividad esperadas, no instalación del lector.
+
+SHA original de historia que se conservará en todas las fases: `75a0aa5fdaab48206bf72e8e70eb274dd75c5b12af81d8b04963aff160c7835a`. No volver a capturar before para aceptar un cambio inesperado. La forma validada es1propietario/1propuesta/1revisión/1recibo.
+
+Alex pausa únicamente el scope privado del usuario2; el lector público de proyectos y las otras ocho capacidades se conservan:
+
+```sh
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content --user=1 user remove-cap 2 alexcuadra_prepare_post_changes
+```
+
+Solo si termina correctamente, y sin otros escritores de estas cuatro tablas, exportar mediante el helper rc.2 ya instalado:
+
+```sh
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content --user=1 eval-file /home/u776991923/domains/alexcuadra.dev/private-tools/blog-proposal-rc2/blog-proposal-backup.php export /home/u776991923/domains/alexcuadra.dev/private-tools/blog-proposal-backups writers-stopped
+```
+
+No crear otra carpeta o reemplazar el respaldo inicial; el helper usa un nombre nuevo exclusivo. Debe devolver ready=true, owners/proposals/revisions/requests=1, sin escrituras de BD. Compartir únicamente BLOG_PROPOSAL_BACKUP_RESULT; no subir los artefactos privados al chat o repositorio. Si falla, conservar la pausa y compartir el error; no restaurar el scope o reintentar por continuidad.
+
+Después se verificará ese artefacto con su SHA recibido antes de revisar el reemplazo de paquetes. No instalar los ZIP, crear planes o modificar roles/otros permisos todavía. La retirada y exportación real permanecen pendientes de ejecución por Alex. No repetir before, instalación inicial, DDL o enroll.
+
+## Histórico: comprobación real de solo lectura ya recibida
 
 Subir únicamente [preflight.php](../wordpress/operations/project-classification-upgrade/preflight.php) a una carpeta nueva:
 
