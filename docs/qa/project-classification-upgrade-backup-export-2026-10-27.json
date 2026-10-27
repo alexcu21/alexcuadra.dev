@@ -1,0 +1,21 @@
+{
+  "evidenceSource": "user-pasted-hosting-WP-CLI-output",
+  "receivedDate": "2026-10-27",
+  "wordpressRoot": "/home/u776991923/domains/alexcuadra.dev/public_html/content",
+  "originalHistorySha256": "75a0aa5fdaab48206bf72e8e70eb274dd75c5b12af81d8b04963aff160c7835a",
+  "result": {
+    "format": "blog-proposal-backup-operator-v1",
+    "mode": "export",
+    "ready": true,
+    "backupDirectory": "backup-20261027T200039Z-1e211a74ec3e7502",
+    "manifestSha256": "deb1593d8340ea7a68c917fc24c370d9384da6beddde79e6ac3dc6903ab76110",
+    "counts": {
+      "owners": 1,
+      "proposals": 1,
+      "revisions": 1,
+      "requests": 1
+    },
+    "databaseWritesPerformed": false,
+    "restorationVerified": false
+  }
+}

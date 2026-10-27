@@ -1,5 +1,7 @@
 # Paquete coordinado de clasificación de proyectos
 
+**27 octubre — respaldo actualizado real recibido:** export ready=true de Alex, backup-20261027T200039Z-1e211a74ec3e7502, manifestSHAdeb1593d…ab76110;1propietario/1propuesta/1revisión/1recibo, sin escrituras de BD. [Recibo](qa/project-classification-upgrade-backup-export-2026-10-27.json). El helper exige scope privado pausado y ocho capacidades previas, sin grant a roles/otros usuarios. Siguiente verify del mismo artefacto/SHA con helper rc.2; mantener pausa y no instalar paquetes todavía. Conservar historySHA75a0aa5f…60c7835a, sin recapturar before; no restaurar el CMS vivo para demostrar respaldo.
+
 **27 octubre — before real del paquete coordinado correcto:**19checks, rc.2 exacto/activo, lector nuevo ausente y nueve capacidades originales. [Recibo](qa/project-classification-upgrade-destination-before-2026-10-27.json). Documento SHA54945c84…7f6b3d coincide con pilotoMCP; historySha75a0aa5f…60c7835a también coincide con el derivado de su petición/recibo originales.1propietario/1propuesta/1revisión/1recibo. Conservar este SHA en todas las fases; no recapturarlo. Siguiente: Alex retira solo alexcuadra_prepare_post_changes y exporta un respaldo nuevo con los helpers rc.2 existentes; sin instalar ZIPs o cambiar otros permisos todavía. Pausa/exportación real aún pendientes.
 
 Preparado y probado en laboratorio con el perfil completo de código del sitio. **Instalación real pendiente**; el CMS conserva propuestas rc.2, catálogo18 y el piloto privado1/v1. No hay nuevos grants o migraciones de tablas.
@@ -19,7 +21,21 @@ Propuestas rc.3 cambia solo versión/main, admisión del lector exacto y README.
 
 Los dos PHP de recuperación nuevos, en project-classification-upgrade/, validan los archivos de rc.3 y aceptan únicamente artefactos con SHA de paquete rc.2 o rc.3: el esquema/DTO de historia no cambió. Se probó recuperar un artefacto creado por rc.2 y leer/repetir su plan desde rc.3. Se conservan las herramientas/ZIP anteriores para rollback; no se sobrescriben sus fuentes o manifiestos.
 
-## Paso actual: pausa del único scope privado y respaldo actualizado
+## Paso actual: verificar el respaldo actualizado ya exportado
+
+[Export real de Alex](qa/project-classification-upgrade-backup-export-2026-10-27.json): ready=true,1propietario/1propuesta/1revisión/1recibo y ninguna escritura de BD. El artefacto nuevo incluye el piloto; no sustituye al respaldo owner-only anterior. El helper verifica scope pausado/permisos exactos y valida internamente el archivo antes de devolver éxito. Falta su verificación en otra invocación con el SHA del recibo.
+
+Mantener el scope privado ausente y ejecutar únicamente:
+
+```sh
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content --user=1 eval-file /home/u776991923/domains/alexcuadra.dev/private-tools/blog-proposal-rc2/blog-proposal-backup.php verify /home/u776991923/domains/alexcuadra.dev/private-tools/blog-proposal-backups/backup-20261027T200039Z-1e211a74ec3e7502 deb1593d8340ea7a68c917fc24c370d9384da6beddde79e6ac3dc6903ab76110
+```
+
+Compartir BLOG_PROPOSAL_BACKUP_RESULT; se esperan integrityVerified=true y los cuatro conteos1. Si falla, conservar artefacto/pausa y compartir el código, sin reexportar o sustituir SHA para hacer pasar el control. restorationVerified=false es correcto porque no se restauró el hosting. No adjuntar artefactos, instalar ZIPs o restaurar permisos todavía.
+
+El historySha de las siguientes fases sigue siendo `75a0aa5fdaab48206bf72e8e70eb274dd75c5b12af81d8b04963aff160c7835a`; no usar en su lugar el SHA del manifiesto de backup. Son comprobaciones distintas. La verificación real separada permanece pendiente.
+
+## Histórico: pausa y exportación ya realizadas por Alex
 
 El [before real de Alex](qa/project-classification-upgrade-destination-before-2026-10-27.json) pasa19checks. La huella del documento coincide con el piloto leído por MCP; el historySha coincide también con el calculado desde su petición original y metadatos conocidos. Lector nuevo ausente y sin actualización de código todavía. Los checks de presencia/activación de clasificación en before significan ausencia/inactividad esperadas, no instalación del lector.
 

@@ -36,3 +36,7 @@ Instalación aún no aprobada. El nuevo paquete no migra esquema, concede permis
 ## Before real recibido y contrastado
 
 [Recibo de Alex](project-classification-upgrade-destination-before-2026-10-27.json): ready=true/19checks, rc.2 exacto y lector ausente. SHA del documento coincide con MCP; SHA de historia también coincide con el derivado local de petición original, propietario2 y metadatos del plan1/v1/recibo. No se efectuó una nueva lectura MCP o SQL remota independiente. Siguiente pausa solo del scope privado y respaldo nuevo con helper rc.2 existente; no instalar paquetes ni recapturar baseline.
+
+## Respaldo actualizado real exportado
+
+[Recibo de Alex](project-classification-upgrade-backup-export-2026-10-27.json): export ready=true, cuatro conteos1 y sin escrituras de BD. Helper rc.2 exige pausa del scope privado y valida integridad interna del artefacto. No hay verificación remota independiente del agente; siguiente verify separado con el SHA recibido. Mantener historia75a0aa5f…60c7835a y scope pausado, sin instalación o restauración todavía.
