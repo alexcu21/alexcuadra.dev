@@ -34,3 +34,7 @@ El recibo real anterior no incluía hashes de main files de plugins. Se genera u
 Imprime BLOG_PROPOSAL_CODE_FINGERPRINT_RESULT y codeMatchesLocalFixture; **installationApproved siempre false**. No instala, concede capacidades o lee cuerpos/credenciales. No verifica árboles completos de plugins y no es una auditoría global de integridad. Las huellas de entradas no justifican cambiar componentes del hosting para forzar coincidencia.
 
 Alex puede subir solo ese PHP a private-tools y ejecutar el [comando del procedimiento](../WORDPRESS_MCP_BLOG_PROPOSAL_PACKAGE.md). Tras revisar la salida: preparar candidato distribuible separado de rc.1 con admisión del perfil contrastado y cerrar respaldo/restauración/instalación/scope por fases. No instalar el experimento ni rc.1 ahora. No hay approve/apply/recover/publicación certificadas ni pérdida del acuse TCP del propio COMMIT reproducida.
+
+## Actualización: resultado del servidor recibido
+
+Alex aportó el diagnóstico:11checks correctos,16main hashes/versiones, dosMU, entradas del tema y wpdb coinciden. [Recibo transcrito y procedencia](blog-proposal-code-fingerprint-destination-2026-10-26.json). Solo difiere del recibo de laboratorio PHP8.5.12 y laboratoryFixtureIgnored=false. No se ejecutó una nueva consulta remota independiente ni se verificaron árboles completos. Nuevo scope ausente, ocho capacidades conservadas, installationApproved=false. La espera de huellas queda cerrada; siguiente candidato distribuible y ensayo de admisión/respaldo/restauración, sin instalar rc.1 ni el experimento.

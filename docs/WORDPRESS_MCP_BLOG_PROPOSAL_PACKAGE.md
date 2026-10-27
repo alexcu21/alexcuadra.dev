@@ -1,20 +1,16 @@
 # Paquete revisable de propuestas privadas
 
-**Actualización:**149pruebas de operaciones/MCP/fallos con el perfil ampliado correctas en candidato exclusivo de laboratorio. Falta contrastar las huellas principales del código real antes de preparar otra versión distribuible; rc.1 permanece retenido. [Evidencia](qa/MCP_BLOG_PROPOSAL_SITE_FUNCTIONAL_2026-10-26.md).
+**Actualización:**149pruebas funcionales/MCP/fallos correctas en laboratorio y11comprobaciones de huellas del servidor coincidentes. rc.1 permanece retenido; el experimento local no se instala. [Pruebas](qa/MCP_BLOG_PROPOSAL_SITE_FUNCTIONAL_2026-10-26.md), [recibo real aportado](qa/blog-proposal-code-fingerprint-destination-2026-10-26.json).
 
-## Paso actual: huellas de código
+## Paso actual: candidato distribuible y ciclo operativo
 
-Subir únicamente [blog-proposal-code-fingerprint.php](../wordpress/operations/blog-proposal-code-fingerprint.php) a private-tools. Es autocontenido; no depende de los otros dos diagnósticos. Alex ejecuta por SSH:
+El diagnóstico autocontenido ya fue ejecutado por Alex: codeMatchesLocalFixture=true, installationApproved=false, nuevo scope ausente y ocho capacidades conservadas. No repetir el comando ni subir otros diagnósticos ahora. Las versiones/main hashes de16plugins, dosMU, entradas de tema y wpdb coinciden con la referencia local. Esto no verifica árboles completos de plugins ni identidad exacta de PHP: hosting8.5.12, laboratorio8.5.11.
 
-```sh
-wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content eval-file /home/u776991923/domains/alexcuadra.dev/private-tools/blog-proposal-code-fingerprint.php
-```
+Preparar una nueva versión distribuible separada del rc.1 sellado, con guard del destino y perfil contrastado. Ensayar instalación inactiva, activación, almacenamiento/propietario/scope, respaldo consistente, restauración aislada y retirada conservando historia. Verificar el ZIP exacto y sus diagnósticos antes de presentar instrucciones de instalación real. No se ha preparado todavía ese candidato ni se ha autorizado instalación por este recibo.
 
-Compartir BLOG_PROPOSAL_CODE_FINGERPRINT_RESULT. Consulta versiones/main hashes de16plugins, entradas de MU/tema/núcleo y metadatos de permisos. No solicita cuerpos o Application Passwords ni instala/concede nada. codeMatchesLocalFixture no aprueba instalación (installationApproved=false) ni verifica árboles completos. Mantener componentes del hosting; una diferencia se revisa antes de admitir. Los pasos iniciales inferiores son históricos y no hay que repetir el before anterior.
+**Estado posterior al diagnóstico real:** before recibido, bloqueado solo por perfil. Código y arranque contrastados, seguidos de149checks funcionales/MCP/fallos correctos en experimento local; main hashes reales ya coinciden; falta otra versión distribuible y su ciclo operativo. rc.1 sigue retenido y sin cambios. [Recibo y siguiente fase](qa/MCP_BLOG_PROPOSAL_DESTINATION_PROFILE_2026-10-26.md). No repetir el comando inicial ni instalar/conceder scopes ahora.
 
-**Estado posterior al diagnóstico real:** before recibido, bloqueado solo por perfil. Código y arranque contrastados, seguidos de149checks funcionales/MCP/fallos correctos en experimento local; falta contrastar main hashes reales antes de otra versión distribuible. rc.1 sigue retenido y sin cambios. [Recibo y siguiente fase](qa/MCP_BLOG_PROPOSAL_DESTINATION_PROFILE_2026-10-26.md). No repetir el comando inicial ni instalar/conceder scopes ahora.
-
-**0.1.0-rc.1, probado en laboratorio; instalación y primer scope reales pendientes.** Este paquete no publica ni edita fuentes. El diagnóstico inicial ya se recibió; el paso vigente es la huella de código indicada arriba.
+**0.1.0-rc.1, probado en laboratorio; instalación y primer scope reales pendientes.** Este paquete no publica ni edita fuentes. El diagnóstico inicial ya se recibió; el paso vigente es preparar el nuevo candidato y su ciclo operativo.
 
 - [ZIP](../artifacts/wordpress/alexcuadra-editorial-blog-proposals-0.1.0-rc.1.zip):17.074bytes, SHA256 `ca33ebd4b3a874a939b8d18dbf42c2cea324325b26716f01208cd1f85154635a`.
 - [Manifiesto](../artifacts/wordpress/alexcuadra-editorial-blog-proposals-0.1.0-rc.1.manifest.json), [pruebas y límites](qa/MCP_BLOG_PROPOSAL_PACKAGE_2026-10-26.md).

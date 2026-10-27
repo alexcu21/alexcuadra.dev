@@ -1,5 +1,7 @@
 # Propuestas editoriales de posts y traducciones
 
+**26 octubre — huellas del servidor recibidas y contrastadas:** las11comprobaciones son correctas; coinciden versiones y archivos principales de16plugins, dosMU, entradas del tema y wpdb. PHP del hosting8.5.12 frente a8.5.11 del laboratorio; no se ignoró ningún fixture en el servidor. Las ocho capacidades anteriores se conservan y el nuevo scope está ausente. [Recibo aportado por Alex](qa/blog-proposal-code-fingerprint-destination-2026-10-26.json). Se cierra la espera del diagnóstico: no volver a pedirlo ni repetir instalaciones/grants del lector. Siguiente: candidato distribuible separado de rc.1 y ensayo de admisión/respaldo/restauración por fases. Las huellas de entradas no verifican árboles completos; installationApproved=false. Sin cambios remotos.
+
 **Actualización funcional del perfil ampliado:**149checks de CRUD/MCP/fallos correctos con experimento local; siguiente huella real de código y candidato distribuible. [Resultado](qa/MCP_BLOG_PROPOSAL_SITE_FUNCTIONAL_2026-10-26.md), [diagnóstico actual](WORDPRESS_MCP_BLOG_PROPOSAL_PACKAGE.md). rc.1 y CMS reales sin cambios.
 
 **Estado posterior al diagnóstico real:** before recibido, bloqueado solo por perfil. Código/arranque contrastados y149checks funcionales ampliados correctos; falta la huella real de main files y candidato distribuible. rc.1 sigue retenido y sin cambios. [Recibo y siguiente fase](qa/MCP_BLOG_PROPOSAL_DESTINATION_PROFILE_2026-10-26.md). No repetir el comando inicial ni instalar/conceder scopes ahora.
