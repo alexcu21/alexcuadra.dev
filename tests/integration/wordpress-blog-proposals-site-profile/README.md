@@ -5,3 +5,12 @@ Preparar código local con scripts/prepare-blog-proposal-site-code.py y --archiv
 Después ejecutar `BLOG_SITE_PROFILE_PROJECT=alexcuadra-blog-site-profile-20261026-r6 python3 tests/integration/wordpress-blog-proposals-site-profile/run.py` solo para una repetición justificada, con un nombre nuevo si hace falta. Requiere la red interna propia del laboratorio de paquete indicada en el runner, vacía y con etiquetas verificadas; no reutiliza redes ajenas ni publica puertos. Usa base sintética, código copiado a tmpfs768MiB, BD256MiB y un guard de HTTP/correo. Configuración y overlays sintéticos van en caché compartida con Docker, sin permisos globales nuevos.
 
 46casos de arranque/inclusión/versiones/procedencia y reproducción del bloqueo del preflight. No instala el candidato ni concede el scope nuevo; no prueba CRUD, aprobación o publicación. Al finalizar detiene solo su proyecto y conserva recursos sin prune. [Evidencia y límites](../../../docs/qa/MCP_BLOG_PROPOSAL_DESTINATION_PROFILE_2026-10-26.md).
+
+
+## Funcional ampliado
+
+`BLOG_SITE_PROFILE_PROJECT=alexcuadra-blog-site-profile-functional-20261026-r3 python3 tests/integration/wordpress-blog-proposals-site-profile/run.py --functional` prepara un candidato solo local desde rc.1 sellado. No reutilizar un proyecto en ejecución. El candidato requiere flag de experimento/local/db/URL exactos; no es distribuible. Prueba72operaciones+34fallos+43HTTP, con perfiles/main hashes/MU/tema del inventario. No modifica rc.1 o su admisión.
+
+Workers usan archivos privados en vez de pipes para diagnósticos, marcadores con plazo y vaciado de buffers. `php process-check.php` prueba siete situaciones con mucho stdout/stderr y errores. El debug log se conserva privado, no se desactiva error_reporting. [Evidencia ampliada](../../../docs/qa/MCP_BLOG_PROPOSAL_SITE_FUNCTIONAL_2026-10-26.md).
+
+El modo de arranque también prueba el nuevo diagnóstico autocontenido de huellas y escribe un recibo distinto, sin sustituir el recibo histórico de arranque. La prueba compara entradas, no árboles completos del servidor; installationApproved=false incluso cuando coinciden.

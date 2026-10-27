@@ -1,15 +1,27 @@
 # Paquete revisable de propuestas privadas
 
-**Estado posterior al diagnóstico real:** before recibido, bloqueado solo por perfil. Código disponible contrastado y46checks de arranque del perfil ampliado correctos; falta ensayar CRUD/MCP/fallos antes de una nueva versión. rc.1 sigue retenido y sin cambios. [Recibo y siguiente fase](qa/MCP_BLOG_PROPOSAL_DESTINATION_PROFILE_2026-10-26.md). No repetir el comando inicial ni instalar/conceder scopes ahora.
+**Actualización:**149pruebas de operaciones/MCP/fallos con el perfil ampliado correctas en candidato exclusivo de laboratorio. Falta contrastar las huellas principales del código real antes de preparar otra versión distribuible; rc.1 permanece retenido. [Evidencia](qa/MCP_BLOG_PROPOSAL_SITE_FUNCTIONAL_2026-10-26.md).
 
-**0.1.0-rc.1, probado en laboratorio; instalación y primer scope reales pendientes.** Este paquete no publica ni edita fuentes. El siguiente paso es únicamente el diagnóstico de compatibilidad del CMS real.
+## Paso actual: huellas de código
+
+Subir únicamente [blog-proposal-code-fingerprint.php](../wordpress/operations/blog-proposal-code-fingerprint.php) a private-tools. Es autocontenido; no depende de los otros dos diagnósticos. Alex ejecuta por SSH:
+
+```sh
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content eval-file /home/u776991923/domains/alexcuadra.dev/private-tools/blog-proposal-code-fingerprint.php
+```
+
+Compartir BLOG_PROPOSAL_CODE_FINGERPRINT_RESULT. Consulta versiones/main hashes de16plugins, entradas de MU/tema/núcleo y metadatos de permisos. No solicita cuerpos o Application Passwords ni instala/concede nada. codeMatchesLocalFixture no aprueba instalación (installationApproved=false) ni verifica árboles completos. Mantener componentes del hosting; una diferencia se revisa antes de admitir. Los pasos iniciales inferiores son históricos y no hay que repetir el before anterior.
+
+**Estado posterior al diagnóstico real:** before recibido, bloqueado solo por perfil. Código y arranque contrastados, seguidos de149checks funcionales/MCP/fallos correctos en experimento local; falta contrastar main hashes reales antes de otra versión distribuible. rc.1 sigue retenido y sin cambios. [Recibo y siguiente fase](qa/MCP_BLOG_PROPOSAL_DESTINATION_PROFILE_2026-10-26.md). No repetir el comando inicial ni instalar/conceder scopes ahora.
+
+**0.1.0-rc.1, probado en laboratorio; instalación y primer scope reales pendientes.** Este paquete no publica ni edita fuentes. El diagnóstico inicial ya se recibió; el paso vigente es la huella de código indicada arriba.
 
 - [ZIP](../artifacts/wordpress/alexcuadra-editorial-blog-proposals-0.1.0-rc.1.zip):17.074bytes, SHA256 `ca33ebd4b3a874a939b8d18dbf42c2cea324325b26716f01208cd1f85154635a`.
 - [Manifiesto](../artifacts/wordpress/alexcuadra-editorial-blog-proposals-0.1.0-rc.1.manifest.json), [pruebas y límites](qa/MCP_BLOG_PROPOSAL_PACKAGE_2026-10-26.md).
 - Permiso nuevo propuesto: `alexcuadra_prepare_post_changes`, directo al usuario2/subscriber. No se ha concedido.
 - Cinco herramientas alexcuadra-blog/*: contexto de fuente publicada, crear/actualizar/get/listado de planes privados. El lector público permanece separado.
 
-## Paso actual: diagnóstico de solo lectura
+## Diagnóstico inicial ya completado (registro histórico)
 
 Alex ejecuta SSH; el agente no abre conexión al hosting. Subir estos **dos archivos juntos**, conservando sus nombres, a `/home/u776991923/domains/alexcuadra.dev/private-tools/`:
 

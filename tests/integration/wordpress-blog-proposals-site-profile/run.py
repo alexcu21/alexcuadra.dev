@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 """Boot the verified code profile with fresh synthetic data; never contact the hosting."""
 import hashlib
+import argparse
+import importlib.util
 import json
 import os
 import re
 from pathlib import Path
 import shutil
 import subprocess
+import sys
 import tarfile
 import tempfile
 import zipfile
@@ -16,6 +19,7 @@ HERE=Path(__file__).resolve().parent
 PROJECT=os.environ.get('BLOG_SITE_PROFILE_PROJECT','alexcuadra-blog-site-profile-20261026')
 NETWORK='alexcuadra-blog-proposal-release-20261026-functional-r2_default'
 BASE=ROOT/'tests/integration/wordpress-blog-read/compose.yaml'
+sys.dont_write_bytecode=True
 
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def command(argv,**kwargs):
@@ -24,6 +28,7 @@ def command(argv,**kwargs):
     return result.stdout
 
 def main():
+    parser=argparse.ArgumentParser();parser.add_argument('--functional',action='store_true');options=parser.parse_args()
     os.umask(0o077)
     if not re.fullmatch(r'alexcuadra-blog-site-profile-[a-z0-9-]+',PROJECT):raise ValueError('OWN_PROFILE_PROJECT_REQUIRED')
     if os.environ.get('DOCKER_HOST') or shutil.disk_usage('/private/tmp').free<2*1024**3:raise ValueError('LOCAL_DOCKER_AND_SPACE_REQUIRED')
@@ -54,15 +59,22 @@ def main():
                 out=overlays/e['path'];out.parent.mkdir(parents=True,exist_ok=True);out.write_bytes(data)
     receipt=json.loads((ROOT/'docs/qa/blog-proposal-destination-before-2026-10-26.json').read_text())['result']['profile']
     profile=work/'profile.json';profile.write_text(json.dumps(receipt))
+    candidate=None;testdir=None
+    if options.functional:
+        spec=importlib.util.spec_from_file_location('site_candidate',HERE/'candidate.py');module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+        candidate,testdir,policy=module.prepare(work,receipt,inventory)
     env={'BLOG_SITE_PROFILE_LAB':'verified-code-only','WORDPRESS_CONFIG_EXTRA':"""
 define('WP_ENVIRONMENT_TYPE','local');define('WP_HOME','https://content.alexcuadra.dev');define('WP_SITEURL','https://content.alexcuadra.dev');
 define('DISABLE_WP_CRON',true);define('WP_HTTP_BLOCK_EXTERNAL',true);define('AUTOMATIC_UPDATER_DISABLED',true);define('DISALLOW_FILE_MODS',true);
+define('WP_DEBUG_DISPLAY',false);define('WP_DEBUG_LOG','/var/www/html/site-profile-debug.log');
 define('AC_EDITORIAL_PROPOSALS_SITE','https://content.alexcuadra.dev');define('AC_EDITORIAL_BLOG_READ_SITE','https://content.alexcuadra.dev');define('AC_EDITORIAL_OPERATING_SITE','https://content.alexcuadra.dev');
 $_SERVER['HTTP_HOST']='content.alexcuadra.dev';$_SERVER['HTTPS']='on';$_SERVER['SERVER_PORT']=443;
 """}
+    if options.functional:env['WORDPRESS_CONFIG_EXTRA']+="define('AC_BLOG_PROPOSALS_SITE_PROFILE_LAB',true);define('WP_ACCESSIBLE_HOSTS','wordpress');"
     env['WORDPRESS_CONFIG_EXTRA']=env['WORDPRESS_CONFIG_EXTRA'].replace('$','$$')
     volumes=[str(source/'wp-content')+':/verified-profile:ro',str(overlays)+':/sealed-overlays:ro',str(HERE)+':/site-profile-lab:ro',
         str(profile)+':/profile-input.json:ro',str(ROOT/'docs/qa/blog-proposal-site-code-inventory-2026-10-26.json')+':/profile-inventory.json:ro',str(ROOT/'wordpress/operations')+':/proposal-operations:ro']
+    if options.functional:volumes.extend([str(candidate)+':/site-candidate:ro',str(testdir)+':/site-tests:ro'])
     settings={'services':{name:{'environment':env,'volumes':volumes}for name in ['wordpress','cli']},
         'networks':{'default':{'external':True,'name':NETWORK}},'volumes':{'wp-data':{'driver_opts':{'o':'size=768m'}}}}
     config=work/'compose.json';config.write_text(json.dumps(settings))
@@ -91,8 +103,35 @@ $_SERVER['HTTP_HOST']='content.alexcuadra.dev';$_SERVER['HTTPS']='on';$_SERVER['
         result={'format':'blog-site-profile-bootstrap-v1','codeInventoryArchiveSha256':inventory['sourceArchiveSha256'],'bootstrap':report,
             'blockedPreflight':blocked,'profileBlockReproduced':True,'realCmsChanged':False,'proposalCrudTested':False,
             'hostDatabaseImported':False,'privateFixtureMuExcludedFromLiveIdentityComparison':True,'network':NETWORK,'networkInternal':True,'hostPorts':False}
-        (ROOT/'docs/qa/blog-proposal-site-profile-bootstrap-2026-10-26.json').write_text(json.dumps(result,indent=2)+'\n')
-        print(json.dumps({'passed':report['passed'],'failed':0,'profileBlockReproduced':True,'newScopeGranted':False,'proposalCrudTested':False}))
+        if not options.functional:
+            output=cli('eval-file','/proposal-operations/blog-proposal-code-fingerprint.php')
+            prefix='BLOG_PROPOSAL_CODE_FINGERPRINT_RESULT=';items=[line[len(prefix):]for line in output.splitlines()if line.startswith(prefix)]
+            if len(items)!=1:raise ValueError('FINGERPRINT_RESULT_MISSING')
+            fingerprint=json.loads(items[0])
+            if fingerprint['codeMatchesLocalFixture'] is not True or fingerprint['installationApproved'] is not False or fingerprint['mutationsRequested'] is not False:raise ValueError('FINGERPRINT_NOT_VERIFIED')
+            (ROOT/'docs/qa/blog-proposal-code-fingerprint-lab-2026-10-26.json').write_text(json.dumps(fingerprint,indent=2)+'\n')
+        if options.functional:
+            compose('run','--rm','--no-deps','--user','0:0','--entrypoint','sh','cli','-ec',
+                'mkdir wp-content/plugins/alexcuadra-editorial-blog-proposals .site-tests; cp -R /site-candidate/. wp-content/plugins/alexcuadra-editorial-blog-proposals/; cp -R /site-tests/. .site-tests/; chown -R 33:33 wp-content/plugins/alexcuadra-editorial-blog-proposals .site-tests')
+            cli('plugin','activate','alexcuadra-editorial-blog-proposals')
+            reports={}
+            for phase,marker in [('check','EDITORIAL_BLOG_PROPOSAL_WP_RESULT='),('failures','EDITORIAL_BLOG_PROPOSAL_FAULT_RESULT='),('http','EDITORIAL_BLOG_PROPOSAL_HTTP_RESULT=')]:
+                out=cli('eval-file','/var/www/html/.site-tests/'+phase+'.php')
+                validated=command(['python3',str(ROOT/'tests/integration/wordpress-blog-proposals/verify-report.py'),marker],input=out)
+                reports[phase]=json.loads(validated.strip()[len(marker):]);print(marker+json.dumps(reports[phase]),flush=True)
+            result['functional']=reports;result['proposalCrudTested']=True;result['candidateVersion']='0.1.0-lab.site.1';result['distributionReady']=False
+            result['candidateFileSha256']={p.name:digest(p)for p in candidate.iterdir()}
+            result['testFileSha256']={p.name:digest(p)for p in testdir.iterdir()}
+            result['candidatePolicy']=policy
+            diagnostics=cli('eval',"$p=ABSPATH.'site-profile-debug.log';if(is_file($p)){echo file_get_contents($p);}")
+            (work/'diagnostics.log').write_text(diagnostics)
+            result['diagnostics']={'bytes':len(diagnostics.encode()),'sha256':hashlib.sha256(diagnostics.encode()).hexdigest(),'retainedPrivately':True,
+                'lines':len(diagnostics.splitlines()),'fatalMarkers':diagnostics.count('PHP Fatal error')}
+            (ROOT/'docs/qa/blog-proposal-site-profile-functional-2026-10-26.json').write_text(json.dumps(result,indent=2)+'\n')
+            print(json.dumps({'bootstrapChecks':report['passed'],'functionalChecks':sum(r['passed']for r in reports.values()),'failed':0,'distributionReady':False}))
+        else:
+            (ROOT/'docs/qa/blog-proposal-site-profile-bootstrap-fingerprint-2026-10-26.json').write_text(json.dumps(result,indent=2)+'\n')
+            print(json.dumps({'passed':report['passed'],'failed':0,'profileBlockReproduced':True,'newScopeGranted':False,'proposalCrudTested':False}))
     finally:compose('stop')
 
 if __name__=='__main__':main()

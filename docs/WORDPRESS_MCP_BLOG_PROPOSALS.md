@@ -1,6 +1,8 @@
 # Propuestas editoriales de posts y traducciones
 
-**Estado posterior al diagnóstico real:** before recibido, bloqueado solo por perfil. Código disponible contrastado y46checks de arranque del perfil ampliado correctos; falta ensayar CRUD/MCP/fallos antes de una nueva versión. rc.1 sigue retenido y sin cambios. [Recibo y siguiente fase](qa/MCP_BLOG_PROPOSAL_DESTINATION_PROFILE_2026-10-26.md). No repetir el comando inicial ni instalar/conceder scopes ahora.
+**Actualización funcional del perfil ampliado:**149checks de CRUD/MCP/fallos correctos con experimento local; siguiente huella real de código y candidato distribuible. [Resultado](qa/MCP_BLOG_PROPOSAL_SITE_FUNCTIONAL_2026-10-26.md), [diagnóstico actual](WORDPRESS_MCP_BLOG_PROPOSAL_PACKAGE.md). rc.1 y CMS reales sin cambios.
+
+**Estado posterior al diagnóstico real:** before recibido, bloqueado solo por perfil. Código/arranque contrastados y149checks funcionales ampliados correctos; falta la huella real de main files y candidato distribuible. rc.1 sigue retenido y sin cambios. [Recibo y siguiente fase](qa/MCP_BLOG_PROPOSAL_DESTINATION_PROFILE_2026-10-26.md). No repetir el comando inicial ni instalar/conceder scopes ahora.
 
 ## Incremento 1: documento de cambios local
 
