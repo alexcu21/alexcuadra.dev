@@ -1,0 +1,30 @@
+{
+  "format": "editorial-coordinated-component-v1",
+  "version": "0.1.0-rc.1",
+  "slug": "alexcuadra-editorial-project-classification",
+  "sha256": "48d0734c5fcb0876171c3fd7ad8d291d7310b624ebb45a18a52b9dc32a4dfe2d",
+  "zipBytes": 4385,
+  "files": [
+    {
+      "path": "alexcuadra-editorial-project-classification/README.md",
+      "bytes": 363,
+      "sha256": "42eb26ccc5c3caec29a7e9f7295a95f18dda72c36cf30187616ac5c9a14c55b3"
+    },
+    {
+      "path": "alexcuadra-editorial-project-classification/alexcuadra-editorial-project-classification.php",
+      "bytes": 374,
+      "sha256": "450c64d6d4fdf99652047097481f3ceb04232d418dadd4875899477fad7b7800"
+    },
+    {
+      "path": "alexcuadra-editorial-project-classification/reader.php",
+      "bytes": 9741,
+      "sha256": "30cd47fa728fd0c6714b57bd6ed5b75e35dc907326b288bee486052d69727bef"
+    }
+  ],
+  "installationApproved": false,
+  "capabilityGrantApproved": false,
+  "sourceWriterIncluded": false,
+  "automaticMigration": false,
+  "scope": "alexcuadra_read_public_projects",
+  "experimentalReaderSha256": "e80b3b422ca54622925ee9b7d56cafb5cacf807807ed1dccd8cd3ac152f2cc2b"
+}

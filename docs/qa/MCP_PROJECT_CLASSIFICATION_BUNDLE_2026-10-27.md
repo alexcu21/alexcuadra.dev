@@ -1,0 +1,34 @@
+# Paquete coordinado de clasificación — 27 octubre 2026
+
+Dos ZIP reproducibles: clasificación0.1.0-rc.1 SHA48d0734c…a4dfe2d (4385bytes) y propuestas0.1.0-rc.3 SHA581dc9a0…cb00df (18023bytes). [Manifiesto](../../artifacts/wordpress/project-classification-bundle-0.1.0-rc.1.manifest.json), [procedimiento](../WORDPRESS_MCP_PROJECT_CLASSIFICATION_PACKAGE.md). rc.2 y todos los paquetes instalados/fuentes selladas se conservan.
+
+## Ensayos finales
+
+| Recibo | Resultado |
+| --- | --- |
+| [Actualización/reversión](project-classification-bundle-upgrade-2026-10-27.json) | 33checks de fixture,8preflights (7correctos y1rechazo esperado por historySha ajeno),6recorridos de backup/verificación/rechazo de destino ocupado |
+| [Regresiones](project-classification-bundle-regression-2026-10-27.json) | 57clasificación WP+22HTTP+72propuestas WP+34fallos+43HTTP+29contratos=257correctas |
+| [Recuperación](project-classification-bundle-recovery-2026-10-27.json) | 39checks de integridad/restauración/get/list/replay y4recorridos CLI correctos |
+| Guards del paquete | 14casos local/sitio/opt-in/producción/multisite/ausencia de WordPress; recibidos en los tres informes |
+
+46checks de arranque preceden a cada ejecución, sin sumarlos como operaciones nuevas. Las credenciales/scopes de pruebas HTTP/operaciones quedan retirados según los recibos. Los ZIP se instalaron por WP-CLI, con reemplazo de la versión conocida solo en el laboratorio; nunca se alteraron los archivos originales de los paquetes para hacerlos pasar.
+
+La propuesta sintética1/v1 y su request original se crean con rc.2 antes del before. Tras rc.3+lector activo, get y replay coinciden exactamente, con una sola propuesta/versión. SHA de tablas editoriales, roles y capacidades coincide antes/después. Los lectores de posts/proyectos anteriores y ambas herramientas nuevas funcionan. Se verifica código completo de los tres archivos del lector; alteración del body, archivo extra y plugin activo desconocido cierran el perfil. Un historySha distinto se rechaza.
+
+El artefacto rc.2 exportado con escritor pausado se verifica con rc.3 y restaura en un prefijo aislado: mismo documento/get/replay. No se escribe en el espacio privado original o fuentes durante esa restauración. Se exporta/verifica después un artefacto rc.3, y se rechaza restaurar sobre las tablas existentes. Desactivar lector y recuperar rc.2 devuelve el mismo plan, versión, recibo, roles, permisos y fuente sintética.
+
+## Perfil y problemas del arnés resueltos
+
+WP7.1.3/PHP8.5.11/Polylang3.9.1/Adapter0.7.1/MariaDB11.8.9. Código previo verificado de16plugins más propuestas/lector, dosMU y TW4. Las dos taxonomías se registran con definiciones nuevas mediante ACF y opciones Polylang sintéticas. No se añade otro MU o relaja su hash. No se importaron SQL/configuración/usuarios/licencias o la propuesta real del hosting.
+
+Los dos primeros recorridos se detuvieron antes de actualizar por el nuevo preflight: el reescritor de eval-file devolvía null. Se reprodujo directamente WP_CLI\\Utils\\replace_path_consts: pregError6, JIT stack limit exhausted. --use-include evita esa reescritura y el driver exige recibo único/ready/estado correctos; no se modifican límites PCRE o controles. Un diagnóstico de reanudación del segundo laboratorio encontró la BD temporal ya desmontada y no aportó aceptación nueva.
+
+El tercer recorrido pasó actualización e instalación inactiva, pero el reinicio de WordPress desmontó el último volumen tmpfs y eliminó los fixtures temporales. Se eliminó ese reinicio del arnés, sin cambios de los ZIP, y el cuarto recorrido completó actualización/reversión. El modo extra bundle-recovery se añadió a las opciones CLI tras ese recorrido: el recibo conserva el hash del arnés ejecutado y la diferencia de esa única opción. Ningún archivo de producto cambió entre los ensayos finales. No se afirma validación del OPcache del hosting.
+
+Doce contenedores propios detenidos y red externa interna reutilizada vacía, sin puertos o prune, verificados en los recibos. Los comandos auxiliares de inspección de WP-CLI se ejecutaron en contenedores efímeros sin red. Sin SSH, lecturas MCP reales, backup/restauración/grant del hosting, correo o deploy en este incremento.
+
+## Siguiente fase real
+
+Subir solo el preflight nuevo, ejecutar --use-include before y revisar perfil, forma1/v1 y pilotDocumentSha256 contra el documento real ya observado. Captura únicamente metadatos de las cuatro tablas nuevas, no baseline de fuentes/postmeta ni reconstrucción del incidente histórico. historySha debe permanecer idéntico en fases sucesivas. Sigue pendiente un respaldo actualizado del plan real antes de cambiar código/permisos.
+
+Instalación aún no aprobada. El nuevo paquete no migra esquema, concede permisos, edita clasificaciones o publica posts. El catálogo público, temporalidad de lecturas y rama PHP del hosting conservan los límites descritos en el procedimiento. No se certifica toda la BD u opciones/cachés/árboles completos del servidor ni aceptación de accesibilidad/frontend/contacto/CMS429.

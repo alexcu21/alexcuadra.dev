@@ -1,5 +1,7 @@
 # Clasificación propia de proyectos en el MCP
 
+**27 octubre — paquete coordinado de clasificación preparado y probado:** lector0.1.0-rc.1 + perfil de propuestas0.1.0-rc.3; ZIPs separados/reproducibles, sin cambios de las cinco unidades de negocio/tablas. Conservación de plan sintético1/v1/get/replay/roles/fuente y rollback rc.2 correctos;33checks/8preflights/6ops,257regresiones,39recuperación/4CLI y14guards. [Paquete/paso vigente](WORDPRESS_MCP_PROJECT_CLASSIFICATION_PACKAGE.md), [QA/límites](qa/MCP_PROJECT_CLASSIFICATION_BUNDLE_2026-10-27.md). CMS real sigue rc.2/catálogo18/propuesta1v1. Siguiente: Alex sube solo preflight.php nuevo y ejecuta --use-include before, sin instalar/grants todavía; verificar hash del piloto e historia no vacía. Respaldo nuevo real pendiente antes de actualización.
+
 Se implementó un candidato local de lectura, separado del plugin0.1.0 instalado y de propuestas rc.2. [Código](../wordpress/experimental/editorial-project-classification/reader.php), [pruebas y límites](qa/MCP_PROJECT_CLASSIFICATION_READER_2026-10-27.md). No se modificó el CMS ni el catálogo real de18herramientas.
 
 ## Contrato de lectura
@@ -23,7 +25,11 @@ Máximo200proyectos públicos por idioma,200términos distintos por taxonomía/i
 
 Las consultas están acotadas y no ofrecen conteos privados. No se declara snapshot transaccional de todas las consultas/cachés de WordPress ni se certifica ausencia de ediciones concurrentes. Se comprueba el estado observado; las garantías de una futura escritura requerirán su revalidación/huella propia.
 
-## Estado y siguiente fase
+## Estado actual: paquete coordinado preparado
+
+El prototipo conserva sus fuentes. Ya se derivaron los ZIP del lector rc.1 y de propuestas rc.3, con admisión exacta coordinada y recuperación de artefactos rc.2. Coexistencia, historia sintética no vacía y rollback ensayados con el perfil completo. [Procedimiento vigente y primer preflight real](WORDPRESS_MCP_PROJECT_CLASSIFICATION_PACKAGE.md), [QA](qa/MCP_PROJECT_CLASSIFICATION_BUNDLE_2026-10-27.md). Instalación del hosting y respaldo actualizado de su plan real pendientes. No instalar el prototipo ni repetir controles iniciales que exigían tablas vacías.
+
+## Histórico: lector local y plan que motivó el paquete
 
 Candidato exclusivo de laboratorio con guard de flag/local/DB/URL/single-site, también comprobado en permiso de cada llamada. Sin admisión de producción, ZIP, instalación o grant nuevos. Pasan57casos WP/Polylang,22HTTP y9guards. Perfil mínimo sintético; todavía no se ensayó con todos los plugins/opciones del hosting.
 

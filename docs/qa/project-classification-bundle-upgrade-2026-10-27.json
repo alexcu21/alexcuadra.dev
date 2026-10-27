@@ -1,0 +1,1152 @@
+{
+  "format": "project-classification-full-profile-bundle-v1",
+  "codeInventoryArchiveSha256": "13f20d924a5d161f28444fabf24adbcba40f1c7bbb8951a57c1e4a00f9541d62",
+  "bootstrap": {
+    "environment": "isolated-synthetic-site-profile-bootstrap",
+    "passed": 46,
+    "failed": 0,
+    "cases": [
+      "sixteen_active_plugins_match_receipt",
+      "plugin_loaded_advanced_custom_fields_acf_php",
+      "plugin_code_advanced_custom_fields_acf_php",
+      "plugin_loaded_alexcuadra_editorial_blog_read_alexcuadra_editorial_blog_read_php",
+      "plugin_code_alexcuadra_editorial_blog_read_alexcuadra_editorial_blog_read_php",
+      "plugin_loaded_alexcuadra_editorial_operating_alexcuadra_editorial_operating_php",
+      "plugin_code_alexcuadra_editorial_operating_alexcuadra_editorial_operating_php",
+      "plugin_loaded_alexcuadra_editorial_proposals_alexcuadra_editorial_proposals_php",
+      "plugin_code_alexcuadra_editorial_proposals_alexcuadra_editorial_proposals_php",
+      "plugin_loaded_alexcuadra_editorial_read_alexcuadra_editorial_read_php",
+      "plugin_code_alexcuadra_editorial_read_alexcuadra_editorial_read_php",
+      "plugin_loaded_hostinger_easy_onboarding_hostinger_easy_onboarding_php",
+      "plugin_code_hostinger_easy_onboarding_hostinger_easy_onboarding_php",
+      "plugin_loaded_hostinger_reach_hostinger_reach_php",
+      "plugin_code_hostinger_reach_hostinger_reach_php",
+      "plugin_loaded_hostinger_hostinger_php",
+      "plugin_code_hostinger_hostinger_php",
+      "plugin_loaded_litespeed_cache_litespeed_cache_php",
+      "plugin_code_litespeed_cache_litespeed_cache_php",
+      "plugin_loaded_mcp_adapter_mcp_adapter_php",
+      "plugin_code_mcp_adapter_mcp_adapter_php",
+      "plugin_loaded_polylang_polylang_php",
+      "plugin_code_polylang_polylang_php",
+      "plugin_loaded_wordpress_beta_tester_wp_beta_tester_php",
+      "plugin_code_wordpress_beta_tester_wp_beta_tester_php",
+      "plugin_loaded_wp_graphql_polylang_0_7_1_wp_graphql_polylang_php",
+      "plugin_code_wp_graphql_polylang_0_7_1_wp_graphql_polylang_php",
+      "plugin_loaded_wp_graphql_wp_graphql_php",
+      "plugin_code_wp_graphql_wp_graphql_php",
+      "plugin_loaded_wpgraphql_acf_wpgraphql_acf_php",
+      "plugin_code_wpgraphql_acf_wpgraphql_acf_php",
+      "plugin_loaded_wpgraphql_ide_wpgraphql_ide_php",
+      "plugin_code_wpgraphql_ide_wpgraphql_ide_php",
+      "mu_loaded_hostinger_auto_updates_php",
+      "mu_loaded_hostinger_preview_domain_php",
+      "twentytwentyfour_16_matches_live_entries",
+      "theme_functions_loaded",
+      "minimal_candidate_still_rejects_only_profile_differences",
+      "core_and_php_branch_match",
+      "no_dropins_or_persistent_object_cache",
+      "new_private_tables_remain_absent",
+      "new_scope_not_granted",
+      "candidate_not_installed",
+      "outbound_http_blocked",
+      "mail_guard_installed",
+      "source_sql_and_config_not_imported"
+    ],
+    "profile": {
+      "checks": {
+        "singleSite": true,
+        "testedWordPress": true,
+        "testedPhp": true,
+        "coreWpdb": true,
+        "dependencies": true,
+        "testedActivePlugins": false,
+        "testedMuPlugins": false,
+        "standardObjectCache": true,
+        "noDropins": true,
+        "testedTheme": false,
+        "queryFilters": true
+      },
+      "ready": false,
+      "wordpress": "7.1.3",
+      "php": "8.5.11",
+      "activePlugins": {
+        "advanced-custom-fields/acf.php": "6.8.10",
+        "alexcuadra-editorial-blog-read/alexcuadra-editorial-blog-read.php": "0.1.0-rc.1",
+        "alexcuadra-editorial-operating/alexcuadra-editorial-operating.php": "0.1.0-rc.3",
+        "alexcuadra-editorial-proposals/alexcuadra-editorial-proposals.php": "0.1.0-rc.2",
+        "alexcuadra-editorial-read/alexcuadra-editorial-read.php": "0.1.0",
+        "hostinger-easy-onboarding/hostinger-easy-onboarding.php": "3.0.5",
+        "hostinger-reach/hostinger-reach.php": "1.8.7",
+        "hostinger/hostinger.php": "3.0.80",
+        "litespeed-cache/litespeed-cache.php": "7.9.2",
+        "mcp-adapter/mcp-adapter.php": "0.7.1",
+        "polylang/polylang.php": "3.9.1",
+        "wordpress-beta-tester/wp-beta-tester.php": "4.0.1",
+        "wp-graphql-polylang-0.7.1/wp-graphql-polylang.php": "0.7.1",
+        "wp-graphql/wp-graphql.php": "2.25.0",
+        "wpgraphql-acf/wpgraphql-acf.php": "3.0.0",
+        "wpgraphql-ide/wpgraphql-ide.php": "5.7.0"
+      },
+      "muPluginNames": [
+        "000-blog-site-guard.php",
+        "hostinger-auto-updates.php",
+        "hostinger-preview-domain.php"
+      ],
+      "muPluginSha256": {
+        "000-blog-site-guard.php": "285beda78da96fa89a30ae9f1c7b9c24f62cbe40f8c79759241698e13bd2f7d5",
+        "hostinger-auto-updates.php": "2492da0336ed34b4377b2a2de882603280e0fde70df712b08fcd2ddef588a5bf",
+        "hostinger-preview-domain.php": "ccedfe9be0bce8e941274a519bfea4ca686a7cc0a1f0cedccdbb39384d8764f4"
+      },
+      "queryCallbacks": [
+        {
+          "priority": 0,
+          "kind": "core-placeholder",
+          "callback": "wpdb::remove_placeholder_escape",
+          "source": "wp-includes/class-wpdb.php",
+          "sourceSha256": "e15403e90032dd0508811301505e491d4212de5152581a98f51b744a1a3903bd"
+        }
+      ],
+      "theme": {
+        "stylesheet": "twentytwentyfour",
+        "template": "twentytwentyfour",
+        "version": "1.6",
+        "styleSha256": "fd3c8a4e86382cbd69046dd4670112c7b17817bdff3671bf29d3e49a874c1fe2",
+        "functionsSha256": "6cec0f112f34ff3a043fe1e16c2d235ce905a735d46039a50879e8fd469f2bce"
+      },
+      "dropinNames": [],
+      "wpdbSourceSha256": "e15403e90032dd0508811301505e491d4212de5152581a98f51b744a1a3903bd",
+      "instrumentedLocalProfile": false,
+      "sourceRenderingPerformed": false
+    },
+    "installedCandidate": false,
+    "newScopeGranted": false,
+    "proposalWritesTested": false,
+    "hostingDatabaseImported": false
+  },
+  "blockedPreflight": {
+    "format": "blog-proposal-preflight-v1",
+    "phase": "before",
+    "userId": 2,
+    "packageSha256": "ca33ebd4b3a874a939b8d18dbf42c2cea324325b26716f01208cd1f85154635a",
+    "ready": false,
+    "checks": {
+      "testedProfile": false,
+      "subscriberOnly": true,
+      "read": true,
+      "noBroadPermissions": true,
+      "preservedExactCapabilities": true,
+      "noRoleWideGrant": true,
+      "expectedScope": true,
+      "scopeOwners": true,
+      "expectedFiles": true,
+      "expectedActivation": true,
+      "expectedGuard": true,
+      "expectedRegistration": true,
+      "expectedSchema": true,
+      "expectedOwners": true,
+      "initialPrivateStorageEmpty": true
+    },
+    "profile": {
+      "checks": {
+        "singleSite": true,
+        "testedWordPress": true,
+        "testedPhp": true,
+        "coreWpdb": true,
+        "dependencies": true,
+        "testedActivePlugins": false,
+        "testedMuPlugins": false,
+        "standardObjectCache": true,
+        "noDropins": true,
+        "testedTheme": false,
+        "queryFilters": true
+      },
+      "ready": false,
+      "wordpress": "7.1.3",
+      "php": "8.5.11",
+      "activePlugins": {
+        "advanced-custom-fields/acf.php": "6.8.10",
+        "alexcuadra-editorial-blog-read/alexcuadra-editorial-blog-read.php": "0.1.0-rc.1",
+        "alexcuadra-editorial-operating/alexcuadra-editorial-operating.php": "0.1.0-rc.3",
+        "alexcuadra-editorial-proposals/alexcuadra-editorial-proposals.php": "0.1.0-rc.2",
+        "alexcuadra-editorial-read/alexcuadra-editorial-read.php": "0.1.0",
+        "hostinger-easy-onboarding/hostinger-easy-onboarding.php": "3.0.5",
+        "hostinger-reach/hostinger-reach.php": "1.8.7",
+        "hostinger/hostinger.php": "3.0.80",
+        "litespeed-cache/litespeed-cache.php": "7.9.2",
+        "mcp-adapter/mcp-adapter.php": "0.7.1",
+        "polylang/polylang.php": "3.9.1",
+        "wordpress-beta-tester/wp-beta-tester.php": "4.0.1",
+        "wp-graphql-polylang-0.7.1/wp-graphql-polylang.php": "0.7.1",
+        "wp-graphql/wp-graphql.php": "2.25.0",
+        "wpgraphql-acf/wpgraphql-acf.php": "3.0.0",
+        "wpgraphql-ide/wpgraphql-ide.php": "5.7.0"
+      },
+      "muPluginNames": [
+        "000-blog-site-guard.php",
+        "hostinger-auto-updates.php",
+        "hostinger-preview-domain.php"
+      ],
+      "muPluginSha256": {
+        "000-blog-site-guard.php": "285beda78da96fa89a30ae9f1c7b9c24f62cbe40f8c79759241698e13bd2f7d5",
+        "hostinger-auto-updates.php": "2492da0336ed34b4377b2a2de882603280e0fde70df712b08fcd2ddef588a5bf",
+        "hostinger-preview-domain.php": "ccedfe9be0bce8e941274a519bfea4ca686a7cc0a1f0cedccdbb39384d8764f4"
+      },
+      "queryCallbacks": [
+        {
+          "priority": 0,
+          "kind": "core-placeholder",
+          "callback": "wpdb::remove_placeholder_escape",
+          "source": "wp-includes/class-wpdb.php",
+          "sourceSha256": "e15403e90032dd0508811301505e491d4212de5152581a98f51b744a1a3903bd"
+        }
+      ],
+      "theme": {
+        "stylesheet": "twentytwentyfour",
+        "template": "twentytwentyfour",
+        "version": "1.6",
+        "styleSha256": "fd3c8a4e86382cbd69046dd4670112c7b17817bdff3671bf29d3e49a874c1fe2",
+        "functionsSha256": "6cec0f112f34ff3a043fe1e16c2d235ce905a735d46039a50879e8fd469f2bce"
+      },
+      "dropinNames": [],
+      "wpdbSourceSha256": "e15403e90032dd0508811301505e491d4212de5152581a98f51b744a1a3903bd",
+      "instrumentedLocalProfile": false,
+      "sourceRenderingPerformed": false
+    },
+    "schema": {
+      "present": 0,
+      "checks": {
+        "owners": false,
+        "proposals": false,
+        "revisions": false,
+        "requests": false
+      },
+      "ready": false,
+      "tables": []
+    },
+    "effectiveCapabilityNames": [
+      "alexcuadra_apply_project_changes",
+      "alexcuadra_prepare_project_changes",
+      "alexcuadra_read_public_posts",
+      "alexcuadra_read_public_projects",
+      "alexcuadra_recover_project_changes",
+      "level_0",
+      "read",
+      "subscriber"
+    ],
+    "broadPermissionsDenied": {
+      "manage_options": true,
+      "install_plugins": true,
+      "activate_plugins": true,
+      "update_plugins": true,
+      "edit_users": true,
+      "promote_users": true,
+      "delete_users": true,
+      "create_users": true,
+      "edit_posts": true,
+      "edit_pages": true,
+      "edit_others_posts": true,
+      "edit_others_pages": true,
+      "publish_posts": true,
+      "publish_pages": true,
+      "delete_posts": true,
+      "delete_pages": true
+    },
+    "sourceContentInspected": false,
+    "applicationPasswordsRequested": false,
+    "mutationsRequested": false,
+    "initialAcceptanceOnly": true
+  },
+  "profileBlockReproduced": true,
+  "realCmsChanged": false,
+  "proposalCrudTested": false,
+  "hostDatabaseImported": false,
+  "privateFixtureMuExcludedFromLiveIdentityComparison": true,
+  "network": "alexcuadra-blog-proposal-release-20261026-functional-r2_default",
+  "networkInternal": true,
+  "hostPorts": false,
+  "archiveInstalledByWpCli": true,
+  "mode": "bundle-upgrade",
+  "fixtures": [
+    {
+      "mode": "configure",
+      "passed": 3,
+      "failed": 0,
+      "cases": [
+        "native_acf_definition_project_category",
+        "native_acf_definition_project_technology",
+        "synthetic_translation_settings_saved"
+      ],
+      "syntheticOnly": true
+    },
+    {
+      "mode": "seed",
+      "passed": 1,
+      "failed": 0,
+      "cases": [
+        "seed_has_proposal_one_version_one"
+      ],
+      "syntheticOnly": true
+    },
+    {
+      "mode": "pause",
+      "passed": 1,
+      "failed": 0,
+      "cases": [
+        "private_writer_scope_paused"
+      ],
+      "syntheticOnly": true
+    },
+    {
+      "mode": "profile-negatives",
+      "passed": 5,
+      "failed": 0,
+      "cases": [
+        "coordinated_profile_ready",
+        "reader_body_drift_blocks_proposals",
+        "extra_reader_file_blocks_proposals",
+        "unknown_active_plugin_still_blocked",
+        "coordinated_profile_restored"
+      ],
+      "syntheticOnly": true
+    },
+    {
+      "mode": "resume",
+      "passed": 1,
+      "failed": 0,
+      "cases": [
+        "private_writer_scope_resumed"
+      ],
+      "syntheticOnly": true
+    },
+    {
+      "mode": "preserve",
+      "passed": 6,
+      "failed": 0,
+      "cases": [
+        "upgrade_preserves_editorial_source_rows",
+        "upgrade_preserves_roles",
+        "upgrade_preserves_exact_capabilities",
+        "retained_get_exact",
+        "retained_replay_exact",
+        "retained_inventory_one_version_one"
+      ],
+      "syntheticOnly": true
+    },
+    {
+      "mode": "readers",
+      "passed": 5,
+      "failed": 0,
+      "cases": [
+        "existing_project_reader_coexists",
+        "existing_blog_reader_coexists",
+        "new_assigned_classification_works",
+        "new_public_translation_works",
+        "new_catalog_works"
+      ],
+      "syntheticOnly": true
+    },
+    {
+      "mode": "pause",
+      "passed": 1,
+      "failed": 0,
+      "cases": [
+        "private_writer_scope_paused"
+      ],
+      "syntheticOnly": true
+    },
+    {
+      "mode": "restore-old-backup",
+      "passed": 3,
+      "failed": 0,
+      "cases": [
+        "rc3_recovers_rc2_artifact",
+        "old_backup_restored_get_exact",
+        "old_backup_restored_replay_exact"
+      ],
+      "syntheticOnly": true
+    },
+    {
+      "mode": "resume",
+      "passed": 1,
+      "failed": 0,
+      "cases": [
+        "private_writer_scope_resumed"
+      ],
+      "syntheticOnly": true
+    },
+    {
+      "mode": "preserve",
+      "passed": 6,
+      "failed": 0,
+      "cases": [
+        "upgrade_preserves_editorial_source_rows",
+        "upgrade_preserves_roles",
+        "upgrade_preserves_exact_capabilities",
+        "retained_get_exact",
+        "retained_replay_exact",
+        "retained_inventory_one_version_one"
+      ],
+      "syntheticOnly": true
+    }
+  ],
+  "upgradePreflights": [
+    {
+      "format": "project-classification-upgrade-preflight-v1",
+      "phase": "before",
+      "ready": true,
+      "checks": {
+        "singleTarget": true,
+        "exactProposalPackage": true,
+        "proposalActive": true,
+        "proposalGuard": true,
+        "profileCompatible": true,
+        "exactClassificationFiles": true,
+        "expectedClassificationActivation": true,
+        "privateToolsRegistered": true,
+        "classificationToolsRegistered": true,
+        "translatedProjectOnlyTaxonomies": true,
+        "schemaReady": true,
+        "expectedPilotShape": true,
+        "originalHistoryPreserved": true,
+        "subscriberOnly": true,
+        "exactCapabilities": true,
+        "expectedScope": true,
+        "scopeOwners": true,
+        "noRoleWideGrant": true,
+        "noBroadPermissions": true
+      },
+      "proposalPackageSha256": "7e5bc2b3213a8497dc47426b4565bbf528400d69f4e4f3e57f40f6119d4d6def",
+      "classificationPackageSha256": "48d0734c5fcb0876171c3fd7ad8d291d7310b624ebb45a18a52b9dc32a4dfe2d",
+      "historySha256": "ff95dafb32bd0f93087292b5da6211919bdf965f79f313cece159c9941eb9d92",
+      "pilotDocumentSha256": "fb6753b7c1d167fc121bfee836d36290fbc1fa2a4d749f1817e6c1f2e5b585c5",
+      "counts": {
+        "owners": 1,
+        "proposals": 1,
+        "revisions": 1,
+        "requests": 1
+      },
+      "effectiveCapabilityNames": [
+        "alexcuadra_apply_project_changes",
+        "alexcuadra_prepare_post_changes",
+        "alexcuadra_prepare_project_changes",
+        "alexcuadra_read_public_posts",
+        "alexcuadra_read_public_projects",
+        "alexcuadra_recover_project_changes",
+        "level_0",
+        "read",
+        "subscriber"
+      ],
+      "broadPermissionsDenied": {
+        "manage_options": true,
+        "install_plugins": true,
+        "activate_plugins": true,
+        "update_plugins": true,
+        "edit_users": true,
+        "promote_users": true,
+        "delete_users": true,
+        "create_users": true,
+        "edit_posts": true,
+        "edit_pages": true,
+        "edit_others_posts": true,
+        "edit_others_pages": true,
+        "publish_posts": true,
+        "publish_pages": true,
+        "delete_posts": true,
+        "delete_pages": true
+      },
+      "sourceBodiesRead": false,
+      "privateDocumentBodiesRead": false,
+      "mutationsRequested": false,
+      "capturesOnlyNewModuleMetadataNotLegacySourceBaseline": true
+    },
+    {
+      "format": "project-classification-upgrade-preflight-v1",
+      "phase": "proposal-upgraded",
+      "ready": true,
+      "checks": {
+        "singleTarget": true,
+        "exactProposalPackage": true,
+        "proposalActive": true,
+        "proposalGuard": true,
+        "profileCompatible": true,
+        "exactClassificationFiles": true,
+        "expectedClassificationActivation": true,
+        "privateToolsRegistered": true,
+        "classificationToolsRegistered": true,
+        "translatedProjectOnlyTaxonomies": true,
+        "schemaReady": true,
+        "expectedPilotShape": true,
+        "originalHistoryPreserved": true,
+        "subscriberOnly": true,
+        "exactCapabilities": true,
+        "expectedScope": true,
+        "scopeOwners": true,
+        "noRoleWideGrant": true,
+        "noBroadPermissions": true
+      },
+      "proposalPackageSha256": "581dc9a006e49d0add30209bf33e31f5f8ba2c97bc575630dc262ebf73cb00df",
+      "classificationPackageSha256": "48d0734c5fcb0876171c3fd7ad8d291d7310b624ebb45a18a52b9dc32a4dfe2d",
+      "historySha256": "ff95dafb32bd0f93087292b5da6211919bdf965f79f313cece159c9941eb9d92",
+      "pilotDocumentSha256": "fb6753b7c1d167fc121bfee836d36290fbc1fa2a4d749f1817e6c1f2e5b585c5",
+      "counts": {
+        "owners": 1,
+        "proposals": 1,
+        "revisions": 1,
+        "requests": 1
+      },
+      "effectiveCapabilityNames": [
+        "alexcuadra_apply_project_changes",
+        "alexcuadra_prepare_project_changes",
+        "alexcuadra_read_public_posts",
+        "alexcuadra_read_public_projects",
+        "alexcuadra_recover_project_changes",
+        "level_0",
+        "read",
+        "subscriber"
+      ],
+      "broadPermissionsDenied": {
+        "manage_options": true,
+        "install_plugins": true,
+        "activate_plugins": true,
+        "update_plugins": true,
+        "edit_users": true,
+        "promote_users": true,
+        "delete_users": true,
+        "create_users": true,
+        "edit_posts": true,
+        "edit_pages": true,
+        "edit_others_posts": true,
+        "edit_others_pages": true,
+        "publish_posts": true,
+        "publish_pages": true,
+        "delete_posts": true,
+        "delete_pages": true
+      },
+      "sourceBodiesRead": false,
+      "privateDocumentBodiesRead": false,
+      "mutationsRequested": false,
+      "capturesOnlyNewModuleMetadataNotLegacySourceBaseline": true
+    },
+    {
+      "format": "project-classification-upgrade-preflight-v1",
+      "phase": "classifier-installed",
+      "ready": true,
+      "checks": {
+        "singleTarget": true,
+        "exactProposalPackage": true,
+        "proposalActive": true,
+        "proposalGuard": true,
+        "profileCompatible": true,
+        "exactClassificationFiles": true,
+        "expectedClassificationActivation": true,
+        "privateToolsRegistered": true,
+        "classificationToolsRegistered": true,
+        "translatedProjectOnlyTaxonomies": true,
+        "schemaReady": true,
+        "expectedPilotShape": true,
+        "originalHistoryPreserved": true,
+        "subscriberOnly": true,
+        "exactCapabilities": true,
+        "expectedScope": true,
+        "scopeOwners": true,
+        "noRoleWideGrant": true,
+        "noBroadPermissions": true
+      },
+      "proposalPackageSha256": "581dc9a006e49d0add30209bf33e31f5f8ba2c97bc575630dc262ebf73cb00df",
+      "classificationPackageSha256": "48d0734c5fcb0876171c3fd7ad8d291d7310b624ebb45a18a52b9dc32a4dfe2d",
+      "historySha256": "ff95dafb32bd0f93087292b5da6211919bdf965f79f313cece159c9941eb9d92",
+      "pilotDocumentSha256": "fb6753b7c1d167fc121bfee836d36290fbc1fa2a4d749f1817e6c1f2e5b585c5",
+      "counts": {
+        "owners": 1,
+        "proposals": 1,
+        "revisions": 1,
+        "requests": 1
+      },
+      "effectiveCapabilityNames": [
+        "alexcuadra_apply_project_changes",
+        "alexcuadra_prepare_project_changes",
+        "alexcuadra_read_public_posts",
+        "alexcuadra_read_public_projects",
+        "alexcuadra_recover_project_changes",
+        "level_0",
+        "read",
+        "subscriber"
+      ],
+      "broadPermissionsDenied": {
+        "manage_options": true,
+        "install_plugins": true,
+        "activate_plugins": true,
+        "update_plugins": true,
+        "edit_users": true,
+        "promote_users": true,
+        "delete_users": true,
+        "create_users": true,
+        "edit_posts": true,
+        "edit_pages": true,
+        "edit_others_posts": true,
+        "edit_others_pages": true,
+        "publish_posts": true,
+        "publish_pages": true,
+        "delete_posts": true,
+        "delete_pages": true
+      },
+      "sourceBodiesRead": false,
+      "privateDocumentBodiesRead": false,
+      "mutationsRequested": false,
+      "capturesOnlyNewModuleMetadataNotLegacySourceBaseline": true
+    },
+    {
+      "format": "project-classification-upgrade-preflight-v1",
+      "phase": "classifier-enabled",
+      "ready": true,
+      "checks": {
+        "singleTarget": true,
+        "exactProposalPackage": true,
+        "proposalActive": true,
+        "proposalGuard": true,
+        "profileCompatible": true,
+        "exactClassificationFiles": true,
+        "expectedClassificationActivation": true,
+        "privateToolsRegistered": true,
+        "classificationToolsRegistered": true,
+        "translatedProjectOnlyTaxonomies": true,
+        "schemaReady": true,
+        "expectedPilotShape": true,
+        "originalHistoryPreserved": true,
+        "subscriberOnly": true,
+        "exactCapabilities": true,
+        "expectedScope": true,
+        "scopeOwners": true,
+        "noRoleWideGrant": true,
+        "noBroadPermissions": true
+      },
+      "proposalPackageSha256": "581dc9a006e49d0add30209bf33e31f5f8ba2c97bc575630dc262ebf73cb00df",
+      "classificationPackageSha256": "48d0734c5fcb0876171c3fd7ad8d291d7310b624ebb45a18a52b9dc32a4dfe2d",
+      "historySha256": "ff95dafb32bd0f93087292b5da6211919bdf965f79f313cece159c9941eb9d92",
+      "pilotDocumentSha256": "fb6753b7c1d167fc121bfee836d36290fbc1fa2a4d749f1817e6c1f2e5b585c5",
+      "counts": {
+        "owners": 1,
+        "proposals": 1,
+        "revisions": 1,
+        "requests": 1
+      },
+      "effectiveCapabilityNames": [
+        "alexcuadra_apply_project_changes",
+        "alexcuadra_prepare_project_changes",
+        "alexcuadra_read_public_posts",
+        "alexcuadra_read_public_projects",
+        "alexcuadra_recover_project_changes",
+        "level_0",
+        "read",
+        "subscriber"
+      ],
+      "broadPermissionsDenied": {
+        "manage_options": true,
+        "install_plugins": true,
+        "activate_plugins": true,
+        "update_plugins": true,
+        "edit_users": true,
+        "promote_users": true,
+        "delete_users": true,
+        "create_users": true,
+        "edit_posts": true,
+        "edit_pages": true,
+        "edit_others_posts": true,
+        "edit_others_pages": true,
+        "publish_posts": true,
+        "publish_pages": true,
+        "delete_posts": true,
+        "delete_pages": true
+      },
+      "sourceBodiesRead": false,
+      "privateDocumentBodiesRead": false,
+      "mutationsRequested": false,
+      "capturesOnlyNewModuleMetadataNotLegacySourceBaseline": true
+    },
+    {
+      "format": "project-classification-upgrade-preflight-v1",
+      "phase": "classifier-enabled",
+      "ready": false,
+      "checks": {
+        "singleTarget": true,
+        "exactProposalPackage": true,
+        "proposalActive": true,
+        "proposalGuard": true,
+        "profileCompatible": true,
+        "exactClassificationFiles": true,
+        "expectedClassificationActivation": true,
+        "privateToolsRegistered": true,
+        "classificationToolsRegistered": true,
+        "translatedProjectOnlyTaxonomies": true,
+        "schemaReady": true,
+        "expectedPilotShape": true,
+        "originalHistoryPreserved": false,
+        "subscriberOnly": true,
+        "exactCapabilities": true,
+        "expectedScope": true,
+        "scopeOwners": true,
+        "noRoleWideGrant": true,
+        "noBroadPermissions": true
+      },
+      "proposalPackageSha256": "581dc9a006e49d0add30209bf33e31f5f8ba2c97bc575630dc262ebf73cb00df",
+      "classificationPackageSha256": "48d0734c5fcb0876171c3fd7ad8d291d7310b624ebb45a18a52b9dc32a4dfe2d",
+      "historySha256": "ff95dafb32bd0f93087292b5da6211919bdf965f79f313cece159c9941eb9d92",
+      "pilotDocumentSha256": "fb6753b7c1d167fc121bfee836d36290fbc1fa2a4d749f1817e6c1f2e5b585c5",
+      "counts": {
+        "owners": 1,
+        "proposals": 1,
+        "revisions": 1,
+        "requests": 1
+      },
+      "effectiveCapabilityNames": [
+        "alexcuadra_apply_project_changes",
+        "alexcuadra_prepare_project_changes",
+        "alexcuadra_read_public_posts",
+        "alexcuadra_read_public_projects",
+        "alexcuadra_recover_project_changes",
+        "level_0",
+        "read",
+        "subscriber"
+      ],
+      "broadPermissionsDenied": {
+        "manage_options": true,
+        "install_plugins": true,
+        "activate_plugins": true,
+        "update_plugins": true,
+        "edit_users": true,
+        "promote_users": true,
+        "delete_users": true,
+        "create_users": true,
+        "edit_posts": true,
+        "edit_pages": true,
+        "edit_others_posts": true,
+        "edit_others_pages": true,
+        "publish_posts": true,
+        "publish_pages": true,
+        "delete_posts": true,
+        "delete_pages": true
+      },
+      "sourceBodiesRead": false,
+      "privateDocumentBodiesRead": false,
+      "mutationsRequested": false,
+      "capturesOnlyNewModuleMetadataNotLegacySourceBaseline": true
+    },
+    {
+      "format": "project-classification-upgrade-preflight-v1",
+      "phase": "after-scope",
+      "ready": true,
+      "checks": {
+        "singleTarget": true,
+        "exactProposalPackage": true,
+        "proposalActive": true,
+        "proposalGuard": true,
+        "profileCompatible": true,
+        "exactClassificationFiles": true,
+        "expectedClassificationActivation": true,
+        "privateToolsRegistered": true,
+        "classificationToolsRegistered": true,
+        "translatedProjectOnlyTaxonomies": true,
+        "schemaReady": true,
+        "expectedPilotShape": true,
+        "originalHistoryPreserved": true,
+        "subscriberOnly": true,
+        "exactCapabilities": true,
+        "expectedScope": true,
+        "scopeOwners": true,
+        "noRoleWideGrant": true,
+        "noBroadPermissions": true
+      },
+      "proposalPackageSha256": "581dc9a006e49d0add30209bf33e31f5f8ba2c97bc575630dc262ebf73cb00df",
+      "classificationPackageSha256": "48d0734c5fcb0876171c3fd7ad8d291d7310b624ebb45a18a52b9dc32a4dfe2d",
+      "historySha256": "ff95dafb32bd0f93087292b5da6211919bdf965f79f313cece159c9941eb9d92",
+      "pilotDocumentSha256": "fb6753b7c1d167fc121bfee836d36290fbc1fa2a4d749f1817e6c1f2e5b585c5",
+      "counts": {
+        "owners": 1,
+        "proposals": 1,
+        "revisions": 1,
+        "requests": 1
+      },
+      "effectiveCapabilityNames": [
+        "alexcuadra_apply_project_changes",
+        "alexcuadra_prepare_post_changes",
+        "alexcuadra_prepare_project_changes",
+        "alexcuadra_read_public_posts",
+        "alexcuadra_read_public_projects",
+        "alexcuadra_recover_project_changes",
+        "level_0",
+        "read",
+        "subscriber"
+      ],
+      "broadPermissionsDenied": {
+        "manage_options": true,
+        "install_plugins": true,
+        "activate_plugins": true,
+        "update_plugins": true,
+        "edit_users": true,
+        "promote_users": true,
+        "delete_users": true,
+        "create_users": true,
+        "edit_posts": true,
+        "edit_pages": true,
+        "edit_others_posts": true,
+        "edit_others_pages": true,
+        "publish_posts": true,
+        "publish_pages": true,
+        "delete_posts": true,
+        "delete_pages": true
+      },
+      "sourceBodiesRead": false,
+      "privateDocumentBodiesRead": false,
+      "mutationsRequested": false,
+      "capturesOnlyNewModuleMetadataNotLegacySourceBaseline": true
+    },
+    {
+      "format": "project-classification-upgrade-preflight-v1",
+      "phase": "classifier-installed",
+      "ready": true,
+      "checks": {
+        "singleTarget": true,
+        "exactProposalPackage": true,
+        "proposalActive": true,
+        "proposalGuard": true,
+        "profileCompatible": true,
+        "exactClassificationFiles": true,
+        "expectedClassificationActivation": true,
+        "privateToolsRegistered": true,
+        "classificationToolsRegistered": true,
+        "translatedProjectOnlyTaxonomies": true,
+        "schemaReady": true,
+        "expectedPilotShape": true,
+        "originalHistoryPreserved": true,
+        "subscriberOnly": true,
+        "exactCapabilities": true,
+        "expectedScope": true,
+        "scopeOwners": true,
+        "noRoleWideGrant": true,
+        "noBroadPermissions": true
+      },
+      "proposalPackageSha256": "581dc9a006e49d0add30209bf33e31f5f8ba2c97bc575630dc262ebf73cb00df",
+      "classificationPackageSha256": "48d0734c5fcb0876171c3fd7ad8d291d7310b624ebb45a18a52b9dc32a4dfe2d",
+      "historySha256": "ff95dafb32bd0f93087292b5da6211919bdf965f79f313cece159c9941eb9d92",
+      "pilotDocumentSha256": "fb6753b7c1d167fc121bfee836d36290fbc1fa2a4d749f1817e6c1f2e5b585c5",
+      "counts": {
+        "owners": 1,
+        "proposals": 1,
+        "revisions": 1,
+        "requests": 1
+      },
+      "effectiveCapabilityNames": [
+        "alexcuadra_apply_project_changes",
+        "alexcuadra_prepare_project_changes",
+        "alexcuadra_read_public_posts",
+        "alexcuadra_read_public_projects",
+        "alexcuadra_recover_project_changes",
+        "level_0",
+        "read",
+        "subscriber"
+      ],
+      "broadPermissionsDenied": {
+        "manage_options": true,
+        "install_plugins": true,
+        "activate_plugins": true,
+        "update_plugins": true,
+        "edit_users": true,
+        "promote_users": true,
+        "delete_users": true,
+        "create_users": true,
+        "edit_posts": true,
+        "edit_pages": true,
+        "edit_others_posts": true,
+        "edit_others_pages": true,
+        "publish_posts": true,
+        "publish_pages": true,
+        "delete_posts": true,
+        "delete_pages": true
+      },
+      "sourceBodiesRead": false,
+      "privateDocumentBodiesRead": false,
+      "mutationsRequested": false,
+      "capturesOnlyNewModuleMetadataNotLegacySourceBaseline": true
+    },
+    {
+      "format": "project-classification-upgrade-preflight-v1",
+      "phase": "rolled-back",
+      "ready": true,
+      "checks": {
+        "singleTarget": true,
+        "exactProposalPackage": true,
+        "proposalActive": true,
+        "proposalGuard": true,
+        "profileCompatible": true,
+        "exactClassificationFiles": true,
+        "expectedClassificationActivation": true,
+        "privateToolsRegistered": true,
+        "classificationToolsRegistered": true,
+        "translatedProjectOnlyTaxonomies": true,
+        "schemaReady": true,
+        "expectedPilotShape": true,
+        "originalHistoryPreserved": true,
+        "subscriberOnly": true,
+        "exactCapabilities": true,
+        "expectedScope": true,
+        "scopeOwners": true,
+        "noRoleWideGrant": true,
+        "noBroadPermissions": true
+      },
+      "proposalPackageSha256": "7e5bc2b3213a8497dc47426b4565bbf528400d69f4e4f3e57f40f6119d4d6def",
+      "classificationPackageSha256": "48d0734c5fcb0876171c3fd7ad8d291d7310b624ebb45a18a52b9dc32a4dfe2d",
+      "historySha256": "ff95dafb32bd0f93087292b5da6211919bdf965f79f313cece159c9941eb9d92",
+      "pilotDocumentSha256": "fb6753b7c1d167fc121bfee836d36290fbc1fa2a4d749f1817e6c1f2e5b585c5",
+      "counts": {
+        "owners": 1,
+        "proposals": 1,
+        "revisions": 1,
+        "requests": 1
+      },
+      "effectiveCapabilityNames": [
+        "alexcuadra_apply_project_changes",
+        "alexcuadra_prepare_post_changes",
+        "alexcuadra_prepare_project_changes",
+        "alexcuadra_read_public_posts",
+        "alexcuadra_read_public_projects",
+        "alexcuadra_recover_project_changes",
+        "level_0",
+        "read",
+        "subscriber"
+      ],
+      "broadPermissionsDenied": {
+        "manage_options": true,
+        "install_plugins": true,
+        "activate_plugins": true,
+        "update_plugins": true,
+        "edit_users": true,
+        "promote_users": true,
+        "delete_users": true,
+        "create_users": true,
+        "edit_posts": true,
+        "edit_pages": true,
+        "edit_others_posts": true,
+        "edit_others_pages": true,
+        "publish_posts": true,
+        "publish_pages": true,
+        "delete_posts": true,
+        "delete_pages": true
+      },
+      "sourceBodiesRead": false,
+      "privateDocumentBodiesRead": false,
+      "mutationsRequested": false,
+      "capturesOnlyNewModuleMetadataNotLegacySourceBaseline": true
+    }
+  ],
+  "operatorReceipts": [
+    {
+      "format": "blog-proposal-backup-operator-v1",
+      "mode": "export",
+      "ready": true,
+      "backupDirectory": "backup-20261027T194458Z-49e0816a32218d97",
+      "manifestSha256": "7e64d41082a1cabbf40b7fe6184ce16a8f49e8d1fc1fc92d1118aedd67cec2b7",
+      "counts": {
+        "owners": 1,
+        "proposals": 1,
+        "revisions": 1,
+        "requests": 1
+      },
+      "databaseWritesPerformed": false,
+      "restorationVerified": false
+    },
+    {
+      "format": "blog-proposal-backup-operator-v1",
+      "mode": "verify",
+      "ready": true,
+      "counts": {
+        "owners": 1,
+        "proposals": 1,
+        "revisions": 1,
+        "requests": 1
+      },
+      "integrityVerified": true,
+      "restorationVerified": false,
+      "databaseWritesPerformed": false
+    },
+    {
+      "format": "blog-proposal-backup-operator-v1",
+      "mode": "verify",
+      "ready": true,
+      "counts": {
+        "owners": 1,
+        "proposals": 1,
+        "revisions": 1,
+        "requests": 1
+      },
+      "integrityVerified": true,
+      "restorationVerified": false,
+      "databaseWritesPerformed": false
+    },
+    {
+      "format": "blog-proposal-backup-operator-v1",
+      "mode": "export",
+      "ready": true,
+      "backupDirectory": "backup-20261027T194516Z-504c0c31364bf96d",
+      "manifestSha256": "0803d546b9638d1fc2ed6449eef2bf388a33dbbcdbf5fdc7f203d86afc603542",
+      "counts": {
+        "owners": 1,
+        "proposals": 1,
+        "revisions": 1,
+        "requests": 1
+      },
+      "databaseWritesPerformed": false,
+      "restorationVerified": false
+    },
+    {
+      "format": "blog-proposal-backup-operator-v1",
+      "mode": "verify",
+      "ready": true,
+      "counts": {
+        "owners": 1,
+        "proposals": 1,
+        "revisions": 1,
+        "requests": 1
+      },
+      "integrityVerified": true,
+      "restorationVerified": false,
+      "databaseWritesPerformed": false
+    },
+    {
+      "format": "blog-proposal-backup-operator-v1",
+      "mode": "restore-empty",
+      "ready": false,
+      "code": "BLOG_RECOVERY_RESTORE_TARGET_NOT_EMPTY",
+      "automaticRetryAllowed": false
+    }
+  ],
+  "regressions": {},
+  "realProposalImported": false,
+  "syntheticProposalOneVersionOne": true,
+  "sourceSqlImported": false,
+  "installationApproved": false,
+  "bundleManifestSha256": "f2ed61e0c6b976e2ede1a0a35c93b452cf8bc2e96206aa7c0072c3cdecdb9d5c",
+  "sourceFileSha256": {
+    "tests/integration/wordpress-project-classification-bundle/driver.py": "7fd26ceeef7691069c6f78f6f765a21b66f938b57ef85884b3525d9bcd71bb2b",
+    "tests/integration/wordpress-project-classification-bundle/fixture.php": "79e2cb8138de19e0cf44db637bbbcd3b96949e8ec97ad6c5a5cf0c3d9b884957",
+    "tests/integration/wordpress-blog-proposals-site-profile/run.py": "b4ffe1ce7126029ea6bb0803651e07cae7c6586ae3af00c5e8789733d246f771",
+    "scripts/package-project-classification-bundle.py": "9798c8183b36bebfc68c2536f21b99cda89f12075d4f8c61fa69ae0c516339ff"
+  },
+  "operatorFileSha256": {
+    "recovery.php": "f41a171c47c34471fc0306b50ab0ee32213567c50c4c9ee0a1c57d600ebf8ad4",
+    "blog-proposal-backup.php": "89fdafdadca689510bc98ecc596b13cabedca6ff2aad4c0d1f77471dcddb8e58",
+    "preflight.php": "f31b0c92cb1e063cd96c450dd19c7ac3f5c8a4b3b70b007f09f2d1c9a24773c0"
+  },
+  "adaptedTestFileSha256": {
+    "check.php": "ed9aef94a56163f2a0a4ecc1de5c4d560c9a0a59f63b2241d4334246bcff3220",
+    "http-client.php": "18aa9d94de076f504c16ca71c686bcdef9725f95c9185079eeb45f1053218a86",
+    "http.php": "e7b90b67dc3869ad1dd4ddc201c21135441fa9e0ff5cb52814d18e60e0a97619",
+    "worker.php": "201d1bb8e8f4e28b1432d17a17e39892dafe30600ef62f0dbdfbf883bce78ee8",
+    "failure-worker.php": "cc9028bce82da425b52ff16edba7ea57ea667c14ec9d3ad8e055cec270041704",
+    "process-support.php": "94ccf7f1fd115a12ed8cb3b17938a65ee6b69db446a806f6d1958d402ac24f5d",
+    "failures.php": "d4cfc598e3b74a7b7facd047e1f66819eb4c1bf4c0f3ddaa5195aee84eb78642",
+    "contracts.php": "1a18b53da9eb8388f39739dc15316341e975dead46ca2917b8f80a6b8c15fcb3"
+  },
+  "harnessEvolutionAfterRun": {
+    "path": "tests/integration/wordpress-blog-proposals-site-profile/run.py",
+    "change": "Only added bundle-recovery to accepted CLI choices; existing bundle-upgrade execution unchanged",
+    "executedSourceSha256": "b4ffe1ce7126029ea6bb0803651e07cae7c6586ae3af00c5e8789733d246f771",
+    "currentSourceSha256": "e4fcb6d494f4ea61056c13d3e89e967b0cae542c18f7ee3089aa2e5d938530a0"
+  },
+  "cleanup": {
+    "containers": [
+      {
+        "name": "alexcuadra-blog-site-profile-bundle-upgrade-20261027-wordpress-1",
+        "running": false,
+        "portBindings": {}
+      },
+      {
+        "name": "alexcuadra-blog-site-profile-bundle-upgrade-20261027-db-1",
+        "running": false,
+        "portBindings": {}
+      },
+      {
+        "name": "alexcuadra-blog-site-profile-bundle-upgrade-r2-20261027-wordpress-1",
+        "running": false,
+        "portBindings": {}
+      },
+      {
+        "name": "alexcuadra-blog-site-profile-bundle-upgrade-r2-20261027-db-1",
+        "running": false,
+        "portBindings": {}
+      },
+      {
+        "name": "alexcuadra-blog-site-profile-bundle-upgrade-r3-20261027-wordpress-1",
+        "running": false,
+        "portBindings": {}
+      },
+      {
+        "name": "alexcuadra-blog-site-profile-bundle-upgrade-r3-20261027-db-1",
+        "running": false,
+        "portBindings": {}
+      },
+      {
+        "name": "alexcuadra-blog-site-profile-bundle-upgrade-r4-20261027-wordpress-1",
+        "running": false,
+        "portBindings": {}
+      },
+      {
+        "name": "alexcuadra-blog-site-profile-bundle-upgrade-r4-20261027-db-1",
+        "running": false,
+        "portBindings": {}
+      },
+      {
+        "name": "alexcuadra-blog-site-profile-bundle-regression-20261027-wordpress-1",
+        "running": false,
+        "portBindings": {}
+      },
+      {
+        "name": "alexcuadra-blog-site-profile-bundle-regression-20261027-db-1",
+        "running": false,
+        "portBindings": {}
+      },
+      {
+        "name": "alexcuadra-blog-site-profile-bundle-recovery-20261027-wordpress-1",
+        "running": false,
+        "portBindings": {}
+      },
+      {
+        "name": "alexcuadra-blog-site-profile-bundle-recovery-20261027-db-1",
+        "running": false,
+        "portBindings": {}
+      }
+    ],
+    "network": "alexcuadra-blog-proposal-release-20261026-functional-r2_default",
+    "internal": true,
+    "attachedContainers": 0,
+    "pruneUsed": false
+  },
+  "packagedReaderGuards": {
+    "passed": 14,
+    "failed": 0,
+    "cases": [
+      "valid",
+      "full_profile_local",
+      "no_wordpress",
+      "missing_flag",
+      "false_flag",
+      "wrong_environment",
+      "wrong_siteurl",
+      "wrong_database",
+      "multisite",
+      "live_valid",
+      "live_no_optin",
+      "live_wrong_constant",
+      "live_wrong_home",
+      "live_wrong_siteurl"
+    ]
+  },
+  "packagedReaderGuardFixtureSha256": "beeaf6df57515de203daedc361d19d2aa749c2b70a5d1b9ed6497f7c4f656eae",
+  "wpCliPreflightInvocationRequiresUseInclude": true,
+  "wpCliRewriteDiagnosis": {
+    "resultIsNull": true,
+    "pregError": 6,
+    "pregMessage": "JIT stack limit exhausted",
+    "workaround": "WP-CLI eval-file --use-include; no PHP/PCRE setting changes"
+  }
+}

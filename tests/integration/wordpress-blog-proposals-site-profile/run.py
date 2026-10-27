@@ -29,7 +29,7 @@ def command(argv,**kwargs):
     return result.stdout
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--functional',action='store_true');parser.add_argument('--release',choices=['functional','lifecycle','recovery']);options=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--functional',action='store_true');parser.add_argument('--release',choices=['functional','lifecycle','recovery','bundle-upgrade','bundle-regression','bundle-recovery']);options=parser.parse_args()
     if options.release:options.functional=True
     os.umask(0o077)
     if not re.fullmatch(r'alexcuadra-blog-site-profile-[a-z0-9-]+',PROJECT):raise ValueError('OWN_PROFILE_PROJECT_REQUIRED')
@@ -89,16 +89,19 @@ $_SERVER['HTTP_HOST']='content.alexcuadra.dev';$_SERVER['HTTPS']='on';$_SERVER['
     if options.release:
         env['WORDPRESS_CONFIG_EXTRA']+="define('AC_EDITORIAL_BLOG_PROPOSALS_LAB',getenv('BLOG_SITE_RELEASE_ENABLED')==='1');"
         env['BLOG_SITE_RELEASE_ENABLED']='1'
+        if options.release.startswith('bundle-'):env['WORDPRESS_CONFIG_EXTRA']+="define('AC_PROJECT_CLASSIFICATION_LAB',true);"
     env['WORDPRESS_CONFIG_EXTRA']=env['WORDPRESS_CONFIG_EXTRA'].replace('$','$$')
     volumes=[str(source/'wp-content')+':/verified-profile:ro',str(overlays)+':/sealed-overlays:ro',str(HERE)+':/site-profile-lab:ro',
         str(profile)+':/profile-input.json:ro',str(ROOT/'docs/qa/blog-proposal-site-code-inventory-2026-10-26.json')+':/profile-inventory.json:ro',str(ROOT/'wordpress/operations')+':/proposal-operations:ro']
     if options.release:
         volumes.extend([str(ROOT/'wordpress/operations/blog-proposal-rc2')+':/release-operations:ro',str(ROOT/'artifacts/wordpress/alexcuadra-editorial-blog-proposals-0.1.0-rc.2.zip')+':/site-release.zip:ro'])
+    if options.release and options.release.startswith('bundle-'):
+        volumes.extend([str(ROOT/'tests/integration/wordpress-project-classification-bundle')+':/bundle-lab:ro',str(ROOT/'wordpress/operations/project-classification-upgrade')+':/bundle-operations:ro',str(ROOT/'artifacts/wordpress/alexcuadra-editorial-blog-proposals-0.1.0-rc.3.zip')+':/bundle-proposals.zip:ro',str(ROOT/'artifacts/wordpress/alexcuadra-editorial-project-classification-0.1.0-rc.1.zip')+':/bundle-classification.zip:ro'])
     if options.functional:volumes.extend([str(candidate)+':/site-candidate:ro',str(testdir)+':/site-tests:ro'])
     settings={'services':{name:{'environment':env,'volumes':volumes}for name in ['wordpress','cli']},
         'networks':{'default':{'external':True,'name':NETWORK}},'volumes':{'wp-data':{'driver_opts':{'o':'size=768m'}}}}
-    if options.release=='recovery':
-        for service in ['wordpress','cli']:settings['services'][service]['volumes'].append('recovery-private:/recovery-private')
+    if options.release=='recovery' or options.release and options.release.startswith('bundle-'):
+        for service in ['wordpress','cli']:settings['services'][service]['volumes'].append('recovery-private:'+('/bundle-private'if options.release and options.release.startswith('bundle-')else'/recovery-private'))
         settings['volumes']['recovery-private']={'driver_opts':{'type':'tmpfs','device':'tmpfs','o':'size=64m'}}
     config=work/'compose.json';config.write_text(json.dumps(settings))
     base=['docker','compose','-p',PROJECT,'-f',str(BASE),'-f',str(config)]
@@ -161,6 +164,10 @@ $_SERVER['HTTP_HOST']='content.alexcuadra.dev';$_SERVER['HTTPS']='on';$_SERVER['
             if options.release=='lifecycle':preflight('after-install',False)
             cli('plugin','activate','alexcuadra-editorial-blog-proposals')
             reports={}
+            if options.release and options.release.startswith('bundle-'):
+                spec=importlib.util.spec_from_file_location('bundle_lab',ROOT/'tests/integration/wordpress-project-classification-bundle/driver.py');module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+                module.execute(options.release,compose,cli,base,work,result)
+                return
             if options.release=='recovery':
                 compose('run','--rm','--no-deps','--user','0:0','--entrypoint','sh','cli','-ec','chmod 700 /recovery-private; chown 33:33 /recovery-private')
                 fixture('install-storage');fixture('enroll')
