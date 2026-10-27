@@ -56,3 +56,7 @@ Instalación aún no aprobada. El nuevo paquete no migra esquema, concede permis
 ## Instalación inactiva del lector conciliada
 
 [Classifier-installed de Alex](project-classification-upgrade-destination-classifier-installed-2026-10-27.json): ready=true/19checks, archivos exactos e inactividad del lector, rc.3 activo y hashes/conteos originales preservados. El diagnóstico resuelve el estado de la carpeta sin identificar su ejecución de instalación. No se reinstala o fuerza. Siguiente opt-in de sitio + activación + classifier-enabled, todavía con scope privado pausado y sin nuevos grants/asignaciones.
+
+## Activación real y lecturas MCP verificadas
+
+[Classifier-enabled](project-classification-upgrade-destination-classifier-enabled-2026-10-27.json) de Alex ready=true/19checks e historia conservada, con scope privado pausado. [Conector independiente](MCP_PROJECT_CLASSIFICATION_LIVE_2026-10-27.md):20abilities,146EN/196ES y catálogos4/20por idioma correctos/recíprocos, sin mutaciones. Siguiente instalar solo los dos helpers operativos rc.3 fuera del árbol público y verify del artefacto rc.2 antes de reabrir el scope privado; no restauración del CMS vivo.

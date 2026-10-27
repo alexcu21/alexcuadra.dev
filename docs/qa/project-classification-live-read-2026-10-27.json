@@ -1,0 +1,1576 @@
+{
+  "format": "project-classification-live-read-v1",
+  "date": "2026-10-27",
+  "evidenceSource": "independent-connected-WordPress-MCP",
+  "callCount": 9,
+  "mutatingAbilitiesExecuted": 0,
+  "privateProposalReadsAttempted": 0,
+  "privateWriterPausedPerCliReceipt": true,
+  "catalog": {
+    "abilities": [
+      {
+        "name": "core/get-site-info",
+        "label": "Get Site Information",
+        "description": "Returns site information configured in WordPress. By default returns all fields, or optionally a filtered subset."
+      },
+      {
+        "name": "core/get-user-info",
+        "label": "Get User Information",
+        "description": "Returns profile details for the current authenticated user to support personalization, auditing, and access-aware behavior. By default returns all fields, or optionally a filtered subset."
+      },
+      {
+        "name": "core/get-environment-info",
+        "label": "Get Environment Info",
+        "description": "Returns core details about the site's runtime context for diagnostics and compatibility (environment, PHP runtime, database server info, WordPress version). By default returns all fields, or optionally a filtered subset."
+      },
+      {
+        "name": "alexcuadra-blog/inspect-post-context",
+        "label": "inspect-post-context",
+        "description": "Scoped private post plan; never writes a source post."
+      },
+      {
+        "name": "alexcuadra-blog/create-post-proposal",
+        "label": "create-post-proposal",
+        "description": "Scoped private post plan; never writes a source post."
+      },
+      {
+        "name": "alexcuadra-blog/update-post-proposal",
+        "label": "update-post-proposal",
+        "description": "Scoped private post plan; never writes a source post."
+      },
+      {
+        "name": "alexcuadra-blog/get-post-proposal",
+        "label": "get-post-proposal",
+        "description": "Scoped private post plan; never writes a source post."
+      },
+      {
+        "name": "alexcuadra-blog/list-post-proposals",
+        "label": "list-post-proposals",
+        "description": "Scoped private post plan; never writes a source post."
+      },
+      {
+        "name": "alexcuadra/list-public-posts",
+        "label": "List public blog posts",
+        "description": "Read native post metadata, reciprocal translations and assigned categories/tags. No bodies or writes."
+      },
+      {
+        "name": "alexcuadra/get-public-post",
+        "label": "Read public blog post metadata",
+        "description": "Read one native published post in the exact language; no body, ACF, private data or writes."
+      },
+      {
+        "name": "alexcuadra/get-public-project-classification",
+        "label": "get-public-project-classification",
+        "description": "Read only project categories/technologies witnessed on public projects, with reciprocal public translations."
+      },
+      {
+        "name": "alexcuadra/list-public-project-terms",
+        "label": "list-public-project-terms",
+        "description": "Read only project categories/technologies witnessed on public projects, with reciprocal public translations."
+      },
+      {
+        "name": "alexcuadra/create-project-change",
+        "label": "create-project-change",
+        "description": "Prepare, inspect history or restore a private owned proposal as a new version. Never modifies the source project or publishes content."
+      },
+      {
+        "name": "alexcuadra/get-project-change",
+        "label": "get-project-change",
+        "description": "Prepare, inspect history or restore a private owned proposal as a new version. Never modifies the source project or publishes content."
+      },
+      {
+        "name": "alexcuadra/update-project-change",
+        "label": "update-project-change",
+        "description": "Prepare, inspect history or restore a private owned proposal as a new version. Never modifies the source project or publishes content."
+      },
+      {
+        "name": "alexcuadra/list-project-change-revisions",
+        "label": "list-project-change-revisions",
+        "description": "Prepare, inspect history or restore a private owned proposal as a new version. Never modifies the source project or publishes content."
+      },
+      {
+        "name": "alexcuadra/get-project-change-revision",
+        "label": "get-project-change-revision",
+        "description": "Prepare, inspect history or restore a private owned proposal as a new version. Never modifies the source project or publishes content."
+      },
+      {
+        "name": "alexcuadra/restore-project-change-revision",
+        "label": "restore-project-change-revision",
+        "description": "Prepare, inspect history or restore a private owned proposal as a new version. Never modifies the source project or publishes content."
+      },
+      {
+        "name": "alexcuadra/list-public-projects",
+        "label": "List public portfolio projects",
+        "description": "List public project IDs, titles, slugs, language and reciprocal public translations. Search titles and paginate in ID order."
+      },
+      {
+        "name": "alexcuadra/get-public-project",
+        "label": "Get public portfolio project",
+        "description": "Read one public project by ID and exact language, including reciprocal public translation metadata."
+      }
+    ]
+  },
+  "abilityInfo": [
+    {
+      "name": "alexcuadra/get-public-project-classification",
+      "label": "get-public-project-classification",
+      "description": "Read only project categories/technologies witnessed on public projects, with reciprocal public translations.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "es"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "locale"
+        ]
+      },
+      "output_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "project_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "es"
+            ]
+          },
+          "categories": {
+            "type": "array",
+            "maxItems": 100,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "name": {
+                  "type": "string"
+                },
+                "slug": {
+                  "type": "string"
+                },
+                "taxonomy": {
+                  "type": "string",
+                  "enum": [
+                    "project_category",
+                    "project_technology"
+                  ]
+                },
+                "locale": {
+                  "type": "string",
+                  "enum": [
+                    "en",
+                    "es"
+                  ]
+                },
+                "translations": {
+                  "type": "array",
+                  "maxItems": 1,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "slug": {
+                        "type": "string"
+                      },
+                      "locale": {
+                        "type": "string",
+                        "enum": [
+                          "en",
+                          "es"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "slug",
+                      "locale"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "slug",
+                "taxonomy",
+                "locale",
+                "translations"
+              ]
+            }
+          },
+          "technologies": {
+            "type": "array",
+            "maxItems": 100,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "name": {
+                  "type": "string"
+                },
+                "slug": {
+                  "type": "string"
+                },
+                "taxonomy": {
+                  "type": "string",
+                  "enum": [
+                    "project_category",
+                    "project_technology"
+                  ]
+                },
+                "locale": {
+                  "type": "string",
+                  "enum": [
+                    "en",
+                    "es"
+                  ]
+                },
+                "translations": {
+                  "type": "array",
+                  "maxItems": 1,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "slug": {
+                        "type": "string"
+                      },
+                      "locale": {
+                        "type": "string",
+                        "enum": [
+                          "en",
+                          "es"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "slug",
+                      "locale"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "slug",
+                "taxonomy",
+                "locale",
+                "translations"
+              ]
+            }
+          }
+        },
+        "required": [
+          "project_id",
+          "locale",
+          "categories",
+          "technologies"
+        ]
+      },
+      "meta": {
+        "annotations": {
+          "readonly": true,
+          "destructive": false,
+          "idempotent": true
+        },
+        "public": false,
+        "show_in_rest": false,
+        "mcp": {
+          "public": true,
+          "type": "tool"
+        }
+      }
+    },
+    {
+      "name": "alexcuadra/list-public-project-terms",
+      "label": "list-public-project-terms",
+      "description": "Read only project categories/technologies witnessed on public projects, with reciprocal public translations.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "es"
+            ]
+          },
+          "taxonomy": {
+            "type": "string",
+            "enum": [
+              "project_category",
+              "project_technology"
+            ]
+          },
+          "after": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20
+          }
+        },
+        "required": [
+          "locale",
+          "taxonomy"
+        ]
+      },
+      "output_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "maxItems": 20,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "name": {
+                  "type": "string"
+                },
+                "slug": {
+                  "type": "string"
+                },
+                "taxonomy": {
+                  "type": "string",
+                  "enum": [
+                    "project_category",
+                    "project_technology"
+                  ]
+                },
+                "locale": {
+                  "type": "string",
+                  "enum": [
+                    "en",
+                    "es"
+                  ]
+                },
+                "translations": {
+                  "type": "array",
+                  "maxItems": 1,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "slug": {
+                        "type": "string"
+                      },
+                      "locale": {
+                        "type": "string",
+                        "enum": [
+                          "en",
+                          "es"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "slug",
+                      "locale"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "slug",
+                "taxonomy",
+                "locale",
+                "translations"
+              ]
+            }
+          },
+          "next_after": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1
+          }
+        },
+        "required": [
+          "items",
+          "next_after"
+        ]
+      },
+      "meta": {
+        "annotations": {
+          "readonly": true,
+          "destructive": false,
+          "idempotent": true
+        },
+        "public": false,
+        "show_in_rest": false,
+        "mcp": {
+          "public": true,
+          "type": "tool"
+        }
+      }
+    }
+  ],
+  "reads": {
+    "get-en": {
+      "ability_name": "alexcuadra/get-public-project-classification",
+      "parameters": {
+        "id": 146,
+        "locale": "en"
+      },
+      "result": {
+        "success": true,
+        "data": {
+          "project_id": 146,
+          "locale": "en",
+          "categories": [
+            {
+              "id": 76,
+              "name": "Custom WordPress Blocks",
+              "slug": "wordpress-blocks",
+              "taxonomy": "project_category",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 78,
+                  "name": "Bloques personalizados de WordPress",
+                  "slug": "bloques-wordpress",
+                  "locale": "es"
+                }
+              ]
+            }
+          ],
+          "technologies": [
+            {
+              "id": 80,
+              "name": "WordPress",
+              "slug": "wordpress",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 82,
+                  "name": "WordPress",
+                  "slug": "wordpress-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 108,
+              "name": "React",
+              "slug": "react",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 110,
+                  "name": "React",
+                  "slug": "react-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 112,
+              "name": "Svelte",
+              "slug": "svelte",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 114,
+                  "name": "Svelte",
+                  "slug": "svelte-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 116,
+              "name": "ACF Pro",
+              "slug": "acf-pro",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 118,
+                  "name": "ACF Pro",
+                  "slug": "acf-pro-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 120,
+              "name": "WordPress REST API",
+              "slug": "wordpress-rest-api",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 122,
+                  "name": "API REST de WordPress",
+                  "slug": "wordpress-rest-api-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 124,
+              "name": "CSS",
+              "slug": "css",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 126,
+                  "name": "CSS",
+                  "slug": "css-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 128,
+              "name": "SCSS",
+              "slug": "scss",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 130,
+                  "name": "SCSS",
+                  "slug": "scss-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 156,
+              "name": "WordPress Block Editor (Gutenberg)",
+              "slug": "gutenberg",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 158,
+                  "name": "Editor de bloques (Gutenberg)",
+                  "slug": "gutenberg-es",
+                  "locale": "es"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "get-es": {
+      "ability_name": "alexcuadra/get-public-project-classification",
+      "parameters": {
+        "id": 196,
+        "locale": "es"
+      },
+      "result": {
+        "success": true,
+        "data": {
+          "project_id": 196,
+          "locale": "es",
+          "categories": [
+            {
+              "id": 78,
+              "name": "Bloques personalizados de WordPress",
+              "slug": "bloques-wordpress",
+              "taxonomy": "project_category",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 76,
+                  "name": "Custom WordPress Blocks",
+                  "slug": "wordpress-blocks",
+                  "locale": "en"
+                }
+              ]
+            }
+          ],
+          "technologies": [
+            {
+              "id": 82,
+              "name": "WordPress",
+              "slug": "wordpress-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 80,
+                  "name": "WordPress",
+                  "slug": "wordpress",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 110,
+              "name": "React",
+              "slug": "react-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 108,
+                  "name": "React",
+                  "slug": "react",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 114,
+              "name": "Svelte",
+              "slug": "svelte-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 112,
+                  "name": "Svelte",
+                  "slug": "svelte",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 118,
+              "name": "ACF Pro",
+              "slug": "acf-pro-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 116,
+                  "name": "ACF Pro",
+                  "slug": "acf-pro",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 122,
+              "name": "API REST de WordPress",
+              "slug": "wordpress-rest-api-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 120,
+                  "name": "WordPress REST API",
+                  "slug": "wordpress-rest-api",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 126,
+              "name": "CSS",
+              "slug": "css-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 124,
+                  "name": "CSS",
+                  "slug": "css",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 130,
+              "name": "SCSS",
+              "slug": "scss-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 128,
+                  "name": "SCSS",
+                  "slug": "scss",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 158,
+              "name": "Editor de bloques (Gutenberg)",
+              "slug": "gutenberg-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 156,
+                  "name": "WordPress Block Editor (Gutenberg)",
+                  "slug": "gutenberg",
+                  "locale": "en"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "catalog-en-project_category": {
+      "ability_name": "alexcuadra/list-public-project-terms",
+      "parameters": {
+        "locale": "en",
+        "taxonomy": "project_category",
+        "after": 0,
+        "limit": 20
+      },
+      "result": {
+        "success": true,
+        "data": {
+          "items": [
+            {
+              "id": 64,
+              "name": "Frontend App",
+              "slug": "frontend-app",
+              "taxonomy": "project_category",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 66,
+                  "name": "Aplicaci\u00f3n frontend",
+                  "slug": "aplicacion-frontend",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 68,
+              "name": "WordPress Site",
+              "slug": "wordpress-site",
+              "taxonomy": "project_category",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 70,
+                  "name": "Sitio WordPress",
+                  "slug": "sitio-wordpress",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 72,
+              "name": "Technical Support",
+              "slug": "technical-support",
+              "taxonomy": "project_category",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 74,
+                  "name": "Soporte t\u00e9cnico",
+                  "slug": "soporte-tecnico",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 76,
+              "name": "Custom WordPress Blocks",
+              "slug": "wordpress-blocks",
+              "taxonomy": "project_category",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 78,
+                  "name": "Bloques personalizados de WordPress",
+                  "slug": "bloques-wordpress",
+                  "locale": "es"
+                }
+              ]
+            }
+          ],
+          "next_after": null
+        }
+      }
+    },
+    "catalog-en-project_technology": {
+      "ability_name": "alexcuadra/list-public-project-terms",
+      "parameters": {
+        "locale": "en",
+        "taxonomy": "project_technology",
+        "after": 0,
+        "limit": 20
+      },
+      "result": {
+        "success": true,
+        "data": {
+          "items": [
+            {
+              "id": 80,
+              "name": "WordPress",
+              "slug": "wordpress",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 82,
+                  "name": "WordPress",
+                  "slug": "wordpress-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 84,
+              "name": "Astro",
+              "slug": "astro",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 86,
+                  "name": "Astro",
+                  "slug": "astro-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 88,
+              "name": "JavaScript",
+              "slug": "javascript",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 90,
+                  "name": "JavaScript",
+                  "slug": "javascript-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 92,
+              "name": "ACF",
+              "slug": "acf",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 94,
+                  "name": "ACF",
+                  "slug": "acf-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 96,
+              "name": "CPT",
+              "slug": "cpt",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 98,
+                  "name": "CPT",
+                  "slug": "cpt-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 100,
+              "name": "Block Themes",
+              "slug": "block-themes",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 102,
+                  "name": "Temas de bloques",
+                  "slug": "block-themes-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 104,
+              "name": "Custom Blocks",
+              "slug": "custom-blocks",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 106,
+                  "name": "Bloques personalizados",
+                  "slug": "custom-blocks-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 108,
+              "name": "React",
+              "slug": "react",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 110,
+                  "name": "React",
+                  "slug": "react-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 112,
+              "name": "Svelte",
+              "slug": "svelte",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 114,
+                  "name": "Svelte",
+                  "slug": "svelte-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 116,
+              "name": "ACF Pro",
+              "slug": "acf-pro",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 118,
+                  "name": "ACF Pro",
+                  "slug": "acf-pro-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 120,
+              "name": "WordPress REST API",
+              "slug": "wordpress-rest-api",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 122,
+                  "name": "API REST de WordPress",
+                  "slug": "wordpress-rest-api-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 124,
+              "name": "CSS",
+              "slug": "css",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 126,
+                  "name": "CSS",
+                  "slug": "css-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 128,
+              "name": "SCSS",
+              "slug": "scss",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 130,
+                  "name": "SCSS",
+                  "slug": "scss-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 132,
+              "name": "Divi",
+              "slug": "divi",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 134,
+                  "name": "Divi",
+                  "slug": "divi-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 136,
+              "name": "DNS",
+              "slug": "dns",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 138,
+                  "name": "DNS",
+                  "slug": "dns-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 140,
+              "name": "SEO",
+              "slug": "seo",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 142,
+                  "name": "SEO",
+                  "slug": "seo-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 144,
+              "name": "Themes",
+              "slug": "themes",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 146,
+                  "name": "Temas",
+                  "slug": "themes-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 148,
+              "name": "Optimization",
+              "slug": "optimization",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 150,
+                  "name": "Optimizaci\u00f3n",
+                  "slug": "optimization-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 152,
+              "name": "Security",
+              "slug": "security",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 154,
+                  "name": "Seguridad",
+                  "slug": "security-es",
+                  "locale": "es"
+                }
+              ]
+            },
+            {
+              "id": 156,
+              "name": "WordPress Block Editor (Gutenberg)",
+              "slug": "gutenberg",
+              "taxonomy": "project_technology",
+              "locale": "en",
+              "translations": [
+                {
+                  "id": 158,
+                  "name": "Editor de bloques (Gutenberg)",
+                  "slug": "gutenberg-es",
+                  "locale": "es"
+                }
+              ]
+            }
+          ],
+          "next_after": null
+        }
+      }
+    },
+    "catalog-es-project_category": {
+      "ability_name": "alexcuadra/list-public-project-terms",
+      "parameters": {
+        "locale": "es",
+        "taxonomy": "project_category",
+        "after": 0,
+        "limit": 20
+      },
+      "result": {
+        "success": true,
+        "data": {
+          "items": [
+            {
+              "id": 66,
+              "name": "Aplicaci\u00f3n frontend",
+              "slug": "aplicacion-frontend",
+              "taxonomy": "project_category",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 64,
+                  "name": "Frontend App",
+                  "slug": "frontend-app",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 70,
+              "name": "Sitio WordPress",
+              "slug": "sitio-wordpress",
+              "taxonomy": "project_category",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 68,
+                  "name": "WordPress Site",
+                  "slug": "wordpress-site",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 74,
+              "name": "Soporte t\u00e9cnico",
+              "slug": "soporte-tecnico",
+              "taxonomy": "project_category",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 72,
+                  "name": "Technical Support",
+                  "slug": "technical-support",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 78,
+              "name": "Bloques personalizados de WordPress",
+              "slug": "bloques-wordpress",
+              "taxonomy": "project_category",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 76,
+                  "name": "Custom WordPress Blocks",
+                  "slug": "wordpress-blocks",
+                  "locale": "en"
+                }
+              ]
+            }
+          ],
+          "next_after": null
+        }
+      }
+    },
+    "catalog-es-project_technology": {
+      "ability_name": "alexcuadra/list-public-project-terms",
+      "parameters": {
+        "locale": "es",
+        "taxonomy": "project_technology",
+        "after": 0,
+        "limit": 20
+      },
+      "result": {
+        "success": true,
+        "data": {
+          "items": [
+            {
+              "id": 82,
+              "name": "WordPress",
+              "slug": "wordpress-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 80,
+                  "name": "WordPress",
+                  "slug": "wordpress",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 86,
+              "name": "Astro",
+              "slug": "astro-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 84,
+                  "name": "Astro",
+                  "slug": "astro",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 90,
+              "name": "JavaScript",
+              "slug": "javascript-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 88,
+                  "name": "JavaScript",
+                  "slug": "javascript",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 94,
+              "name": "ACF",
+              "slug": "acf-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 92,
+                  "name": "ACF",
+                  "slug": "acf",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 98,
+              "name": "CPT",
+              "slug": "cpt-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 96,
+                  "name": "CPT",
+                  "slug": "cpt",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 102,
+              "name": "Temas de bloques",
+              "slug": "block-themes-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 100,
+                  "name": "Block Themes",
+                  "slug": "block-themes",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 106,
+              "name": "Bloques personalizados",
+              "slug": "custom-blocks-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 104,
+                  "name": "Custom Blocks",
+                  "slug": "custom-blocks",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 110,
+              "name": "React",
+              "slug": "react-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 108,
+                  "name": "React",
+                  "slug": "react",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 114,
+              "name": "Svelte",
+              "slug": "svelte-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 112,
+                  "name": "Svelte",
+                  "slug": "svelte",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 118,
+              "name": "ACF Pro",
+              "slug": "acf-pro-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 116,
+                  "name": "ACF Pro",
+                  "slug": "acf-pro",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 122,
+              "name": "API REST de WordPress",
+              "slug": "wordpress-rest-api-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 120,
+                  "name": "WordPress REST API",
+                  "slug": "wordpress-rest-api",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 126,
+              "name": "CSS",
+              "slug": "css-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 124,
+                  "name": "CSS",
+                  "slug": "css",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 130,
+              "name": "SCSS",
+              "slug": "scss-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 128,
+                  "name": "SCSS",
+                  "slug": "scss",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 134,
+              "name": "Divi",
+              "slug": "divi-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 132,
+                  "name": "Divi",
+                  "slug": "divi",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 138,
+              "name": "DNS",
+              "slug": "dns-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 136,
+                  "name": "DNS",
+                  "slug": "dns",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 142,
+              "name": "SEO",
+              "slug": "seo-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 140,
+                  "name": "SEO",
+                  "slug": "seo",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 146,
+              "name": "Temas",
+              "slug": "themes-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 144,
+                  "name": "Themes",
+                  "slug": "themes",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 150,
+              "name": "Optimizaci\u00f3n",
+              "slug": "optimization-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 148,
+                  "name": "Optimization",
+                  "slug": "optimization",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 154,
+              "name": "Seguridad",
+              "slug": "security-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 152,
+                  "name": "Security",
+                  "slug": "security",
+                  "locale": "en"
+                }
+              ]
+            },
+            {
+              "id": 158,
+              "name": "Editor de bloques (Gutenberg)",
+              "slug": "gutenberg-es",
+              "taxonomy": "project_technology",
+              "locale": "es",
+              "translations": [
+                {
+                  "id": 156,
+                  "name": "WordPress Block Editor (Gutenberg)",
+                  "slug": "gutenberg",
+                  "locale": "en"
+                }
+              ]
+            }
+          ],
+          "next_after": null
+        }
+      }
+    }
+  },
+  "checks": {
+    "catalog20": true,
+    "catalogCategories4PerLanguage": true,
+    "catalogTechnologies20PerLanguage": true,
+    "classification146En196EsReciprocal": true,
+    "allReadOnly": true,
+    "catalogIdsMatchApprovedTaxonomyMap": true,
+    "schemasClosedRecursively": true
+  },
+  "privateHistoryIndependentlyReRead": false
+}

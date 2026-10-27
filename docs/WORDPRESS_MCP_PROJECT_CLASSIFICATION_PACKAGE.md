@@ -1,5 +1,7 @@
 # Paquete coordinado de clasificación de proyectos
 
+**27 octubre — lector activo y lecturas MCP reales verificadas:** classifier-enabled de Alex ready=true/19checks; rc.3+lector exactos/activos, historia/documento/conteos originales y ocho capacidades previas, scope privado pausado. [Recibo](qa/project-classification-upgrade-destination-classifier-enabled-2026-10-27.json). Conector: catálogo20, get146EN/196ES con1categoría/8tecnologías y reciprocidad, catálogos4categorías/20tecnologías por idioma con IDs del mapa aprobado;9llamadas sin mutaciones. [Evidencia/límites](qa/MCP_PROJECT_CLASSIFICATION_LIVE_2026-10-27.md). Siguiente: subir dos helpers rc.3 a private-tools/project-classification-upgrade y verificar el respaldo rc.2 deb1593d…ab76110 con ellos antes de restaurar solo el scope privado. No reinstalar, crear planes o cambiar clasificaciones.
+
 **27 octubre — carpeta del lector conciliada, instalación inactiva verificada:** classifier-installed de Alex ready=true/19checks; tres archivos exactos de rc.1, lector inactivo/sin sus herramientas, rc.3 activo y misma historia/documento/conteos1/1/1/1. [Recibo](qa/project-classification-upgrade-destination-classifier-installed-2026-10-27.json). Se cierra el estado desconocido de la carpeta, no se identifica cuándo se instaló; no reinstalar/forzar/borrar. Siguiente opt-in AC_EDITORIAL_PROJECT_CLASSIFICATION_SITE exacto + activar solo lector + classifier-enabled con historySHA original. Mantener scope privado pausado y ocho capacidades anteriores; sin nuevos grants/DDL/asignaciones.
 
 **27 octubre — instalación del lector detenida por carpeta existente:** SHA del ZIP48d0734c…a4dfe2d correcto; WP-CLI rechaza destino ya existente sin --force y la cadena no ejecuta preflight. [Observación](qa/project-classification-install-existing-directory-2026-10-27.json). No se conocen aún integridad/activación de esa carpeta ni su origen; no asumir instalación correcta o parcial. Siguiente solo classifier-installed de lectura con historySHA75a0aa5f…60c7835a, manteniendo scope pausado. No reintentar, forzar, borrar, activar o restaurar permisos. Se observó mensaje de purga de cachés; no se afirma ausencia global de efectos del instalador/plugins.
@@ -29,7 +31,28 @@ Propuestas rc.3 cambia solo versión/main, admisión del lector exacto y README.
 
 Los dos PHP de recuperación nuevos, en project-classification-upgrade/, validan los archivos de rc.3 y aceptan únicamente artefactos con SHA de paquete rc.2 o rc.3: el esquema/DTO de historia no cambió. Se probó recuperar un artefacto creado por rc.2 y leer/repetir su plan desde rc.3. Se conservan las herramientas/ZIP anteriores para rollback; no se sobrescriben sus fuentes o manifiestos.
 
-## Paso actual: opt-in del sitio y activación del lector
+## Paso actual: helpers rc.3 y verificación del artefacto rc.2
+
+[Classifier-enabled de Alex](qa/project-classification-upgrade-destination-classifier-enabled-2026-10-27.json):19checks correctos con ambos paquetes activos, historia/documento/conteos preservados y ocho capacidades anteriores. Las nuevas lecturas se verificaron también por MCP: [catálogo20, clasificación EN/ES y términos](qa/MCP_PROJECT_CLASSIFICATION_LIVE_2026-10-27.md). No repetir instalación, activación o before; no restaurar todavía el scope privado.
+
+Subir estos **dos archivos nuevos juntos** a private-tools/project-classification-upgrade, junto al preflight existente:
+
+- [blog-proposal-backup.php rc.3](../wordpress/operations/project-classification-upgrade/blog-proposal-backup.php).
+- [recovery.php rc.3](../wordpress/operations/project-classification-upgrade/recovery.php).
+
+No sustituir los de private-tools/blog-proposal-rc2: se conservan para rollback. El helper nuevo exige los ocho archivos de propuestas rc.3 y admite únicamente artefactos identificados como rc.2 o rc.3, con el mismo contrato/esquema probado.
+
+Alex mantiene scope privado ausente y ejecuta solo verify sobre el respaldo ya creado, sin exportar ni restaurar:
+
+```sh
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content --user=1 eval-file /home/u776991923/domains/alexcuadra.dev/private-tools/project-classification-upgrade/blog-proposal-backup.php verify /home/u776991923/domains/alexcuadra.dev/private-tools/blog-proposal-backups/backup-20261027T200039Z-1e211a74ec3e7502 deb1593d8340ea7a68c917fc24c370d9384da6beddde79e6ac3dc6903ab76110
+```
+
+Compartir BLOG_PROPOSAL_BACKUP_RESULT; se esperan ready/integrityVerified=true y cuatro conteos1. restorationVerified=false sigue siendo correcto: no se restaura sobre el CMS vivo. Si falla, conservar la pausa/artefacto y compartir el código; no cambiar hashes, crear otro respaldo o improvisar una restauración.
+
+Esta verificación con el helper rc.3 aún está pendiente. Solo después se preparará la restitución del único scope anterior al usuario2 y after-scope con historySHA75a0aa5fdaab48206bf72e8e70eb274dd75c5b12af81d8b04963aff160c7835a. Las lecturas privadas del piloto no se repiten mientras siga pausado.
+
+## Histórico: guard y activación del lector ya verificados
 
 El [classifier-installed aportado por Alex](qa/project-classification-upgrade-destination-classifier-installed-2026-10-27.json) pasa19checks: lector rc.1 exacto/inactivo, rc.3 operativo e historia/documento originales con conteos1/1/1/1. La carpeta ya está conciliada; no reinstalar, forzar o eliminar. No se conoce qué ejecución la creó y no hace falta atribuir una causa para verificar su estado actual.
 
