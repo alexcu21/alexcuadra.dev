@@ -52,3 +52,7 @@ Instalación aún no aprobada. El nuevo paquete no migra esquema, concede permis
 ## Rechazo de instalación del lector por carpeta existente
 
 [Salida aportada por Alex](project-classification-install-existing-directory-2026-10-27.json): SHA del ZIP correcto y rechazo de instalación sin --force por destino existente; preflight encadenado no ejecutado. Estado/integridad/activación de la carpeta pendientes de conocer. Se observó purga de cachés del hosting; no se afirma conservación global de BD/caché. Siguiente diagnóstico classifier-installed ya preparado, de solo lectura y con historySha original; no borrar/forzar/reactivar o restaurar scopes.
+
+## Instalación inactiva del lector conciliada
+
+[Classifier-installed de Alex](project-classification-upgrade-destination-classifier-installed-2026-10-27.json): ready=true/19checks, archivos exactos e inactividad del lector, rc.3 activo y hashes/conteos originales preservados. El diagnóstico resuelve el estado de la carpeta sin identificar su ejecución de instalación. No se reinstala o fuerza. Siguiente opt-in de sitio + activación + classifier-enabled, todavía con scope privado pausado y sin nuevos grants/asignaciones.

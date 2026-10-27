@@ -1,5 +1,7 @@
 # Paquete coordinado de clasificación de proyectos
 
+**27 octubre — carpeta del lector conciliada, instalación inactiva verificada:** classifier-installed de Alex ready=true/19checks; tres archivos exactos de rc.1, lector inactivo/sin sus herramientas, rc.3 activo y misma historia/documento/conteos1/1/1/1. [Recibo](qa/project-classification-upgrade-destination-classifier-installed-2026-10-27.json). Se cierra el estado desconocido de la carpeta, no se identifica cuándo se instaló; no reinstalar/forzar/borrar. Siguiente opt-in AC_EDITORIAL_PROJECT_CLASSIFICATION_SITE exacto + activar solo lector + classifier-enabled con historySHA original. Mantener scope privado pausado y ocho capacidades anteriores; sin nuevos grants/DDL/asignaciones.
+
 **27 octubre — instalación del lector detenida por carpeta existente:** SHA del ZIP48d0734c…a4dfe2d correcto; WP-CLI rechaza destino ya existente sin --force y la cadena no ejecuta preflight. [Observación](qa/project-classification-install-existing-directory-2026-10-27.json). No se conocen aún integridad/activación de esa carpeta ni su origen; no asumir instalación correcta o parcial. Siguiente solo classifier-installed de lectura con historySHA75a0aa5f…60c7835a, manteniendo scope pausado. No reintentar, forzar, borrar, activar o restaurar permisos. Se observó mensaje de purga de cachés; no se afirma ausencia global de efectos del instalador/plugins.
 
 **27 octubre — propuestas rc.3 activas y conservadas en el hosting:** Alex aporta proposal-upgraded ready=true/19checks, ZIP exacto SHA581dc9a0…cb00df. HistorySHA75a0aa5f…60c7835a/documentoSHA54945c84…7f6b3d/conteos1/1/1/1 intactos; ocho capacidades previas y scope privado pausado. [Recibo](qa/project-classification-upgrade-destination-proposal-upgraded-2026-10-27.json). Siguiente: instalar inactivo solo lector rc.1 SHA48d0734c…a4dfe2d, sin --force/activación, y classifier-installed con SHA de historia original. No repetir actualización de propuestas, DDL, enroll o backup.
@@ -27,7 +29,23 @@ Propuestas rc.3 cambia solo versión/main, admisión del lector exacto y README.
 
 Los dos PHP de recuperación nuevos, en project-classification-upgrade/, validan los archivos de rc.3 y aceptan únicamente artefactos con SHA de paquete rc.2 o rc.3: el esquema/DTO de historia no cambió. Se probó recuperar un artefacto creado por rc.2 y leer/repetir su plan desde rc.3. Se conservan las herramientas/ZIP anteriores para rollback; no se sobrescriben sus fuentes o manifiestos.
 
-## Paso actual: diagnosticar la carpeta existente, sin reinstalar
+## Paso actual: opt-in del sitio y activación del lector
+
+El [classifier-installed aportado por Alex](qa/project-classification-upgrade-destination-classifier-installed-2026-10-27.json) pasa19checks: lector rc.1 exacto/inactivo, rc.3 operativo e historia/documento originales con conteos1/1/1/1. La carpeta ya está conciliada; no reinstalar, forzar o eliminar. No se conoce qué ejecución la creó y no hace falta atribuir una causa para verificar su estado actual.
+
+Alex configura únicamente el guard del lector, lo activa y verifica; && detiene los pasos siguientes si hay error:
+
+```sh
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content config set AC_EDITORIAL_PROJECT_CLASSIFICATION_SITE 'https://content.alexcuadra.dev' --type=constant &&
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content plugin activate alexcuadra-editorial-project-classification &&
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content eval-file /home/u776991923/domains/alexcuadra.dev/private-tools/project-classification-upgrade/preflight.php --use-include classifier-enabled 75a0aa5fdaab48206bf72e8e70eb274dd75c5b12af81d8b04963aff160c7835a
+```
+
+La constante es una cadena, sin --raw ni flag de laboratorio. Se esperan19checks correctos con ambos paquetes activos, cinco herramientas privadas registradas y dos de clasificación, historia original y ocho capacidades anteriores. La capacidad de lectura de proyectos existente basta para el lector; no se concede ninguna nueva. La activación no registra taxonomías ni modifica términos/asignaciones/esquema/historia.
+
+Compartir PROJECT_CLASSIFICATION_UPGRADE_RESULT o el error antes de continuar. Mantener alexcuadra_prepare_post_changes ausente; no restaurarlo hasta verificar los helpers de recuperación rc.3 con el artefacto rc.2. Activación real del lector aún pendiente de ejecución por Alex. No repetir controles iniciales que exigen tablas vacías ni crear propuestas para probar lectura.
+
+## Histórico: carpeta existente ya conciliada por diagnóstico
 
 Alex aportó un [rechazo por carpeta existente](qa/project-classification-install-existing-directory-2026-10-27.json). El archivo ZIP sí coincidió con el SHA esperado. La instalación no informó éxito y, por la cadena &&, no se ejecutó classifier-installed. No se conoce todavía el estado/integridad de los tres archivos o su activación; no se deduce instalación parcial, éxito previo o causa concreta.
 
