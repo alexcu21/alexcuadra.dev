@@ -44,3 +44,7 @@ Instalación aún no aprobada. El nuevo paquete no migra esquema, concede permis
 ## Respaldo actualizado real verificado
 
 [Verify de Alex](project-classification-upgrade-backup-verify-2026-10-27.json): integrityVerified=true y cuatro conteos1, sin escrituras o restauración de BD. Artefacto/SHA originales conservados. Siguiente presentar el ZIP exacto rc.3 y sustituir únicamente el rc.2 conocido con scope pausado; proposal-upgraded debe conservar historySHA75a0aa5f…60c7835a y ocho capacidades previas. Sin actualización remota ejecutada por el agente ni instalación real anticipada.
+
+## Rc.3 real activo y preservación verificada
+
+[proposal-upgraded de Alex](project-classification-upgrade-destination-proposal-upgraded-2026-10-27.json): ready=true/19checks; paquete rc.3 exacto/activo, historia/documento/conteos originales y ocho capacidades previas intactos. Scope privado pausado y lector nuevo ausente. No hubo actualización remota ejecutada por el agente ni lectura nueva de cuerpos. Siguiente instalación inactiva del lector exacto y classifier-installed, sin --force o activación.

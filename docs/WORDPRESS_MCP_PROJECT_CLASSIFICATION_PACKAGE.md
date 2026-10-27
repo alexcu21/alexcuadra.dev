@@ -1,5 +1,7 @@
 # Paquete coordinado de clasificación de proyectos
 
+**27 octubre — propuestas rc.3 activas y conservadas en el hosting:** Alex aporta proposal-upgraded ready=true/19checks, ZIP exacto SHA581dc9a0…cb00df. HistorySHA75a0aa5f…60c7835a/documentoSHA54945c84…7f6b3d/conteos1/1/1/1 intactos; ocho capacidades previas y scope privado pausado. [Recibo](qa/project-classification-upgrade-destination-proposal-upgraded-2026-10-27.json). Siguiente: instalar inactivo solo lector rc.1 SHA48d0734c…a4dfe2d, sin --force/activación, y classifier-installed con SHA de historia original. No repetir actualización de propuestas, DDL, enroll o backup.
+
 **27 octubre — respaldo actualizado real verificado:** Alex aporta verify ready=true/integrityVerified=true y conteos1/1/1/1 del artefacto deb1593d…ab76110. [Recibo](qa/project-classification-upgrade-backup-verify-2026-10-27.json). Mantener scope privado pausado. Siguiente: revisar/subir ZIP exacto de propuestas rc.3, comprobar SHA581dc9a0…cb00df, desactivar únicamente propuestas rc.2, sustituir código mediante actualización explícita de esa versión conocida, reactivar y proposal-upgraded con historySHA75a0aa5f…60c7835a. Aún sin lector nuevo, DDL, enrolamientos o restauración de permisos. Actualización real pendiente de Alex.
 
 **27 octubre — respaldo actualizado real recibido:** export ready=true de Alex, backup-20261027T200039Z-1e211a74ec3e7502, manifestSHAdeb1593d…ab76110;1propietario/1propuesta/1revisión/1recibo, sin escrituras de BD. [Recibo](qa/project-classification-upgrade-backup-export-2026-10-27.json). El helper exige scope privado pausado y ocho capacidades previas, sin grant a roles/otros usuarios. Siguiente verify del mismo artefacto/SHA con helper rc.2; mantener pausa y no instalar paquetes todavía. Conservar historySHA75a0aa5f…60c7835a, sin recapturar before; no restaurar el CMS vivo para demostrar respaldo.
@@ -23,7 +25,26 @@ Propuestas rc.3 cambia solo versión/main, admisión del lector exacto y README.
 
 Los dos PHP de recuperación nuevos, en project-classification-upgrade/, validan los archivos de rc.3 y aceptan únicamente artefactos con SHA de paquete rc.2 o rc.3: el esquema/DTO de historia no cambió. Se probó recuperar un artefacto creado por rc.2 y leer/repetir su plan desde rc.3. Se conservan las herramientas/ZIP anteriores para rollback; no se sobrescriben sus fuentes o manifiestos.
 
-## Paso actual: sustituir propuestas rc.2 por el rc.3 exacto, con escritura pausada
+## Paso actual: lector instalado inactivo y classifier-installed
+
+El [proposal-upgraded real de Alex](qa/project-classification-upgrade-destination-proposal-upgraded-2026-10-27.json) pasa19checks: rc.3 exacto/activo y misma historia/documento/conteos. El usuario2 mantiene las ocho capacidades previas con scope privado ausente; lector nuevo todavía ausente. No repetir sustitución de propuestas o restaurar permisos.
+
+Subir solo el ZIP del lector0.1.0-rc.1 de la tabla a private-tools/project-classification-upgrade. Comprobar primero:
+
+```sh
+sha256sum /home/u776991923/domains/alexcuadra.dev/private-tools/project-classification-upgrade/alexcuadra-editorial-project-classification-0.1.0-rc.1.zip
+```
+
+Debe devolver exactamente `48d0734c5fcb0876171c3fd7ad8d291d7310b624ebb45a18a52b9dc32a4dfe2d`. Solo entonces instalarlo inactivo y verificar la fase:
+
+```sh
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content plugin install /home/u776991923/domains/alexcuadra.dev/private-tools/project-classification-upgrade/alexcuadra-editorial-project-classification-0.1.0-rc.1.zip &&
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content eval-file /home/u776991923/domains/alexcuadra.dev/private-tools/project-classification-upgrade/preflight.php --use-include classifier-installed 75a0aa5fdaab48206bf72e8e70eb274dd75c5b12af81d8b04963aff160c7835a
+```
+
+Sin --force ni --activate. Si ya existe o falla, conservar pausa y compartir el error, sin sustituir una versión desconocida. Compartir PROJECT_CLASSIFICATION_UPGRADE_RESULT antes de configurar el opt-in o activar. La fase exige los tres archivos exactos del lector, inactivo/sin sus herramientas, rc.3 operativo, ocho capacidades y la historia original. Instalación del lector aún pendiente de ejecución por Alex.
+
+## Histórico: sustitución de propuestas rc.2 por rc.3 ya verificada
 
 [Verify actualizado de Alex](qa/project-classification-upgrade-backup-verify-2026-10-27.json): integrityVerified=true y1propietario/1propuesta/1revisión/1recibo. Mantener alexcuadra_prepare_post_changes ausente. No volver a exportar, enrolar, crear tablas o restaurar el sitio.
 
