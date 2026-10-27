@@ -1,0 +1,206 @@
+{
+  "format": "project-classification-lab-v1",
+  "reports": {
+    "check": {
+      "passed": 57,
+      "failed": 0,
+      "cases": [
+        "two_native_abilities_registered",
+        "fixture_registration_does_not_grant_scope",
+        "anonymous_denied",
+        "admin_without_scope_denied",
+        "unrelated_scope_denied_alexcuadra_read_public_posts",
+        "unrelated_scope_denied_alexcuadra_prepare_post_changes",
+        "reader_keeps_subscriber_without_editing",
+        "classification_has_closed_project_fields",
+        "categories_are_project_owned",
+        "technologies_are_project_owned",
+        "reciprocal_category_translation",
+        "reciprocal_technology_translation",
+        "private_only_translation_not_exposed",
+        "no_body_meta_description_or_private_names",
+        "spanish_uses_exact_spanish_terms",
+        "empty_assignments_are_empty_arrays",
+        "bounded_cursor_first_page",
+        "bounded_cursor_terminal_page",
+        "unused_draft_and_blog_only_terms_excluded",
+        "catalog_has_no_counts_parents_or_descriptions",
+        "catalog_spanish_is_exact",
+        "excluded_source_0",
+        "excluded_source_1",
+        "excluded_source_2",
+        "excluded_source_3",
+        "excluded_source_4",
+        "excluded_source_5",
+        "excluded_source_6",
+        "excluded_source_7",
+        "excluded_source_8",
+        "wrong_language_does_not_fallback",
+        "closed_catalog_input_0",
+        "closed_catalog_input_1",
+        "closed_catalog_input_2",
+        "closed_catalog_input_3",
+        "closed_catalog_input_4",
+        "closed_catalog_input_5",
+        "closed_catalog_input_6",
+        "closed_catalog_input_7",
+        "closed_catalog_input_8",
+        "closed_classification_input",
+        "native_adapter_executes_classification",
+        "adapter_discovers_both_tools",
+        "recursive_closed_contract_get-public-project-classification",
+        "recursive_closed_contract_list-public-project-terms",
+        "read_operations_preserve_editorial_tables",
+        "mixed_language_assignment_fails_closed",
+        "new_public_translation_witness_is_visible",
+        "withdrawn_translation_witness_disappears",
+        "taxonomy_shared_with_posts_rejected",
+        "missing_taxonomy_fails_closed",
+        "more_than_100_assigned_terms_rejected",
+        "catalog_over_200_public_terms_rejected",
+        "inventory_over_200_public_projects_rejected",
+        "bounds_do_not_leave_a_partial_catalog",
+        "scope_revocation_denies_next_read",
+        "no_role_wide_grant"
+      ],
+      "syntheticScopeRemoved": true,
+      "sourceFingerprintsPreservedDuringReads": true,
+      "wordpress": "7.1.3",
+      "php": "8.5.11",
+      "polylang": "3.9.1"
+    },
+    "http": {
+      "httpTransportVerified": true,
+      "realCmsChanged": false,
+      "realPermissionsChanged": false,
+      "emailSent": false,
+      "syntheticCredentialsRevoked": true,
+      "syntheticScopeRemoved": true,
+      "passed": 22,
+      "failed": 0,
+      "cases": [
+        "anonymous_http_denied",
+        "real_application_password_session",
+        "transport_without_scope_denied",
+        "http_catalog_has_two_tools",
+        "http_schema_and_annotations",
+        "http_assigned_project_terms",
+        "http_reciprocal_translation",
+        "http_private_fields_excluded",
+        "http_spanish_terms",
+        "http_catalog_cursor",
+        "http_catalog_terminal_page",
+        "http_blog_taxonomy_rejected",
+        "http_unknown_fields_rejected",
+        "http_private_project_rejected",
+        "http_wrong_language_rejected",
+        "http_other_user_cannot_reuse_session",
+        "http_blog_scope_cannot_read_project_terms",
+        "http_revocation_blocks_existing_session",
+        "http_session_closed",
+        "http_closed_session_rejected",
+        "http_revoked_credential_rejected",
+        "http_reads_preserve_editorial_tables"
+      ]
+    }
+  },
+  "realCmsChanged": false,
+  "realPermissionsChanged": false,
+  "sourceFileSha256": {
+    "wordpress/experimental/editorial-project-classification/reader.php": "e80b3b422ca54622925ee9b7d56cafb5cacf807807ed1dccd8cd3ac152f2cc2b",
+    "tests/integration/wordpress-project-classification/fixture.php": "ce9a4ac1f235ffef99e90d4310efee4df09566b40a78472f10c533355bcc6d82",
+    "tests/integration/wordpress-project-classification/check.php": "b43b8d382a6f500667d8cac6f16b83d16f8789bd53d43b016fb13f86dc16b5c4",
+    "tests/integration/wordpress-project-classification/http.php": "2682c2c806f5657777e8d5e5413cec66a2707755f3632dd9498d2e522900c359",
+    "tests/integration/wordpress-project-classification/run.py": "cb8b5454686c13cef7a69d788ace6ded11ce0ae1e46d8025cdb65ece6b4e9cf4",
+    "tests/integration/wordpress-project-classification/guard-check.php": "a99e7faaaf244b3d9ea2801669c8d3dfac89c9f45915a26ac6f065f8ae2120d9"
+  },
+  "project": "alexcuadra-project-classification-final-20261027",
+  "hostPorts": false,
+  "guards": {
+    "passed": 9,
+    "failed": 0,
+    "cases": [
+      "valid",
+      "no_wordpress",
+      "missing_flag",
+      "false_flag",
+      "wrong_environment",
+      "production_url",
+      "wrong_siteurl",
+      "wrong_database",
+      "multisite"
+    ]
+  },
+  "guardRuntimePhp": "8.5.11",
+  "cleanup": {
+    "containers": [
+      {
+        "name": "alexcuadra-project-classification-native-20261027-wordpress-1",
+        "running": false,
+        "portBindings": {}
+      },
+      {
+        "name": "alexcuadra-project-classification-native-20261027-db-1",
+        "running": false,
+        "portBindings": {}
+      },
+      {
+        "name": "alexcuadra-project-classification-native-r2-20261027-wordpress-1",
+        "running": false,
+        "portBindings": {}
+      },
+      {
+        "name": "alexcuadra-project-classification-native-r2-20261027-db-1",
+        "running": false,
+        "portBindings": {}
+      },
+      {
+        "name": "alexcuadra-project-classification-integration-20261027-wordpress-1",
+        "running": false,
+        "portBindings": {}
+      },
+      {
+        "name": "alexcuadra-project-classification-integration-20261027-db-1",
+        "running": false,
+        "portBindings": {}
+      },
+      {
+        "name": "alexcuadra-project-classification-final-20261027-wordpress-1",
+        "running": false,
+        "portBindings": {}
+      },
+      {
+        "name": "alexcuadra-project-classification-final-20261027-db-1",
+        "running": false,
+        "portBindings": {}
+      }
+    ],
+    "networks": [
+      {
+        "name": "alexcuadra-project-classification-native-20261027_default",
+        "internal": true,
+        "attachedContainers": 0
+      },
+      {
+        "name": "alexcuadra-project-classification-native-r2-20261027_default",
+        "internal": true,
+        "attachedContainers": 0
+      },
+      {
+        "name": "alexcuadra-project-classification-integration-20261027_default",
+        "internal": true,
+        "attachedContainers": 0
+      },
+      {
+        "name": "alexcuadra-project-classification-final-20261027_default",
+        "internal": true,
+        "attachedContainers": 0
+      }
+    ],
+    "pruneUsed": false
+  },
+  "distributedPackagePrepared": false,
+  "productionAdmissionImplemented": false,
+  "fullSiteProfileTested": false,
+  "realMcpCallsPerformed": 0
+}
