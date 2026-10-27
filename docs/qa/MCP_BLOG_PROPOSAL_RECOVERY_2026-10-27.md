@@ -21,3 +21,7 @@ La pausa de escritores externos/DDL se declara por el operador; el helper no det
 Los tres ensayos utilizaron solo proyectos propios, red interna y sin puertos de host; limpieza registrada en el recibo. Las primeras ejecuciones pasaron38+4 y39+4; el último ensayo añade el recorrido exitoso del CLI. Sin fallos de producto observados en esos ensayos; el segundo endurece permisos filtrados/privacidad de errores antes de la verificación final.
 
 No se ejecutó SSH, backup real, restauración real, grant nuevo, propuesta real, publicación, correo o deploy. No se importaron SQL/configuración/cuentas del respaldo del hosting ni se reabrió la incidencia histórica de postmeta. PHP8.5.11 del laboratorio difiere del8.5.12 reportado por el hosting. Siguiente: Alex sube solo los dos nuevos PHP, crea carpeta privada y ejecuta export; revisar el recibo de integridad antes de grant.
+
+## Exportación real recibida
+
+[Recibo aportado por Alex](blog-proposal-backup-destination-export-2026-10-27.json): export ready=true, owners1 y propuestas/revisiones/recibos0, sin escrituras de BD. Respaldo identificado por directorio y SHA del manifiesto en el recibo. No hubo ejecución remota independiente del agente ni restauración del hosting. Siguiente verify en una nueva invocación, con ese mismo SHA; conservar permiso ausente y artefacto intacto.

@@ -1,5 +1,7 @@
 # Respaldo y recuperación de propuestas privadas rc.2
 
+**27 octubre — primera exportación real recibida:** Alex aporta export ready=true, respaldo backup-20261027T160054Z-d1f849d991c44fdb y manifestSha256 39022b62…a5b0c76; cuenta1propietario y0propuestas/revisiones/recibos, sin escrituras de BD. [Recibo](qa/blog-proposal-backup-destination-export-2026-10-27.json). Siguiente verify sobre ese mismo directorio/SHA con scope todavía ausente; no repetir exportación, modificar artefactos, restaurar sobre el CMS vivo ni conceder permiso todavía. restorationVerified=false es correcto: no se ejecutó restauración del hosting.
+
 Herramienta operativa separada del plugin. Exporta y recupera únicamente las cuatro tablas ac_blog_proposal_ del prefijo de esta instalación. No instala abilities, concede permisos, publica contenido ni restaura posts, postmeta, opciones, roles o credenciales. El ZIP rc.2 permanece sellado e idéntico.
 
 Archivos que deben permanecer juntos fuera del directorio público:
@@ -16,7 +18,19 @@ El comando no quita ni añade scopes automáticamente. Para futuros respaldos, r
 
 La exportación usa una transacción nativa mysqli READ ONLY/REPEATABLE READ con snapshot consistente; no permite reconexión de wpdb dentro del snapshot. Comprueba esquema antes/después, conexión y ausencia de escritores admitidos. No bloquea cambios DDL o SQL de operadores externos: la declaración de pausa debe ser real.
 
-## Primera exportación del hosting: siguiente paso
+## Paso actual: verificación separada del respaldo ya creado
+
+El [resultado de exportación de Alex](qa/blog-proposal-backup-destination-export-2026-10-27.json) confirma el respaldo inicial esperado: owners=1, otras tres tablas=0 y databaseWritesPerformed=false. La herramienta verifica internamente antes de devolver éxito; ahora se hará una invocación nueva contra el mismo artefacto y SHA conservado en este recibo. restorationVerified=false indica que no se restauró el hosting, no un fallo de exportación.
+
+Mantener el scope nuevo ausente. Alex ejecuta únicamente:
+
+```sh
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content --user=1 eval-file /home/u776991923/domains/alexcuadra.dev/private-tools/blog-proposal-rc2/blog-proposal-backup.php verify /home/u776991923/domains/alexcuadra.dev/private-tools/blog-proposal-backups/backup-20261027T160054Z-d1f849d991c44fdb 39022b626ba023405c3ba2475bb7d0281f910bcfa7cfa3610385b29bba5b0c76
+```
+
+Compartir únicamente BLOG_PROPOSAL_BACKUP_RESULT; no adjuntar tables.json o manifest.json. Se espera ready=true, integrityVerified=true y los mismos conteos, sin escrituras de BD. Si falla, compartir el código y conservar el artefacto: no regenerar, editar, sustituir el SHA o restaurar para hacer pasar el control. No repetir exportación o mkdir. El grant sigue pendiente de revisión del recibo de verify.
+
+## Histórico: primera exportación del hosting ya realizada por Alex
 
 El after-owner de Alex ya es correcto. No repetir instalación, creación de tablas, enroll o diagnósticos anteriores. Subir los dos PHP nuevos a:
 
