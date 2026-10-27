@@ -60,3 +60,7 @@ Instalación aún no aprobada. El nuevo paquete no migra esquema, concede permis
 ## Activación real y lecturas MCP verificadas
 
 [Classifier-enabled](project-classification-upgrade-destination-classifier-enabled-2026-10-27.json) de Alex ready=true/19checks e historia conservada, con scope privado pausado. [Conector independiente](MCP_PROJECT_CLASSIFICATION_LIVE_2026-10-27.md):20abilities,146EN/196ES y catálogos4/20por idioma correctos/recíprocos, sin mutaciones. Siguiente instalar solo los dos helpers operativos rc.3 fuera del árbol público y verify del artefacto rc.2 antes de reabrir el scope privado; no restauración del CMS vivo.
+
+## Compatibilidad del respaldo verificada con helpers rc.3 reales
+
+[Verify aportado por Alex](project-classification-upgrade-backup-verify-rc3-2026-10-27.json) tras ejecutar el comando indicado en la carpeta nueva: ready/integrityVerified=true, cuatro conteos1 y sin escrituras/restauración de BD. Siguiente restitución exclusiva del scope privado anterior y after-scope con hash original; cerrar por get/list/replay del plan1/v1 vía MCP, sin crear otro. No se han ejecutado cambios remotos por el agente.

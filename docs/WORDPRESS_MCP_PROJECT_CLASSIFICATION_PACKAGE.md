@@ -1,5 +1,7 @@
 # Paquete coordinado de clasificación de proyectos
 
+**27 octubre — artefacto rc.2 verificado con helpers rc.3 en el hosting:** Alex aporta verify ready=true/integrityVerified=true, conteos1/1/1/1 y sin escrituras de BD; no restauración sobre el sitio vivo. [Recibo](qa/project-classification-upgrade-backup-verify-rc3-2026-10-27.json). Siguiente restituir únicamente alexcuadra_prepare_post_changes al usuario2 y after-scope del nuevo preflight con historySHA75a0aa5f…60c7835a; ocho capacidades previas/roles/historia deben conservarse. Después get/replay del piloto existente por MCP, sin crear un plan nuevo. No repetir instalación, activación, backup o DDL. Restitución real todavía pendiente de Alex.
+
 **27 octubre — lector activo y lecturas MCP reales verificadas:** classifier-enabled de Alex ready=true/19checks; rc.3+lector exactos/activos, historia/documento/conteos originales y ocho capacidades previas, scope privado pausado. [Recibo](qa/project-classification-upgrade-destination-classifier-enabled-2026-10-27.json). Conector: catálogo20, get146EN/196ES con1categoría/8tecnologías y reciprocidad, catálogos4categorías/20tecnologías por idioma con IDs del mapa aprobado;9llamadas sin mutaciones. [Evidencia/límites](qa/MCP_PROJECT_CLASSIFICATION_LIVE_2026-10-27.md). Siguiente: subir dos helpers rc.3 a private-tools/project-classification-upgrade y verificar el respaldo rc.2 deb1593d…ab76110 con ellos antes de restaurar solo el scope privado. No reinstalar, crear planes o cambiar clasificaciones.
 
 **27 octubre — carpeta del lector conciliada, instalación inactiva verificada:** classifier-installed de Alex ready=true/19checks; tres archivos exactos de rc.1, lector inactivo/sin sus herramientas, rc.3 activo y misma historia/documento/conteos1/1/1/1. [Recibo](qa/project-classification-upgrade-destination-classifier-installed-2026-10-27.json). Se cierra el estado desconocido de la carpeta, no se identifica cuándo se instaló; no reinstalar/forzar/borrar. Siguiente opt-in AC_EDITORIAL_PROJECT_CLASSIFICATION_SITE exacto + activar solo lector + classifier-enabled con historySHA original. Mantener scope privado pausado y ocho capacidades anteriores; sin nuevos grants/DDL/asignaciones.
@@ -31,7 +33,24 @@ Propuestas rc.3 cambia solo versión/main, admisión del lector exacto y README.
 
 Los dos PHP de recuperación nuevos, en project-classification-upgrade/, validan los archivos de rc.3 y aceptan únicamente artefactos con SHA de paquete rc.2 o rc.3: el esquema/DTO de historia no cambió. Se probó recuperar un artefacto creado por rc.2 y leer/repetir su plan desde rc.3. Se conservan las herramientas/ZIP anteriores para rollback; no se sobrescriben sus fuentes o manifiestos.
 
-## Paso actual: helpers rc.3 y verificación del artefacto rc.2
+## Paso actual: restituir solo el scope privado anterior y after-scope
+
+La [verificación con helpers rc.3 aportada por Alex](qa/project-classification-upgrade-backup-verify-rc3-2026-10-27.json) confirma integridad del artefacto rc.2 y los cuatro conteos1. Ambos paquetes/lecturas públicas ya están verificados. No repetir instalación, activación, exportación o verify; no restaurar el respaldo sobre el CMS vivo.
+
+Alex restituye únicamente la capacidad directa que se pausó al usuario2 y comprueba el nuevo after-scope, que acepta historia no vacía:
+
+```sh
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content --user=1 user add-cap 2 alexcuadra_prepare_post_changes &&
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content eval-file /home/u776991923/domains/alexcuadra.dev/private-tools/project-classification-upgrade/preflight.php --use-include after-scope 75a0aa5fdaab48206bf72e8e70eb274dd75c5b12af81d8b04963aff160c7835a
+```
+
+Compartir PROJECT_CLASSIFICATION_UPGRADE_RESULT o el error antes de usar preparación privada. Se esperan19checks, nueve capacidades originales (ocho conservadas más la que se restituyó), subscriber, ningún grant a roles/otros usuarios y16permisos amplios denegados. Historia/documento/conteos deben conservar el SHA original; no recapturar before o borrar datos. No usar el preflight inicial de blog-proposals-rc2 que exigía tablas vacías.
+
+El permiso ya estaba concedido antes de la pausa y sigue limitado a planes privados/contexto publicado; no añade edición/publicación nativa. La restitución real aún está pendiente. Si falla el comando o la comprobación, compartir el resultado antes de continuar; no añadir otros permisos o crear propuestas para probarlo.
+
+Tras revisar after-scope, el agente verificará por MCP get1/v1, listado1/v1 y replay exacto con la petición original d445d143c728bc9301ca4af463c06116, comparando contra el documento54945c84…7f6b3d. No generar otra request_id, versión o plan. El catálogo20 y las lecturas públicas EN/ES ya pasaron; no necesitan repetición sin causa.
+
+## Histórico: helpers rc.3 y artefacto rc.2 ya verificados
 
 [Classifier-enabled de Alex](qa/project-classification-upgrade-destination-classifier-enabled-2026-10-27.json):19checks correctos con ambos paquetes activos, historia/documento/conteos preservados y ocho capacidades anteriores. Las nuevas lecturas se verificaron también por MCP: [catálogo20, clasificación EN/ES y términos](qa/MCP_PROJECT_CLASSIFICATION_LIVE_2026-10-27.md). No repetir instalación, activación o before; no restaurar todavía el scope privado.
 
