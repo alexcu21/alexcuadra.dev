@@ -1,5 +1,9 @@
 # Paquete revisable de propuestas privadas
 
+**27 octubre — candidato rc.2 preparado:** ZIP separado de rc.1, ocho archivos/17.693bytes, SHA7e5bc2b3…d4d6def.149funcionales+29contratos+10admisión correctas; ciclo de instalación/restauración/retirada en laboratorio con nueve preflights y30checks. [Paquete/procedimiento vigente](WORDPRESS_MCP_BLOG_PROPOSAL_RC2.md), [QA/límites](qa/MCP_BLOG_PROPOSAL_RC2_2026-10-27.md). Respaldo/restauración solo sintéticos, no herramienta de hosting ni API reabierta tras restaurar. Instalación/grant reales pendientes. Siguiente preflight rc.2 de solo lectura con su pareja de PHP en private-tools/blog-proposal-rc2; no repetir fingerprint ni instalar rc.1/experimento. CMS/Worker/contacto intactos.
+
+## Archivo histórico de rc.1: procedimiento sustituido por rc.2
+
 **Actualización:**149pruebas funcionales/MCP/fallos correctas en laboratorio y11comprobaciones de huellas del servidor coincidentes. rc.1 permanece retenido; el experimento local no se instala. [Pruebas](qa/MCP_BLOG_PROPOSAL_SITE_FUNCTIONAL_2026-10-26.md), [recibo real aportado](qa/blog-proposal-code-fingerprint-destination-2026-10-26.json).
 
 ## Paso actual: candidato distribuible y ciclo operativo

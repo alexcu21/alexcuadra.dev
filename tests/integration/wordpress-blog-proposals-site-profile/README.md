@@ -14,3 +14,7 @@ Después ejecutar `BLOG_SITE_PROFILE_PROJECT=alexcuadra-blog-site-profile-202610
 Workers usan archivos privados en vez de pipes para diagnósticos, marcadores con plazo y vaciado de buffers. `php process-check.php` prueba siete situaciones con mucho stdout/stderr y errores. El debug log se conserva privado, no se desactiva error_reporting. [Evidencia ampliada](../../../docs/qa/MCP_BLOG_PROPOSAL_SITE_FUNCTIONAL_2026-10-26.md).
 
 El modo de arranque también prueba el nuevo diagnóstico autocontenido de huellas y escribe un recibo distinto, sin sustituir el recibo histórico de arranque. La prueba compara entradas, no árboles completos del servidor; installationApproved=false incluso cuando coinciden.
+
+## Candidato rc.2
+
+`scripts/package-editorial-blog-proposals-site.py` deriva un candidato distribuible separado del ZIP rc.1, conservando el original. `--release functional` verifica149casos de operaciones/fallos/HTTP más29contratos y10casos de admisión real simulada. `--release lifecycle` instala el ZIP con WP-CLI y prueba nueve preflights/30checks, respaldo privado sintético y restauración a prefijo separado. No copiar los fixtures al hosting. Usar un proyecto propio nuevo; runner exige red interna vacía y detiene solo su proyecto. [Procedimiento](../../../docs/WORDPRESS_MCP_BLOG_PROPOSAL_RC2.md).

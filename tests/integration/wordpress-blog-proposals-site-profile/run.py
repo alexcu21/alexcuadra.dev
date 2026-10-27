@@ -28,7 +28,8 @@ def command(argv,**kwargs):
     return result.stdout
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--functional',action='store_true');options=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--functional',action='store_true');parser.add_argument('--release',choices=['functional','lifecycle']);options=parser.parse_args()
+    if options.release:options.functional=True
     os.umask(0o077)
     if not re.fullmatch(r'alexcuadra-blog-site-profile-[a-z0-9-]+',PROJECT):raise ValueError('OWN_PROFILE_PROJECT_REQUIRED')
     if os.environ.get('DOCKER_HOST') or shutil.disk_usage('/private/tmp').free<2*1024**3:raise ValueError('LOCAL_DOCKER_AND_SPACE_REQUIRED')
@@ -63,6 +64,19 @@ def main():
     if options.functional:
         spec=importlib.util.spec_from_file_location('site_candidate',HERE/'candidate.py');module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
         candidate,testdir,policy=module.prepare(work,receipt,inventory)
+        if options.release:
+            archive=ROOT/'artifacts/wordpress/alexcuadra-editorial-blog-proposals-0.1.0-rc.2.zip'
+            release_manifest=json.loads(archive.with_suffix('.manifest.json').read_text())
+            if digest(archive)!=release_manifest['sha256']:raise ValueError('RELEASE_ARCHIVE_DRIFT')
+            for p in candidate.iterdir():p.unlink()
+            with zipfile.ZipFile(archive)as z:
+                if sorted(z.namelist())!=sorted(e['path']for e in release_manifest['files']):raise ValueError('RELEASE_FILE_LIST_DRIFT')
+                for e in release_manifest['files']:
+                    data=z.read(e['path'])
+                    if hashlib.sha256(data).hexdigest()!=e['sha256']:raise ValueError('RELEASE_ENTRY_DRIFT')
+                    (candidate/e['path'].split('/',1)[1]).write_bytes(data)
+            (testdir/'contracts.php').write_bytes((ROOT/'tests/integration/wordpress-blog-proposals-release/contracts.php').read_bytes())
+            policy={'destinationReceiptSha256':release_manifest['destinationReceiptSha256'],'admissionSha256':digest(candidate/'admission.php'),'mode':'exact-entry-profile-rc2','wholePluginTreesVerified':False}
     env={'BLOG_SITE_PROFILE_LAB':'verified-code-only','WORDPRESS_CONFIG_EXTRA':"""
 define('WP_ENVIRONMENT_TYPE','local');define('WP_HOME','https://content.alexcuadra.dev');define('WP_SITEURL','https://content.alexcuadra.dev');
 define('DISABLE_WP_CRON',true);define('WP_HTTP_BLOCK_EXTERNAL',true);define('AUTOMATIC_UPDATER_DISABLED',true);define('DISALLOW_FILE_MODS',true);
@@ -71,9 +85,14 @@ define('AC_EDITORIAL_PROPOSALS_SITE','https://content.alexcuadra.dev');define('A
 $_SERVER['HTTP_HOST']='content.alexcuadra.dev';$_SERVER['HTTPS']='on';$_SERVER['SERVER_PORT']=443;
 """}
     if options.functional:env['WORDPRESS_CONFIG_EXTRA']+="define('AC_BLOG_PROPOSALS_SITE_PROFILE_LAB',true);define('WP_ACCESSIBLE_HOSTS','wordpress');"
+    if options.release:
+        env['WORDPRESS_CONFIG_EXTRA']+="define('AC_EDITORIAL_BLOG_PROPOSALS_LAB',getenv('BLOG_SITE_RELEASE_ENABLED')==='1');"
+        env['BLOG_SITE_RELEASE_ENABLED']='1'
     env['WORDPRESS_CONFIG_EXTRA']=env['WORDPRESS_CONFIG_EXTRA'].replace('$','$$')
     volumes=[str(source/'wp-content')+':/verified-profile:ro',str(overlays)+':/sealed-overlays:ro',str(HERE)+':/site-profile-lab:ro',
         str(profile)+':/profile-input.json:ro',str(ROOT/'docs/qa/blog-proposal-site-code-inventory-2026-10-26.json')+':/profile-inventory.json:ro',str(ROOT/'wordpress/operations')+':/proposal-operations:ro']
+    if options.release:
+        volumes.extend([str(ROOT/'wordpress/operations/blog-proposal-rc2')+':/release-operations:ro',str(ROOT/'artifacts/wordpress/alexcuadra-editorial-blog-proposals-0.1.0-rc.2.zip')+':/site-release.zip:ro'])
     if options.functional:volumes.extend([str(candidate)+':/site-candidate:ro',str(testdir)+':/site-tests:ro'])
     settings={'services':{name:{'environment':env,'volumes':volumes}for name in ['wordpress','cli']},
         'networks':{'default':{'external':True,'name':NETWORK}},'volumes':{'wp-data':{'driver_opts':{'o':'size=768m'}}}}
@@ -110,16 +129,71 @@ $_SERVER['HTTP_HOST']='content.alexcuadra.dev';$_SERVER['HTTPS']='on';$_SERVER['
             fingerprint=json.loads(items[0])
             if fingerprint['codeMatchesLocalFixture'] is not True or fingerprint['installationApproved'] is not False or fingerprint['mutationsRequested'] is not False:raise ValueError('FINGERPRINT_NOT_VERIFIED')
             (ROOT/'docs/qa/blog-proposal-code-fingerprint-lab-2026-10-26.json').write_text(json.dumps(fingerprint,indent=2)+'\n')
+        lifecycle=[]
+        def preflight(phase,enabled,ready=True):
+            proc=subprocess.run(base+['run','--rm','--no-deps','-e','BLOG_SITE_RELEASE_ENABLED='+('1'if enabled else'0'),'cli','eval-file','/release-operations/blog-proposal-preflight.php','2',phase],capture_output=True,text=True)
+            lines=[l[len('BLOG_PROPOSAL_PREFLIGHT_RESULT='):]for l in proc.stdout.splitlines()if l.startswith('BLOG_PROPOSAL_PREFLIGHT_RESULT=')]
+            if len(lines)!=1:raise ValueError('RELEASE_PREFLIGHT_MISSING:'+proc.stderr[:1000]+proc.stdout[:1000])
+            item=json.loads(lines[0])
+            if item['ready'] is not ready or (proc.returncode==0)!=ready:raise ValueError('RELEASE_PREFLIGHT_UNEXPECTED:'+json.dumps(item))
+            lifecycle.append(item);print('RC2_PREFLIGHT='+json.dumps({'phase':phase,'ready':ready}),flush=True)
+        def fixture(mode):
+            out=cli('eval-file','/site-profile-lab/release-lifecycle.php',mode)
+            lines=[l[len('SITE_RELEASE_LIFECYCLE_RESULT='):]for l in out.splitlines()if l.startswith('SITE_RELEASE_LIFECYCLE_RESULT=')]
+            if len(lines)!=1:raise ValueError('LIFECYCLE_RESULT_MISSING')
+            item=json.loads(lines[0])
+            if item['failed']!=0 or item['passed']!=len(set(item['cases'])) or not item['passed']:raise ValueError('LIFECYCLE_CASES_INVALID')
+            lifecycle.append(item);print('RC2_FIXTURE='+json.dumps(item),flush=True)
+        if options.release=='lifecycle':preflight('before',False)
         if options.functional:
-            compose('run','--rm','--no-deps','--user','0:0','--entrypoint','sh','cli','-ec',
-                'mkdir wp-content/plugins/alexcuadra-editorial-blog-proposals .site-tests; cp -R /site-candidate/. wp-content/plugins/alexcuadra-editorial-blog-proposals/; cp -R /site-tests/. .site-tests/; chown -R 33:33 wp-content/plugins/alexcuadra-editorial-blog-proposals .site-tests')
+            if options.release:
+                cli('plugin','install','/site-release.zip')
+                compose('run','--rm','--no-deps','--user','0:0','--entrypoint','sh','cli','-ec',
+                    'mkdir .site-tests; cp -R /site-tests/. .site-tests/; chown -R 33:33 .site-tests')
+                result['archiveInstalledByWpCli']=True
+            else:
+                compose('run','--rm','--no-deps','--user','0:0','--entrypoint','sh','cli','-ec',
+                    'mkdir wp-content/plugins/alexcuadra-editorial-blog-proposals .site-tests; cp -R /site-candidate/. wp-content/plugins/alexcuadra-editorial-blog-proposals/; cp -R /site-tests/. .site-tests/; chown -R 33:33 wp-content/plugins/alexcuadra-editorial-blog-proposals .site-tests')
+            if options.release=='lifecycle':preflight('after-install',False)
             cli('plugin','activate','alexcuadra-editorial-blog-proposals')
             reports={}
+            if options.release=='lifecycle':
+                preflight('after-enable',True);fixture('profile-negatives')
+                fixture('install-storage');preflight('after-storage',True)
+                fixture('enroll');preflight('after-owner',True)
+                fixture('grant');preflight('after-scope',True)
+                fixture('poison');preflight('after-scope',True,False)
+                fixture('repair');preflight('after-scope',True)
+                fixture('seed-and-backup');fixture('restore-and-retain')
+                cli('plugin','deactivate','alexcuadra-editorial-blog-proposals')
+                preflight('withdrawn',False);fixture('assert-retained')
+                result['releaseLifecycle']=lifecycle;result['releaseManifest']=release_manifest
+                result['candidateVersion']='0.1.0-rc.2';result['distributionReady']=False
+                result['privateProposalOperationsTested']=True
+                result['isolatedRestoreUsesSeparateTablePrefix']=True
+                result['repositoryApiReplayAfterRestoreTested']=False
+                result['sourceTablesRestored']=False
+                (ROOT/'docs/qa/blog-proposal-rc2-lifecycle-2026-10-27.json').write_text(json.dumps(result,indent=2)+'\n')
+                return
             for phase,marker in [('check','EDITORIAL_BLOG_PROPOSAL_WP_RESULT='),('failures','EDITORIAL_BLOG_PROPOSAL_FAULT_RESULT='),('http','EDITORIAL_BLOG_PROPOSAL_HTTP_RESULT=')]:
                 out=cli('eval-file','/var/www/html/.site-tests/'+phase+'.php')
                 validated=command(['python3',str(ROOT/'tests/integration/wordpress-blog-proposals/verify-report.py'),marker],input=out)
                 reports[phase]=json.loads(validated.strip()[len(marker):]);print(marker+json.dumps(reports[phase]),flush=True)
-            result['functional']=reports;result['proposalCrudTested']=True;result['candidateVersion']='0.1.0-lab.site.1';result['distributionReady']=False
+            if options.release:
+                out=cli('eval-file','/var/www/html/.site-tests/contracts.php')
+                lines=[l[len('BLOG_PROPOSAL_RELEASE_CONTRACT_RESULT='):]for l in out.splitlines()if l.startswith('BLOG_PROPOSAL_RELEASE_CONTRACT_RESULT=')]
+                if len(lines)!=1:raise ValueError('CONTRACT_RECEIPT_MISSING')
+                contracts=json.loads(lines[0])
+                if contracts['failed']!=0 or contracts['passed']!=len(set(contracts['cases'])):raise ValueError('CONTRACT_FAILED')
+                result['releaseContracts']=contracts;result['releaseManifest']=release_manifest
+                output=cli('eval-file','/site-profile-lab/production-admission-check.php')
+                prefix='SITE_RELEASE_ADMISSION_RESULT='
+                lines=[l[len(prefix):]for l in output.splitlines()if l.startswith(prefix)]
+                if len(lines)!=1:raise ValueError('PRODUCTION_ADMISSION_RECEIPT_MISSING')
+                admission=json.loads(lines[0])
+                if admission['failed']!=0 or admission['passed']!=len(set(admission['cases'])):raise ValueError('PRODUCTION_ADMISSION_CHECK_FAILED')
+                result['productionBranchAdmissionInSyntheticLab']=admission
+            result['functional']=reports;result['proposalCrudTested']=True;result['candidateVersion']='0.1.0-rc.2'if options.release else'0.1.0-lab.site.1';result['distributionReady']=False
             result['candidateFileSha256']={p.name:digest(p)for p in candidate.iterdir()}
             result['testFileSha256']={p.name:digest(p)for p in testdir.iterdir()}
             result['candidatePolicy']=policy
@@ -127,7 +201,7 @@ $_SERVER['HTTP_HOST']='content.alexcuadra.dev';$_SERVER['HTTPS']='on';$_SERVER['
             (work/'diagnostics.log').write_text(diagnostics)
             result['diagnostics']={'bytes':len(diagnostics.encode()),'sha256':hashlib.sha256(diagnostics.encode()).hexdigest(),'retainedPrivately':True,
                 'lines':len(diagnostics.splitlines()),'fatalMarkers':diagnostics.count('PHP Fatal error')}
-            (ROOT/'docs/qa/blog-proposal-site-profile-functional-2026-10-26.json').write_text(json.dumps(result,indent=2)+'\n')
+            (ROOT/('docs/qa/blog-proposal-rc2-functional-2026-10-27.json'if options.release else'docs/qa/blog-proposal-site-profile-functional-2026-10-26.json')).write_text(json.dumps(result,indent=2)+'\n')
             print(json.dumps({'bootstrapChecks':report['passed'],'functionalChecks':sum(r['passed']for r in reports.values()),'failed':0,'distributionReady':False}))
         else:
             (ROOT/'docs/qa/blog-proposal-site-profile-bootstrap-fingerprint-2026-10-26.json').write_text(json.dumps(result,indent=2)+'\n')

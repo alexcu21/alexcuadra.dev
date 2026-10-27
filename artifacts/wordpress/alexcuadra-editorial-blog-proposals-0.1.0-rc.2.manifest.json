@@ -1,0 +1,58 @@
+{
+  "format": "editorial-blog-proposals-review-v2",
+  "version": "0.1.0-rc.2",
+  "decision": "hold-pending-release-lifecycle-review",
+  "targetSite": "https://content.alexcuadra.dev",
+  "plannedUserId": 2,
+  "capability": "alexcuadra_prepare_post_changes",
+  "installationApproved": false,
+  "capabilityGrantApproved": false,
+  "sourceWriterIncluded": false,
+  "automaticMigration": false,
+  "basePackageSha256": "ca33ebd4b3a874a939b8d18dbf42c2cea324325b26716f01208cd1f85154635a",
+  "destinationReceiptSha256": "351c41e4148b423c43826faf2b836a17e46930cda7e9250596eddc9d67cfecea",
+  "sha256": "7e5bc2b3213a8497dc47426b4565bbf528400d69f4e4f3e57f40f6119d4d6def",
+  "zipBytes": 17693,
+  "files": [
+    {
+      "path": "alexcuadra-editorial-blog-proposals/README.md",
+      "bytes": 500,
+      "sha256": "606c7dff0d1e4e684342719800b4fe2a9bfa8b143d3cc936afa2607ec0079369"
+    },
+    {
+      "path": "alexcuadra-editorial-blog-proposals/abilities.php",
+      "bytes": 5631,
+      "sha256": "46c4ef85ae4f336e7b62075ea34da9cfeba7d69e48eb366d19e1f364050009c2"
+    },
+    {
+      "path": "alexcuadra-editorial-blog-proposals/admission.php",
+      "bytes": 14962,
+      "sha256": "7043443da1d1ea07208cd52dbafbd98f1458e425b19a00546d3219ac90805eb4"
+    },
+    {
+      "path": "alexcuadra-editorial-blog-proposals/alexcuadra-editorial-blog-proposals.php",
+      "bytes": 603,
+      "sha256": "62346abeeb919130faea84b8db88876140125cb837eaa06e0062a0fcf423c42a"
+    },
+    {
+      "path": "alexcuadra-editorial-blog-proposals/connection-fence.php",
+      "bytes": 2840,
+      "sha256": "c836eb135f411cc2e59d54eb126bd5d2e4a91ba184ca47018c3728e4ae1b5be5"
+    },
+    {
+      "path": "alexcuadra-editorial-blog-proposals/planner.php",
+      "bytes": 7838,
+      "sha256": "a47a8ce035a391fa4e0ba7de7d11a0db0b2b8d241aa7d3d9b5d063d55b44ae8f"
+    },
+    {
+      "path": "alexcuadra-editorial-blog-proposals/wordpress-repository.php",
+      "bytes": 10202,
+      "sha256": "14756411443d31ad89409a8a0963b72d38492d2e544e4b8b523ca3592bbf7204"
+    },
+    {
+      "path": "alexcuadra-editorial-blog-proposals/wordpress-source.php",
+      "bytes": 3633,
+      "sha256": "10a7efb3af20870fbd3cec53550d663b1253b397c8cffa8776a7cd39071a94bd"
+    }
+  ]
+}
