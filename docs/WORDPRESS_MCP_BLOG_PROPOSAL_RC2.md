@@ -14,7 +14,27 @@ La excepción de pruebas exige entorno local, DB_HOST=db, URL exacta y marca de 
 
 Las huellas principales coinciden con el servidor; no verifican árboles completos. El laboratorio usa PHP8.5.11/MariaDB11.8.9 y configuración/datos sintéticos; servidor PHP8.5.12. No certifica opciones reales de hosting, preview, cachés externas, restauración ante pérdida del servidor ni escritura pública.
 
-## Paso actual: guard del sitio, activación y after-enable
+## Paso actual: cuatro tablas vacías y after-storage
+
+El [after-enable real](qa/blog-proposal-rc2-destination-after-enable-2026-10-27.json) pasa las 15 comprobaciones: guard/plugin activos, cinco herramientas registradas, archivos exactos y perfil compatible. Las cuatro tablas propias aún no existen; no hay nuevo scope y las ocho capacidades anteriores se conservan. No repetir instalación o activación.
+
+Alex ejecuta por SSH con el operador CLI1 administrador existente, ya identificado en el procedimiento operativo anterior; no se asignan capacidades al usuario2. El método install comprueba nuevamente sitio/perfil, contexto CLI, manage_options, ausencia de transacción y ausencia de las cuatro tablas antes del primer CREATE. Solo crea las cuatro tablas ac_blog_proposal_ del prefijo de esta instalación y valida su esquema; no inscribe propietarios ni concede permisos.
+
+```sh
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content --user=1 eval '(new \AlexCuadra\EditorialBlogProposals\WordPressRepository($GLOBALS["wpdb"]))->install(); WP_CLI::line("BLOG_PROPOSAL_STORAGE_CREATED");'
+```
+
+Si termina correctamente, comprobar:
+
+```sh
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content eval-file /home/u776991923/domains/alexcuadra.dev/private-tools/blog-proposal-rc2/blog-proposal-preflight.php 2 after-storage
+```
+
+Compartir BLOG_PROPOSAL_PREFLIGHT_RESULT antes de continuar. after-storage exige cuatro tablas InnoDB/utf8mb4_bin con columnas/índices/FK/triggers exactos, sin filas ni propietario y con los permisos anteriores intactos. El schema.ready=false de las fases previas era la ausencia esperada; aquí debe ser true.
+
+Si el primer comando falla, detenerse y compartir el error; no repetir DDL ni usar DROP/ALTER para reparar. El DDL de MariaDB no es transaccional y una interrupción puede dejar tablas parciales. Si el usuario1 ya no tiene manage_options, el método rechaza sin crear tablas; revisar el operador antes de cambiar identidades o permisos. No hay creación real de almacenamiento hasta que Alex ejecute este paso. Propietario y primer scope se revisarán después; el respaldo operativo del hosting sigue pendiente antes de escribir propuestas privadas reales.
+
+## Histórico: guard, activación y after-enable completados
 
 El [after-install aportado por Alex](qa/blog-proposal-rc2-destination-after-install-2026-10-27.json) pasa las 15 comprobaciones. Archivos exactos, perfil compatible y plugin inactivo. No se han creado tablas propias ni concedido el scope nuevo; las ocho capacidades anteriores permanecen. No repetir instalación, before o fingerprint.
 

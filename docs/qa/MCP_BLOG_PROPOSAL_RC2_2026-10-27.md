@@ -25,3 +25,7 @@ Alex aportó el [before rc.2](blog-proposal-rc2-destination-before-2026-10-27.js
 ## Instalación inactiva real verificada
 
 [After-install aportado por Alex](blog-proposal-rc2-destination-after-install-2026-10-27.json): ready=true, 15 comprobaciones principales/11 del perfil correctas y archivos exactos del ZIP. Continúan inactivo el plugin y el guard, sin tablas ni scope nuevo, con ocho capacidades previas. No hubo nueva consulta remota independiente del agente. Siguiente guard del sitio + activación + after-enable; no repetir instalación o diagnósticos anteriores.
+
+## Activación real verificada
+
+[After-enable de Alex](blog-proposal-rc2-destination-after-enable-2026-10-27.json): ready=true, 15 comprobaciones principales y 11 del perfil correctas. Plugin/guard activos y cinco herramientas registradas; sin tablas ni nuevo scope, con ocho capacidades anteriores. Siguiente creación explícita de cuatro tablas vacías mediante install() como operador1 existente y after-storage. El método exacto ya se ejercitó en el ciclo rc.2 de laboratorio. El agente no ejecuta DDL remoto; no hubo nueva inspección independiente del servidor.

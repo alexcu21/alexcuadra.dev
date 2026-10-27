@@ -1,5 +1,7 @@
 # Incrementos pendientes — estado consolidado al 26 octubre 2026
 
+**27 octubre — activación real de rc.2 verificada:** after-enable de Alex ready=true, 15 comprobaciones principales y 11 del perfil correctas. Plugin/guard activos y cinco herramientas registradas; archivos exactos, sin tablas propias o scope nuevo y con las ocho capacidades anteriores. [Recibo](qa/blog-proposal-rc2-destination-after-enable-2026-10-27.json). Siguiente: operador CLI1 existente crea únicamente las cuatro tablas vacías del módulo y after-storage; sin propietario/grant/propuestas. No reinstalar, reactivar o repetir fases anteriores. El procedimiento de respaldo del hosting sigue pendiente antes de escritura privada real.
+
 **27 octubre — instalación inactiva de rc.2 verificada:** Alex aporta after-install ready=true, 15 comprobaciones principales/11 del perfil correctas, archivos exactos del ZIP 7e5bc2b3…d4d6def. Plugin inactivo, guard apagado, sin tablas propias o nuevo scope; ocho capacidades anteriores conservadas. [Recibo](qa/blog-proposal-rc2-destination-after-install-2026-10-27.json). Siguiente: constante de sitio exacta, activar solo este plugin y after-enable; aún sin DDL, propietario o grant. No reinstalar ni repetir before/fingerprint.
 
 **27 octubre — before real de rc.2 recibido:** ready=true, 15 comprobaciones principales y 11 del perfil correctas, SHA del ZIP exacto. No hay paquete instalado, tablas propias, guard activo ni scope nuevo; se conservan las ocho capacidades previas. [Recibo de Alex](qa/blog-proposal-rc2-destination-before-2026-10-27.json). Siguiente: instalación inactiva del ZIP rc.2 exacto por Alex y after-install; sin activar, crear tablas o conceder permisos. No repetir before/fingerprint. Respaldo operativo del hosting pendiente antes de escritura privada.
@@ -32,7 +34,7 @@ El nuevo [planificador de propuestas](WORDPRESS_MCP_BLOG_PROPOSALS.md) prepara u
 
 | Prioridad | Incremento concreto | Criterio de cierre |
 | --- | --- | --- |
-| 2 | Revisar rc.2 y admisión real por fases |ZIP preparado y pruebas de ciclo aislado correctas. Instalación inactiva verificada; configurar guard exacto, activar y recibir after-enable. Activación/tablas/propietario/primer scope posteriores. Preparar respaldo operativo del hosting antes de escritura privada; no instalar el experimento ni rc.1. |
+| 2 | Revisar rc.2 y admisión real por fases |ZIP preparado y pruebas de ciclo aislado correctas. Activación verificada; crear únicamente cuatro tablas vacías y recibir after-storage. Activación/tablas/propietario/primer scope posteriores. Preparar respaldo operativo del hosting antes de escritura privada; no instalar el experimento ni rc.1. |
 | 3 | Ampliar clasificación editorial MCP de proyectos | Lectura y propuestas para categorías/tecnologías propias de proyectos, con IDs/idiomas exactos y sin reutilizar categorías del blog. El lector de posts ya operativo solo cubre category/post_tag asignados. |
 | 4 | Promover el conjunto reciente de staging a producción | Revisar caché/contacto/EN/ES y publicar el código manteniendo contacto false; postflight real y reversión. No requiere activar el formulario ni reenviar un piloto. |
 | 5 | Preparar contacto en producción | Añadir entrypoint/export del coordinador, bindings, rate limiter independiente, origen, remitente, widget/hostname y tres secretos. Revisar alcance/configuración antes de crearlos; no basta con activar el flag. |
@@ -55,4 +57,4 @@ Los booleanos prueban coincidencia con la configuración requerida, no el valor 
 - Bandeja interna de mensajes: **no es un requisito acordado**. Alex preguntó dónde se guardan; actualmente no existe esa bandeja. Añadirla exige definir finalidad, acceso y conservación antes de persistir mensajes.
 - Comprobar ajuste Email preview de Cloudflare y mantener el procedimiento manual30días en Gmail; no se automatiza el borrado sin una petición específica.
 
-No se desplegó frontend ni se cambió CMS/DNS/contacto/permisos en este incremento de inventario/candidato. Siguiente trabajo concreto: prioridad2, guard/activación del rc.2 y after-enable; instalación inactiva real ya verificada. No repetir instalación/grants del lector ni instalar rc.1 o el experimento local.
+No se desplegó frontend ni se cambió CMS/DNS/contacto/permisos en este incremento de inventario/candidato. Siguiente trabajo concreto: prioridad2, almacenamiento vacío del rc.2 y after-storage; activación real ya verificada. No repetir instalación/grants del lector ni instalar rc.1 o el experimento local.
