@@ -1,0 +1,80 @@
+{
+  "evidenceSource": "user-pasted-hosting-WP-CLI-output",
+  "receivedDate": "2026-10-27",
+  "wordpressRoot": "/home/u776991923/domains/alexcuadra.dev/public_html/content",
+  "result": {
+    "format": "project-classification-upgrade-preflight-v1",
+    "phase": "after-scope",
+    "ready": true,
+    "checks": {
+      "singleTarget": true,
+      "exactProposalPackage": true,
+      "proposalActive": true,
+      "proposalGuard": true,
+      "profileCompatible": true,
+      "exactClassificationFiles": true,
+      "expectedClassificationActivation": true,
+      "privateToolsRegistered": true,
+      "classificationToolsRegistered": true,
+      "translatedProjectOnlyTaxonomies": true,
+      "schemaReady": true,
+      "expectedPilotShape": true,
+      "originalHistoryPreserved": true,
+      "subscriberOnly": true,
+      "exactCapabilities": true,
+      "expectedScope": true,
+      "scopeOwners": true,
+      "noRoleWideGrant": true,
+      "noBroadPermissions": true
+    },
+    "proposalPackageSha256": "581dc9a006e49d0add30209bf33e31f5f8ba2c97bc575630dc262ebf73cb00df",
+    "classificationPackageSha256": "48d0734c5fcb0876171c3fd7ad8d291d7310b624ebb45a18a52b9dc32a4dfe2d",
+    "historySha256": "75a0aa5fdaab48206bf72e8e70eb274dd75c5b12af81d8b04963aff160c7835a",
+    "pilotDocumentSha256": "54945c849ee3fea44d56c640a63f335961f68577d2ca1fb41b5d7248337f6b3d",
+    "counts": {
+      "owners": 1,
+      "proposals": 1,
+      "revisions": 1,
+      "requests": 1
+    },
+    "effectiveCapabilityNames": [
+      "alexcuadra_apply_project_changes",
+      "alexcuadra_prepare_post_changes",
+      "alexcuadra_prepare_project_changes",
+      "alexcuadra_read_public_posts",
+      "alexcuadra_read_public_projects",
+      "alexcuadra_recover_project_changes",
+      "level_0",
+      "read",
+      "subscriber"
+    ],
+    "broadPermissionsDenied": {
+      "manage_options": true,
+      "install_plugins": true,
+      "activate_plugins": true,
+      "update_plugins": true,
+      "edit_users": true,
+      "promote_users": true,
+      "delete_users": true,
+      "create_users": true,
+      "edit_posts": true,
+      "edit_pages": true,
+      "edit_others_posts": true,
+      "edit_others_pages": true,
+      "publish_posts": true,
+      "publish_pages": true,
+      "delete_posts": true,
+      "delete_pages": true
+    },
+    "sourceBodiesRead": false,
+    "privateDocumentBodiesRead": false,
+    "mutationsRequested": false,
+    "capturesOnlyNewModuleMetadataNotLegacySourceBaseline": true
+  },
+  "crossCheckWithExistingMcpPilot": {
+    "documentHashMatches": true,
+    "originalHistoryHashUnchanged": true,
+    "newRemotePrivatePilotReadPerformed": true,
+    "exactOriginalRequestReplayVerified": true
+  }
+}

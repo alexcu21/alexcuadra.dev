@@ -1,5 +1,7 @@
 # Clasificación propia de proyectos en el MCP
 
+**27 octubre — actualización coordinada de clasificación cerrada:** after-scope real ready=true/19checks, nueve capacidades originales restauradas y hashes/conteos1/1/1/1 conservados. [Recibo CLI](qa/project-classification-upgrade-destination-after-scope-2026-10-27.json). Conector5llamadas: get/replay exactos del documento original1/v1, inventario único tras replay y metadatos públicos228 idénticos al piloto inicial; ninguna propuesta nueva o publicación. [Cierre y límites](qa/MCP_PROJECT_CLASSIFICATION_UPGRADE_COMPLETE_2026-10-27.md). Catálogo20 y lecturas EN/ES4categorías/20tecnologías ya verificadas; respaldo con piloto validado por helpers rc.2/rc.3. No más instalación/activación/grant/backups por esta aceptación. Pendientes planes/escritura de clasificación y escritor público de posts, frontend/contacto/CMS429/QA final.
+
 **27 octubre — artefacto rc.2 verificado con helpers rc.3 en el hosting:** Alex aporta verify ready=true/integrityVerified=true, conteos1/1/1/1 y sin escrituras de BD; no restauración sobre el sitio vivo. [Recibo](qa/project-classification-upgrade-backup-verify-rc3-2026-10-27.json). Siguiente restituir únicamente alexcuadra_prepare_post_changes al usuario2 y after-scope del nuevo preflight con historySHA75a0aa5f…60c7835a; ocho capacidades previas/roles/historia deben conservarse. Después get/replay del piloto existente por MCP, sin crear un plan nuevo. No repetir instalación, activación, backup o DDL. Restitución real todavía pendiente de Alex.
 
 **27 octubre — lector activo y lecturas MCP reales verificadas:** classifier-enabled de Alex ready=true/19checks; rc.3+lector exactos/activos, historia/documento/conteos originales y ocho capacidades previas, scope privado pausado. [Recibo](qa/project-classification-upgrade-destination-classifier-enabled-2026-10-27.json). Conector: catálogo20, get146EN/196ES con1categoría/8tecnologías y reciprocidad, catálogos4categorías/20tecnologías por idioma con IDs del mapa aprobado;9llamadas sin mutaciones. [Evidencia/límites](qa/MCP_PROJECT_CLASSIFICATION_LIVE_2026-10-27.md). Siguiente: subir dos helpers rc.3 a private-tools/project-classification-upgrade y verificar el respaldo rc.2 deb1593d…ab76110 con ellos antes de restaurar solo el scope privado. No reinstalar, crear planes o cambiar clasificaciones.
@@ -41,7 +43,13 @@ Máximo200proyectos públicos por idioma,200términos distintos por taxonomía/i
 
 Las consultas están acotadas y no ofrecen conteos privados. No se declara snapshot transaccional de todas las consultas/cachés de WordPress ni se certifica ausencia de ediciones concurrentes. Se comprueba el estado observado; las garantías de una futura escritura requerirán su revalidación/huella propia.
 
-## Estado actual: paquete coordinado preparado
+## Estado actual: lectura instalada y actualización cerrada
+
+Clasificación rc.1 y propuestas rc.3 ya están activos en el CMS. Catálogo20, asignaciones146EN/196ES y catálogos4categorías/20tecnologías por idioma verificados por MCP. After-scope conservó las nueve capacidades originales y la historia del piloto1/v1; get/replay exactos y metadatos públicos del artículo sin cambios. [Cierre real](qa/MCP_PROJECT_CLASSIFICATION_UPGRADE_COMPLETE_2026-10-27.md). No repetir instalación o permisos.
+
+Esta fase completa la lectura propia de proyectos. Propuestas de asignaciones, creación de términos y aplicación siguen pendientes; el catálogo público no amplía acceso a términos usados solo en contenido privado. El escritor público de posts es una fase separada.
+
+## Histórico: preparación del paquete coordinado
 
 El prototipo conserva sus fuentes. Ya se derivaron los ZIP del lector rc.1 y de propuestas rc.3, con admisión exacta coordinada y recuperación de artefactos rc.2. Coexistencia, historia sintética no vacía y rollback ensayados con el perfil completo. [Procedimiento vigente y primer preflight real](WORDPRESS_MCP_PROJECT_CLASSIFICATION_PACKAGE.md), [QA](qa/MCP_PROJECT_CLASSIFICATION_BUNDLE_2026-10-27.md). Instalación del hosting y respaldo actualizado de su plan real pendientes. No instalar el prototipo ni repetir controles iniciales que exigían tablas vacías.
 

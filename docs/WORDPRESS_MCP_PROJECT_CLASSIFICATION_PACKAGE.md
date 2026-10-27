@@ -1,5 +1,7 @@
 # Paquete coordinado de clasificación de proyectos
 
+**27 octubre — actualización coordinada de clasificación cerrada:** after-scope real ready=true/19checks, nueve capacidades originales restauradas y hashes/conteos1/1/1/1 conservados. [Recibo CLI](qa/project-classification-upgrade-destination-after-scope-2026-10-27.json). Conector5llamadas: get/replay exactos del documento original1/v1, inventario único tras replay y metadatos públicos228 idénticos al piloto inicial; ninguna propuesta nueva o publicación. [Cierre y límites](qa/MCP_PROJECT_CLASSIFICATION_UPGRADE_COMPLETE_2026-10-27.md). Catálogo20 y lecturas EN/ES4categorías/20tecnologías ya verificadas; respaldo con piloto validado por helpers rc.2/rc.3. No más instalación/activación/grant/backups por esta aceptación. Pendientes planes/escritura de clasificación y escritor público de posts, frontend/contacto/CMS429/QA final.
+
 **27 octubre — artefacto rc.2 verificado con helpers rc.3 en el hosting:** Alex aporta verify ready=true/integrityVerified=true, conteos1/1/1/1 y sin escrituras de BD; no restauración sobre el sitio vivo. [Recibo](qa/project-classification-upgrade-backup-verify-rc3-2026-10-27.json). Siguiente restituir únicamente alexcuadra_prepare_post_changes al usuario2 y after-scope del nuevo preflight con historySHA75a0aa5f…60c7835a; ocho capacidades previas/roles/historia deben conservarse. Después get/replay del piloto existente por MCP, sin crear un plan nuevo. No repetir instalación, activación, backup o DDL. Restitución real todavía pendiente de Alex.
 
 **27 octubre — lector activo y lecturas MCP reales verificadas:** classifier-enabled de Alex ready=true/19checks; rc.3+lector exactos/activos, historia/documento/conteos originales y ocho capacidades previas, scope privado pausado. [Recibo](qa/project-classification-upgrade-destination-classifier-enabled-2026-10-27.json). Conector: catálogo20, get146EN/196ES con1categoría/8tecnologías y reciprocidad, catálogos4categorías/20tecnologías por idioma con IDs del mapa aprobado;9llamadas sin mutaciones. [Evidencia/límites](qa/MCP_PROJECT_CLASSIFICATION_LIVE_2026-10-27.md). Siguiente: subir dos helpers rc.3 a private-tools/project-classification-upgrade y verificar el respaldo rc.2 deb1593d…ab76110 con ellos antes de restaurar solo el scope privado. No reinstalar, crear planes o cambiar clasificaciones.
@@ -33,7 +35,17 @@ Propuestas rc.3 cambia solo versión/main, admisión del lector exacto y README.
 
 Los dos PHP de recuperación nuevos, en project-classification-upgrade/, validan los archivos de rc.3 y aceptan únicamente artefactos con SHA de paquete rc.2 o rc.3: el esquema/DTO de historia no cambió. Se probó recuperar un artefacto creado por rc.2 y leer/repetir su plan desde rc.3. Se conservan las herramientas/ZIP anteriores para rollback; no se sobrescriben sus fuentes o manifiestos.
 
-## Paso actual: restituir solo el scope privado anterior y after-scope
+## Estado actual: actualización real completada
+
+After-scope de Alex pasa19checks, con los dos paquetes activos y nueve capacidades originales; misma historia/documento/conteos1/1/1/1. El get y replay del piloto por MCP coinciden exactamente con el documento anterior, el inventario conserva una sola versión y los metadatos públicos del artículo siguen iguales. [Cierre completo](qa/MCP_PROJECT_CLASSIFICATION_UPGRADE_COMPLETE_2026-10-27.md).
+
+No repetir instalación, actualización, guard, activación, grant, pausa, exportación o preflights iniciales para esta aceptación. El lector de clasificación funciona con el permiso público existente; la preparación privada volvió a estar disponible. El respaldo actualizado del piloto se conserva, validado por ambos helpers. No hubo restauración sobre el CMS vivo.
+
+Los controles de este paquete son de aceptación de esta transición1/v1. Si se crean nuevas revisiones/planes después, no deben borrarse para satisfacer esos checks o recapturarse hashes para ignorar deriva. Futuras actualizaciones necesitan un procedimiento adecuado a la historia vigente; futuras copias requieren pausa coordinada y retiro solo del scope privado.
+
+Las nuevas lecturas no permiten crear términos o modificar asignaciones. Propuestas/aplicación de clasificación y escritura pública de posts quedan pendientes como fases separadas. El plan1 sigue sin aprobación/aplicación pública.
+
+## Histórico: restitución del scope privado y after-scope ya verificados
 
 La [verificación con helpers rc.3 aportada por Alex](qa/project-classification-upgrade-backup-verify-rc3-2026-10-27.json) confirma integridad del artefacto rc.2 y los cuatro conteos1. Ambos paquetes/lecturas públicas ya están verificados. No repetir instalación, activación, exportación o verify; no restaurar el respaldo sobre el CMS vivo.
 

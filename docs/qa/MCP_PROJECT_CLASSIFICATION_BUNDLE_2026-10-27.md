@@ -64,3 +64,7 @@ Instalación aún no aprobada. El nuevo paquete no migra esquema, concede permis
 ## Compatibilidad del respaldo verificada con helpers rc.3 reales
 
 [Verify aportado por Alex](project-classification-upgrade-backup-verify-rc3-2026-10-27.json) tras ejecutar el comando indicado en la carpeta nueva: ready/integrityVerified=true, cuatro conteos1 y sin escrituras/restauración de BD. Siguiente restitución exclusiva del scope privado anterior y after-scope con hash original; cerrar por get/list/replay del plan1/v1 vía MCP, sin crear otro. No se han ejecutado cambios remotos por el agente.
+
+## Cierre posterior verificado
+
+[Actualización completa](MCP_PROJECT_CLASSIFICATION_UPGRADE_COMPLETE_2026-10-27.md): after-scope real correcto y cinco llamadas MCP finales con get/replay exactos del piloto1/v1 e inventario único; metadatos públicos iguales al piloto original. La pausa indicada en fases previas ya terminó restituyendo únicamente el permiso anterior. No repetir instalación/activación/grant/backup o crear otra propuesta para esta aceptación.
