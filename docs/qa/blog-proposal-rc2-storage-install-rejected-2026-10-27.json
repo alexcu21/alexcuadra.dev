@@ -1,0 +1,19 @@
+{
+  "format": "blog-proposal-storage-install-observation-v1",
+  "evidenceSource": "user-pasted-hosting-WP-CLI-error",
+  "receivedDate": "2026-10-27",
+  "wordpressRoot": "/home/u776991923/domains/alexcuadra.dev/public_html/content",
+  "operatorUserId": 1,
+  "packageSha256": "7e5bc2b3213a8497dc47426b4565bbf528400d69f4e4f3e57f40f6119d4d6def",
+  "exception": "blog_proposal_storage_not_empty",
+  "sourceFile": "wordpress-repository.php",
+  "sourceLine": 37,
+  "interpretation": {
+    "observedAtLeastOneOwnTable": true,
+    "createStatementsReachedByThisInvocation": false,
+    "whichTablesPresentKnown": false,
+    "tableContentsKnown": false,
+    "causeOfPresenceKnown": false
+  },
+  "nextStep": "read-only rc2 preflight 2 after-storage; no retry, DROP, ALTER, owner enrollment or scope grant"
+}

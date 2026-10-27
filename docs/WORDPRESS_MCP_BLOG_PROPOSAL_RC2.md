@@ -1,5 +1,7 @@
 # Propuestas privadas: candidato 0.1.0-rc.2
 
+**27 octubre — creación de almacenamiento detenida:** Alex aporta blog_proposal_storage_not_empty en wordpress-repository.php:37. Esa línea está en la comprobación de ausencia, antes de todos los CREATE: esta invocación no llegó al DDL. Se observó al menos una tabla propia existente; se desconocen cuáles, sus filas y el origen del cambio desde after-enable (present=0). [Observación](qa/blog-proposal-rc2-storage-install-rejected-2026-10-27.json). Siguiente únicamente preflight rc.2 `2 after-storage` de solo lectura. No reintentar install, borrar/alterar tablas, inscribir propietario ni conceder scope. No atribuir éxito de almacenamiento o causa sin el diagnóstico.
+
 Candidato separado de rc.1, derivado del ZIP sellado y del diagnóstico de huellas aportado por Alex. No instala ni cambia el CMS por generar estos archivos. Conserva las cinco herramientas privadas, los DTOs cerrados y la lógica de repositorio; cambia versión, admisión del perfil y README. No incluye escritor de posts, publicación, grants automáticos, migración automática ni borrado.
 
 - [ZIP rc.2](../artifacts/wordpress/alexcuadra-editorial-blog-proposals-0.1.0-rc.2.zip):17.693bytes; SHA256 `7e5bc2b3213a8497dc47426b4565bbf528400d69f4e4f3e57f40f6119d4d6def`.
@@ -14,7 +16,7 @@ La excepción de pruebas exige entorno local, DB_HOST=db, URL exacta y marca de 
 
 Las huellas principales coinciden con el servidor; no verifican árboles completos. El laboratorio usa PHP8.5.11/MariaDB11.8.9 y configuración/datos sintéticos; servidor PHP8.5.12. No certifica opciones reales de hosting, preview, cachés externas, restauración ante pérdida del servidor ni escritura pública.
 
-## Paso actual: cuatro tablas vacías y after-storage
+## Fase pausada: no ejecutar de nuevo la creación de tablas
 
 El [after-enable real](qa/blog-proposal-rc2-destination-after-enable-2026-10-27.json) pasa las 15 comprobaciones: guard/plugin activos, cinco herramientas registradas, archivos exactos y perfil compatible. Las cuatro tablas propias aún no existen; no hay nuevo scope y las ocho capacidades anteriores se conservan. No repetir instalación o activación.
 
