@@ -27,3 +27,8 @@ El MU fixture bajo tests registra cinco abilities alexcuadra-lab/*, incluyendo c
 Faltan candidato distribuible con DTOs cerrados/guard de destino, admisión de esquema/perfil/plugins/query filters/caché y plan de archivo/retención/backups. No trasladar la instalación DDL de laboratorio al CMS ni reutilizar permisos de proyectos. El snapshot de grupo usa APIs nativas/cachés y no certifica atomicidad frente a todo escritor; antes de aplicar se requerirá revalidación coordinada.
 
 Prueba: `/opt/homebrew/bin/php tests/editorial-blog-proposals/check.php`. El planificador usa proyecciones sintéticas; el repositorio sí usa SQLite real. Estos dos componentes no integran WordPress/Polylang/HTTP; los archivos wordpress-* y connection-fence sí se prueban en WordPress/MariaDB y por MCP/HTTP mediante el fixture de laboratorio. Prueba de almacenamiento: `/opt/homebrew/bin/php tests/editorial-blog-proposals/storage-check.php`. No subir el repositorio experimental al hosting.
+
+
+## Candidato revisable separado
+
+[Paquete0.1.0-rc.1 y diagnóstico](../../../docs/WORDPRESS_MCP_BLOG_PROPOSAL_PACKAGE.md) preparados en wordpress/packages, con derivación explícita registrada por el builder. No son copias byte por byte: namespace/prefijo/guard/admisión cambian y se probaron sobre el ZIP instalado.273checks y nueve recibos de ciclo; perfil real pendiente, sin instalación o scopes reales nuevos. El código experimental y el MU fixture siguen siendo solo laboratorio. Siguiente: before del perfil del CMS, no repetir pruebas o grants por continuidad.

@@ -1,0 +1,22 @@
+services:
+  wordpress:
+    environment: &release-env
+      BLOG_READ_SKIP_CANDIDATE: "1"
+      BLOG_PROPOSALS_ENABLED: "true"
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_ENVIRONMENT_TYPE', 'local');
+        define('AC_EDITORIAL_BLOG_PROPOSALS_LAB', getenv('BLOG_PROPOSALS_ENABLED') === 'true');
+        define('AC_EDITORIAL_BLOG_READ_LAB', true);
+        define('WP_DEBUG_DISPLAY', false);
+        define('DISABLE_WP_CRON', true);
+        define('WP_HTTP_BLOCK_EXTERNAL', true);
+        define('WP_ACCESSIBLE_HOSTS', 'wordpress');
+    volumes: &release-volumes
+      - ../wordpress-blog-proposals-release:/release-lab:ro
+      - ../../../node_modules/.cache/editorial-blog-proposals-release:/package-lab:ro
+      - ../../../artifacts/wordpress/alexcuadra-editorial-blog-proposals-0.1.0-rc.1.zip:/blog-proposal-release.zip:ro
+      - ../../../artifacts/wordpress/alexcuadra-editorial-blog-read-0.1.0-rc.1.zip:/blog-read-release.zip:ro
+      - ../../../wordpress/operations:/proposal-operations:ro
+  cli:
+    environment: *release-env
+    volumes: *release-volumes

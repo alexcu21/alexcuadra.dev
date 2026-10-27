@@ -37,10 +37,16 @@ La barrera fija el handle/CONNECTION_ID/transacción y fuerza errores antes de c
 
 Cinco abilities solo en MU fixture de tests: contexto de fuente publicada, crear/actualizar/get/listado de propuestas. Contexto privado permite preparar base/diff sin ampliar el lector público ni revelar cuerpos privados/IDs de destinos ocultos. La fase HTTP confirma propiedad de propuestas/historia/inventario, schema de entrada, revocación de scope/credencial y rechazo de sesión ajena/cerrada. No hay herramientas de aprobar/aplicar/recuperar. Los scopes/credenciales sintéticos se retiraron.
 
+## Incremento 5: candidato privado y preflight
+
+Paquete0.1.0-rc.1 con cinco entradas/salidas cerradas, guard de destino/perfil, esquema acotado y plan de conservación.273comprobaciones y nueve recibos de ciclo; retirada probada con una propuesta privada conservada. [Paquete y comando de diagnóstico](WORDPRESS_MCP_BLOG_PROPOSAL_PACKAGE.md), [evidencia](qa/MCP_BLOG_PROPOSAL_PACKAGE_2026-10-26.md).
+
+No está instalado en el CMS real ni concede permisos por activación. El perfil ensayado es mínimo y deliberadamente conservador, incluido tema/drop-ins/MU/query filters y wpdb. El hosting puede diferir: el siguiente paso es un before de solo lectura, con ambos archivos de diagnóstico juntos en private-tools. No cambiar/desactivar componentes del sitio para forzar compatibilidad.
+
 ## Siguientes capas
 
-1. Preparar candidato distribuible de propuestas privadas: cinco DTOs de entrada/salida cerrados, namespace/guard de destino revisables, preflight de esquema/perfil/identidad y plan de conservación. No copiar el MU fixture como plugin ni reutilizar permisos públicos/de proyectos. El contexto con cuerpo publicado es parte del nuevo scope privado a revisar, no del scope lector ya concedido.
-2. Admisión operativa de esquema/InnoDB/collation/índices y compatibilidad de plugins/MU/query filters/caché, propietario mínimo y archivo/retención/backups. Política conservadora actual: cuotas acotadas, conservar revisiones/recibos, sin borrado automático. Preparar artefactos antes de revisar instalación y primer scope reales; ninguna concesión por continuidad.
-3. Aprobación, aplicación y recuperación con scopes/recibos independientes. Revalidar fuente/grupo frente a escritores externos/cachés; la intención privada histórica no autoriza publicar. Validar HTML/bloques/hooks/efectos al aplicar, revisar nuevamente cualquier saneamiento que altere el diff e impedir duplicación de grupos/publicación implícita. No reaprovechar propuesta227/revisión1 o grants de proyectos.
+1. Recibir/contrastar perfil real y reproducir las diferencias pertinentes antes de aceptar el destino o ajustar un candidato. Comprobar tema/plugins/MU/caché/SQL filtros/driver sin datos o cuerpos privados. La observación before no instala ni concede capacidades.
+2. Admisión operativa/respaldo y prueba de restauración del almacenamiento privado, después revisión del ZIP exacto y primer scope. Activación, tablas, propietario y permiso son pasos distintos con recibos. Conservar historia bajo cuotas, sin borrado automático. El contexto con cuerpo publicado pertenece al nuevo scope privado, no al lector público.
+3. Aprobación/aplicación/recuperación futuras con scopes/recibos independientes. Revalidar fuente/grupo frente a escritores/cachés; la intención privada no autoriza publicar. Validar HTML/bloques/hooks/efectos y repetir revisión si saneamiento cambia el diff. Sin duplicación de grupos o publicación implícita. No reutilizar propuesta227/revisión1 o grants de proyectos.
 
-El conector real permanece en el lector de metadatos y herramientas anteriores: no hay nuevas instalaciones, permisos o comandos pendientes para Alex. Siguiente trabajo concreto: candidato privado con preflight y conservación; no repetir la instalación del lector ni el piloto de contacto.
+El lector real sigue operativo y no hay nuevas herramientas privadas instaladas. Alex ejecuta solo el diagnóstico indicado en el procedimiento; no repetir instalación/grants del lector ni el piloto de contacto.

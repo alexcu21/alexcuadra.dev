@@ -1,0 +1,1646 @@
+{
+  "date": "2026-10-26",
+  "package": {
+    "format": "editorial-blog-proposals-review-v1",
+    "version": "0.1.0-rc.1",
+    "decision": "hold-pending-destination-profile",
+    "targetSite": "https://content.alexcuadra.dev",
+    "plannedUserId": 2,
+    "capability": "alexcuadra_prepare_post_changes",
+    "installationApproved": false,
+    "capabilityGrantApproved": false,
+    "sourceWriterIncluded": false,
+    "automaticMigration": false,
+    "labSourceSha256": {
+      "planner.php": "47ce6a9e98b268f5441211afe25599029e36b25df890f1f78273f5883df085ae",
+      "wordpress-source.php": "da67a912041ed2f40355426a010f643c46d4adac0ab2c7293c0c3fff24cc236c",
+      "wordpress-repository.php": "02a36b43e588a85ab9d05acdda39029a4d2ac881e58b774c3574489c77cc2746",
+      "connection-fence.php": "15a736c06b5f5cd457aa71a8ff1d9f0c4ad82b01b2b7f3ad565319b112b321bb"
+    },
+    "derivation": [
+      "namespace",
+      "guard-name-and-site-profile-admission",
+      "dedicated-table-prefix",
+      "closed-schema-admission"
+    ],
+    "sha256": "ca33ebd4b3a874a939b8d18dbf42c2cea324325b26716f01208cd1f85154635a",
+    "zipBytes": 17074,
+    "files": [
+      {
+        "path": "alexcuadra-editorial-blog-proposals/alexcuadra-editorial-blog-proposals.php",
+        "bytes": 603,
+        "sha256": "1e74cd2053a47fb96fe15951a478e1a69bdff4afb15dd145765a492b672e463f"
+      },
+      {
+        "path": "alexcuadra-editorial-blog-proposals/admission.php",
+        "bytes": 10767,
+        "sha256": "e921622855988d6dd08e15a4d092c7437d084f59e1bde1c35000bf529af83894"
+      },
+      {
+        "path": "alexcuadra-editorial-blog-proposals/abilities.php",
+        "bytes": 5631,
+        "sha256": "46c4ef85ae4f336e7b62075ea34da9cfeba7d69e48eb366d19e1f364050009c2"
+      },
+      {
+        "path": "alexcuadra-editorial-blog-proposals/README.md",
+        "bytes": 2956,
+        "sha256": "71797d4753ac88aa8cff38d33919cd9766178371c774f23dd67f8f73c828bd6a"
+      },
+      {
+        "path": "alexcuadra-editorial-blog-proposals/planner.php",
+        "bytes": 7838,
+        "sha256": "a47a8ce035a391fa4e0ba7de7d11a0db0b2b8d241aa7d3d9b5d063d55b44ae8f"
+      },
+      {
+        "path": "alexcuadra-editorial-blog-proposals/wordpress-source.php",
+        "bytes": 3633,
+        "sha256": "10a7efb3af20870fbd3cec53550d663b1253b397c8cffa8776a7cd39071a94bd"
+      },
+      {
+        "path": "alexcuadra-editorial-blog-proposals/wordpress-repository.php",
+        "bytes": 10202,
+        "sha256": "14756411443d31ad89409a8a0963b72d38492d2e544e4b8b523ca3592bbf7204"
+      },
+      {
+        "path": "alexcuadra-editorial-blog-proposals/connection-fence.php",
+        "bytes": 2840,
+        "sha256": "c836eb135f411cc2e59d54eb126bd5d2e4a91ba184ca47018c3728e4ae1b5be5"
+      }
+    ]
+  },
+  "functional": {
+    "EDITORIAL_BLOG_PROPOSAL_WP_RESULT": {
+      "environment": "isolated-wordpress-mariadb-polylang",
+      "wordpress": "7.1.3",
+      "php": "8.5.11",
+      "mariadb": "11.8.9-MariaDB-ubu2404",
+      "polylang": "3.9.1",
+      "passed": 72,
+      "failed": 0,
+      "concurrentWordPressProcesses": true,
+      "syntheticScopesRemoved": true,
+      "sourceFingerprintsPreservedDuringProposalOperations": true,
+      "httpTransportTested": false,
+      "cases": [
+        "dedicated_empty_native_schema",
+        "native_install_does_not_replace_tables",
+        "all_native_tables_innodb",
+        "wpdb_detects_full_utf8mb4_for_document_table",
+        "install_and_enroll_do_not_grant_scope",
+        "native_anonymous_cannot_project_body",
+        "native_admin_without_scope_denied",
+        "native_subscriber_without_scope_denied",
+        "public_read_scope_cannot_access_private_projection",
+        "project_prepare_scope_does_not_expand",
+        "native_prepare_user_has_no_edit_or_admin",
+        "real_reciprocal_polylang_group",
+        "private_projection_contains_only_allowed_source_columns",
+        "native_assigned_category_and_tag",
+        "native_catalog_contains_both_languages",
+        "native_projection_ignores_stale_cached_body",
+        "excluded_native_source_12",
+        "excluded_native_source_13",
+        "excluded_native_source_14",
+        "excluded_native_source_15",
+        "excluded_native_source_16",
+        "excluded_native_source_17",
+        "excluded_native_source_18",
+        "excluded_native_source_2147483647",
+        "native_private_proposal_owner_and_version",
+        "native_exact_before_after",
+        "native_replay_has_no_duplicate_rows",
+        "native_owned_current_and_historic_reads",
+        "native_request_key_conflict",
+        "client_cannot_supply_owner",
+        "native_update_replaces_patch_and_advances_version",
+        "native_old_review_retained",
+        "native_version_conflict",
+        "native_update_replay_after_head_advanced",
+        "native_other_owner_cannot_read",
+        "native_other_owner_cannot_read_history",
+        "native_other_owner_cannot_update",
+        "native_other_owner_inventory_empty",
+        "native_same_key_is_independent_by_owner",
+        "native_revocation_blocks_read",
+        "native_revocation_blocks_replay",
+        "full_projection_includes_hidden_target_8",
+        "hidden_target_blocks_duplicate_translation_8",
+        "full_projection_includes_hidden_target_10",
+        "hidden_target_blocks_duplicate_translation_10",
+        "native_translation_stores_private_intent_only",
+        "native_translation_cannot_copy_source_language_terms",
+        "native_tag_not_category",
+        "wpdb_preserves_literal_html_quotes_and_unicode_without_execution",
+        "native_proposal_operations_preserve_editorial_tables",
+        "native_receipt_failure_rolls_back_create",
+        "native_receipt_failure_rolls_back_update",
+        "native_no_partial_head_revision_receipt_after_rollback",
+        "native_outer_transaction_rejected",
+        "native_outer_transaction_not_committed",
+        "native_replay_returns_original_after_source_changed",
+        "fresh_native_source_invalidates_old_base",
+        "native_rebase_generates_new_review",
+        "native_rebase_does_not_write_source",
+        "translation_replay_remains_original_after_link_added",
+        "native_new_link_blocks_new_translation_revision",
+        "two_wordpress_processes_same_key_get_same_revision",
+        "two_wordpress_processes_same_version_one_winner",
+        "native_concurrent_head_advances_once",
+        "native_owned_cursor_listing_bounded",
+        "native_unbounded_inventory_rejected",
+        "native_owner_proposal_quota",
+        "native_replay_works_when_owner_quota_full",
+        "native_full_owner_quota_does_not_block_other",
+        "native_version_quota",
+        "native_concurrency_and_quotas_preserve_editorial_tables",
+        "synthetic_prepare_scopes_removed"
+      ]
+    },
+    "EDITORIAL_BLOG_PROPOSAL_FAULT_RESULT": {
+      "environment": "isolated-mariadb-connection-and-process-faults",
+      "connectionLossVerified": true,
+      "processKillVerified": true,
+      "syntheticCapabilitiesRemoved": true,
+      "passed": 34,
+      "failed": 0,
+      "cases": [
+        "kill-connection_fails_closed",
+        "kill-connection_never_reconnects_original_handle",
+        "kill-connection_rolls_back_all_private_records",
+        "kill-connection_fresh_request_retry_creates_one_review",
+        "kill-connection_retry_replays_exact_original",
+        "reset-mode-and-kill_fails_closed",
+        "reset-mode-and-kill_never_reconnects_original_handle",
+        "reset-mode-and-kill_rolls_back_all_private_records",
+        "reset-mode-and-kill_fresh_request_retry_creates_one_review",
+        "reset-mode-and-kill_retry_replays_exact_original",
+        "close-handle_fails_closed",
+        "close-handle_never_reconnects_original_handle",
+        "close-handle_rolls_back_all_private_records",
+        "close-handle_fresh_request_retry_creates_one_review",
+        "close-handle_retry_replays_exact_original",
+        "replace-handle_fails_closed",
+        "replace-handle_rolls_back_all_private_records",
+        "replace-handle_fresh_request_retry_creates_one_review",
+        "replace-handle_retry_replays_exact_original",
+        "transaction-control_fails_closed",
+        "transaction-control_rolls_back_all_private_records",
+        "transaction-control_fresh_request_retry_creates_one_review",
+        "transaction-control_retry_replays_exact_original",
+        "guard-order_fails_closed",
+        "guard-order_rolls_back_all_private_records",
+        "guard-order_fresh_request_retry_creates_one_review",
+        "guard-order_retry_replays_exact_original",
+        "crash-before_has_expected_atomic_persistence",
+        "crash-before_retry_has_only_one_new_review",
+        "crash-before_replay_is_exact",
+        "crash-after_has_expected_atomic_persistence",
+        "crash-after_retry_has_only_one_new_review",
+        "crash-after_replay_is_exact",
+        "connection_and_process_faults_never_change_editorial_tables"
+      ]
+    },
+    "EDITORIAL_BLOG_PROPOSAL_HTTP_RESULT": {
+      "environment": "isolated-apache-mcp-private-proposals",
+      "httpTransportVerified": true,
+      "syntheticCredentialsRevoked": true,
+      "syntheticCapabilitiesRemoved": true,
+      "passed": 43,
+      "failed": 0,
+      "cases": [
+        "http_anonymous_initialization_denied",
+        "http_invalid_password_denied",
+        "http_real_credentials_initialize_both_users",
+        "http_initialized_notification_3",
+        "http_initialized_notification_4",
+        "http_missing_session_denied",
+        "http_other_user_cannot_reuse_session",
+        "http_missing_protocol_denied",
+        "http_subscriber_session_does_not_grant_body_context",
+        "http_public_read_scope_not_private_prepare_scope",
+        "http_prepare_users_stay_subscriber_without_edit_admin",
+        "http_discovers_five_lab_abilities_no_apply_or_recover",
+        "http_closed_request_schema_without_client_owner",
+        "http_authorized_context_has_published_body_and_base",
+        "http_context_excludes_postmeta_and_hidden_bodies",
+        "http_private_source_context_denied_without_body_leak",
+        "http_context_reports_existing_locales_without_hidden_target_identity",
+        "http_creates_owned_private_review",
+        "http_create_replay_returns_exact_original",
+        "http_owned_read_returns_exact_review",
+        "http_other_owner_read_denied_without_review_leak",
+        "http_other_owner_history_denied_without_review_leak",
+        "http_other_owner_inventory_empty",
+        "http_other_owner_update_denied",
+        "http_updates_expected_version",
+        "http_update_replay_preserves_receipt",
+        "http_history_version_one_retained",
+        "http_stale_expected_version_denied",
+        "http_request_key_reuse_denied",
+        "http_client_owner_field_denied",
+        "http_unapproved_source_field_denied",
+        "http_private_post_proposal_denied",
+        "http_translation_is_private_intent_without_post_id",
+        "http_linked_draft_blocks_duplicate_translation",
+        "http_unbounded_inventory_denied",
+        "http_scope_revocation_blocks_existing_session_read",
+        "http_scope_revocation_blocks_existing_session_replay",
+        "http_session_delete_succeeds",
+        "http_closed_session_cannot_read_review",
+        "http_revoked_credential_blocks_existing_session",
+        "http_private_proposal_operations_preserve_source_tables",
+        "http_synthetic_credentials_removed",
+        "http_synthetic_prepare_scopes_removed"
+      ]
+    },
+    "BLOG_PROPOSAL_RELEASE_CONTRACT_RESULT": {
+      "passed": 29,
+      "failed": 0,
+      "contractsClosed": true,
+      "cases": [
+        "closed_input_inspect-post-context",
+        "closed_output_inspect-post-context",
+        "closed_input_create-post-proposal",
+        "closed_output_create-post-proposal",
+        "closed_input_update-post-proposal",
+        "closed_output_update-post-proposal",
+        "closed_input_get-post-proposal",
+        "closed_output_get-post-proposal",
+        "closed_input_list-post-proposals",
+        "closed_output_list-post-proposals",
+        "valid_review_create-post-proposal",
+        "valid_review_update-post-proposal",
+        "valid_review_get-post-proposal",
+        "reject_unknown_review_field",
+        "reject_unknown_document_field",
+        "reject_source_write_claim",
+        "reject_unknown_nested_change",
+        "reject_client_owner",
+        "reject_client_slug",
+        "valid_published_context",
+        "reject_context_postmeta",
+        "valid_empty_inventory",
+        "valid_nullable_translation_intent",
+        "reject_reserved_translation_post_id",
+        "exact_five_private_tools",
+        "no_source_writer_or_automatic_grants",
+        "admitted_coexisting_reader_profile",
+        "unknown_active_plugin_fails_profile",
+        "profile_restored_after_request_filter"
+      ]
+    }
+  },
+  "planner": {
+    "environment": "pure-php-synthetic-projections",
+    "php": "8.5.11",
+    "passed": 82,
+    "failed": 0,
+    "wordpress": false,
+    "database": false,
+    "network": false,
+    "sourceWrites": false,
+    "durableIdempotencyTested": false,
+    "cases": [
+      "review_has_exact_before_after",
+      "private_owner_version_without_approval",
+      "no_source_write_or_translation_side_effect",
+      "inputs_preserved",
+      "same_request_has_same_plan",
+      "map_and_catalog_order_are_canonical",
+      "document_hash_binds_review",
+      "review_tampering_changes_hash",
+      "request_hash_is_owner_bound",
+      "same_key_different_payload_has_different_hash",
+      "anonymous_denied",
+      "missing_owner_denied",
+      "scope_does_not_expand_read",
+      "scope_does_not_expand_alexcuadra_read_public_posts",
+      "scope_does_not_expand_alexcuadra_prepare_project_changes",
+      "scope_does_not_expand_manage_options",
+      "scope_requires_boolean_true",
+      "unapproved_field_slug",
+      "unapproved_field_status",
+      "unapproved_field_author",
+      "unapproved_field_meta",
+      "unapproved_field_acf",
+      "unapproved_field_sql",
+      "actor_not_a_client_request_field",
+      "empty_patch_denied",
+      "no_op_denied",
+      "wrong_source_denied",
+      "update_exact_language_only",
+      "unknown_language_denied",
+      "invalid_input_request_id",
+      "invalid_input_source_id",
+      "invalid_input_base_hash",
+      "invalid_input_operation",
+      "nonpublic_source_draft",
+      "nonpublic_source_private",
+      "nonpublic_source_future",
+      "nonpublic_source_trash",
+      "project_not_native_post",
+      "protected_source_denied",
+      "concurrent_change_title",
+      "concurrent_change_content",
+      "concurrent_change_excerpt",
+      "concurrent_change_categories",
+      "concurrent_change_tags",
+      "concurrent_change_translations",
+      "catalog_drift_invalidates_base",
+      "inconsistent_group_46",
+      "inconsistent_group_47",
+      "inconsistent_group_48",
+      "wrong_term_assignment_160",
+      "wrong_term_assignment_3",
+      "wrong_term_assignment_999",
+      "wrong_term_assignment_164",
+      "invalid_term_ids_53",
+      "invalid_term_ids_54",
+      "invalid_term_ids_55",
+      "invalid_term_ids_56",
+      "invalid_term_ids_57",
+      "invalid_term_ids_58",
+      "canonical_terms_and_explicit_clears",
+      "term_order_does_not_change_plan",
+      "invalid_or_oversized_text_61",
+      "invalid_or_oversized_text_62",
+      "invalid_or_oversized_text_63",
+      "invalid_or_oversized_text_64",
+      "blank_title_denied",
+      "html_block_unicode_stored_as_literal_not_sanitized_or_executed",
+      "translation_intent_no_id_reserved",
+      "translation_has_all_explicit_fields_no_existing_target",
+      "translation_binds_source_and_target_languages",
+      "translation_requires_title",
+      "translation_requires_content",
+      "translation_requires_excerpt",
+      "translation_requires_categories",
+      "translation_requires_tags",
+      "translation_cannot_copy_source_term_ids",
+      "same_language_creation_denied",
+      "existing_linked_translation_denied",
+      "concurrently_linked_translation_invalidates_review",
+      "spanish_to_english_creation_supported",
+      "duplicate_catalog_ids_denied",
+      "project_taxonomy_catalog_denied"
+    ]
+  },
+  "siteGuards": {
+    "passed": 13,
+    "failed": 0,
+    "cases": [
+      {
+        "case": "closed",
+        "admitted": false,
+        "passed": true
+      },
+      {
+        "case": "live",
+        "admitted": true,
+        "passed": true
+      },
+      {
+        "case": "wrong_flag",
+        "admitted": false,
+        "passed": true
+      },
+      {
+        "case": "wrong_home",
+        "admitted": false,
+        "passed": true
+      },
+      {
+        "case": "wrong_site",
+        "admitted": false,
+        "passed": true
+      },
+      {
+        "case": "multisite",
+        "admitted": false,
+        "passed": true
+      },
+      {
+        "case": "lab",
+        "admitted": true,
+        "passed": true
+      },
+      {
+        "case": "lab_in_production",
+        "admitted": false,
+        "passed": true
+      },
+      {
+        "case": "lab_wrong_db",
+        "admitted": false,
+        "passed": true
+      },
+      {
+        "case": "lab_wrong_home",
+        "admitted": false,
+        "passed": true
+      },
+      {
+        "case": "string_lab_flag",
+        "admitted": false,
+        "passed": true
+      },
+      {
+        "case": "live_subdirectory",
+        "admitted": false,
+        "passed": true
+      },
+      {
+        "case": "live_trailing_slash",
+        "admitted": true,
+        "passed": true
+      }
+    ]
+  },
+  "lifecycle": [
+    {
+      "format": "blog-proposal-preflight-v1",
+      "phase": "before",
+      "userId": 2,
+      "packageSha256": "ca33ebd4b3a874a939b8d18dbf42c2cea324325b26716f01208cd1f85154635a",
+      "ready": true,
+      "checks": {
+        "testedProfile": true,
+        "subscriberOnly": true,
+        "read": true,
+        "noBroadPermissions": true,
+        "preservedExactCapabilities": true,
+        "noRoleWideGrant": true,
+        "expectedScope": true,
+        "scopeOwners": true,
+        "expectedFiles": true,
+        "expectedActivation": true,
+        "expectedGuard": true,
+        "expectedRegistration": true,
+        "expectedSchema": true,
+        "expectedOwners": true,
+        "initialPrivateStorageEmpty": true
+      },
+      "profile": {
+        "checks": {
+          "singleSite": true,
+          "testedWordPress": true,
+          "testedPhp": true,
+          "coreWpdb": true,
+          "dependencies": true,
+          "testedActivePlugins": true,
+          "testedMuPlugins": true,
+          "standardObjectCache": true,
+          "noDropins": true,
+          "testedTheme": true,
+          "queryFilters": true
+        },
+        "ready": true,
+        "wordpress": "7.1.3",
+        "php": "8.5.11",
+        "activePlugins": {
+          "alexcuadra-editorial-blog-read/alexcuadra-editorial-blog-read.php": "0.1.0-rc.1",
+          "mcp-adapter/mcp-adapter.php": "0.7.1",
+          "polylang/polylang.php": "3.9.1"
+        },
+        "muPluginNames": [
+          "editorial-blog-read-lab.php"
+        ],
+        "muPluginSha256": {
+          "editorial-blog-read-lab.php": "dd2ee1103c1f2e8215a6215891c7d593818a737c7f747a909965ca5485ef4201"
+        },
+        "queryCallbacks": [
+          {
+            "priority": 0,
+            "kind": "core-placeholder",
+            "callback": "wpdb::remove_placeholder_escape",
+            "source": "wp-includes/class-wpdb.php",
+            "sourceSha256": "e15403e90032dd0508811301505e491d4212de5152581a98f51b744a1a3903bd"
+          }
+        ],
+        "theme": {
+          "stylesheet": "twentytwentyfive",
+          "template": "twentytwentyfive",
+          "version": "1.5",
+          "styleSha256": "f21ff7e12ce351b9a2e081f517233bc46287b2d9afaabe3cb0f6cdf2653a721e",
+          "functionsSha256": "51681ddc22490e05066da69a44e74bd8ee78249f6322d8c6efcd777d19641f84"
+        },
+        "dropinNames": [],
+        "wpdbSourceSha256": "e15403e90032dd0508811301505e491d4212de5152581a98f51b744a1a3903bd",
+        "instrumentedLocalProfile": true,
+        "sourceRenderingPerformed": false
+      },
+      "schema": {
+        "present": 0,
+        "checks": {
+          "owners": false,
+          "proposals": false,
+          "revisions": false,
+          "requests": false
+        },
+        "ready": false,
+        "tables": []
+      },
+      "effectiveCapabilityNames": [
+        "alexcuadra_apply_project_changes",
+        "alexcuadra_prepare_project_changes",
+        "alexcuadra_read_public_posts",
+        "alexcuadra_read_public_projects",
+        "alexcuadra_recover_project_changes",
+        "level_0",
+        "read",
+        "subscriber"
+      ],
+      "broadPermissionsDenied": {
+        "manage_options": true,
+        "install_plugins": true,
+        "activate_plugins": true,
+        "update_plugins": true,
+        "edit_users": true,
+        "promote_users": true,
+        "delete_users": true,
+        "create_users": true,
+        "edit_posts": true,
+        "edit_pages": true,
+        "edit_others_posts": true,
+        "edit_others_pages": true,
+        "publish_posts": true,
+        "publish_pages": true,
+        "delete_posts": true,
+        "delete_pages": true
+      },
+      "sourceContentInspected": false,
+      "applicationPasswordsRequested": false,
+      "mutationsRequested": false,
+      "initialAcceptanceOnly": true
+    },
+    {
+      "format": "blog-proposal-preflight-v1",
+      "phase": "after-install",
+      "userId": 2,
+      "packageSha256": "ca33ebd4b3a874a939b8d18dbf42c2cea324325b26716f01208cd1f85154635a",
+      "ready": true,
+      "checks": {
+        "testedProfile": true,
+        "subscriberOnly": true,
+        "read": true,
+        "noBroadPermissions": true,
+        "preservedExactCapabilities": true,
+        "noRoleWideGrant": true,
+        "expectedScope": true,
+        "scopeOwners": true,
+        "expectedFiles": true,
+        "expectedActivation": true,
+        "expectedGuard": true,
+        "expectedRegistration": true,
+        "expectedSchema": true,
+        "expectedOwners": true,
+        "initialPrivateStorageEmpty": true
+      },
+      "profile": {
+        "checks": {
+          "singleSite": true,
+          "testedWordPress": true,
+          "testedPhp": true,
+          "coreWpdb": true,
+          "dependencies": true,
+          "testedActivePlugins": true,
+          "testedMuPlugins": true,
+          "standardObjectCache": true,
+          "noDropins": true,
+          "testedTheme": true,
+          "queryFilters": true
+        },
+        "ready": true,
+        "wordpress": "7.1.3",
+        "php": "8.5.11",
+        "activePlugins": {
+          "alexcuadra-editorial-blog-read/alexcuadra-editorial-blog-read.php": "0.1.0-rc.1",
+          "mcp-adapter/mcp-adapter.php": "0.7.1",
+          "polylang/polylang.php": "3.9.1"
+        },
+        "muPluginNames": [
+          "editorial-blog-read-lab.php"
+        ],
+        "muPluginSha256": {
+          "editorial-blog-read-lab.php": "dd2ee1103c1f2e8215a6215891c7d593818a737c7f747a909965ca5485ef4201"
+        },
+        "queryCallbacks": [
+          {
+            "priority": 0,
+            "kind": "core-placeholder",
+            "callback": "wpdb::remove_placeholder_escape",
+            "source": "wp-includes/class-wpdb.php",
+            "sourceSha256": "e15403e90032dd0508811301505e491d4212de5152581a98f51b744a1a3903bd"
+          }
+        ],
+        "theme": {
+          "stylesheet": "twentytwentyfive",
+          "template": "twentytwentyfive",
+          "version": "1.5",
+          "styleSha256": "f21ff7e12ce351b9a2e081f517233bc46287b2d9afaabe3cb0f6cdf2653a721e",
+          "functionsSha256": "51681ddc22490e05066da69a44e74bd8ee78249f6322d8c6efcd777d19641f84"
+        },
+        "dropinNames": [],
+        "wpdbSourceSha256": "e15403e90032dd0508811301505e491d4212de5152581a98f51b744a1a3903bd",
+        "instrumentedLocalProfile": true,
+        "sourceRenderingPerformed": false
+      },
+      "schema": {
+        "present": 0,
+        "checks": {
+          "owners": false,
+          "proposals": false,
+          "revisions": false,
+          "requests": false
+        },
+        "ready": false,
+        "tables": []
+      },
+      "effectiveCapabilityNames": [
+        "alexcuadra_apply_project_changes",
+        "alexcuadra_prepare_project_changes",
+        "alexcuadra_read_public_posts",
+        "alexcuadra_read_public_projects",
+        "alexcuadra_recover_project_changes",
+        "level_0",
+        "read",
+        "subscriber"
+      ],
+      "broadPermissionsDenied": {
+        "manage_options": true,
+        "install_plugins": true,
+        "activate_plugins": true,
+        "update_plugins": true,
+        "edit_users": true,
+        "promote_users": true,
+        "delete_users": true,
+        "create_users": true,
+        "edit_posts": true,
+        "edit_pages": true,
+        "edit_others_posts": true,
+        "edit_others_pages": true,
+        "publish_posts": true,
+        "publish_pages": true,
+        "delete_posts": true,
+        "delete_pages": true
+      },
+      "sourceContentInspected": false,
+      "applicationPasswordsRequested": false,
+      "mutationsRequested": false,
+      "initialAcceptanceOnly": true
+    },
+    {
+      "format": "blog-proposal-preflight-v1",
+      "phase": "after-enable",
+      "userId": 2,
+      "packageSha256": "ca33ebd4b3a874a939b8d18dbf42c2cea324325b26716f01208cd1f85154635a",
+      "ready": true,
+      "checks": {
+        "testedProfile": true,
+        "subscriberOnly": true,
+        "read": true,
+        "noBroadPermissions": true,
+        "preservedExactCapabilities": true,
+        "noRoleWideGrant": true,
+        "expectedScope": true,
+        "scopeOwners": true,
+        "expectedFiles": true,
+        "expectedActivation": true,
+        "expectedGuard": true,
+        "expectedRegistration": true,
+        "expectedSchema": true,
+        "expectedOwners": true,
+        "initialPrivateStorageEmpty": true
+      },
+      "profile": {
+        "checks": {
+          "singleSite": true,
+          "testedWordPress": true,
+          "testedPhp": true,
+          "coreWpdb": true,
+          "dependencies": true,
+          "testedActivePlugins": true,
+          "testedMuPlugins": true,
+          "standardObjectCache": true,
+          "noDropins": true,
+          "testedTheme": true,
+          "queryFilters": true
+        },
+        "ready": true,
+        "wordpress": "7.1.3",
+        "php": "8.5.11",
+        "activePlugins": {
+          "alexcuadra-editorial-blog-proposals/alexcuadra-editorial-blog-proposals.php": "0.1.0-rc.1",
+          "alexcuadra-editorial-blog-read/alexcuadra-editorial-blog-read.php": "0.1.0-rc.1",
+          "mcp-adapter/mcp-adapter.php": "0.7.1",
+          "polylang/polylang.php": "3.9.1"
+        },
+        "muPluginNames": [
+          "editorial-blog-read-lab.php"
+        ],
+        "muPluginSha256": {
+          "editorial-blog-read-lab.php": "dd2ee1103c1f2e8215a6215891c7d593818a737c7f747a909965ca5485ef4201"
+        },
+        "queryCallbacks": [
+          {
+            "priority": 0,
+            "kind": "core-placeholder",
+            "callback": "wpdb::remove_placeholder_escape",
+            "source": "wp-includes/class-wpdb.php",
+            "sourceSha256": "e15403e90032dd0508811301505e491d4212de5152581a98f51b744a1a3903bd"
+          }
+        ],
+        "theme": {
+          "stylesheet": "twentytwentyfive",
+          "template": "twentytwentyfive",
+          "version": "1.5",
+          "styleSha256": "f21ff7e12ce351b9a2e081f517233bc46287b2d9afaabe3cb0f6cdf2653a721e",
+          "functionsSha256": "51681ddc22490e05066da69a44e74bd8ee78249f6322d8c6efcd777d19641f84"
+        },
+        "dropinNames": [],
+        "wpdbSourceSha256": "e15403e90032dd0508811301505e491d4212de5152581a98f51b744a1a3903bd",
+        "instrumentedLocalProfile": true,
+        "sourceRenderingPerformed": false
+      },
+      "schema": {
+        "present": 0,
+        "checks": {
+          "owners": false,
+          "proposals": false,
+          "revisions": false,
+          "requests": false
+        },
+        "ready": false,
+        "tables": []
+      },
+      "effectiveCapabilityNames": [
+        "alexcuadra_apply_project_changes",
+        "alexcuadra_prepare_project_changes",
+        "alexcuadra_read_public_posts",
+        "alexcuadra_read_public_projects",
+        "alexcuadra_recover_project_changes",
+        "level_0",
+        "read",
+        "subscriber"
+      ],
+      "broadPermissionsDenied": {
+        "manage_options": true,
+        "install_plugins": true,
+        "activate_plugins": true,
+        "update_plugins": true,
+        "edit_users": true,
+        "promote_users": true,
+        "delete_users": true,
+        "create_users": true,
+        "edit_posts": true,
+        "edit_pages": true,
+        "edit_others_posts": true,
+        "edit_others_pages": true,
+        "publish_posts": true,
+        "publish_pages": true,
+        "delete_posts": true,
+        "delete_pages": true
+      },
+      "sourceContentInspected": false,
+      "applicationPasswordsRequested": false,
+      "mutationsRequested": false,
+      "initialAcceptanceOnly": true
+    },
+    {
+      "format": "blog-proposal-preflight-v1",
+      "phase": "after-storage",
+      "userId": 2,
+      "packageSha256": "ca33ebd4b3a874a939b8d18dbf42c2cea324325b26716f01208cd1f85154635a",
+      "ready": true,
+      "checks": {
+        "testedProfile": true,
+        "subscriberOnly": true,
+        "read": true,
+        "noBroadPermissions": true,
+        "preservedExactCapabilities": true,
+        "noRoleWideGrant": true,
+        "expectedScope": true,
+        "scopeOwners": true,
+        "expectedFiles": true,
+        "expectedActivation": true,
+        "expectedGuard": true,
+        "expectedRegistration": true,
+        "expectedSchema": true,
+        "expectedOwners": true,
+        "initialPrivateStorageEmpty": true
+      },
+      "profile": {
+        "checks": {
+          "singleSite": true,
+          "testedWordPress": true,
+          "testedPhp": true,
+          "coreWpdb": true,
+          "dependencies": true,
+          "testedActivePlugins": true,
+          "testedMuPlugins": true,
+          "standardObjectCache": true,
+          "noDropins": true,
+          "testedTheme": true,
+          "queryFilters": true
+        },
+        "ready": true,
+        "wordpress": "7.1.3",
+        "php": "8.5.11",
+        "activePlugins": {
+          "alexcuadra-editorial-blog-proposals/alexcuadra-editorial-blog-proposals.php": "0.1.0-rc.1",
+          "alexcuadra-editorial-blog-read/alexcuadra-editorial-blog-read.php": "0.1.0-rc.1",
+          "mcp-adapter/mcp-adapter.php": "0.7.1",
+          "polylang/polylang.php": "3.9.1"
+        },
+        "muPluginNames": [
+          "editorial-blog-read-lab.php"
+        ],
+        "muPluginSha256": {
+          "editorial-blog-read-lab.php": "dd2ee1103c1f2e8215a6215891c7d593818a737c7f747a909965ca5485ef4201"
+        },
+        "queryCallbacks": [
+          {
+            "priority": 0,
+            "kind": "core-placeholder",
+            "callback": "wpdb::remove_placeholder_escape",
+            "source": "wp-includes/class-wpdb.php",
+            "sourceSha256": "e15403e90032dd0508811301505e491d4212de5152581a98f51b744a1a3903bd"
+          }
+        ],
+        "theme": {
+          "stylesheet": "twentytwentyfive",
+          "template": "twentytwentyfive",
+          "version": "1.5",
+          "styleSha256": "f21ff7e12ce351b9a2e081f517233bc46287b2d9afaabe3cb0f6cdf2653a721e",
+          "functionsSha256": "51681ddc22490e05066da69a44e74bd8ee78249f6322d8c6efcd777d19641f84"
+        },
+        "dropinNames": [],
+        "wpdbSourceSha256": "e15403e90032dd0508811301505e491d4212de5152581a98f51b744a1a3903bd",
+        "instrumentedLocalProfile": true,
+        "sourceRenderingPerformed": false
+      },
+      "schema": {
+        "present": 4,
+        "checks": {
+          "owners": true,
+          "proposals": true,
+          "revisions": true,
+          "requests": true
+        },
+        "ready": true,
+        "tables": {
+          "owners": {
+            "engine": "InnoDB",
+            "collation": "utf8mb4_bin"
+          },
+          "proposals": {
+            "engine": "InnoDB",
+            "collation": "utf8mb4_bin"
+          },
+          "revisions": {
+            "engine": "InnoDB",
+            "collation": "utf8mb4_bin"
+          },
+          "requests": {
+            "engine": "InnoDB",
+            "collation": "utf8mb4_bin"
+          }
+        }
+      },
+      "effectiveCapabilityNames": [
+        "alexcuadra_apply_project_changes",
+        "alexcuadra_prepare_project_changes",
+        "alexcuadra_read_public_posts",
+        "alexcuadra_read_public_projects",
+        "alexcuadra_recover_project_changes",
+        "level_0",
+        "read",
+        "subscriber"
+      ],
+      "broadPermissionsDenied": {
+        "manage_options": true,
+        "install_plugins": true,
+        "activate_plugins": true,
+        "update_plugins": true,
+        "edit_users": true,
+        "promote_users": true,
+        "delete_users": true,
+        "create_users": true,
+        "edit_posts": true,
+        "edit_pages": true,
+        "edit_others_posts": true,
+        "edit_others_pages": true,
+        "publish_posts": true,
+        "publish_pages": true,
+        "delete_posts": true,
+        "delete_pages": true
+      },
+      "sourceContentInspected": false,
+      "applicationPasswordsRequested": false,
+      "mutationsRequested": false,
+      "initialAcceptanceOnly": true
+    },
+    {
+      "format": "blog-proposal-preflight-v1",
+      "phase": "after-owner",
+      "userId": 2,
+      "packageSha256": "ca33ebd4b3a874a939b8d18dbf42c2cea324325b26716f01208cd1f85154635a",
+      "ready": true,
+      "checks": {
+        "testedProfile": true,
+        "subscriberOnly": true,
+        "read": true,
+        "noBroadPermissions": true,
+        "preservedExactCapabilities": true,
+        "noRoleWideGrant": true,
+        "expectedScope": true,
+        "scopeOwners": true,
+        "expectedFiles": true,
+        "expectedActivation": true,
+        "expectedGuard": true,
+        "expectedRegistration": true,
+        "expectedSchema": true,
+        "expectedOwners": true,
+        "initialPrivateStorageEmpty": true
+      },
+      "profile": {
+        "checks": {
+          "singleSite": true,
+          "testedWordPress": true,
+          "testedPhp": true,
+          "coreWpdb": true,
+          "dependencies": true,
+          "testedActivePlugins": true,
+          "testedMuPlugins": true,
+          "standardObjectCache": true,
+          "noDropins": true,
+          "testedTheme": true,
+          "queryFilters": true
+        },
+        "ready": true,
+        "wordpress": "7.1.3",
+        "php": "8.5.11",
+        "activePlugins": {
+          "alexcuadra-editorial-blog-proposals/alexcuadra-editorial-blog-proposals.php": "0.1.0-rc.1",
+          "alexcuadra-editorial-blog-read/alexcuadra-editorial-blog-read.php": "0.1.0-rc.1",
+          "mcp-adapter/mcp-adapter.php": "0.7.1",
+          "polylang/polylang.php": "3.9.1"
+        },
+        "muPluginNames": [
+          "editorial-blog-read-lab.php"
+        ],
+        "muPluginSha256": {
+          "editorial-blog-read-lab.php": "dd2ee1103c1f2e8215a6215891c7d593818a737c7f747a909965ca5485ef4201"
+        },
+        "queryCallbacks": [
+          {
+            "priority": 0,
+            "kind": "core-placeholder",
+            "callback": "wpdb::remove_placeholder_escape",
+            "source": "wp-includes/class-wpdb.php",
+            "sourceSha256": "e15403e90032dd0508811301505e491d4212de5152581a98f51b744a1a3903bd"
+          }
+        ],
+        "theme": {
+          "stylesheet": "twentytwentyfive",
+          "template": "twentytwentyfive",
+          "version": "1.5",
+          "styleSha256": "f21ff7e12ce351b9a2e081f517233bc46287b2d9afaabe3cb0f6cdf2653a721e",
+          "functionsSha256": "51681ddc22490e05066da69a44e74bd8ee78249f6322d8c6efcd777d19641f84"
+        },
+        "dropinNames": [],
+        "wpdbSourceSha256": "e15403e90032dd0508811301505e491d4212de5152581a98f51b744a1a3903bd",
+        "instrumentedLocalProfile": true,
+        "sourceRenderingPerformed": false
+      },
+      "schema": {
+        "present": 4,
+        "checks": {
+          "owners": true,
+          "proposals": true,
+          "revisions": true,
+          "requests": true
+        },
+        "ready": true,
+        "tables": {
+          "owners": {
+            "engine": "InnoDB",
+            "collation": "utf8mb4_bin"
+          },
+          "proposals": {
+            "engine": "InnoDB",
+            "collation": "utf8mb4_bin"
+          },
+          "revisions": {
+            "engine": "InnoDB",
+            "collation": "utf8mb4_bin"
+          },
+          "requests": {
+            "engine": "InnoDB",
+            "collation": "utf8mb4_bin"
+          }
+        }
+      },
+      "effectiveCapabilityNames": [
+        "alexcuadra_apply_project_changes",
+        "alexcuadra_prepare_project_changes",
+        "alexcuadra_read_public_posts",
+        "alexcuadra_read_public_projects",
+        "alexcuadra_recover_project_changes",
+        "level_0",
+        "read",
+        "subscriber"
+      ],
+      "broadPermissionsDenied": {
+        "manage_options": true,
+        "install_plugins": true,
+        "activate_plugins": true,
+        "update_plugins": true,
+        "edit_users": true,
+        "promote_users": true,
+        "delete_users": true,
+        "create_users": true,
+        "edit_posts": true,
+        "edit_pages": true,
+        "edit_others_posts": true,
+        "edit_others_pages": true,
+        "publish_posts": true,
+        "publish_pages": true,
+        "delete_posts": true,
+        "delete_pages": true
+      },
+      "sourceContentInspected": false,
+      "applicationPasswordsRequested": false,
+      "mutationsRequested": false,
+      "initialAcceptanceOnly": true
+    },
+    {
+      "format": "blog-proposal-preflight-v1",
+      "phase": "after-scope",
+      "userId": 2,
+      "packageSha256": "ca33ebd4b3a874a939b8d18dbf42c2cea324325b26716f01208cd1f85154635a",
+      "ready": true,
+      "checks": {
+        "testedProfile": true,
+        "subscriberOnly": true,
+        "read": true,
+        "noBroadPermissions": true,
+        "preservedExactCapabilities": true,
+        "noRoleWideGrant": true,
+        "expectedScope": true,
+        "scopeOwners": true,
+        "expectedFiles": true,
+        "expectedActivation": true,
+        "expectedGuard": true,
+        "expectedRegistration": true,
+        "expectedSchema": true,
+        "expectedOwners": true,
+        "initialPrivateStorageEmpty": true
+      },
+      "profile": {
+        "checks": {
+          "singleSite": true,
+          "testedWordPress": true,
+          "testedPhp": true,
+          "coreWpdb": true,
+          "dependencies": true,
+          "testedActivePlugins": true,
+          "testedMuPlugins": true,
+          "standardObjectCache": true,
+          "noDropins": true,
+          "testedTheme": true,
+          "queryFilters": true
+        },
+        "ready": true,
+        "wordpress": "7.1.3",
+        "php": "8.5.11",
+        "activePlugins": {
+          "alexcuadra-editorial-blog-proposals/alexcuadra-editorial-blog-proposals.php": "0.1.0-rc.1",
+          "alexcuadra-editorial-blog-read/alexcuadra-editorial-blog-read.php": "0.1.0-rc.1",
+          "mcp-adapter/mcp-adapter.php": "0.7.1",
+          "polylang/polylang.php": "3.9.1"
+        },
+        "muPluginNames": [
+          "editorial-blog-read-lab.php"
+        ],
+        "muPluginSha256": {
+          "editorial-blog-read-lab.php": "dd2ee1103c1f2e8215a6215891c7d593818a737c7f747a909965ca5485ef4201"
+        },
+        "queryCallbacks": [
+          {
+            "priority": 0,
+            "kind": "core-placeholder",
+            "callback": "wpdb::remove_placeholder_escape",
+            "source": "wp-includes/class-wpdb.php",
+            "sourceSha256": "e15403e90032dd0508811301505e491d4212de5152581a98f51b744a1a3903bd"
+          }
+        ],
+        "theme": {
+          "stylesheet": "twentytwentyfive",
+          "template": "twentytwentyfive",
+          "version": "1.5",
+          "styleSha256": "f21ff7e12ce351b9a2e081f517233bc46287b2d9afaabe3cb0f6cdf2653a721e",
+          "functionsSha256": "51681ddc22490e05066da69a44e74bd8ee78249f6322d8c6efcd777d19641f84"
+        },
+        "dropinNames": [],
+        "wpdbSourceSha256": "e15403e90032dd0508811301505e491d4212de5152581a98f51b744a1a3903bd",
+        "instrumentedLocalProfile": true,
+        "sourceRenderingPerformed": false
+      },
+      "schema": {
+        "present": 4,
+        "checks": {
+          "owners": true,
+          "proposals": true,
+          "revisions": true,
+          "requests": true
+        },
+        "ready": true,
+        "tables": {
+          "owners": {
+            "engine": "InnoDB",
+            "collation": "utf8mb4_bin"
+          },
+          "proposals": {
+            "engine": "InnoDB",
+            "collation": "utf8mb4_bin"
+          },
+          "revisions": {
+            "engine": "InnoDB",
+            "collation": "utf8mb4_bin"
+          },
+          "requests": {
+            "engine": "InnoDB",
+            "collation": "utf8mb4_bin"
+          }
+        }
+      },
+      "effectiveCapabilityNames": [
+        "alexcuadra_apply_project_changes",
+        "alexcuadra_prepare_post_changes",
+        "alexcuadra_prepare_project_changes",
+        "alexcuadra_read_public_posts",
+        "alexcuadra_read_public_projects",
+        "alexcuadra_recover_project_changes",
+        "level_0",
+        "read",
+        "subscriber"
+      ],
+      "broadPermissionsDenied": {
+        "manage_options": true,
+        "install_plugins": true,
+        "activate_plugins": true,
+        "update_plugins": true,
+        "edit_users": true,
+        "promote_users": true,
+        "delete_users": true,
+        "create_users": true,
+        "edit_posts": true,
+        "edit_pages": true,
+        "edit_others_posts": true,
+        "edit_others_pages": true,
+        "publish_posts": true,
+        "publish_pages": true,
+        "delete_posts": true,
+        "delete_pages": true
+      },
+      "sourceContentInspected": false,
+      "applicationPasswordsRequested": false,
+      "mutationsRequested": false,
+      "initialAcceptanceOnly": true
+    },
+    {
+      "format": "blog-proposal-preflight-v1",
+      "phase": "after-scope",
+      "userId": 2,
+      "packageSha256": "ca33ebd4b3a874a939b8d18dbf42c2cea324325b26716f01208cd1f85154635a",
+      "ready": false,
+      "checks": {
+        "testedProfile": true,
+        "subscriberOnly": true,
+        "read": true,
+        "noBroadPermissions": true,
+        "preservedExactCapabilities": true,
+        "noRoleWideGrant": true,
+        "expectedScope": true,
+        "scopeOwners": true,
+        "expectedFiles": true,
+        "expectedActivation": true,
+        "expectedGuard": true,
+        "expectedRegistration": true,
+        "expectedSchema": false,
+        "expectedOwners": false,
+        "initialPrivateStorageEmpty": false
+      },
+      "profile": {
+        "checks": {
+          "singleSite": true,
+          "testedWordPress": true,
+          "testedPhp": true,
+          "coreWpdb": true,
+          "dependencies": true,
+          "testedActivePlugins": true,
+          "testedMuPlugins": true,
+          "standardObjectCache": true,
+          "noDropins": true,
+          "testedTheme": true,
+          "queryFilters": true
+        },
+        "ready": true,
+        "wordpress": "7.1.3",
+        "php": "8.5.11",
+        "activePlugins": {
+          "alexcuadra-editorial-blog-proposals/alexcuadra-editorial-blog-proposals.php": "0.1.0-rc.1",
+          "alexcuadra-editorial-blog-read/alexcuadra-editorial-blog-read.php": "0.1.0-rc.1",
+          "mcp-adapter/mcp-adapter.php": "0.7.1",
+          "polylang/polylang.php": "3.9.1"
+        },
+        "muPluginNames": [
+          "editorial-blog-read-lab.php"
+        ],
+        "muPluginSha256": {
+          "editorial-blog-read-lab.php": "dd2ee1103c1f2e8215a6215891c7d593818a737c7f747a909965ca5485ef4201"
+        },
+        "queryCallbacks": [
+          {
+            "priority": 0,
+            "kind": "core-placeholder",
+            "callback": "wpdb::remove_placeholder_escape",
+            "source": "wp-includes/class-wpdb.php",
+            "sourceSha256": "e15403e90032dd0508811301505e491d4212de5152581a98f51b744a1a3903bd"
+          }
+        ],
+        "theme": {
+          "stylesheet": "twentytwentyfive",
+          "template": "twentytwentyfive",
+          "version": "1.5",
+          "styleSha256": "f21ff7e12ce351b9a2e081f517233bc46287b2d9afaabe3cb0f6cdf2653a721e",
+          "functionsSha256": "51681ddc22490e05066da69a44e74bd8ee78249f6322d8c6efcd777d19641f84"
+        },
+        "dropinNames": [],
+        "wpdbSourceSha256": "e15403e90032dd0508811301505e491d4212de5152581a98f51b744a1a3903bd",
+        "instrumentedLocalProfile": true,
+        "sourceRenderingPerformed": false
+      },
+      "schema": {
+        "present": 4,
+        "checks": {
+          "owners": true,
+          "proposals": false,
+          "revisions": true,
+          "requests": true
+        },
+        "ready": false,
+        "tables": {
+          "owners": {
+            "engine": "InnoDB",
+            "collation": "utf8mb4_bin"
+          },
+          "proposals": {
+            "engine": "InnoDB",
+            "collation": "utf8mb4_bin"
+          },
+          "revisions": {
+            "engine": "InnoDB",
+            "collation": "utf8mb4_bin"
+          },
+          "requests": {
+            "engine": "InnoDB",
+            "collation": "utf8mb4_bin"
+          }
+        }
+      },
+      "effectiveCapabilityNames": [
+        "alexcuadra_apply_project_changes",
+        "alexcuadra_prepare_post_changes",
+        "alexcuadra_prepare_project_changes",
+        "alexcuadra_read_public_posts",
+        "alexcuadra_read_public_projects",
+        "alexcuadra_recover_project_changes",
+        "level_0",
+        "read",
+        "subscriber"
+      ],
+      "broadPermissionsDenied": {
+        "manage_options": true,
+        "install_plugins": true,
+        "activate_plugins": true,
+        "update_plugins": true,
+        "edit_users": true,
+        "promote_users": true,
+        "delete_users": true,
+        "create_users": true,
+        "edit_posts": true,
+        "edit_pages": true,
+        "edit_others_posts": true,
+        "edit_others_pages": true,
+        "publish_posts": true,
+        "publish_pages": true,
+        "delete_posts": true,
+        "delete_pages": true
+      },
+      "sourceContentInspected": false,
+      "applicationPasswordsRequested": false,
+      "mutationsRequested": false,
+      "initialAcceptanceOnly": true
+    },
+    {
+      "format": "blog-proposal-preflight-v1",
+      "phase": "after-scope",
+      "userId": 2,
+      "packageSha256": "ca33ebd4b3a874a939b8d18dbf42c2cea324325b26716f01208cd1f85154635a",
+      "ready": true,
+      "checks": {
+        "testedProfile": true,
+        "subscriberOnly": true,
+        "read": true,
+        "noBroadPermissions": true,
+        "preservedExactCapabilities": true,
+        "noRoleWideGrant": true,
+        "expectedScope": true,
+        "scopeOwners": true,
+        "expectedFiles": true,
+        "expectedActivation": true,
+        "expectedGuard": true,
+        "expectedRegistration": true,
+        "expectedSchema": true,
+        "expectedOwners": true,
+        "initialPrivateStorageEmpty": true
+      },
+      "profile": {
+        "checks": {
+          "singleSite": true,
+          "testedWordPress": true,
+          "testedPhp": true,
+          "coreWpdb": true,
+          "dependencies": true,
+          "testedActivePlugins": true,
+          "testedMuPlugins": true,
+          "standardObjectCache": true,
+          "noDropins": true,
+          "testedTheme": true,
+          "queryFilters": true
+        },
+        "ready": true,
+        "wordpress": "7.1.3",
+        "php": "8.5.11",
+        "activePlugins": {
+          "alexcuadra-editorial-blog-proposals/alexcuadra-editorial-blog-proposals.php": "0.1.0-rc.1",
+          "alexcuadra-editorial-blog-read/alexcuadra-editorial-blog-read.php": "0.1.0-rc.1",
+          "mcp-adapter/mcp-adapter.php": "0.7.1",
+          "polylang/polylang.php": "3.9.1"
+        },
+        "muPluginNames": [
+          "editorial-blog-read-lab.php"
+        ],
+        "muPluginSha256": {
+          "editorial-blog-read-lab.php": "dd2ee1103c1f2e8215a6215891c7d593818a737c7f747a909965ca5485ef4201"
+        },
+        "queryCallbacks": [
+          {
+            "priority": 0,
+            "kind": "core-placeholder",
+            "callback": "wpdb::remove_placeholder_escape",
+            "source": "wp-includes/class-wpdb.php",
+            "sourceSha256": "e15403e90032dd0508811301505e491d4212de5152581a98f51b744a1a3903bd"
+          }
+        ],
+        "theme": {
+          "stylesheet": "twentytwentyfive",
+          "template": "twentytwentyfive",
+          "version": "1.5",
+          "styleSha256": "f21ff7e12ce351b9a2e081f517233bc46287b2d9afaabe3cb0f6cdf2653a721e",
+          "functionsSha256": "51681ddc22490e05066da69a44e74bd8ee78249f6322d8c6efcd777d19641f84"
+        },
+        "dropinNames": [],
+        "wpdbSourceSha256": "e15403e90032dd0508811301505e491d4212de5152581a98f51b744a1a3903bd",
+        "instrumentedLocalProfile": true,
+        "sourceRenderingPerformed": false
+      },
+      "schema": {
+        "present": 4,
+        "checks": {
+          "owners": true,
+          "proposals": true,
+          "revisions": true,
+          "requests": true
+        },
+        "ready": true,
+        "tables": {
+          "owners": {
+            "engine": "InnoDB",
+            "collation": "utf8mb4_bin"
+          },
+          "proposals": {
+            "engine": "InnoDB",
+            "collation": "utf8mb4_bin"
+          },
+          "revisions": {
+            "engine": "InnoDB",
+            "collation": "utf8mb4_bin"
+          },
+          "requests": {
+            "engine": "InnoDB",
+            "collation": "utf8mb4_bin"
+          }
+        }
+      },
+      "effectiveCapabilityNames": [
+        "alexcuadra_apply_project_changes",
+        "alexcuadra_prepare_post_changes",
+        "alexcuadra_prepare_project_changes",
+        "alexcuadra_read_public_posts",
+        "alexcuadra_read_public_projects",
+        "alexcuadra_recover_project_changes",
+        "level_0",
+        "read",
+        "subscriber"
+      ],
+      "broadPermissionsDenied": {
+        "manage_options": true,
+        "install_plugins": true,
+        "activate_plugins": true,
+        "update_plugins": true,
+        "edit_users": true,
+        "promote_users": true,
+        "delete_users": true,
+        "create_users": true,
+        "edit_posts": true,
+        "edit_pages": true,
+        "edit_others_posts": true,
+        "edit_others_pages": true,
+        "publish_posts": true,
+        "publish_pages": true,
+        "delete_posts": true,
+        "delete_pages": true
+      },
+      "sourceContentInspected": false,
+      "applicationPasswordsRequested": false,
+      "mutationsRequested": false,
+      "initialAcceptanceOnly": true
+    },
+    {
+      "format": "blog-proposal-preflight-v1",
+      "phase": "withdrawn",
+      "userId": 2,
+      "packageSha256": "ca33ebd4b3a874a939b8d18dbf42c2cea324325b26716f01208cd1f85154635a",
+      "ready": true,
+      "checks": {
+        "testedProfile": true,
+        "subscriberOnly": true,
+        "read": true,
+        "noBroadPermissions": true,
+        "preservedExactCapabilities": true,
+        "noRoleWideGrant": true,
+        "expectedScope": true,
+        "scopeOwners": true,
+        "expectedFiles": true,
+        "expectedActivation": true,
+        "expectedGuard": true,
+        "expectedRegistration": true,
+        "expectedSchema": true,
+        "expectedOwners": true,
+        "initialPrivateStorageEmpty": true
+      },
+      "profile": {
+        "checks": {
+          "singleSite": true,
+          "testedWordPress": true,
+          "testedPhp": true,
+          "coreWpdb": true,
+          "dependencies": true,
+          "testedActivePlugins": true,
+          "testedMuPlugins": true,
+          "standardObjectCache": true,
+          "noDropins": true,
+          "testedTheme": true,
+          "queryFilters": true
+        },
+        "ready": true,
+        "wordpress": "7.1.3",
+        "php": "8.5.11",
+        "activePlugins": {
+          "alexcuadra-editorial-blog-read/alexcuadra-editorial-blog-read.php": "0.1.0-rc.1",
+          "mcp-adapter/mcp-adapter.php": "0.7.1",
+          "polylang/polylang.php": "3.9.1"
+        },
+        "muPluginNames": [
+          "editorial-blog-read-lab.php"
+        ],
+        "muPluginSha256": {
+          "editorial-blog-read-lab.php": "dd2ee1103c1f2e8215a6215891c7d593818a737c7f747a909965ca5485ef4201"
+        },
+        "queryCallbacks": [
+          {
+            "priority": 0,
+            "kind": "core-placeholder",
+            "callback": "wpdb::remove_placeholder_escape",
+            "source": "wp-includes/class-wpdb.php",
+            "sourceSha256": "e15403e90032dd0508811301505e491d4212de5152581a98f51b744a1a3903bd"
+          }
+        ],
+        "theme": {
+          "stylesheet": "twentytwentyfive",
+          "template": "twentytwentyfive",
+          "version": "1.5",
+          "styleSha256": "f21ff7e12ce351b9a2e081f517233bc46287b2d9afaabe3cb0f6cdf2653a721e",
+          "functionsSha256": "51681ddc22490e05066da69a44e74bd8ee78249f6322d8c6efcd777d19641f84"
+        },
+        "dropinNames": [],
+        "wpdbSourceSha256": "e15403e90032dd0508811301505e491d4212de5152581a98f51b744a1a3903bd",
+        "instrumentedLocalProfile": true,
+        "sourceRenderingPerformed": false
+      },
+      "schema": {
+        "present": 4,
+        "checks": {
+          "owners": true,
+          "proposals": true,
+          "revisions": true,
+          "requests": true
+        },
+        "ready": true,
+        "tables": {
+          "owners": {
+            "engine": "InnoDB",
+            "collation": "utf8mb4_bin"
+          },
+          "proposals": {
+            "engine": "InnoDB",
+            "collation": "utf8mb4_bin"
+          },
+          "revisions": {
+            "engine": "InnoDB",
+            "collation": "utf8mb4_bin"
+          },
+          "requests": {
+            "engine": "InnoDB",
+            "collation": "utf8mb4_bin"
+          }
+        }
+      },
+      "effectiveCapabilityNames": [
+        "alexcuadra_apply_project_changes",
+        "alexcuadra_prepare_project_changes",
+        "alexcuadra_read_public_posts",
+        "alexcuadra_read_public_projects",
+        "alexcuadra_recover_project_changes",
+        "level_0",
+        "read",
+        "subscriber"
+      ],
+      "broadPermissionsDenied": {
+        "manage_options": true,
+        "install_plugins": true,
+        "activate_plugins": true,
+        "update_plugins": true,
+        "edit_users": true,
+        "promote_users": true,
+        "delete_users": true,
+        "create_users": true,
+        "edit_posts": true,
+        "edit_pages": true,
+        "edit_others_posts": true,
+        "edit_others_pages": true,
+        "publish_posts": true,
+        "publish_pages": true,
+        "delete_posts": true,
+        "delete_pages": true
+      },
+      "sourceContentInspected": false,
+      "applicationPasswordsRequested": false,
+      "mutationsRequested": false,
+      "initialAcceptanceOnly": false
+    }
+  ],
+  "retainedPrivateRows": [
+    1,
+    1,
+    1
+  ],
+  "schemaDriftRejected": true,
+  "functionalChecks": 273,
+  "cleanup": {
+    "allFiveLabProjectsStopped": true,
+    "finalNetworksInternal": true,
+    "publishedPorts": false
+  },
+  "realCmsChanged": false,
+  "realCapabilitiesGranted": false,
+  "destinationProfileAccepted": false,
+  "sourceFileSha256": {
+    "scripts/package-editorial-blog-proposals.py": "ebfe79f3df774ab8a3dfae64c0a2431d2a2ef833989e87e4a8465621c14e3709",
+    "tests/editorial-blog-proposals/release-guard.php": "7bf4b0c362eec630cf58e2ed43d60e96bde8063cda226a3295713418f18e7419",
+    "tests/editorial-blog-proposals/release-planner.py": "9bd76ff5b4f9d0133c85afb287636c6c5bcf0082abf8f842c524347f3df040a0",
+    "tests/integration/wordpress-blog-proposals-release/README.md": "e66bebe7b08bed49e0bf4eea8342f1c86faabb6bbe954eea14e477a5eb984dbb",
+    "tests/integration/wordpress-blog-proposals-release/compose.yaml": "0d5d3d263c8d66f7cbd18504c2b4fb2adf791668e697ccaf91ea96c811733548",
+    "tests/integration/wordpress-blog-proposals-release/contracts.php": "1a18b53da9eb8388f39739dc15316341e975dead46ca2917b8f80a6b8c15fcb3",
+    "tests/integration/wordpress-blog-proposals-release/fixture.php": "786796020c4defd8bd698cc81fd0137515d403168d29dae97bc3e91700c4ae74",
+    "tests/integration/wordpress-blog-proposals-release/prepare.py": "4ac0e4bafea834ba7ed7bf830d03fe841993a531674e8002ca7e49a9b397efc9",
+    "tests/integration/wordpress-blog-proposals-release/run.sh": "10e8ff601a6d15c2bdeb1304197d8c79a54746cc35c1e79ffc23823ff0d7ca36",
+    "tests/integration/wordpress-blog-proposals-release/verify-preflight.py": "46d4e6791eb691f4768761dce06586331040ddd4313b73affbcb4e23ede3dd22",
+    "wordpress/operations/blog-proposal-admission.php": "ddb5919fb359e397ac3a687ea574816d2b67f486aa90fae152348e6567ddc570",
+    "wordpress/operations/blog-proposal-preflight.php": "0f1b522cc0fc912adc6aeff50deefc76e3f86718d138f46b4e83f0adf621e07e",
+    "wordpress/operations/blog-proposal-preflight.template.php": "8fc881fa0b32628cbbb42e87b28e07f3d4a92ace82bb082d56832334b7279279"
+  }
+}
