@@ -29,3 +29,7 @@ Alex aportó el [before rc.2](blog-proposal-rc2-destination-before-2026-10-27.js
 ## Activación real verificada
 
 [After-enable de Alex](blog-proposal-rc2-destination-after-enable-2026-10-27.json): ready=true, 15 comprobaciones principales y 11 del perfil correctas. Plugin/guard activos y cinco herramientas registradas; sin tablas ni nuevo scope, con ocho capacidades anteriores. Siguiente creación explícita de cuatro tablas vacías mediante install() como operador1 existente y after-storage. El método exacto ya se ejercitó en el ciclo rc.2 de laboratorio. El agente no ejecuta DDL remoto; no hubo nueva inspección independiente del servidor.
+
+## Almacenamiento real reconciliado
+
+[After-storage de Alex](blog-proposal-rc2-destination-after-storage-2026-10-27.json): ready=true, cuatro tablas con esquema completo y esperado, sin propietarios o filas de propuestas/revisiones/recibos; ocho capacidades previas intactas. Esto verifica el estado actual, no identifica cuándo ni quién creó las tablas. No repetir install ni reparar/borrar. Siguiente enroll(2) por operador1 y after-owner, sin permiso nuevo. Método enroll ya ensayado en el ciclo rc.2; sin nueva ejecución remota del agente.

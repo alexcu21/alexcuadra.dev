@@ -1,5 +1,7 @@
 # Propuestas privadas: candidato 0.1.0-rc.2
 
+**27 octubre — almacenamiento real de rc.2 verificado:** Alex aporta after-storage ready=true, 15 comprobaciones principales/11 del perfil correctas. Cuatro tablas completas InnoDB/utf8mb4_bin con esquema exacto, sin propietarios ni propuestas/revisiones/recibos. Ocho capacidades previas conservadas y scope nuevo ausente. [Recibo](qa/blog-proposal-rc2-destination-after-storage-2026-10-27.json). El rechazo de install no requiere reparar/recrear; no se conoce el momento ni la ejecución que creó las tablas. Siguiente: enroll(2) mediante operador1 existente y after-owner, sin grant. Respaldo operativo antes de habilitar escritura de propuestas sigue pendiente.
+
 **27 octubre — creación de almacenamiento detenida:** Alex aporta blog_proposal_storage_not_empty en wordpress-repository.php:37. Esa línea está en la comprobación de ausencia, antes de todos los CREATE: esta invocación no llegó al DDL. Se observó al menos una tabla propia existente; se desconocen cuáles, sus filas y el origen del cambio desde after-enable (present=0). [Observación](qa/blog-proposal-rc2-storage-install-rejected-2026-10-27.json). Siguiente únicamente preflight rc.2 `2 after-storage` de solo lectura. No reintentar install, borrar/alterar tablas, inscribir propietario ni conceder scope. No atribuir éxito de almacenamiento o causa sin el diagnóstico.
 
 Candidato separado de rc.1, derivado del ZIP sellado y del diagnóstico de huellas aportado por Alex. No instala ni cambia el CMS por generar estos archivos. Conserva las cinco herramientas privadas, los DTOs cerrados y la lógica de repositorio; cambia versión, admisión del perfil y README. No incluye escritor de posts, publicación, grants automáticos, migración automática ni borrado.
@@ -16,7 +18,27 @@ La excepción de pruebas exige entorno local, DB_HOST=db, URL exacta y marca de 
 
 Las huellas principales coinciden con el servidor; no verifican árboles completos. El laboratorio usa PHP8.5.11/MariaDB11.8.9 y configuración/datos sintéticos; servidor PHP8.5.12. No certifica opciones reales de hosting, preview, cachés externas, restauración ante pérdida del servidor ni escritura pública.
 
-## Fase pausada: no ejecutar de nuevo la creación de tablas
+## Paso actual: propietario2 y after-owner, sin permiso nuevo
+
+El [after-storage real](qa/blog-proposal-rc2-destination-after-storage-2026-10-27.json) pasa las 15 comprobaciones: cuatro tablas con esquema exacto, InnoDB/utf8mb4_bin, vacías y sin propietarios, conservando las ocho capacidades anteriores. El estado actual queda verificado; no se conoce qué ejecución creó las tablas. El rechazo anterior de install ocurrió antes del DDL y no justifica repetir creación, borrar o reparar tablas.
+
+Alex ejecuta por SSH como el operador administrador1 existente:
+
+```sh
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content --user=1 eval '(new \AlexCuadra\EditorialBlogProposals\WordPressRepository($GLOBALS["wpdb"]))->enroll(2); WP_CLI::line("BLOG_PROPOSAL_OWNER_ENROLLED");'
+```
+
+Si termina correctamente, comprobar:
+
+```sh
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content eval-file /home/u776991923/domains/alexcuadra.dev/private-tools/blog-proposal-rc2/blog-proposal-preflight.php 2 after-owner
+```
+
+Compartir BLOG_PROPOSAL_PREFLIGHT_RESULT. enroll(2) comprueba sitio/perfil/esquema, contexto CLI, manage_options y existencia del usuario2; solo inserta su fila de propietario si falta. No concede permisos, cambia roles, crea propuestas o edita contenido. after-owner exige exactamente propietario2, las otras tres tablas vacías y las ocho capacidades previas sin nuevo scope. Si falla, compartir el error antes de avanzar.
+
+El grant sigue pendiente: antes de habilitar escritura de propuestas reales debe quedar revisado el procedimiento operativo de respaldo/recuperación del hosting. No usar el fixture sintético en el servidor.
+
+## Histórico: creación detenida, almacenamiento ya reconciliado por diagnóstico
 
 El [after-enable real](qa/blog-proposal-rc2-destination-after-enable-2026-10-27.json) pasa las 15 comprobaciones: guard/plugin activos, cinco herramientas registradas, archivos exactos y perfil compatible. Las cuatro tablas propias aún no existen; no hay nuevo scope y las ocho capacidades anteriores se conservan. No repetir instalación o activación.
 
