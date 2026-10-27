@@ -1,0 +1,17 @@
+# Propuestas de clasificación nativas — 27 octubre 2026
+
+Implementados adaptador WordPress/Polylang y repositorio privado InnoDB **de laboratorio**, separados de los paquetes sellados y de tablas/propuestas existentes. Se reutiliza explícitamente la política de lectura pública del lector experimental. El repositorio y la barrera de conexión derivan del laboratorio nativo de blog en otro namespace/prefijo.
+
+**70 comprobaciones nativas +62 regresiones del planificador +99 de SQLite correctas.** WordPress7.1.3/PHP8.5.11/MariaDB11.8.9/Polylang3.9.1, contenedores propios, red interna, sin puertos públicos o conexión al hosting. [Recibo nativo con casos y hashes](project-classification-proposal-native-2026-10-27.json). [Procedimiento y límites](../../tests/integration/wordpress-project-classification-proposals/README.md).
+
+El contexto devuelve solo clasificación y catálogos completos de categorías/tecnologías públicas del idioma exacto. Valida tipo/estado/contraseña actuales desde columnas de DB, sin confiar en WP_Post cacheado. La política del lector excluye términos sin testigo público y taxonomías compartidas; conserva únicamente traducciones visibles recíprocas. Dos recogidas consecutivas deben coincidir. Esto detecta diferencias observadas, **no demuestra una instantánea global atómica** frente a todos los escritores/cachés/filters. No se devuelve cuerpo, meta o descripciones.
+
+Tablas propias owners/proposals/revisions/requests, InnoDB/utf8mb4_bin. DDL/enrollment requieren operador CLI con manage_options y guard local; subscriber conserva read y dos scopes concretos, sin permisos de edición/admin o grant al rol. Constructor/carga no crean tablas. Lock por owner serializa cuota, versión y recibo. La barrera fija mysqli/CONNECTION_ID/transacción y evita replay SQL sobre otra conexión; no se ensayaron todavía sus modos de fallo en este módulo.
+
+Verificados: documentos antes/después exactos EN/ES, propietarios aislados, scopes revocados bloqueando incluso replay, identidad proyecto/idioma estable, versión esperada y revisión histórica inmutable. Misma clave concurrente devuelve un único documento; dos escritores sobre misma versión dan un ganador/conflicto y un solo avance. Fallo de inserción del recibo revierte creación o avance de head/revisión. Rebase explícito genera otra revisión sin escribir fuente.
+
+Las pruebas comparan tablas posts/postmeta/terms/term_taxonomy/term_relationships/termmeta durante operaciones privadas. Los cambios de contenido, relaciones y usuarios del fixture son deliberados y sintéticos, fuera del repositorio. No representan ni rebasan la incidencia histórica o fuentes del CMS real.
+
+El primer ensayo encontró un contador de informe vacío por el ámbito de eval-file. Se corrigió a global y se añadió rechazo de informes con menos60casos. Ensayo nuevo native-r2:70casos únicos, cero fallos. Ambos proyectos fueron detenidos por el ejecutor; las dos redes se inspeccionaron internas/sin conexiones. No prune. Lint de PHP nuevo y git diff --check correctos.
+
+No hay nuevo paquete, herramienta MCP, aprobación/aplicación de clasificación, grant o propuesta en el CMS. El piloto blog1/v1, clasificación publicada y producción conservan su último estado verificado. Siguiente: ensayos nativos de fallos/recuperación y transporte MCP/HTTP; después esquema/admisión/backup y paquete coordinado con el perfil real. No instalar este experimento en el hosting.
