@@ -1,5 +1,7 @@
 # Propuestas editoriales de posts y traducciones
 
+**Estado posterior al diagnóstico real:** before recibido, bloqueado solo por perfil. Código disponible contrastado y46checks de arranque del perfil ampliado correctos; falta ensayar CRUD/MCP/fallos antes de una nueva versión. rc.1 sigue retenido y sin cambios. [Recibo y siguiente fase](qa/MCP_BLOG_PROPOSAL_DESTINATION_PROFILE_2026-10-26.md). No repetir el comando inicial ni instalar/conceder scopes ahora.
+
 ## Incremento 1: documento de cambios local
 
 Implementado [planificador PHP puro](../wordpress/experimental/editorial-blog-proposals/planner.php), separado de los plugins instalados. Produce un documento privado previsto para revisión, sin guardar ni registrar herramientas. No amplía el permiso real alexcuadra_read_public_posts. [Contrato técnico y límites](../wordpress/experimental/editorial-blog-proposals/README.md).

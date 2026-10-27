@@ -1,5 +1,7 @@
 # Paquete revisable de propuestas privadas
 
+**Estado posterior al diagnóstico real:** before recibido, bloqueado solo por perfil. Código disponible contrastado y46checks de arranque del perfil ampliado correctos; falta ensayar CRUD/MCP/fallos antes de una nueva versión. rc.1 sigue retenido y sin cambios. [Recibo y siguiente fase](qa/MCP_BLOG_PROPOSAL_DESTINATION_PROFILE_2026-10-26.md). No repetir el comando inicial ni instalar/conceder scopes ahora.
+
 **0.1.0-rc.1, probado en laboratorio; instalación y primer scope reales pendientes.** Este paquete no publica ni edita fuentes. El siguiente paso es únicamente el diagnóstico de compatibilidad del CMS real.
 
 - [ZIP](../artifacts/wordpress/alexcuadra-editorial-blog-proposals-0.1.0-rc.1.zip):17.074bytes, SHA256 `ca33ebd4b3a874a939b8d18dbf42c2cea324325b26716f01208cd1f85154635a`.

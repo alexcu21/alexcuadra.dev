@@ -1,0 +1,203 @@
+{
+  "format": "blog-proposal-site-code-inventory-v1",
+  "sourceArchiveSha256": "13f20d924a5d161f28444fabf24adbcba40f1c7bbb8951a57c1e4a00f9541d62",
+  "sourceArchiveBytes": 247734036,
+  "verifiedCodeFiles": 13636,
+  "verifiedCodeBytes": 207193629,
+  "activePluginCount": 16,
+  "plugins": {
+    "advanced-custom-fields/acf.php": {
+      "reportedVersion": "6.8.10",
+      "availableVersion": "6.8.10",
+      "mainSha256": "e3c7114e354ea19850463db3191c2d60ee244e57501d5008cd0617f7c0fb7e64",
+      "origin": {
+        "kind": "verified-backup-code",
+        "archiveSha256": "13f20d924a5d161f28444fabf24adbcba40f1c7bbb8951a57c1e4a00f9541d62"
+      },
+      "liveMainHashProvided": false
+    },
+    "alexcuadra-editorial-blog-read/alexcuadra-editorial-blog-read.php": {
+      "reportedVersion": "0.1.0-rc.1",
+      "availableVersion": "0.1.0-rc.1",
+      "mainSha256": "7a50acba34429ec6cedcf467fbdcfae8e2702abf6420f170235f019664024f73",
+      "origin": {
+        "kind": "sealed-zip",
+        "artifact": "alexcuadra-editorial-blog-read-0.1.0-rc.1.zip",
+        "sha256": "d8f8fcb1dcc83962036a70c3fb0e3a57e44dbeb96b5556e8abe1dcb7fbd205e6"
+      },
+      "liveMainHashProvided": false
+    },
+    "alexcuadra-editorial-operating/alexcuadra-editorial-operating.php": {
+      "reportedVersion": "0.1.0-rc.3",
+      "availableVersion": "0.1.0-rc.3",
+      "mainSha256": "77cf118d953992a0d99e20ace6c5a31278ea637f0bfaa07ed1ee9970e0c4a3bf",
+      "origin": {
+        "kind": "sealed-zip",
+        "artifact": "alexcuadra-editorial-operating-0.1.0-rc.3.zip",
+        "sha256": "d0b09a1612fa95606915b33fa8664ae29589008abed4ca77c3c35a5259b8ed30"
+      },
+      "liveMainHashProvided": false
+    },
+    "alexcuadra-editorial-proposals/alexcuadra-editorial-proposals.php": {
+      "reportedVersion": "0.1.0-rc.2",
+      "availableVersion": "0.1.0-rc.2",
+      "mainSha256": "a9a1b498ab18472a30966cfcd160ef91d35aa62420911e31ca30e7ec3452949e",
+      "origin": {
+        "kind": "sealed-zip",
+        "artifact": "alexcuadra-editorial-proposals-0.1.0-rc.2.zip",
+        "sha256": "c31e6814864be0692035de7b46322fc2fc0159d2104e0b4d25404c3b15859f07"
+      },
+      "liveMainHashProvided": false
+    },
+    "alexcuadra-editorial-read/alexcuadra-editorial-read.php": {
+      "reportedVersion": "0.1.0",
+      "availableVersion": "0.1.0",
+      "mainSha256": "9e4def28919b5dc896037fa13dddf62b4f63e4a725095fe12b3e0d8419f22619",
+      "origin": {
+        "kind": "verified-backup-code",
+        "archiveSha256": "13f20d924a5d161f28444fabf24adbcba40f1c7bbb8951a57c1e4a00f9541d62"
+      },
+      "liveMainHashProvided": false
+    },
+    "hostinger-easy-onboarding/hostinger-easy-onboarding.php": {
+      "reportedVersion": "3.0.5",
+      "availableVersion": "3.0.5",
+      "mainSha256": "5e2927308eaa142bb79149603aeb3e4b8b0ad33db6e6c59f4cfbd5b0761d0a19",
+      "origin": {
+        "kind": "verified-backup-code",
+        "archiveSha256": "13f20d924a5d161f28444fabf24adbcba40f1c7bbb8951a57c1e4a00f9541d62"
+      },
+      "liveMainHashProvided": false
+    },
+    "hostinger-reach/hostinger-reach.php": {
+      "reportedVersion": "1.8.7",
+      "availableVersion": "1.8.7",
+      "mainSha256": "dffaaeea0c33214046f7f62b8d104d927ad17be0942c4af4a67d0e9ae734f48b",
+      "origin": {
+        "kind": "verified-backup-code",
+        "archiveSha256": "13f20d924a5d161f28444fabf24adbcba40f1c7bbb8951a57c1e4a00f9541d62"
+      },
+      "liveMainHashProvided": false
+    },
+    "hostinger/hostinger.php": {
+      "reportedVersion": "3.0.80",
+      "availableVersion": "3.0.80",
+      "mainSha256": "5d1dd6e5d9677e6c53732765f343eb5fd573d13fb0314e67d30afeecf24d264e",
+      "origin": {
+        "kind": "verified-backup-code",
+        "archiveSha256": "13f20d924a5d161f28444fabf24adbcba40f1c7bbb8951a57c1e4a00f9541d62"
+      },
+      "liveMainHashProvided": false
+    },
+    "litespeed-cache/litespeed-cache.php": {
+      "reportedVersion": "7.9.2",
+      "availableVersion": "7.9.2",
+      "mainSha256": "ad57729d8736659c99068f4727d299c6c6b29b55d019d67a5c417918c3370f2f",
+      "origin": {
+        "kind": "verified-backup-code",
+        "archiveSha256": "13f20d924a5d161f28444fabf24adbcba40f1c7bbb8951a57c1e4a00f9541d62"
+      },
+      "liveMainHashProvided": false
+    },
+    "mcp-adapter/mcp-adapter.php": {
+      "reportedVersion": "0.7.1",
+      "availableVersion": "0.7.1",
+      "mainSha256": "ad0388cd18385c66a8efc7ec433047e6787e75cd2d0bbf2332333258717b4620",
+      "origin": {
+        "kind": "verified-backup-code",
+        "archiveSha256": "13f20d924a5d161f28444fabf24adbcba40f1c7bbb8951a57c1e4a00f9541d62"
+      },
+      "liveMainHashProvided": false
+    },
+    "polylang/polylang.php": {
+      "reportedVersion": "3.9.1",
+      "availableVersion": "3.9.1",
+      "mainSha256": "39cf938c68eb3c34078c8b1ea1dd900889458cb03b4977a9a9ff92f7b3e01379",
+      "origin": {
+        "kind": "verified-backup-code",
+        "archiveSha256": "13f20d924a5d161f28444fabf24adbcba40f1c7bbb8951a57c1e4a00f9541d62"
+      },
+      "liveMainHashProvided": false
+    },
+    "wordpress-beta-tester/wp-beta-tester.php": {
+      "reportedVersion": "4.0.1",
+      "availableVersion": "4.0.1",
+      "mainSha256": "536e1073be4b7cefff0f5158aa14f6684f03d049e808db567aad963556641a40",
+      "origin": {
+        "kind": "verified-backup-code",
+        "archiveSha256": "13f20d924a5d161f28444fabf24adbcba40f1c7bbb8951a57c1e4a00f9541d62"
+      },
+      "liveMainHashProvided": false
+    },
+    "wp-graphql-polylang-0.7.1/wp-graphql-polylang.php": {
+      "reportedVersion": "0.7.1",
+      "availableVersion": "0.7.1",
+      "mainSha256": "6e2933f965a072969e7d0dbf4a9e623e2a7e7e1ee1da6ea416bad7a18b7688a4",
+      "origin": {
+        "kind": "verified-backup-code",
+        "archiveSha256": "13f20d924a5d161f28444fabf24adbcba40f1c7bbb8951a57c1e4a00f9541d62"
+      },
+      "liveMainHashProvided": false
+    },
+    "wp-graphql/wp-graphql.php": {
+      "reportedVersion": "2.25.0",
+      "availableVersion": "2.25.0",
+      "mainSha256": "d1bfa232b509aebf130fc7f7f090618f5577d296df8d3d6bfef0af55618a4408",
+      "origin": {
+        "kind": "verified-backup-code",
+        "archiveSha256": "13f20d924a5d161f28444fabf24adbcba40f1c7bbb8951a57c1e4a00f9541d62"
+      },
+      "liveMainHashProvided": false
+    },
+    "wpgraphql-acf/wpgraphql-acf.php": {
+      "reportedVersion": "3.0.0",
+      "availableVersion": "3.0.0",
+      "mainSha256": "6ef3736685ea63e4707e631886dea03dd8cee05c7e76b87cc1f6b0eae72db842",
+      "origin": {
+        "kind": "verified-backup-code",
+        "archiveSha256": "13f20d924a5d161f28444fabf24adbcba40f1c7bbb8951a57c1e4a00f9541d62"
+      },
+      "liveMainHashProvided": false
+    },
+    "wpgraphql-ide/wpgraphql-ide.php": {
+      "reportedVersion": "5.7.0",
+      "availableVersion": "5.7.0",
+      "mainSha256": "b22c9f1d2474665577b7d2842214ad64835fa43cd7a91f8dd30d5561dd054236",
+      "origin": {
+        "kind": "verified-backup-code",
+        "archiveSha256": "13f20d924a5d161f28444fabf24adbcba40f1c7bbb8951a57c1e4a00f9541d62"
+      },
+      "liveMainHashProvided": false
+    }
+  },
+  "muPlugins": {
+    "hostinger-auto-updates.php": {
+      "sha256": "2492da0336ed34b4377b2a2de882603280e0fde70df712b08fcd2ddef588a5bf",
+      "matchesLiveReceipt": true
+    },
+    "hostinger-preview-domain.php": {
+      "sha256": "ccedfe9be0bce8e941274a519bfea4ca686a7cc0a1f0cedccdbb39384d8764f4",
+      "matchesLiveReceipt": true
+    }
+  },
+  "theme": {
+    "stylesheet": "twentytwentyfour",
+    "template": "twentytwentyfour",
+    "version": "1.6",
+    "styleSha256": "fd3c8a4e86382cbd69046dd4670112c7b17817bdff3671bf29d3e49a874c1fe2",
+    "functionsSha256": "6cec0f112f34ff3a043fe1e16c2d235ce905a735d46039a50879e8fd469f2bce"
+  },
+  "themeEntryHashesMatchLive": true,
+  "sourceSqlExtracted": false,
+  "sourceConfigurationExtracted": false,
+  "sourceDataImported": false,
+  "sourcePhpExecuted": false,
+  "hostingAccessed": false,
+  "candidateChanged": false,
+  "destinationAccepted": false,
+  "limits": [
+    "Plugin versions match code candidates; the live receipt does not provide main-file or whole-tree hashes.",
+    "MU and two theme entry hashes match exactly; whole live theme integrity is not certified.",
+    "Compatibility has not been tested with this full profile. No allowlist or new package admission is implied."
+  ]
+}
