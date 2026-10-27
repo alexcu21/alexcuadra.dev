@@ -21,3 +21,7 @@ No hay aprobación de instalación, grant, escritor público o publicación; la 
 ## Recibo before real revisado
 
 Alex aportó el [before rc.2](blog-proposal-rc2-destination-before-2026-10-27.json): ready=true, 15 comprobaciones principales y 11 del perfil correctas; SHA del ZIP coincide. Ausencia esperada de paquete/tablas/guard/scope, ocho capacidades previas conservadas y 16 permisos amplios denegados. No se hizo una nueva consulta remota independiente ni instalación. Siguiente: Alex instala el ZIP exacto inactivo y comparte after-install; no repetir before o fingerprint.
+
+## Instalación inactiva real verificada
+
+[After-install aportado por Alex](blog-proposal-rc2-destination-after-install-2026-10-27.json): ready=true, 15 comprobaciones principales/11 del perfil correctas y archivos exactos del ZIP. Continúan inactivo el plugin y el guard, sin tablas ni scope nuevo, con ocho capacidades previas. No hubo nueva consulta remota independiente del agente. Siguiente guard del sitio + activación + after-enable; no repetir instalación o diagnósticos anteriores.

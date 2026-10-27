@@ -14,7 +14,29 @@ La excepción de pruebas exige entorno local, DB_HOST=db, URL exacta y marca de 
 
 Las huellas principales coinciden con el servidor; no verifican árboles completos. El laboratorio usa PHP8.5.11/MariaDB11.8.9 y configuración/datos sintéticos; servidor PHP8.5.12. No certifica opciones reales de hosting, preview, cachés externas, restauración ante pérdida del servidor ni escritura pública.
 
-## Paso actual: instalación inactiva y after-install
+## Paso actual: guard del sitio, activación y after-enable
+
+El [after-install aportado por Alex](qa/blog-proposal-rc2-destination-after-install-2026-10-27.json) pasa las 15 comprobaciones. Archivos exactos, perfil compatible y plugin inactivo. No se han creado tablas propias ni concedido el scope nuevo; las ocho capacidades anteriores permanecen. No repetir instalación, before o fingerprint.
+
+Alex ejecuta por SSH, deteniéndose si algún comando falla:
+
+```sh
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content config set AC_EDITORIAL_BLOG_PROPOSALS_SITE 'https://content.alexcuadra.dev' --type=constant
+```
+
+```sh
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content plugin activate alexcuadra-editorial-blog-proposals
+```
+
+```sh
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content eval-file /home/u776991923/domains/alexcuadra.dev/private-tools/blog-proposal-rc2/blog-proposal-preflight.php 2 after-enable
+```
+
+Compartir BLOG_PROPOSAL_PREFLIGHT_RESULT. La constante es una cadena de URL, sin --raw. No configurar la excepción de laboratorio. after-enable exige plugin/guard activos y cinco herramientas registradas, archivos exactos, tablas todavía ausentes y las ocho capacidades anteriores sin nuevo scope. Activar este paquete no instala almacenamiento, inscribe propietarios ni concede permisos. No llamar herramientas de creación para probar activación.
+
+Si falla la activación o el diagnóstico, compartir la salida antes de avanzar; no modificar perfil, plugins, tema o permisos para forzar aceptación. La activación real sigue pendiente de ejecución por Alex. DDL/propietario/grant son fases posteriores; falta procedimiento operativo de respaldo/recuperación del hosting antes de escritura privada real.
+
+## Histórico: instalación inactiva y after-install ya completados
 
 Alex aportó el [before real](qa/blog-proposal-rc2-destination-before-2026-10-27.json): ready=true, las 15 comprobaciones principales y las 11 de perfil son correctas. El SHA coincide con este ZIP. El paquete, guard, tablas y nuevo scope todavía están ausentes. schema.ready=false es lo esperado en before porque aún no existen las cuatro tablas; no indica un fallo de esta fase. Se conservan las ocho capacidades previas.
 
