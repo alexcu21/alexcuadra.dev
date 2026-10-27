@@ -1,6 +1,6 @@
-# Propuestas de clasificación de proyectos: planificador local
+# Propuestas de clasificación de proyectos: laboratorio local
 
-`planner.php` es PHP puro separado de los paquetes sellados. No registra hooks, herramientas, rutas, tablas ni permisos. No instalar en WordPress. Produce un documento inicial revisable; todavía no guarda propuestas o recibos, no implementa compare-and-swap ni replay durable, y no aplica asignaciones o crea términos.
+`planner.php` es PHP puro separado de los paquetes sellados. No registra hooks, herramientas, rutas, tablas ni permisos. Produce un documento inicial revisable; `repository.php` añade persistencia privada únicamente en SQLite de laboratorio. No instalar ninguno en WordPress. No aplica asignaciones o crea términos.
 
 Entrada de cliente cerrada: `request_id` (32 hex), `project_id` entero positivo, `locale` en/es, `base_hash` (64 hex) y `fields`. Solo admite `categories` y `technologies`, listas de hasta100 IDs únicos. Cada campo presente reemplaza el conjunto completo; omitido conserva asignaciones y `[]` propone retirarlas todas. Se ordenan los IDs; no se adivinan términos por nombre, slug o traducción. Rechaza propuestas sin cambios.
 
@@ -12,8 +12,24 @@ El lector confiable debe verificar visibilidad pública actual, proyecto sin con
 
 `base_hash()` liga clasificación y catálogo completos, incluidos nombres, slugs y traducciones. Su cambio obliga a preparar/revisar otra base; no liga cuerpo, título ni toda la fuente. Cada cambio devuelve taxonomía/idioma y listas before/after con IDs y etiquetas. Documento inicial owner/version1/approval=not-requested/source_write_performed=false. `request_hash` liga propietario y solicitud normalizada; `document_hash` liga el documento. Ninguna huella constituye aprobación, cifrado o firma de autenticidad.
 
-Prueba: `/opt/homebrew/bin/php tests/editorial-project-classification-proposals/check.php`. Proyecciones sintéticas, sin CMS, transporte o almacenamiento real.
+Prueba del planificador: `/opt/homebrew/bin/php tests/editorial-project-classification-proposals/check.php`. Proyecciones sintéticas, sin CMS o transporte; las pruebas de almacenamiento se describen a continuación.
 
-Siguiente incremento: repositorio privado separado con lectura exclusivamente del propietario, versiones inmutables, control de versión esperada, recibos durables por owner/request_id y rechazo del mismo ID con payload diferente. Revalidar permisos antes de replay; replay conserva el documento original, no certifica vigencia de la fuente. Definir cuotas/archivo/respaldo y ensayar concurrencia/fallos/aislamiento antes de un adaptador WordPress. No ampliar silenciosamente el esquema antiguo de propuestas de proyectos ni las herramientas públicas. La integración real requerirá un paquete y revisión del perfil de coexistencia: agregar un plugin fuera del perfil admitido cierra el módulo privado de blog rc.3.
+## Repositorio SQLite separado
+
+Derivado explícitamente del modelo transaccional del laboratorio de blog, con namespace, guard y tres tablas propios `classification_proposals`, `classification_revisions`, `classification_requests`. Solo CLI, sin ABSPATH, PDO SQLite y opt-in `AC_PROJECT_CLASSIFICATION_PROPOSALS_STORAGE_LAB=true`. Instalación explícita en una base dedicada vacía; no migraciones, tablas del CMS o archivos instalables. El llamador del laboratorio es responsable de directorio0700/archivo0600. Las pruebas lo verifican; el repositorio no convierte un archivo existente en privado ni certifica el esquema de una base arbitraria.
+
+Operaciones `create`, `update`, `get` (actual o revisión exacta) y `listing` (metadatos propios, cursor por ID, hasta20). Lecturas y escrituras exigen los tres scopes proyectados; el owner proviene del actor. IDs ajenos y ausentes comparten not_found. No búsqueda de otros propietarios o API de borrado. Conserva revisiones y recibos, sin TTL/poda automática. Privado por autorización de aplicación, no cifrado frente a administradores o acceso al archivo.
+
+`update` exige versión esperada, mantiene proyecto/idioma y reemplaza **todo el patch propuesto** contra la base indicada: no hereda campos de revisiones anteriores. Un cambio de base explícito produce una revisión nueva; las antiguas permanecen intactas. No es un patch sobre el estado final de la propuesta previa.
+
+El recibo liga owner/request_id a operación, ID de propuesta, versión esperada y solicitud normalizada. Un reintento exacto devuelve la revisión original aunque haya cambiado la fuente, el catálogo o la versión actual; no certifica vigencia de la fuente. Un payload u operación diferente bajo la misma clave se rechaza. Revalida actor/scopes antes incluso del replay. El hash del recibo añade operación/ID/versión al hash de solicitud del documento; no son intercambiables.
+
+`BEGIN IMMEDIATE`, claves únicas y foreign keys serializan admisión/versión/recibo; head, revisión y recibo se confirman juntos. Espera de lock hasta2000ms y error storage_busy reintentable. No trasplantar este locking a MariaDB. No se prueban pérdida de conexión o acuse TCP del commit; un error incierto requiere el mismo ID, nunca inventar otro.
+
+Cuotas por propietario:16 propuestas,64 revisiones,128 solicitudes,8MiB lógicos incluyendo estimación de metadatos; hasta16 versiones/propuesta y786432 bytes/documento. No son límites de disco físico. Al llenarse rechaza nuevas escrituras sin podar historia; los reintentos existentes siguen disponibles. Solo se permiten límites inferiores para ensayos.
+
+Prueba: `/opt/homebrew/bin/php tests/editorial-project-classification-proposals/storage-check.php`.99 casos SQLite real: persistencia/reapertura, propietarios, permisos revocados, conflictos/replay/canonicalización, EN/ES, cuotas, rollback por fallo SQL, lock ocupado, dos procesos concurrentes y SIGKILL antes/después del commit. Copia sintética mediante VACUUM INTO y reapertura con historia/replay/aislamiento verificados; no operador de backups del hosting. Bases temporales sin red y eliminadas al terminar. [Evidencia y límites](../../../docs/qa/MCP_PROJECT_CLASSIFICATION_PROPOSAL_STORAGE_2026-10-27.md).
+
+Siguiente: adaptador WordPress/Polylang, repositorio InnoDB separado y ensayos de concurrencia, fallos y privacidad nativos antes del transporte MCP. Se requiere admisión de esquema/perfil y plan de archivo/respaldo propios. No ampliar silenciosamente el esquema antiguo de propuestas de proyectos ni las herramientas públicas. La integración real requerirá un paquete y revisión del perfil de coexistencia: agregar un plugin fuera del perfil admitido cierra el módulo privado de blog rc.3.
 
 La propuesta real de blog1/v1, propuesta histórica227/revisión1, paquetes sellados, capacidades y asignaciones actuales quedan fuera de este experimento.
