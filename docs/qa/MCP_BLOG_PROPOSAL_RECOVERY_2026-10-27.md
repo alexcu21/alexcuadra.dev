@@ -25,3 +25,7 @@ No se ejecutó SSH, backup real, restauración real, grant nuevo, propuesta real
 ## Exportación real recibida
 
 [Recibo aportado por Alex](blog-proposal-backup-destination-export-2026-10-27.json): export ready=true, owners1 y propuestas/revisiones/recibos0, sin escrituras de BD. Respaldo identificado por directorio y SHA del manifiesto en el recibo. No hubo ejecución remota independiente del agente ni restauración del hosting. Siguiente verify en una nueva invocación, con ese mismo SHA; conservar permiso ausente y artefacto intacto.
+
+## Integridad del respaldo real verificada
+
+[Verify aportado por Alex](blog-proposal-backup-destination-verify-2026-10-27.json): ready=true/integrityVerified=true, owners1 y otras tres tablas0; sin escrituras de BD y sin restauración sobre el hosting. Se usaron directorio/SHA del recibo de export. No se ejecutó inspección remota independiente del agente. Se cierra la verificación del respaldo inicial; sigue pendiente el grant directo único y after-scope antes del uso MCP. No repetir backup/verificación o restaurar para probar integridad.

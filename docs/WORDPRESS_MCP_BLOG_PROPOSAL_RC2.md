@@ -1,5 +1,7 @@
 # Propuestas privadas: candidato 0.1.0-rc.2
 
+**27 octubre — respaldo inicial real verificado:** Alex aporta verify ready=true/integrityVerified=true;1propietario y0propuestas/revisiones/recibos, sin escrituras de BD, mismo artefacto/SHA del export. [Recibo](qa/blog-proposal-backup-destination-verify-2026-10-27.json). Herramientas de recuperación ya ensayadas en entorno aislado; no se restauró sobre el CMS vivo. Siguiente concesión directa únicamente alexcuadra_prepare_post_changes al usuario2 por Alex y after-scope, conservando ocho capacidades previas/rol subscriber y16denegaciones amplias. No grant a roles/otros usuarios ni creación de propuestas todavía. Verificación MCP real de solo lectura tras recibir after-scope.
+
 **27 octubre — primera exportación real recibida:** Alex aporta export ready=true, respaldo backup-20261027T160054Z-d1f849d991c44fdb y manifestSha256 39022b62…a5b0c76; cuenta1propietario y0propuestas/revisiones/recibos, sin escrituras de BD. [Recibo](qa/blog-proposal-backup-destination-export-2026-10-27.json). Siguiente verify sobre ese mismo directorio/SHA con scope todavía ausente; no repetir exportación, modificar artefactos, restaurar sobre el CMS vivo ni conceder permiso todavía. restorationVerified=false es correcto: no se ejecutó restauración del hosting.
 
 **27 octubre — respaldo/recuperación operativos preparados y ensayados:** dos PHP externos al plugin;39pruebas de recuperación y5recorridos CLI correctos, incluida restauración exitosa en prefijo aislado y get/list/replay originales. Exportación nativa READ ONLY/REPEATABLE READ, archivos privados/manifiesto/hashes, destino ocupado rechazado, rollback de filas ante fallo sin reintento de DDL. [Procedimiento vigente](WORDPRESS_MCP_BLOG_PROPOSAL_RECOVERY.md), [QA/límites](qa/MCP_BLOG_PROPOSAL_RECOVERY_2026-10-27.md). ZIP rc.2 intacto; laboratorios propios detenidos/red interna vacía. Siguiente: Alex sube solo blog-proposal-backup.php y recovery.php a private-tools/blog-proposal-rc2, crea carpeta0700 y ejecuta primera exportación con scope ausente. No se ha hecho backup/restauración/grant real desde el agente; revisar recibo antes del nuevo permiso.
@@ -24,7 +26,27 @@ La excepción de pruebas exige entorno local, DB_HOST=db, URL exacta y marca de 
 
 Las huellas principales coinciden con el servidor; no verifican árboles completos. El laboratorio usa PHP8.5.11/MariaDB11.8.9 y configuración/datos sintéticos; servidor PHP8.5.12. No certifica opciones reales de hosting, preview, cachés externas, restauración ante pérdida del servidor ni escritura pública.
 
-## Paso actual: primera exportación real antes de grant
+## Paso actual: un permiso directo para usuario2 y after-scope
+
+El after-owner real y el respaldo inicial exportado/verificado son correctos. [Verify de Alex](qa/blog-proposal-backup-destination-verify-2026-10-27.json): ready=true/integrityVerified=true,1propietario y otras tres tablas vacías. Se conservan artefacto/SHA fuera del árbol público; no se restauró sobre el sitio vivo. Recuperación y replay se ensayaron con las herramientas exactas en datos sintéticos.
+
+Cambio de permiso concreto: añadir únicamente alexcuadra_prepare_post_changes al usuario2 existente. Permite contexto de posts publicados y creación/actualización/lectura/listado de sus planes privados; no edita/publica fuentes, crea posts/traducciones reales ni concede administración. Se conservan rol subscriber y las ocho capacidades anteriores; ningún grant al rol o a otra cuenta. El grant real sigue pendiente de ejecución por Alex.
+
+```sh
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content --user=1 user add-cap 2 alexcuadra_prepare_post_changes
+```
+
+Si termina correctamente, ejecutar inmediatamente:
+
+```sh
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content eval-file /home/u776991923/domains/alexcuadra.dev/private-tools/blog-proposal-rc2/blog-proposal-preflight.php 2 after-scope
+```
+
+Compartir BLOG_PROPOSAL_PREFLIGHT_RESULT antes de usar las herramientas. Se esperan15checks correctos, exactamente nueve capacidades para usuario2 (ocho previas más una), ningún grant al rol/otra cuenta,16permisos amplios denegados y almacenamiento de propuestas vacío con propietario2. Si falla un comando, compartir el error antes de avanzar. No crear una propuesta para probar permisos ni repetir enroll/install/backup.
+
+Tras revisar after-scope: catálogo y listado privado vacío mediante conector MCP, sin creación, credenciales nuevas o publicación. Una propuesta real requiere especificar y revisar su fuente/diff por separado. Para futuros respaldos hay que pausar los escritores y retirar solo el scope nuevo; la herramienta de exportación rechaza escritores habilitados. No sobrescribir ni borrar el respaldo inicial.
+
+## Histórico: primera exportación real antes de grant ya completada
 
 El procedimiento específico y sus dos PHP ya están preparados y probados: [respaldo/recuperación](WORDPRESS_MCP_BLOG_PROPOSAL_RECOVERY.md), [39pruebas y5recorridos CLI](qa/MCP_BLOG_PROPOSAL_RECOVERY_2026-10-27.md). La primera exportación real debe conservar únicamente propietario2 y las otras tres tablas vacías. Subir los dos nuevos PHP, crear carpeta privada y ejecutar export según ese procedimiento; compartir BLOG_PROPOSAL_BACKUP_RESULT. No conceder todavía el scope ni restaurar sobre el CMS vivo. No hay que repetir enroll, install, guard o activación.
 

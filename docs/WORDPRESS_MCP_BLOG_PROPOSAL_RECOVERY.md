@@ -1,5 +1,7 @@
 # Respaldo y recuperación de propuestas privadas rc.2
 
+**27 octubre — respaldo inicial real verificado:** Alex aporta verify ready=true/integrityVerified=true;1propietario y0propuestas/revisiones/recibos, sin escrituras de BD, mismo artefacto/SHA del export. [Recibo](qa/blog-proposal-backup-destination-verify-2026-10-27.json). Herramientas de recuperación ya ensayadas en entorno aislado; no se restauró sobre el CMS vivo. Siguiente concesión directa únicamente alexcuadra_prepare_post_changes al usuario2 por Alex y after-scope, conservando ocho capacidades previas/rol subscriber y16denegaciones amplias. No grant a roles/otros usuarios ni creación de propuestas todavía. Verificación MCP real de solo lectura tras recibir after-scope.
+
 **27 octubre — primera exportación real recibida:** Alex aporta export ready=true, respaldo backup-20261027T160054Z-d1f849d991c44fdb y manifestSha256 39022b62…a5b0c76; cuenta1propietario y0propuestas/revisiones/recibos, sin escrituras de BD. [Recibo](qa/blog-proposal-backup-destination-export-2026-10-27.json). Siguiente verify sobre ese mismo directorio/SHA con scope todavía ausente; no repetir exportación, modificar artefactos, restaurar sobre el CMS vivo ni conceder permiso todavía. restorationVerified=false es correcto: no se ejecutó restauración del hosting.
 
 Herramienta operativa separada del plugin. Exporta y recupera únicamente las cuatro tablas ac_blog_proposal_ del prefijo de esta instalación. No instala abilities, concede permisos, publica contenido ni restaura posts, postmeta, opciones, roles o credenciales. El ZIP rc.2 permanece sellado e idéntico.
@@ -18,7 +20,11 @@ El comando no quita ni añade scopes automáticamente. Para futuros respaldos, r
 
 La exportación usa una transacción nativa mysqli READ ONLY/REPEATABLE READ con snapshot consistente; no permite reconexión de wpdb dentro del snapshot. Comprueba esquema antes/después, conexión y ausencia de escritores admitidos. No bloquea cambios DDL o SQL de operadores externos: la declaración de pausa debe ser real.
 
-## Paso actual: verificación separada del respaldo ya creado
+## Estado actual: integridad verificada; siguiente grant y after-scope
+
+El [verify real de Alex](qa/blog-proposal-backup-destination-verify-2026-10-27.json) confirma integrityVerified=true con los mismos conteos. No repetir export/verify ni restaurar sobre el CMS vivo. La fase siguiente es el [grant directo único y after-scope](WORDPRESS_MCP_BLOG_PROPOSAL_RC2.md), todavía pendientes. Conservar el artefacto y su SHA; para respaldos futuros retirar únicamente el nuevo scope y coordinar pausa de escritores antes de exportar.
+
+## Histórico: verificación separada del respaldo ya completada
 
 El [resultado de exportación de Alex](qa/blog-proposal-backup-destination-export-2026-10-27.json) confirma el respaldo inicial esperado: owners=1, otras tres tablas=0 y databaseWritesPerformed=false. La herramienta verifica internamente antes de devolver éxito; ahora se hará una invocación nueva contra el mismo artefacto y SHA conservado en este recibo. restorationVerified=false indica que no se restauró el hosting, no un fallo de exportación.
 
