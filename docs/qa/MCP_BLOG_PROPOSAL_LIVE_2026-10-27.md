@@ -28,3 +28,7 @@ Privacidad entre propietarios, revocación, desactivación, concurrencia y fallo
 PHP8.5.12 del hosting frente a8.5.11 del laboratorio; huellas de entradas/perfil contrastadas, sin auditoría de árboles completos u opciones/cachés reales. Las tablas iniciales vacías no prueban creación/replay reales por MCP: el piloto privado continúa pendiente y se mantiene separado de escritura pública.
 
 Siguiente piloto con fuente/diff explícitos o ampliar taxonomías propias de proyectos. El contacto/producción/CMS429/accesibilidad siguen en el inventario y no se declaran resueltos por este cierre. Para respaldos futuros, pausar escritores y retirar solo el scope nuevo; el respaldo inicial no incluye planes posteriores.
+
+## Actualización: piloto privado completado
+
+[Propuesta1/v1 y evidencia](MCP_BLOG_PROPOSAL_PILOT_2026-10-27.md): creación/get/inventario/replay exacto por MCP y fuente observada sin cambios. Esta evidencia posterior sustituye la espera del primer piloto descrita arriba; no convierte la prueba de instalación inicial en una prueba de publicación. No repetir preflights que requieren tablas vacías ni borrar la propuesta.

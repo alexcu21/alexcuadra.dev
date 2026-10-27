@@ -1,0 +1,28 @@
+{
+  "format": "blog-private-pilot-request-v1",
+  "date": "2026-10-27",
+  "authorization": {
+    "userMessage": "continuemos",
+    "scope": "Continue the first private-proposal pilot discussed in the preceding response; no source editing or publication",
+    "diffSelectedBy": "assistant",
+    "reason": "Mechanical Spanish accent correction in the existing published title"
+  },
+  "before": {
+    "title": "Como contribuir a WordPress | Parte 1"
+  },
+  "request": {
+    "request_id": "d445d143c728bc9301ca4af463c06116",
+    "source_id": 228,
+    "locale": "es",
+    "base_hash": "5ed93f35b76e6200ed9004a5b66b775a8f24bdfd78e4aa6b152fd0ff3e088c85",
+    "operation": "update-post",
+    "fields": {
+      "title": "Cómo contribuir a WordPress | Parte 1"
+    }
+  },
+  "expectedChangedFields": [
+    "title"
+  ],
+  "sourceWriteAuthorized": false,
+  "translationWriteAuthorized": false
+}

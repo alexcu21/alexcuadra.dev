@@ -1,0 +1,131 @@
+{
+  "format": "blog-private-proposal-live-pilot-v1",
+  "date": "2026-10-27",
+  "evidenceSource": "independent-connected-wordpress-MCP-calls",
+  "authorization": {
+    "userMessage": "continuemos",
+    "scope": "First private proposal pilot; no public source editing",
+    "diffSelectedBy": "assistant",
+    "reason": "Mechanical Spanish accent correction"
+  },
+  "calls": {
+    "schema": 1,
+    "publicList": 2,
+    "inspectContext": 2,
+    "createRequests": 2,
+    "successfulNewProposals": 1,
+    "replayRequests": 1,
+    "get": 1,
+    "privateList": 2,
+    "total": 10
+  },
+  "request": {
+    "request_id": "d445d143c728bc9301ca4af463c06116",
+    "source_id": 228,
+    "locale": "es",
+    "base_hash": "5ed93f35b76e6200ed9004a5b66b775a8f24bdfd78e4aa6b152fd0ff3e088c85",
+    "operation": "update-post",
+    "fields": {
+      "title": "Cómo contribuir a WordPress | Parte 1"
+    }
+  },
+  "review": {
+    "proposal_id": 1,
+    "version": 1,
+    "document": {
+      "format": "blog-private-proposal-plan-v1",
+      "owner_id": 2,
+      "version": 1,
+      "request_id": "d445d143c728bc9301ca4af463c06116",
+      "request_hash": "0a2a6542c737b2d1cd5c35978ec19ef8386d501737426fb3e9ac78b074790d5a",
+      "source_id": 228,
+      "source_locale": "es",
+      "locale": "es",
+      "base_hash": "5ed93f35b76e6200ed9004a5b66b775a8f24bdfd78e4aa6b152fd0ff3e088c85",
+      "operation": "update-post",
+      "changes": {
+        "title": {
+          "before": "Como contribuir a WordPress | Parte 1",
+          "after": "Cómo contribuir a WordPress | Parte 1"
+        }
+      },
+      "translation_intent": null,
+      "approval": "not-requested",
+      "source_write_performed": false,
+      "proposal_id": 1,
+      "document_hash": "54945c849ee3fea44d56c640a63f335961f68577d2ca1fb41b5d7248337f6b3d"
+    }
+  },
+  "readbackIdentical": true,
+  "replayIdentical": true,
+  "inventoryAfter": {
+    "items": [
+      {
+        "proposal_id": 1,
+        "version": 1
+      }
+    ],
+    "next_after": null
+  },
+  "sourceComparison": {
+    "source_id": 228,
+    "baseHashBefore": "5ed93f35b76e6200ed9004a5b66b775a8f24bdfd78e4aa6b152fd0ff3e088c85",
+    "baseHashAfter": "5ed93f35b76e6200ed9004a5b66b775a8f24bdfd78e4aa6b152fd0ff3e088c85",
+    "allProjectedFieldsAndTermsEqual": true,
+    "publicMetadataEqual": true,
+    "publicMetadataAfter": {
+      "id": 228,
+      "title": "Como contribuir a WordPress | Parte 1",
+      "slug": "como-contribuir-a-wordpress-parte-1",
+      "locale": "es",
+      "translations": [
+        {
+          "id": 239,
+          "slug": "how-to-contribute-to-wordpress-part-1",
+          "locale": "en"
+        }
+      ],
+      "categories": [
+        {
+          "id": 160,
+          "name": "OpenSource",
+          "slug": "opensource-es",
+          "taxonomy": "category",
+          "locale": "es",
+          "translations": [
+            {
+              "id": 46,
+              "name": "OpenSource",
+              "slug": "opensource",
+              "locale": "en"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        {
+          "id": 163,
+          "name": "WordPress",
+          "slug": "wordpress-es",
+          "taxonomy": "post_tag",
+          "locale": "es",
+          "translations": [
+            {
+              "id": 3,
+              "name": "WordPress",
+              "slug": "wordpress",
+              "locale": "en"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "sourceBodyPersisted": false,
+  "approvalExecuted": false,
+  "publicWritesRequested": 0,
+  "sourceWritePerformedFlag": false,
+  "otherOwnersTestedLive": false,
+  "globalDatabaseFingerprintTaken": false,
+  "initialBackupContainsThisProposal": false
+}
