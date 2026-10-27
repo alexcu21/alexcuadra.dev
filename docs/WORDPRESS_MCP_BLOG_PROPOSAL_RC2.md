@@ -1,5 +1,7 @@
 # Propuestas privadas: candidato 0.1.0-rc.2
 
+**27 octubre — propuestas privadas rc.2 operativas por MCP:** Alex aporta after-scope ready=true/15checks; usuario2 conserva subscriber y ocho capacidades previas más solo alexcuadra_prepare_post_changes, sin grant a roles/otros usuarios y16permisos amplios denegados. [Recibo CLI](qa/blog-proposal-rc2-destination-after-scope-2026-10-27.json). Verificación independiente del conector: catálogo18abilities, cinco nuevas con DTOs cerrados y anotaciones correctas; listado privado items=[]/next_after=null. Siete llamadas de lectura/metadatos, sin crear planes o leer cuerpos. [Cierre real/límites](qa/MCP_BLOG_PROPOSAL_LIVE_2026-10-27.md). Instalación/grant/backup inicial ya cerrados; no repetir comandos. Siguiente piloto privado con fuente/diff explícitos antes de cualquier creación, o incremento de taxonomías propias de proyectos; edición/publicación de posts sigue sin implementarse.
+
 **27 octubre — respaldo inicial real verificado:** Alex aporta verify ready=true/integrityVerified=true;1propietario y0propuestas/revisiones/recibos, sin escrituras de BD, mismo artefacto/SHA del export. [Recibo](qa/blog-proposal-backup-destination-verify-2026-10-27.json). Herramientas de recuperación ya ensayadas en entorno aislado; no se restauró sobre el CMS vivo. Siguiente concesión directa únicamente alexcuadra_prepare_post_changes al usuario2 por Alex y after-scope, conservando ocho capacidades previas/rol subscriber y16denegaciones amplias. No grant a roles/otros usuarios ni creación de propuestas todavía. Verificación MCP real de solo lectura tras recibir after-scope.
 
 **27 octubre — primera exportación real recibida:** Alex aporta export ready=true, respaldo backup-20261027T160054Z-d1f849d991c44fdb y manifestSha256 39022b62…a5b0c76; cuenta1propietario y0propuestas/revisiones/recibos, sin escrituras de BD. [Recibo](qa/blog-proposal-backup-destination-export-2026-10-27.json). Siguiente verify sobre ese mismo directorio/SHA con scope todavía ausente; no repetir exportación, modificar artefactos, restaurar sobre el CMS vivo ni conceder permiso todavía. restorationVerified=false es correcto: no se ejecutó restauración del hosting.
@@ -26,7 +28,15 @@ La excepción de pruebas exige entorno local, DB_HOST=db, URL exacta y marca de 
 
 Las huellas principales coinciden con el servidor; no verifican árboles completos. El laboratorio usa PHP8.5.11/MariaDB11.8.9 y configuración/datos sintéticos; servidor PHP8.5.12. No certifica opciones reales de hosting, preview, cachés externas, restauración ante pérdida del servidor ni escritura pública.
 
-## Paso actual: un permiso directo para usuario2 y after-scope
+## Estado actual: instalación y acceso MCP inicial verificados
+
+Alex completó after-scope con15checks correctos; nueve capacidades efectivas (ocho previas más alexcuadra_prepare_post_changes), subscriber conservado y16permisos amplios denegados. [Recibo CLI](qa/blog-proposal-rc2-destination-after-scope-2026-10-27.json). El conector independiente confirma18abilities, cinco nuevas y listado privado vacío. [Cierre real](qa/MCP_BLOG_PROPOSAL_LIVE_2026-10-27.md).
+
+No repetir instalación, grant, enroll o diagnósticos iniciales. No se ha creado una propuesta real ni leído cuerpos para probar acceso. Siguiente piloto privado requiere fuente y cambio concretos revisables; no se prepara un diff arbitrario ni una publicación. Actualizar un plan privado no modifica el artículo o sus traducciones. El escritor público/aprobación/aplicación/recuperación de posts sigue fuera de este paquete.
+
+El respaldo inicial y su SHA se conservan; futuras exportaciones requieren pausar escritores y retirar solo este scope. No repetir after-scope inicial cuando ya existan planes: exige almacenamiento inicialmente vacío; no borrar historia para satisfacerlo.
+
+## Histórico: permiso directo y after-scope ya completados
 
 El after-owner real y el respaldo inicial exportado/verificado son correctos. [Verify de Alex](qa/blog-proposal-backup-destination-verify-2026-10-27.json): ready=true/integrityVerified=true,1propietario y otras tres tablas vacías. Se conservan artefacto/SHA fuera del árbol público; no se restauró sobre el sitio vivo. Recuperación y replay se ensayaron con las herramientas exactas en datos sintéticos.
 

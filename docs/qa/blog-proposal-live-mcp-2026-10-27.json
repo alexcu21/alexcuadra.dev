@@ -1,0 +1,1478 @@
+{
+  "format": "blog-proposal-live-mcp-v1",
+  "verifiedDate": "2026-10-27",
+  "evidenceSource": "independent-connected-wordpress-mcp-read-only-calls",
+  "callCount": 7,
+  "mutatingAbilitiesExecuted": 0,
+  "sourceBodiesRead": false,
+  "credentialsCreated": false,
+  "discovery": {
+    "abilities": [
+      {
+        "name": "core/get-site-info",
+        "label": "Get Site Information",
+        "description": "Returns site information configured in WordPress. By default returns all fields, or optionally a filtered subset."
+      },
+      {
+        "name": "core/get-user-info",
+        "label": "Get User Information",
+        "description": "Returns profile details for the current authenticated user to support personalization, auditing, and access-aware behavior. By default returns all fields, or optionally a filtered subset."
+      },
+      {
+        "name": "core/get-environment-info",
+        "label": "Get Environment Info",
+        "description": "Returns core details about the site's runtime context for diagnostics and compatibility (environment, PHP runtime, database server info, WordPress version). By default returns all fields, or optionally a filtered subset."
+      },
+      {
+        "name": "alexcuadra-blog/inspect-post-context",
+        "label": "inspect-post-context",
+        "description": "Scoped private post plan; never writes a source post."
+      },
+      {
+        "name": "alexcuadra-blog/create-post-proposal",
+        "label": "create-post-proposal",
+        "description": "Scoped private post plan; never writes a source post."
+      },
+      {
+        "name": "alexcuadra-blog/update-post-proposal",
+        "label": "update-post-proposal",
+        "description": "Scoped private post plan; never writes a source post."
+      },
+      {
+        "name": "alexcuadra-blog/get-post-proposal",
+        "label": "get-post-proposal",
+        "description": "Scoped private post plan; never writes a source post."
+      },
+      {
+        "name": "alexcuadra-blog/list-post-proposals",
+        "label": "list-post-proposals",
+        "description": "Scoped private post plan; never writes a source post."
+      },
+      {
+        "name": "alexcuadra/list-public-posts",
+        "label": "List public blog posts",
+        "description": "Read native post metadata, reciprocal translations and assigned categories/tags. No bodies or writes."
+      },
+      {
+        "name": "alexcuadra/get-public-post",
+        "label": "Read public blog post metadata",
+        "description": "Read one native published post in the exact language; no body, ACF, private data or writes."
+      },
+      {
+        "name": "alexcuadra/create-project-change",
+        "label": "create-project-change",
+        "description": "Prepare, inspect history or restore a private owned proposal as a new version. Never modifies the source project or publishes content."
+      },
+      {
+        "name": "alexcuadra/get-project-change",
+        "label": "get-project-change",
+        "description": "Prepare, inspect history or restore a private owned proposal as a new version. Never modifies the source project or publishes content."
+      },
+      {
+        "name": "alexcuadra/update-project-change",
+        "label": "update-project-change",
+        "description": "Prepare, inspect history or restore a private owned proposal as a new version. Never modifies the source project or publishes content."
+      },
+      {
+        "name": "alexcuadra/list-project-change-revisions",
+        "label": "list-project-change-revisions",
+        "description": "Prepare, inspect history or restore a private owned proposal as a new version. Never modifies the source project or publishes content."
+      },
+      {
+        "name": "alexcuadra/get-project-change-revision",
+        "label": "get-project-change-revision",
+        "description": "Prepare, inspect history or restore a private owned proposal as a new version. Never modifies the source project or publishes content."
+      },
+      {
+        "name": "alexcuadra/restore-project-change-revision",
+        "label": "restore-project-change-revision",
+        "description": "Prepare, inspect history or restore a private owned proposal as a new version. Never modifies the source project or publishes content."
+      },
+      {
+        "name": "alexcuadra/list-public-projects",
+        "label": "List public portfolio projects",
+        "description": "List public project IDs, titles, slugs, language and reciprocal public translations. Search titles and paginate in ID order."
+      },
+      {
+        "name": "alexcuadra/get-public-project",
+        "label": "Get public portfolio project",
+        "description": "Read one public project by ID and exact language, including reciprocal public translation metadata."
+      }
+    ]
+  },
+  "abilityInfo": {
+    "alexcuadra-blog/inspect-post-context": {
+      "name": "alexcuadra-blog/inspect-post-context",
+      "label": "inspect-post-context",
+      "description": "Scoped private post plan; never writes a source post.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "source_id": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "source_id"
+        ]
+      },
+      "output_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "source_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "es"
+            ]
+          },
+          "base_hash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "fields": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "title": {
+                "type": "string",
+                "maxLength": 1000
+              },
+              "content": {
+                "type": "string",
+                "maxLength": 262144
+              },
+              "excerpt": {
+                "type": "string",
+                "maxLength": 8192
+              },
+              "categories": {
+                "type": "array",
+                "maxItems": 100,
+                "uniqueItems": true,
+                "items": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "tags": {
+                "type": "array",
+                "maxItems": 100,
+                "uniqueItems": true,
+                "items": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "required": [
+              "title",
+              "content",
+              "excerpt",
+              "categories",
+              "tags"
+            ]
+          },
+          "linked_locales": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 2,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "enum": [
+                "en",
+                "es"
+              ]
+            }
+          },
+          "terms": {
+            "type": "array",
+            "maxItems": 1000,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "taxonomy": {
+                  "type": "string",
+                  "enum": [
+                    "category",
+                    "post_tag"
+                  ]
+                },
+                "locale": {
+                  "type": "string",
+                  "enum": [
+                    "en",
+                    "es"
+                  ]
+                },
+                "public": {
+                  "type": "boolean",
+                  "enum": [
+                    true
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "taxonomy",
+                "locale",
+                "public"
+              ]
+            }
+          }
+        },
+        "required": [
+          "source_id",
+          "locale",
+          "base_hash",
+          "fields",
+          "linked_locales",
+          "terms"
+        ]
+      },
+      "meta": {
+        "annotations": {
+          "readonly": true,
+          "destructive": false,
+          "idempotent": true
+        },
+        "public": false,
+        "show_in_rest": false,
+        "mcp": {
+          "public": true,
+          "type": "tool"
+        }
+      }
+    },
+    "alexcuadra-blog/create-post-proposal": {
+      "name": "alexcuadra-blog/create-post-proposal",
+      "label": "create-post-proposal",
+      "description": "Scoped private post plan; never writes a source post.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{32}$"
+          },
+          "source_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "locale": {
+            "type": "string",
+            "enum": [
+              "en",
+              "es"
+            ]
+          },
+          "base_hash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "operation": {
+            "type": "string",
+            "enum": [
+              "update-post",
+              "create-translation"
+            ]
+          },
+          "fields": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "title": {
+                "type": "string",
+                "maxLength": 1000
+              },
+              "content": {
+                "type": "string",
+                "maxLength": 262144
+              },
+              "excerpt": {
+                "type": "string",
+                "maxLength": 8192
+              },
+              "categories": {
+                "type": "array",
+                "maxItems": 100,
+                "uniqueItems": true,
+                "items": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "tags": {
+                "type": "array",
+                "maxItems": 100,
+                "uniqueItems": true,
+                "items": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "required": [],
+            "minProperties": 1
+          }
+        },
+        "required": [
+          "request_id",
+          "source_id",
+          "locale",
+          "base_hash",
+          "operation",
+          "fields"
+        ]
+      },
+      "output_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "proposal_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "document": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "format": {
+                "type": "string",
+                "enum": [
+                  "blog-private-proposal-plan-v1"
+                ]
+              },
+              "owner_id": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "version": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 16
+              },
+              "request_id": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{32}$"
+              },
+              "request_hash": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "source_id": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "source_locale": {
+                "type": "string",
+                "enum": [
+                  "en",
+                  "es"
+                ]
+              },
+              "locale": {
+                "type": "string",
+                "enum": [
+                  "en",
+                  "es"
+                ]
+              },
+              "base_hash": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "update-post",
+                  "create-translation"
+                ]
+              },
+              "changes": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "title": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "before": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "maxLength": 1000
+                      },
+                      "after": {
+                        "type": "string",
+                        "maxLength": 1000
+                      }
+                    },
+                    "required": [
+                      "before",
+                      "after"
+                    ]
+                  },
+                  "content": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "before": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "maxLength": 262144
+                      },
+                      "after": {
+                        "type": "string",
+                        "maxLength": 262144
+                      }
+                    },
+                    "required": [
+                      "before",
+                      "after"
+                    ]
+                  },
+                  "excerpt": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "before": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "maxLength": 8192
+                      },
+                      "after": {
+                        "type": "string",
+                        "maxLength": 8192
+                      }
+                    },
+                    "required": [
+                      "before",
+                      "after"
+                    ]
+                  },
+                  "categories": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "before": {
+                        "type": [
+                          "array",
+                          "null"
+                        ],
+                        "maxItems": 100,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "after": {
+                        "type": "array",
+                        "maxItems": 100,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      }
+                    },
+                    "required": [
+                      "before",
+                      "after"
+                    ]
+                  },
+                  "tags": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "before": {
+                        "type": [
+                          "array",
+                          "null"
+                        ],
+                        "maxItems": 100,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "after": {
+                        "type": "array",
+                        "maxItems": 100,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      }
+                    },
+                    "required": [
+                      "before",
+                      "after"
+                    ]
+                  }
+                },
+                "required": [],
+                "minProperties": 1
+              },
+              "translation_intent": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "source_group": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "en": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "es": {
+                        "type": "integer",
+                        "minimum": 1
+                      }
+                    },
+                    "required": [],
+                    "minProperties": 1,
+                    "maxProperties": 1
+                  },
+                  "target_locale": {
+                    "type": "string",
+                    "enum": [
+                      "en",
+                      "es"
+                    ]
+                  },
+                  "target_id": {
+                    "type": "null"
+                  }
+                },
+                "required": [
+                  "source_group",
+                  "target_locale",
+                  "target_id"
+                ]
+              },
+              "approval": {
+                "type": "string",
+                "enum": [
+                  "not-requested"
+                ]
+              },
+              "source_write_performed": {
+                "type": "boolean",
+                "enum": [
+                  false
+                ]
+              },
+              "proposal_id": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "document_hash": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "format",
+              "owner_id",
+              "version",
+              "request_id",
+              "request_hash",
+              "source_id",
+              "source_locale",
+              "locale",
+              "base_hash",
+              "operation",
+              "changes",
+              "translation_intent",
+              "approval",
+              "source_write_performed",
+              "proposal_id",
+              "document_hash"
+            ]
+          }
+        },
+        "required": [
+          "proposal_id",
+          "version",
+          "document"
+        ]
+      },
+      "meta": {
+        "annotations": {
+          "readonly": false,
+          "destructive": false,
+          "idempotent": true
+        },
+        "public": false,
+        "show_in_rest": false,
+        "mcp": {
+          "public": true,
+          "type": "tool"
+        }
+      }
+    },
+    "alexcuadra-blog/update-post-proposal": {
+      "name": "alexcuadra-blog/update-post-proposal",
+      "label": "update-post-proposal",
+      "description": "Scoped private post plan; never writes a source post.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "proposal_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "request": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{32}$"
+              },
+              "source_id": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "locale": {
+                "type": "string",
+                "enum": [
+                  "en",
+                  "es"
+                ]
+              },
+              "base_hash": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "update-post",
+                  "create-translation"
+                ]
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "content": {
+                    "type": "string",
+                    "maxLength": 262144
+                  },
+                  "excerpt": {
+                    "type": "string",
+                    "maxLength": 8192
+                  },
+                  "categories": {
+                    "type": "array",
+                    "maxItems": 100,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "integer",
+                      "minimum": 1
+                    }
+                  },
+                  "tags": {
+                    "type": "array",
+                    "maxItems": 100,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "integer",
+                      "minimum": 1
+                    }
+                  }
+                },
+                "required": [],
+                "minProperties": 1
+              }
+            },
+            "required": [
+              "request_id",
+              "source_id",
+              "locale",
+              "base_hash",
+              "operation",
+              "fields"
+            ]
+          }
+        },
+        "required": [
+          "proposal_id",
+          "expected_version",
+          "request"
+        ]
+      },
+      "output_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "proposal_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "document": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "format": {
+                "type": "string",
+                "enum": [
+                  "blog-private-proposal-plan-v1"
+                ]
+              },
+              "owner_id": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "version": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 16
+              },
+              "request_id": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{32}$"
+              },
+              "request_hash": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "source_id": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "source_locale": {
+                "type": "string",
+                "enum": [
+                  "en",
+                  "es"
+                ]
+              },
+              "locale": {
+                "type": "string",
+                "enum": [
+                  "en",
+                  "es"
+                ]
+              },
+              "base_hash": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "update-post",
+                  "create-translation"
+                ]
+              },
+              "changes": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "title": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "before": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "maxLength": 1000
+                      },
+                      "after": {
+                        "type": "string",
+                        "maxLength": 1000
+                      }
+                    },
+                    "required": [
+                      "before",
+                      "after"
+                    ]
+                  },
+                  "content": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "before": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "maxLength": 262144
+                      },
+                      "after": {
+                        "type": "string",
+                        "maxLength": 262144
+                      }
+                    },
+                    "required": [
+                      "before",
+                      "after"
+                    ]
+                  },
+                  "excerpt": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "before": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "maxLength": 8192
+                      },
+                      "after": {
+                        "type": "string",
+                        "maxLength": 8192
+                      }
+                    },
+                    "required": [
+                      "before",
+                      "after"
+                    ]
+                  },
+                  "categories": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "before": {
+                        "type": [
+                          "array",
+                          "null"
+                        ],
+                        "maxItems": 100,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "after": {
+                        "type": "array",
+                        "maxItems": 100,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      }
+                    },
+                    "required": [
+                      "before",
+                      "after"
+                    ]
+                  },
+                  "tags": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "before": {
+                        "type": [
+                          "array",
+                          "null"
+                        ],
+                        "maxItems": 100,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "after": {
+                        "type": "array",
+                        "maxItems": 100,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      }
+                    },
+                    "required": [
+                      "before",
+                      "after"
+                    ]
+                  }
+                },
+                "required": [],
+                "minProperties": 1
+              },
+              "translation_intent": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "source_group": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "en": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "es": {
+                        "type": "integer",
+                        "minimum": 1
+                      }
+                    },
+                    "required": [],
+                    "minProperties": 1,
+                    "maxProperties": 1
+                  },
+                  "target_locale": {
+                    "type": "string",
+                    "enum": [
+                      "en",
+                      "es"
+                    ]
+                  },
+                  "target_id": {
+                    "type": "null"
+                  }
+                },
+                "required": [
+                  "source_group",
+                  "target_locale",
+                  "target_id"
+                ]
+              },
+              "approval": {
+                "type": "string",
+                "enum": [
+                  "not-requested"
+                ]
+              },
+              "source_write_performed": {
+                "type": "boolean",
+                "enum": [
+                  false
+                ]
+              },
+              "proposal_id": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "document_hash": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "format",
+              "owner_id",
+              "version",
+              "request_id",
+              "request_hash",
+              "source_id",
+              "source_locale",
+              "locale",
+              "base_hash",
+              "operation",
+              "changes",
+              "translation_intent",
+              "approval",
+              "source_write_performed",
+              "proposal_id",
+              "document_hash"
+            ]
+          }
+        },
+        "required": [
+          "proposal_id",
+          "version",
+          "document"
+        ]
+      },
+      "meta": {
+        "annotations": {
+          "readonly": false,
+          "destructive": false,
+          "idempotent": true
+        },
+        "public": false,
+        "show_in_rest": false,
+        "mcp": {
+          "public": true,
+          "type": "tool"
+        }
+      }
+    },
+    "alexcuadra-blog/get-post-proposal": {
+      "name": "alexcuadra-blog/get-post-proposal",
+      "label": "get-post-proposal",
+      "description": "Scoped private post plan; never writes a source post.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "proposal_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          }
+        },
+        "required": [
+          "proposal_id"
+        ]
+      },
+      "output_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "proposal_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "document": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "format": {
+                "type": "string",
+                "enum": [
+                  "blog-private-proposal-plan-v1"
+                ]
+              },
+              "owner_id": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "version": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 16
+              },
+              "request_id": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{32}$"
+              },
+              "request_hash": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "source_id": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "source_locale": {
+                "type": "string",
+                "enum": [
+                  "en",
+                  "es"
+                ]
+              },
+              "locale": {
+                "type": "string",
+                "enum": [
+                  "en",
+                  "es"
+                ]
+              },
+              "base_hash": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "update-post",
+                  "create-translation"
+                ]
+              },
+              "changes": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "title": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "before": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "maxLength": 1000
+                      },
+                      "after": {
+                        "type": "string",
+                        "maxLength": 1000
+                      }
+                    },
+                    "required": [
+                      "before",
+                      "after"
+                    ]
+                  },
+                  "content": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "before": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "maxLength": 262144
+                      },
+                      "after": {
+                        "type": "string",
+                        "maxLength": 262144
+                      }
+                    },
+                    "required": [
+                      "before",
+                      "after"
+                    ]
+                  },
+                  "excerpt": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "before": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "maxLength": 8192
+                      },
+                      "after": {
+                        "type": "string",
+                        "maxLength": 8192
+                      }
+                    },
+                    "required": [
+                      "before",
+                      "after"
+                    ]
+                  },
+                  "categories": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "before": {
+                        "type": [
+                          "array",
+                          "null"
+                        ],
+                        "maxItems": 100,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "after": {
+                        "type": "array",
+                        "maxItems": 100,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      }
+                    },
+                    "required": [
+                      "before",
+                      "after"
+                    ]
+                  },
+                  "tags": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "before": {
+                        "type": [
+                          "array",
+                          "null"
+                        ],
+                        "maxItems": 100,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      },
+                      "after": {
+                        "type": "array",
+                        "maxItems": 100,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      }
+                    },
+                    "required": [
+                      "before",
+                      "after"
+                    ]
+                  }
+                },
+                "required": [],
+                "minProperties": 1
+              },
+              "translation_intent": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "source_group": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "en": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "es": {
+                        "type": "integer",
+                        "minimum": 1
+                      }
+                    },
+                    "required": [],
+                    "minProperties": 1,
+                    "maxProperties": 1
+                  },
+                  "target_locale": {
+                    "type": "string",
+                    "enum": [
+                      "en",
+                      "es"
+                    ]
+                  },
+                  "target_id": {
+                    "type": "null"
+                  }
+                },
+                "required": [
+                  "source_group",
+                  "target_locale",
+                  "target_id"
+                ]
+              },
+              "approval": {
+                "type": "string",
+                "enum": [
+                  "not-requested"
+                ]
+              },
+              "source_write_performed": {
+                "type": "boolean",
+                "enum": [
+                  false
+                ]
+              },
+              "proposal_id": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "document_hash": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "format",
+              "owner_id",
+              "version",
+              "request_id",
+              "request_hash",
+              "source_id",
+              "source_locale",
+              "locale",
+              "base_hash",
+              "operation",
+              "changes",
+              "translation_intent",
+              "approval",
+              "source_write_performed",
+              "proposal_id",
+              "document_hash"
+            ]
+          }
+        },
+        "required": [
+          "proposal_id",
+          "version",
+          "document"
+        ]
+      },
+      "meta": {
+        "annotations": {
+          "readonly": true,
+          "destructive": false,
+          "idempotent": true
+        },
+        "public": false,
+        "show_in_rest": false,
+        "mcp": {
+          "public": true,
+          "type": "tool"
+        }
+      }
+    },
+    "alexcuadra-blog/list-post-proposals": {
+      "name": "alexcuadra-blog/list-post-proposals",
+      "label": "list-post-proposals",
+      "description": "Scoped private post plan; never writes a source post.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "after": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20
+          }
+        },
+        "required": []
+      },
+      "output_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "maxItems": 20,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "proposal_id": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "version": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 16
+                }
+              },
+              "required": [
+                "proposal_id",
+                "version"
+              ]
+            }
+          },
+          "next_after": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1
+          }
+        },
+        "required": [
+          "items",
+          "next_after"
+        ]
+      },
+      "meta": {
+        "annotations": {
+          "readonly": true,
+          "destructive": false,
+          "idempotent": true
+        },
+        "public": false,
+        "show_in_rest": false,
+        "mcp": {
+          "public": true,
+          "type": "tool"
+        }
+      }
+    }
+  },
+  "listInvocation": {
+    "ability_name": "alexcuadra-blog/list-post-proposals",
+    "parameters": {
+      "after": 0,
+      "limit": 1
+    }
+  },
+  "listResult": {
+    "success": true,
+    "data": {
+      "items": [],
+      "next_after": null
+    }
+  },
+  "otherOwnersTestedLive": false,
+  "revocationTestedLive": false,
+  "proposalCreationTestedLive": false,
+  "checks": {
+    "catalogCount18": true,
+    "fiveNewToolsPresent": true,
+    "inputOutputObjectsClosedRecursively": true,
+    "annotationsMatchPrivateOperations": true,
+    "listingEmptyAndTerminal": true,
+    "noMutatingCalls": true
+  }
+}

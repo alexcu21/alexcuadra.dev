@@ -1,5 +1,7 @@
 # Respaldo y recuperación de propuestas privadas rc.2
 
+**27 octubre — propuestas privadas rc.2 operativas por MCP:** Alex aporta after-scope ready=true/15checks; usuario2 conserva subscriber y ocho capacidades previas más solo alexcuadra_prepare_post_changes, sin grant a roles/otros usuarios y16permisos amplios denegados. [Recibo CLI](qa/blog-proposal-rc2-destination-after-scope-2026-10-27.json). Verificación independiente del conector: catálogo18abilities, cinco nuevas con DTOs cerrados y anotaciones correctas; listado privado items=[]/next_after=null. Siete llamadas de lectura/metadatos, sin crear planes o leer cuerpos. [Cierre real/límites](qa/MCP_BLOG_PROPOSAL_LIVE_2026-10-27.md). Instalación/grant/backup inicial ya cerrados; no repetir comandos. Siguiente piloto privado con fuente/diff explícitos antes de cualquier creación, o incremento de taxonomías propias de proyectos; edición/publicación de posts sigue sin implementarse.
+
 **27 octubre — respaldo inicial real verificado:** Alex aporta verify ready=true/integrityVerified=true;1propietario y0propuestas/revisiones/recibos, sin escrituras de BD, mismo artefacto/SHA del export. [Recibo](qa/blog-proposal-backup-destination-verify-2026-10-27.json). Herramientas de recuperación ya ensayadas en entorno aislado; no se restauró sobre el CMS vivo. Siguiente concesión directa únicamente alexcuadra_prepare_post_changes al usuario2 por Alex y after-scope, conservando ocho capacidades previas/rol subscriber y16denegaciones amplias. No grant a roles/otros usuarios ni creación de propuestas todavía. Verificación MCP real de solo lectura tras recibir after-scope.
 
 **27 octubre — primera exportación real recibida:** Alex aporta export ready=true, respaldo backup-20261027T160054Z-d1f849d991c44fdb y manifestSha256 39022b62…a5b0c76; cuenta1propietario y0propuestas/revisiones/recibos, sin escrituras de BD. [Recibo](qa/blog-proposal-backup-destination-export-2026-10-27.json). Siguiente verify sobre ese mismo directorio/SHA con scope todavía ausente; no repetir exportación, modificar artefactos, restaurar sobre el CMS vivo ni conceder permiso todavía. restorationVerified=false es correcto: no se ejecutó restauración del hosting.
@@ -20,7 +22,11 @@ El comando no quita ni añade scopes automáticamente. Para futuros respaldos, r
 
 La exportación usa una transacción nativa mysqli READ ONLY/REPEATABLE READ con snapshot consistente; no permite reconexión de wpdb dentro del snapshot. Comprueba esquema antes/después, conexión y ausencia de escritores admitidos. No bloquea cambios DDL o SQL de operadores externos: la declaración de pausa debe ser real.
 
-## Estado actual: integridad verificada; siguiente grant y after-scope
+## Estado actual: respaldo inicial verificado y grant completado
+
+After-scope y el acceso MCP real ya se verificaron; no repetir grant o respaldo inicial. [Cierre](qa/MCP_BLOG_PROPOSAL_LIVE_2026-10-27.md). El artefacto inicial solo contiene propietario2; no cubre planes futuros. Para un respaldo posterior, coordinar la pausa y retirar únicamente alexcuadra_prepare_post_changes antes de exportar; las otras capacidades permanecen. Verificar/conservar cada artefacto nuevo y su SHA, sin reemplazar o podar el anterior. No ejecutar restore-empty sobre el CMS vivo para probar instalación.
+
+## Histórico: integridad verificada antes del grant
 
 El [verify real de Alex](qa/blog-proposal-backup-destination-verify-2026-10-27.json) confirma integrityVerified=true con los mismos conteos. No repetir export/verify ni restaurar sobre el CMS vivo. La fase siguiente es el [grant directo único y after-scope](WORDPRESS_MCP_BLOG_PROPOSAL_RC2.md), todavía pendientes. Conservar el artefacto y su SHA; para respaldos futuros retirar únicamente el nuevo scope y coordinar pausa de escritores antes de exportar.
 
