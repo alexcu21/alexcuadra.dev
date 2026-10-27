@@ -40,3 +40,7 @@ Instalación aún no aprobada. El nuevo paquete no migra esquema, concede permis
 ## Respaldo actualizado real exportado
 
 [Recibo de Alex](project-classification-upgrade-backup-export-2026-10-27.json): export ready=true, cuatro conteos1 y sin escrituras de BD. Helper rc.2 exige pausa del scope privado y valida integridad interna del artefacto. No hay verificación remota independiente del agente; siguiente verify separado con el SHA recibido. Mantener historia75a0aa5f…60c7835a y scope pausado, sin instalación o restauración todavía.
+
+## Respaldo actualizado real verificado
+
+[Verify de Alex](project-classification-upgrade-backup-verify-2026-10-27.json): integrityVerified=true y cuatro conteos1, sin escrituras o restauración de BD. Artefacto/SHA originales conservados. Siguiente presentar el ZIP exacto rc.3 y sustituir únicamente el rc.2 conocido con scope pausado; proposal-upgraded debe conservar historySHA75a0aa5f…60c7835a y ocho capacidades previas. Sin actualización remota ejecutada por el agente ni instalación real anticipada.

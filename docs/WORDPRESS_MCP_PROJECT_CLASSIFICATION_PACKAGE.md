@@ -1,5 +1,7 @@
 # Paquete coordinado de clasificación de proyectos
 
+**27 octubre — respaldo actualizado real verificado:** Alex aporta verify ready=true/integrityVerified=true y conteos1/1/1/1 del artefacto deb1593d…ab76110. [Recibo](qa/project-classification-upgrade-backup-verify-2026-10-27.json). Mantener scope privado pausado. Siguiente: revisar/subir ZIP exacto de propuestas rc.3, comprobar SHA581dc9a0…cb00df, desactivar únicamente propuestas rc.2, sustituir código mediante actualización explícita de esa versión conocida, reactivar y proposal-upgraded con historySHA75a0aa5f…60c7835a. Aún sin lector nuevo, DDL, enrolamientos o restauración de permisos. Actualización real pendiente de Alex.
+
 **27 octubre — respaldo actualizado real recibido:** export ready=true de Alex, backup-20261027T200039Z-1e211a74ec3e7502, manifestSHAdeb1593d…ab76110;1propietario/1propuesta/1revisión/1recibo, sin escrituras de BD. [Recibo](qa/project-classification-upgrade-backup-export-2026-10-27.json). El helper exige scope privado pausado y ocho capacidades previas, sin grant a roles/otros usuarios. Siguiente verify del mismo artefacto/SHA con helper rc.2; mantener pausa y no instalar paquetes todavía. Conservar historySHA75a0aa5f…60c7835a, sin recapturar before; no restaurar el CMS vivo para demostrar respaldo.
 
 **27 octubre — before real del paquete coordinado correcto:**19checks, rc.2 exacto/activo, lector nuevo ausente y nueve capacidades originales. [Recibo](qa/project-classification-upgrade-destination-before-2026-10-27.json). Documento SHA54945c84…7f6b3d coincide con pilotoMCP; historySha75a0aa5f…60c7835a también coincide con el derivado de su petición/recibo originales.1propietario/1propuesta/1revisión/1recibo. Conservar este SHA en todas las fases; no recapturarlo. Siguiente: Alex retira solo alexcuadra_prepare_post_changes y exporta un respaldo nuevo con los helpers rc.2 existentes; sin instalar ZIPs o cambiar otros permisos todavía. Pausa/exportación real aún pendientes.
@@ -21,7 +23,30 @@ Propuestas rc.3 cambia solo versión/main, admisión del lector exacto y README.
 
 Los dos PHP de recuperación nuevos, en project-classification-upgrade/, validan los archivos de rc.3 y aceptan únicamente artefactos con SHA de paquete rc.2 o rc.3: el esquema/DTO de historia no cambió. Se probó recuperar un artefacto creado por rc.2 y leer/repetir su plan desde rc.3. Se conservan las herramientas/ZIP anteriores para rollback; no se sobrescriben sus fuentes o manifiestos.
 
-## Paso actual: verificar el respaldo actualizado ya exportado
+## Paso actual: sustituir propuestas rc.2 por el rc.3 exacto, con escritura pausada
+
+[Verify actualizado de Alex](qa/project-classification-upgrade-backup-verify-2026-10-27.json): integrityVerified=true y1propietario/1propuesta/1revisión/1recibo. Mantener alexcuadra_prepare_post_changes ausente. No volver a exportar, enrolar, crear tablas o restaurar el sitio.
+
+Subir solo el ZIP de propuestas0.1.0-rc.3 de la tabla superior a private-tools/project-classification-upgrade. Revisar su SHA antes de desactivar código:
+
+```sh
+sha256sum /home/u776991923/domains/alexcuadra.dev/private-tools/project-classification-upgrade/alexcuadra-editorial-blog-proposals-0.1.0-rc.3.zip
+```
+
+Debe coincidir exactamente con `581dc9a006e49d0add30209bf33e31f5f8ba2c97bc575630dc262ebf73cb00df`. Solo entonces, Alex ejecuta la secuencia siguiente. El uso acotado de --force sustituye el rc.2 cuyos ocho archivos fueron verificados en before y por el helper de backup; no autoriza sobrescribir otro paquete o versión desconocida. Esta actualización exacta se ensayó en laboratorio conservando historia no vacía y rollback.
+
+```sh
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content plugin deactivate alexcuadra-editorial-blog-proposals &&
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content plugin install /home/u776991923/domains/alexcuadra.dev/private-tools/project-classification-upgrade/alexcuadra-editorial-blog-proposals-0.1.0-rc.3.zip --force &&
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content plugin activate alexcuadra-editorial-blog-proposals &&
+wp --path=/home/u776991923/domains/alexcuadra.dev/public_html/content eval-file /home/u776991923/domains/alexcuadra.dev/private-tools/project-classification-upgrade/preflight.php --use-include proposal-upgraded 75a0aa5fdaab48206bf72e8e70eb274dd75c5b12af81d8b04963aff160c7835a
+```
+
+Las condiciones && detienen los pasos posteriores si un comando falla. Compartir PROJECT_CLASSIFICATION_UPGRADE_RESULT o el error antes de avanzar. No reintentar sustitución, activar el lector, restaurar permisos o ejecutar DDL por continuidad. Si falla después de desactivar, mantener la pausa y compartir la salida; no improvisar recuperación de código/tablas.
+
+Se esperan19checks correctos, rc.3 exacto/activo y cinco herramientas privadas, lector nuevo ausente, los ocho permisos anteriores y los mismos hashes/conteos de historia. El sitio publicado no requiere migración de fuentes; el cambio de paquete no implementa publicación o asignación de términos. La sustitución real sigue pendiente de ejecución por Alex; el manifiesto sellado no se modifica para atribuirle ejecución anticipada.
+
+## Histórico: verificación del respaldo actualizado ya recibida
 
 [Export real de Alex](qa/project-classification-upgrade-backup-export-2026-10-27.json): ready=true,1propietario/1propuesta/1revisión/1recibo y ninguna escritura de BD. El artefacto nuevo incluye el piloto; no sustituye al respaldo owner-only anterior. El helper verifica scope pausado/permisos exactos y valida internamente el archivo antes de devolver éxito. Falta su verificación en otra invocación con el SHA del recibo.
 
