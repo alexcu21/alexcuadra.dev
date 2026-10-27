@@ -1,0 +1,19 @@
+# Propuestas de clasificación de proyectos: planificador local
+
+`planner.php` es PHP puro separado de los paquetes sellados. No registra hooks, herramientas, rutas, tablas ni permisos. No instalar en WordPress. Produce un documento inicial revisable; todavía no guarda propuestas o recibos, no implementa compare-and-swap ni replay durable, y no aplica asignaciones o crea términos.
+
+Entrada de cliente cerrada: `request_id` (32 hex), `project_id` entero positivo, `locale` en/es, `base_hash` (64 hex) y `fields`. Solo admite `categories` y `technologies`, listas de hasta100 IDs únicos. Cada campo presente reemplaza el conjunto completo; omitido conserva asignaciones y `[]` propone retirarlas todas. Se ordenan los IDs; no se adivinan términos por nombre, slug o traducción. Rechaza propuestas sin cambios.
+
+El actor procede del futuro adaptador autenticado, nunca del cliente. Exige `read`, `alexcuadra_read_public_projects` y `alexcuadra_prepare_project_changes`, sin grants o capacidades de blog. La función pura comprueba la proyección del actor; no demuestra una sesión WordPress ni implementa autorización de lectura entre propietarios.
+
+El adaptador deberá obtener una clasificación con el DTO cerrado de `get-public-project-classification` y reunir **todas las páginas** de ambos catálogos en el idioma del proyecto. `context()` acepta `{categories:[term...],technologies:[term...]}`, hasta200 términos por taxonomía, y compara los metadatos asignados con ese catálogo. Solo `project_category`/`project_technology`; no categorías/etiquetas del blog ni campos de fuente/cuerpo/meta. Las etiquetas recibidas se conservan como texto para revisión: cualquier vista deberá escaparlas, nunca renderizarlas como HTML.
+
+El lector confiable debe verificar visibilidad pública actual, proyecto sin contraseña, taxonomías exclusivas de proyectos y reciprocidad/visibilidad de traducciones. El planificador comprueba estructura e idioma, pero **no consulta WordPress/Polylang ni demuestra esos hechos**. Un cliente no puede proporcionar el catálogo o la clasificación a una futura herramienta MCP. No se acepta una página aislada como catálogo completo. El adaptador debe fallar ante lecturas incompletas/cambios detectados, no inventar una instantánea atómica a partir de llamadas paginadas.
+
+`base_hash()` liga clasificación y catálogo completos, incluidos nombres, slugs y traducciones. Su cambio obliga a preparar/revisar otra base; no liga cuerpo, título ni toda la fuente. Cada cambio devuelve taxonomía/idioma y listas before/after con IDs y etiquetas. Documento inicial owner/version1/approval=not-requested/source_write_performed=false. `request_hash` liga propietario y solicitud normalizada; `document_hash` liga el documento. Ninguna huella constituye aprobación, cifrado o firma de autenticidad.
+
+Prueba: `/opt/homebrew/bin/php tests/editorial-project-classification-proposals/check.php`. Proyecciones sintéticas, sin CMS, transporte o almacenamiento real.
+
+Siguiente incremento: repositorio privado separado con lectura exclusivamente del propietario, versiones inmutables, control de versión esperada, recibos durables por owner/request_id y rechazo del mismo ID con payload diferente. Revalidar permisos antes de replay; replay conserva el documento original, no certifica vigencia de la fuente. Definir cuotas/archivo/respaldo y ensayar concurrencia/fallos/aislamiento antes de un adaptador WordPress. No ampliar silenciosamente el esquema antiguo de propuestas de proyectos ni las herramientas públicas. La integración real requerirá un paquete y revisión del perfil de coexistencia: agregar un plugin fuera del perfil admitido cierra el módulo privado de blog rc.3.
+
+La propuesta real de blog1/v1, propuesta histórica227/revisión1, paquetes sellados, capacidades y asignaciones actuales quedan fuera de este experimento.
