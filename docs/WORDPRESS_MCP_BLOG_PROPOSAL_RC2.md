@@ -1,5 +1,7 @@
 # Propuestas privadas: candidato 0.1.0-rc.2
 
+**27 octubre — propietario real de rc.2 verificado:** Alex aporta after-owner ready=true, 15 comprobaciones principales y 11 del perfil correctas. El check de esta fase exige únicamente propietario2; propuestas/revisiones/recibos siguen vacíos y las ocho capacidades anteriores se conservan. [Recibo](qa/blog-proposal-rc2-destination-after-owner-2026-10-27.json). Siguiente: preparar y probar exportación/restauración operativas limitadas a las cuatro tablas antes de grant. No repetir enroll/install ni conceder alexcuadra_prepare_post_changes todavía. El respaldo genérico histórico está fijado a otro perfil y no se reutiliza para este módulo. Ningún comando adicional requerido ahora a Alex.
+
 **27 octubre — almacenamiento real de rc.2 verificado:** Alex aporta after-storage ready=true, 15 comprobaciones principales/11 del perfil correctas. Cuatro tablas completas InnoDB/utf8mb4_bin con esquema exacto, sin propietarios ni propuestas/revisiones/recibos. Ocho capacidades previas conservadas y scope nuevo ausente. [Recibo](qa/blog-proposal-rc2-destination-after-storage-2026-10-27.json). El rechazo de install no requiere reparar/recrear; no se conoce el momento ni la ejecución que creó las tablas. Siguiente: enroll(2) mediante operador1 existente y after-owner, sin grant. Respaldo operativo antes de habilitar escritura de propuestas sigue pendiente.
 
 **27 octubre — creación de almacenamiento detenida:** Alex aporta blog_proposal_storage_not_empty en wordpress-repository.php:37. Esa línea está en la comprobación de ausencia, antes de todos los CREATE: esta invocación no llegó al DDL. Se observó al menos una tabla propia existente; se desconocen cuáles, sus filas y el origen del cambio desde after-enable (present=0). [Observación](qa/blog-proposal-rc2-storage-install-rejected-2026-10-27.json). Siguiente únicamente preflight rc.2 `2 after-storage` de solo lectura. No reintentar install, borrar/alterar tablas, inscribir propietario ni conceder scope. No atribuir éxito de almacenamiento o causa sin el diagnóstico.
@@ -18,7 +20,22 @@ La excepción de pruebas exige entorno local, DB_HOST=db, URL exacta y marca de 
 
 Las huellas principales coinciden con el servidor; no verifican árboles completos. El laboratorio usa PHP8.5.11/MariaDB11.8.9 y configuración/datos sintéticos; servidor PHP8.5.12. No certifica opciones reales de hosting, preview, cachés externas, restauración ante pérdida del servidor ni escritura pública.
 
-## Paso actual: propietario2 y after-owner, sin permiso nuevo
+## Paso actual: respaldo y recuperación operativos antes de grant
+
+El [after-owner aportado por Alex](qa/blog-proposal-rc2-destination-after-owner-2026-10-27.json) pasa las 15 comprobaciones principales y las 11 del perfil. expectedOwners en esta fase exige exactamente propietario2; las otras tres tablas permanecen vacías. Se conservan las ocho capacidades previas y sigue ausente alexcuadra_prepare_post_changes. No repetir enroll, install, activación o diagnósticos iniciales.
+
+El siguiente incremento prepara un procedimiento operativo de respaldo/recuperación limitado a las cuatro tablas privadas del módulo. El ensayo sintético ya realizado demuestra esquema/filas/hashes en prefijo aislado; no es una herramienta de exportación y restauración lista para usar en el hosting. El helper genérico editorial-private-backup.php está fijado a otro perfil/conjunto de37tablas y exporta fuentes/configuración: no corresponde reutilizarlo ni ampliar su perfil por continuidad.
+
+Criterios pendientes antes de conceder el scope:
+
+- Exportación consistente y acotada de solo owners/proposals/revisions/requests, con escritores pausados, sitio/paquete/esquema/propietario verificados, sin credenciales o cuerpos en stdout.
+- Artefacto privado fuera del árbol público, acceso restringido, manifiesto/hashes, conteos y comprobación de integridad; sin sobreescribir un respaldo anterior o podar historia.
+- Restauración del artefacto exacto en destino aislado con rechazo de destino ocupado, verificación de propietario/versiones/documentos/recibos y pruebas de lectura/replay sobre el estado restaurado. No restaurar posts/postmeta/roles/opciones/capacidades.
+- Ensayar errores de exportación/integridad/restauración y documentar la recuperación del destino real como una operación revisada separada, sin DROP o sustitución automática en producción.
+
+No se ha realizado un respaldo nuevo del hosting ni una restauración real. No hay comandos adicionales para Alex en este estado; no conceder el nuevo scope ni crear propuestas de prueba hasta cerrar esta preparación y revisar el cambio de permiso concreto. Sin cambios de correo/Worker/CMS realizados por el agente.
+
+## Histórico: propietario2 y after-owner ya completados
 
 El [after-storage real](qa/blog-proposal-rc2-destination-after-storage-2026-10-27.json) pasa las 15 comprobaciones: cuatro tablas con esquema exacto, InnoDB/utf8mb4_bin, vacías y sin propietarios, conservando las ocho capacidades anteriores. El estado actual queda verificado; no se conoce qué ejecución creó las tablas. El rechazo anterior de install ocurrió antes del DDL y no justifica repetir creación, borrar o reparar tablas.
 

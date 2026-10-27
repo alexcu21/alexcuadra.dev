@@ -33,3 +33,7 @@ Alex aportó el [before rc.2](blog-proposal-rc2-destination-before-2026-10-27.js
 ## Almacenamiento real reconciliado
 
 [After-storage de Alex](blog-proposal-rc2-destination-after-storage-2026-10-27.json): ready=true, cuatro tablas con esquema completo y esperado, sin propietarios o filas de propuestas/revisiones/recibos; ocho capacidades previas intactas. Esto verifica el estado actual, no identifica cuándo ni quién creó las tablas. No repetir install ni reparar/borrar. Siguiente enroll(2) por operador1 y after-owner, sin permiso nuevo. Método enroll ya ensayado en el ciclo rc.2; sin nueva ejecución remota del agente.
+
+## Propietario real verificado
+
+[After-owner de Alex](blog-proposal-rc2-destination-after-owner-2026-10-27.json): ready=true, 15 comprobaciones principales/11 del perfil correctas, propietario2 exacto según check de fase, otras tres tablas vacías y ocho capacidades previas intactas. No se consultaron cuerpos ni hubo verificación remota independiente del agente. Siguiente procedimiento operativo de respaldo/recuperación específico de cuatro tablas; el genérico histórico exige otro perfil y no se reutiliza. Nuevo scope todavía pendiente, sin repetir enroll/install.
