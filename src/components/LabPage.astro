@@ -30,7 +30,7 @@ const editorialSections = project ? [
 ---
 <BaseLayout title={project ? `${project.title} | LAB | Alex Cuadra` : 'LAB | Alex Cuadra'}
   description={project ? blogSummary(project.excerpt) || project.purpose || project.title : (es ? 'Proyectos personales y aprendizaje en desarrollo.' : 'Personal projects and learning in progress.')}
-  locale={locale} alternates={alternates} image={project?.image}>
+  locale={locale} alternates={alternates} image={project?.image} labAvailable={Boolean(project) || projects.length > 0}>
   <main id="main-content" tabindex="-1" class:list={['wrapper lab', { reading: !!project }]}>
     <nav aria-label={es ? 'Navegación de LAB' : 'LAB navigation'}>
       {project && <a href={base}>← LAB</a>}

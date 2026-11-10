@@ -16,9 +16,10 @@ interface Props {
 	imageAlt?: string;
 	alternates?: { locale: 'en' | 'es'; path: string }[];
 	labAvailable?: boolean;
+	blogAvailable?: boolean;
 }
 
-const { title, description, locale = 'en', regionalLocale, image, imageAlt, alternates = [], labAvailable } = Astro.props;
+const { title, description, locale = 'en', regionalLocale, image, imageAlt, alternates = [], labAvailable, blogAvailable } = Astro.props;
 ---
 
 <html lang={locale}>
@@ -28,7 +29,7 @@ const { title, description, locale = 'en', regionalLocale, image, imageAlt, alte
 	<body>
 		<a class="skip-link" href="#main-content">{locale === 'es' ? 'Saltar al contenido' : 'Skip to content'}</a>
 		<div class="stack backgrounds">
-			<Nav locale={locale} labAvailable={labAvailable} />
+			<Nav locale={locale} labAvailable={labAvailable} blogAvailable={blogAvailable} />
 			<slot />
 			<Footer locale={locale} />
 		</div>

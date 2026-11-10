@@ -1,4 +1,3 @@
-import { getArticlesCategories } from './client.js';
 import { referenceInventory } from './reference-inventory.js';
 import { contentPath } from './site-routes.js';
 
@@ -17,8 +16,18 @@ export function referenceCategoryCards(categories, references) {
 }
 
 export async function getReferenceCategoryCards() {
-  const [categories, references] = await Promise.all([getArticlesCategories(), referenceInventory()]);
-  return referenceCategoryCards(categories, references);
+  const references = await referenceInventory();
+  return referenceCategoryCards(inventoryCategories(references), references);
+}
+
+// Names and counts come only from the already validated public references.
+// No extra all-taxonomy request or counts belonging to private/blog-only posts.
+function inventoryCategories(references) {
+  const categories = new Map();
+  for (const reference of references) for (const term of reference.categories.nodes) {
+    if (!categories.has(term.slug)) categories.set(term.slug, { slug: term.slug, name: term.name });
+  }
+  return [...categories.values()].sort((a, b) => a.name.localeCompare(b.name, 'en'));
 }
 
 export function referenceDirectory(categories, references) {
@@ -36,7 +45,7 @@ export function referenceDirectory(categories, references) {
 }
 
 export async function getReferenceArchive() {
-  const [categories, references] = await Promise.all([getArticlesCategories(), referenceInventory()]);
-  const channels = referenceCategoryCards(categories, references);
+  const references = await referenceInventory();
+  const channels = referenceCategoryCards(inventoryCategories(references), references);
   return { channels, entries: referenceDirectory(channels, references) };
 }

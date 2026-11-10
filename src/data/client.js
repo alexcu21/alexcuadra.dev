@@ -2,9 +2,10 @@ import { gql } from 'graphql-request';
 import { collectCmsPages } from './cms-pagination.js';
 import { request, cmsFailure } from './cms-request.js';
 import { publicProjects } from './public-projects.js';
-import { isPublicContent, publicCollection } from './content-visibility.js';
+import { publicCollection } from './content-visibility.js';
 import { localizedCollection, localizedArticle, localizedCategories } from './localized-content.js';
 import { localizedPage } from './localized-pages.js';
+import { publicReferenceArchive, publicReferenceDetail, publicReferenceCategoryPage, publicReferenceCache } from './public-references.js';
 
 // GraphQL endpoint
 const endpoint = 'https://content.alexcuadra.dev/graphql';
@@ -166,9 +167,7 @@ export const getArticlesByCategory = async (slug, locale) => {
     `;
 
     return collectCmsPages(async after => {
-        const data = await request(endpoint, query, { slug, after }, {
-            validateServiceData: data => publicCollection(data?.articles?.nodes),
-        });
+        const data = await request(endpoint, query, { slug, after }, publicReferenceCache(publicReferenceArchive));
         return data.articles;
     }, 'getArticlesByCategory');
 }
@@ -208,9 +207,7 @@ export const getArticleBySlug = async (slug, locale) => {
     `;
 
     const variables = { slug };
-    const data = await request(endpoint, query, variables, {
-        validateServiceData: data => data?.article === null || isPublicContent(data?.article),
-    });
+    const data = await request(endpoint, query, variables, publicReferenceCache(publicReferenceDetail));
     if (!data.article || !data.article.categories) return data.article;
     const categories = await collectCmsPages(async after => {
         if (after === null) return data.article.categories;
@@ -224,9 +221,7 @@ export const getArticleBySlug = async (slug, locale) => {
                     }
                 }
             }
-        `, { slug, after }, {
-            validateServiceData: result => isPublicContent(result?.article),
-        });
+        `, { slug, after }, publicReferenceCache(publicReferenceCategoryPage));
         return next.article?.categories;
     }, 'ArticleCategoryPage');
     return { ...data.article, categories: { ...data.article.categories, nodes: categories } };

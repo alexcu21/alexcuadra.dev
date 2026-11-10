@@ -2,21 +2,19 @@
 import { getHomeInfo } from '../data/client';
 import { publicTranslationLinks } from '../data/content-language.js';
 import { hasPageTranslation } from '../data/page-navigation.js';
-import { hasBlogPosts } from '../data/blog-content.js';
-import { hasLabProjects } from '../data/lab-content.js';
+import { navigationAvailability } from '../data/navigation-availability.js';
 import Icon from './Icon.astro';
 import ThemeToggle from './ThemeToggle.astro';
 import type { iconPaths } from './IconPaths';
 import { routeBase } from '../data/site-routes.js';
 
-interface Props { locale?: 'en' | 'es'; labAvailable?: boolean; }
-const { locale = 'en', labAvailable } = Astro.props;
+interface Props { locale?: 'en' | 'es'; labAvailable?: boolean; blogAvailable?: boolean; }
+const { locale = 'en', labAvailable, blogAvailable } = Astro.props;
 const spanish = locale === 'es';
 const data = await getHomeInfo('en');
 const spanishHome = spanish && publicTranslationLinks(data[0]).some((target: { locale: 'en' | 'es' }) => target.locale === 'es');
 const spanishAbout = spanish && await hasPageTranslation(68, 'es');
-const showBlog = await hasBlogPosts(locale);
-const showLab = labAvailable ?? await hasLabProjects(locale);
+const { blogAvailable: showBlog, labAvailable: showLab } = await navigationAvailability(locale, { blogAvailable, labAvailable });
 /** Main menu items */
 const textLinks: { label: string; href: string }[] = [
 	{ label: spanishHome ? 'Inicio' : spanish ? 'Inicio (EN)' : 'Home', href: spanishHome ? '/es/' : '/' },

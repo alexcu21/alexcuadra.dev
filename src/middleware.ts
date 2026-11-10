@@ -19,7 +19,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
     try { edgeCache = await caches.open('alexcuadra-public-cms'); } catch { /* Cache is optional. */ }
   }
   const response = presentDocumentError(context.request, await withCmsRequest(next, { requestId, edgeCache, cacheOrigin: context.url.origin,
-    cmsConfig: env, bufferHtml: true }));
+    cmsConfig: env, routePattern: context.routePattern, bufferHtml: true }));
   const headers = new Headers(response.headers);
   headers.set('X-Request-ID', requestId);
   // Staging uses workers.dev; this is an indexing policy, not access control.

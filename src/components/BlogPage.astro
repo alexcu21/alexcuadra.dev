@@ -15,7 +15,7 @@ const date = post ? blogDate(post.dateGmt, locale) : null;
 const image = post?.featuredImage?.node?.sourceUrl;
 const description = post ? blogSummary(post.excerpt) || post.title : (spanish ? 'Publicaciones de Alex Cuadra.' : 'Posts by Alex Cuadra.');
 ---
-<BaseLayout title={post ? `${post.title} | Blog | Alex Cuadra` : 'Blog | Alex Cuadra'} description={description} locale={locale} alternates={alternates} image={image}>
+<BaseLayout title={post ? `${post.title} | Blog | Alex Cuadra` : 'Blog | Alex Cuadra'} description={description} locale={locale} alternates={alternates} image={image} blogAvailable={Boolean(post) || posts.length > 0}>
   <main id="main-content" tabindex="-1" class:list={['wrapper blog', { reading: !!post }]}>
     {post ? <>
       <nav aria-label={spanish ? 'Navegación del blog' : 'Blog navigation'}>

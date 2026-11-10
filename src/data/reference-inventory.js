@@ -15,11 +15,12 @@ export function publicReferenceInventory(data) {
     || (connection.pageInfo.hasNextPage && (typeof connection.pageInfo.endCursor !== 'string' || !connection.pageInfo.endCursor))
     || connection.nodes.some(node => !safeSlug(node.slug) || !Array.isArray(node.categories?.nodes)
       || node.categories.pageInfo?.hasNextPage !== false
-      || node.categories.nodes.some(term => !safeSlug(term?.slug)))) return undefined;
+      || node.categories.nodes.some(term => !safeSlug(term?.slug)
+        || typeof term.name !== 'string' || !term.name.trim()))) return undefined;
   return { articles: {
     nodes: connection.nodes.map(node => ({ status: 'publish', isRestricted: false, hasPassword: false,
       slug: node.slug, title: typeof node.title === 'string' ? node.title : null,
-      categories: { nodes: node.categories.nodes.map(term => ({ slug: term.slug })),
+      categories: { nodes: node.categories.nodes.map(term => ({ slug: term.slug, name: term.name })),
         pageInfo: { hasNextPage: false } } })),
     pageInfo: { hasNextPage: connection.pageInfo.hasNextPage,
       endCursor: typeof connection.pageInfo.endCursor === 'string' ? connection.pageInfo.endCursor : null },
@@ -34,7 +35,7 @@ export async function referenceInventory() {
     const data = await request('https://content.alexcuadra.dev/graphql', `query SitemapReferences($after: String) {
       articles(first: 100, after: $after, where: {status: PUBLISH, hasPassword: false}) {
         nodes { status isRestricted hasPassword slug title
-          categories(first: 100) { nodes { slug } pageInfo { hasNextPage } }
+          categories(first: 100) { nodes { slug name } pageInfo { hasNextPage } }
         } pageInfo { hasNextPage endCursor }
       }
     }`, { after }, {
