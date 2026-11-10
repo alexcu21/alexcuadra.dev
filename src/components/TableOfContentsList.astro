@@ -1,0 +1,11 @@
+---
+interface Item { id: string; label: string; children: Item[]; }
+interface Props { items: Item[]; }
+const { items } = Astro.props;
+---
+<ol>
+  {items.map(item => <li>
+    <a href={`#${encodeURIComponent(item.id)}`}>{item.label}</a>
+    {item.children.length > 0 && <Astro.self items={item.children} />}
+  </li>)}
+</ol>

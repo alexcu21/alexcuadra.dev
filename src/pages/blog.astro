@@ -1,13 +1,8 @@
 ---
-// JS
+import BlogPage from '../components/BlogPage.astro';
+import { getBlogPosts, hasBlogPosts } from '../data/blog-content.js';
+const posts = await getBlogPosts('en');
+if (!posts.length) return new Response('Not found', { status: 404, headers: { 'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex' } });
+const archiveAlternate = await hasBlogPosts('es');
 ---
-
-<div>
-    <h2>Blog</h2>
-</div>
-
-<style>
-    h2 {
-        font-size: 3rem;
-    }
-</style>
+<BlogPage locale="en" posts={posts} archiveAlternate={archiveAlternate} />

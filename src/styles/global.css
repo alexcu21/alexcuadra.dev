@@ -3,127 +3,68 @@
 
 /* Global variables */
 :root {
-	/* Colors */
-	--gray-0: #050c9c; /* Navy Blue */
-	--gray-50: #3572ef; /* Medium Blue */
-	--gray-100: #3abef9; /* Sky Blue */
-	--gray-200: #a7e6ff; /* Light Cyan */
-	--gray-300: #050c9c; /* Reusing Navy for Depth */
-	--gray-400: #3572ef;
-	--gray-500: #3abef9;
-	--gray-600: #a7e6ff;
-	--gray-700: rgba(53, 114, 239, 0.7); /* Semi-transparent Medium Blue */
-	--gray-800: rgba(58, 190, 249, 0.7); /* Semi-transparent Sky Blue */
-	--gray-900: #f3f4f7; /* Default Light Gray */
-	--gray-999-basis: 210, 85%, 56%; /* Basis for blue-related adjustments */
-	--gray-999_40: hsla(var(--gray-999-basis), 0.4);
-	--gray-999: #ffffff;
-
-	--accent-light: #3abef9; /* Sky Blue */
-	--accent-regular: #3572ef; /* Medium Blue */
-	--accent-dark: #050c9c; /* Navy */
-	--accent-overlay: hsla(210, 85%, 56%, 0.33); /* Light Blue Overlay */
-	--accent-subtle-overlay: var(--accent-overlay);
-	--accent-text-over: var(--gray-999);
-
-	--link-color: var(--accent-regular);
-
-	/* Gradients */
-	--gradient-stop-1: var(--gray-0);
-	--gradient-stop-2: var(--gray-100);
-	--gradient-stop-3: var(--gray-200);
-	--gradient-subtle: linear-gradient(150deg, var(--gray-900) 19%, var(--gray-999) 150%);
-	--gradient-accent: linear-gradient(
-		150deg,
-		var(--gradient-stop-1),
-		var(--gradient-stop-2),
-		var(--gradient-stop-3)
-	);
-	--gradient-accent-orange: linear-gradient(
-		150deg,
-		#ca7879,
-		var(--accent-regular),
-		var(--accent-dark)
-	);
-	--gradient-stroke: linear-gradient(180deg, var(--gray-900), var(--gray-700));
-
-	/* Shadows */
-	--shadow-sm: 0px 6px 3px rgba(5, 12, 156, 0.1), 0px 4px 2px rgba(53, 114, 239, 0.1),
-		0px 2px 2px rgba(58, 190, 249, 0.2), 0px 0px 1px rgba(167, 230, 255, 0.3);
-	--shadow-md: 0px 28px 11px rgba(5, 12, 156, 0.1), 0px 16px 10px rgba(53, 114, 239, 0.2),
-		0px 7px 7px rgba(58, 190, 249, 0.3), 0px 2px 4px rgba(167, 230, 255, 0.4);
-	--shadow-lg: 0px 62px 25px rgba(5, 12, 156, 0.1), 0px 35px 21px rgba(53, 114, 239, 0.3),
-		0px 16px 16px rgba(58, 190, 249, 0.4), 0px 4px 9px rgba(167, 230, 255, 0.5);
-
-	/* Text Sizes */
-	--text-sm: 0.875rem;
-	--text-base: 1rem;
-	--text-md: 1.125rem;
-	--text-lg: 1.25rem;
-	--text-xl: 1.625rem;
-	--text-2xl: 2.125rem;
-	--text-3xl: 2.625rem;
-	--text-4xl: 3.5rem;
-	--text-5xl: 4.5rem;
-
-	/* Fonts */
-	--font-system: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-		Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-	--font-body: 'Public Sans', var(--font-system);
-	--font-brand: Rubik, var(--font-system);
-
-	/* Transitions */
-	--theme-transition: 0.2s ease-in-out;
+  --gray-0: #142134;
+  --gray-50: #1c2b40;
+  --gray-100: #25374c;
+  --gray-200: #314760;
+  --gray-300: #425b70;
+  --gray-400: #50667c;
+  --gray-500: #647b90;
+  --gray-600: #8294a5;
+  --gray-700: #bfccd7;
+  --gray-800: #d7e1e8;
+  --gray-900: #eef3f6;
+  --gray-999: #f8fafc;
+  --gray-999-basis: 210, 40%, 98%;
+  --gray-999_40: #eef3f699;
+  --accent-light: #16849a; --accent-regular: #006b80; --accent-dark: #005566;
+  --accent-overlay: #006b801a; --accent-subtle-overlay: #006b8010;
+  --accent-text-over: #ffffff; --link-color: #006b80;
+  --gradient-accent-orange: linear-gradient(135deg, #006b80, #4a367f);
+  --font-system: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Plus Jakarta Sans', var(--font-system);
+  --font-brand: 'Plus Jakarta Sans', var(--font-system);
+  --font-mono: ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  --text-sm: .875rem; --text-base: 1rem; --text-md: 1.125rem; --text-lg: 1.25rem;
+  --text-xl: 1.5rem; --text-2xl: 2rem; --text-3xl: 2.5rem; --text-4xl: 3.5rem; --text-5xl: 4.5rem;
+  --theme-transition: .2s ease-in-out;
+  --gradient-subtle: linear-gradient(145deg, var(--gray-900), var(--gray-999));
+  --gradient-stroke: linear-gradient(180deg, var(--gray-700), var(--gray-800));
+  --gradient-accent: linear-gradient(135deg, var(--accent-regular), var(--accent-light));
+  --gradient-stop-1: var(--accent-regular);
+  --gradient-stop-2: var(--accent-light);
+  --gradient-stop-3: var(--accent-regular);
+  --shadow-sm: 0 2px 8px #00000008;
+  --shadow-md: 0 12px 36px #00000012;
+  --shadow-lg: 0 24px 64px #00000020;
 }
-
 :root.theme-dark {
-	--gray-0: #ffffff;
-	--gray-50: #f3f4f7;
-	--gray-100: #e3e6ee;
-	--gray-200: #a7e6ff;
-	--gray-300: #3abef9;
-	--gray-400: #3572ef;
-	--gray-500: #050c9c;
-	--gray-600: #283044;
-	--gray-700: #1c1e3d;
-	--gray-800: #141925;
-	--gray-900: #090b11;
-	--gray-999-basis: 225, 31%, 5%;
-	--gray-999: #090b11;
-
-	--accent-light: #a7e6ff; /* Light Cyan */
-	--accent-regular: #3abef9; /* Sky Blue */
-	--accent-dark: #050c9c; /* Navy Blue */
-	--accent-overlay: hsla(210, 85%, 56%, 0.33);
-	--accent-subtle-overlay: hsla(210, 85%, 56%, 0.33);
-	--accent-text-over: var(--gray-0);
-
-	/* --link-color: var(--accent-dark); */
-
-	--gradient-stop-1: #050c9c;
-	--gradient-stop-2: #3572ef;
-	--gradient-stop-3: #3abef9;
-	--gradient-subtle: linear-gradient(150deg, var(--gray-999) 19%, var(--gray-900) 81%);
-	--gradient-accent-orange: linear-gradient(
-		150deg,
-		#ca7879,
-		var(--accent-regular),
-		var(--accent-light)
-	);
-	--gradient-stroke: linear-gradient(180deg, var(--gray-600), var(--gray-800));
-
-	--shadow-sm: 0px 6px 3px rgba(5, 12, 156, 0.1), 0px 4px 2px rgba(53, 114, 239, 0.1),
-		0px 2px 2px rgba(58, 190, 249, 0.2), 0px 0px 1px rgba(167, 230, 255, 0.3);
-	--shadow-md: 0px 28px 11px rgba(5, 12, 156, 0.1), 0px 16px 10px rgba(53, 114, 239, 0.2),
-		0px 7px 7px rgba(58, 190, 249, 0.3), 0px 2px 4px rgba(167, 230, 255, 0.4);
-	--shadow-lg: 0px 62px 25px rgba(5, 12, 156, 0.1), 0px 35px 21px rgba(53, 114, 239, 0.3),
-		0px 16px 16px rgba(58, 190, 249, 0.4), 0px 4px 9px rgba(167, 230, 255, 0.5);
+  --gray-0: #dde2f3;
+  --gray-50: #dde2f3;
+  --gray-100: #d4dde6;
+  --gray-200: #bcc9cd;
+  --gray-300: #b5c1cc;
+  --gray-400: #a6b5c3;
+  --gray-500: #869397;
+  --gray-600: #62717c;
+  --gray-700: #3d494c;
+  --gray-800: #2a3541;
+  --gray-900: #161c28;
+  --gray-999: #0e131f;
+  --gray-999-basis: 225, 38%, 9%;
+  --gray-999_40: #161c2899;
+  --accent-light: #d0bcff; --accent-regular: #4cd7f6; --accent-dark: #4cd7f6;
+  --accent-overlay: #4cd7f61a; --accent-subtle-overlay: #4cd7f610;
+  --accent-text-over: #003640; --link-color: #4cd7f6;
+  --gradient-accent-orange: linear-gradient(135deg, #4cd7f6, #d0bcff);
+  --shadow-md: 0 12px 36px #00000024;
+  --shadow-lg: 0 24px 64px #00000032;
 }
 
 html,
 body {
 	min-height: 100%;
-	overflow-x: hidden;
+	overflow-x: clip;
 }
 
 body {
@@ -148,6 +89,11 @@ img {
 
 a {
 	color: var(--link-color);
+}
+
+a:focus-visible, button:focus-visible {
+	outline: 2px solid var(--accent-regular);
+	outline-offset: 4px;
 }
 
 h1,

@@ -1,0 +1,20 @@
+.references { padding-block: 2rem 4rem; min-width: 0; }
+.references nav { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 2rem; }
+.references nav a { display: inline-flex; align-items: center; gap: .5rem; color: var(--gray-300); text-underline-offset: .3em; }
+.references h1 { font-size: clamp(2.25rem, 5vw, 4.5rem); line-height: 1.15; letter-spacing: -.04em; overflow-wrap: anywhere; }
+.references header { margin-bottom: 2.5rem; max-width: 65ch; }
+.references .intro { margin-top: 1.25rem; color: var(--gray-300); font-size: 1.125rem; line-height: 1.7; }
+.references .reference-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; list-style: none; padding: 0; }
+.reference-card { min-width: 0; }
+.reference-card > a { display: flex; align-items: center; justify-content: space-between; gap: 1rem; height: 100%; min-height: 7rem; padding: 1.5rem; border: 1px solid var(--gray-800); border-radius: 1rem; background: var(--gray-900); color: var(--gray-0); text-decoration: none; overflow-wrap: anywhere; }
+.reference-card > a:hover { border-color: var(--accent-regular); }
+.reference-card h2 { font-size: 1.25rem; line-height: 1.5; }
+.references .reference-image { display: block; width: 100%; height: auto; border: 1px solid var(--gray-800); border-radius: 1rem; margin-block: 2rem; }
+.references .reference-body { max-width: 70ch; margin-inline: auto; min-width: 0; }
+.references .reference-return { margin-block:2rem 0; }
+.references blockquote { margin-top: 1.5rem; padding: 1rem 1.5rem; border-inline-start: 3px solid var(--accent-regular); color: var(--gray-300); line-height: 1.7; }
+@media (min-width: 50em) {
+  .references { padding-block: 3rem 5rem; }
+  .references .reference-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .references .reference-body { font-size: 1.125rem; }
+}

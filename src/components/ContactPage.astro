@@ -1,0 +1,64 @@
+---
+import LanguageLabel from "./LanguageLabel.astro";
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactFormFields from './ContactFormFields.astro';
+import { getContactCopy } from '../data/contact-content.js';
+import { getHomeInfo } from '../data/client.js';
+import { routeBase } from '../data/site-routes.js';
+import { env } from 'cloudflare:workers';
+interface Props { locale: 'en' | 'es'; }
+const { locale } = Astro.props;
+const spanish = locale === 'es';
+const home = await getHomeInfo('en');
+const email = home[0].homePageFields.email;
+const enabled = env.CONTACT_FORM_ENABLED === 'true' && !!env.TURNSTILE_SITE_KEY;
+const copy = enabled ? await getContactCopy(locale) : null;
+const title = spanish ? 'Contacto' : 'Contact';
+const introduction = spanish ? 'Cuéntame qué quieres construir o mejorar.' : "Tell me what you'd like to build or improve.";
+const alternates: {locale: 'en' | 'es'; path: string}[] = [
+  { locale: 'en', path: routeBase('contact', 'en') }, { locale: 'es', path: routeBase('contact', 'es') },
+];
+---
+<BaseLayout title={`${title} | Alex Cuadra`} description={introduction} locale={locale} alternates={alternates}>
+  <main id="main-content" tabindex="-1" class="wrapper contact-page">
+    <nav aria-label={spanish ? 'Idioma de contacto' : 'Contact language'}>
+      <a href={routeBase('contact', spanish ? 'en' : 'es')} lang={spanish ? 'en' : 'es'} hreflang={spanish ? 'en' : 'es'}><LanguageLabel locale={spanish ? 'en' : 'es'} /></a>
+    </nav>
+    <header><p class="eyebrow">{spanish ? '// Conversemos' : "// Let's talk"}</p><h1>{title}</h1><p class="introduction">{introduction}</p></header>
+    <div class="contact-grid">
+      <aside class="contact-details" aria-label={spanish ? 'Otras formas de contacto' : 'Other ways to get in touch'}>
+        <h2>{spanish ? 'Correo directo' : 'Direct email'}</h2>
+        <a href={`mailto:${email}`}>{email}</a>
+        <p>{spanish ? 'También puedes escribirme desde tu aplicación de correo.' : 'You can also write to me from your email app.'}</p>
+        <a class="project-link" href={routeBase('projects', locale)}>{spanish ? 'Explorar proyectos' : 'Explore projects'} →</a>
+      </aside>
+      <div class="form-panel">
+        {copy ? <ContactFormFields locale={locale} copy={copy} email={email} sitekey={env.TURNSTILE_SITE_KEY!} /> : <section aria-labelledby="contact-alternative">
+          <h2 id="contact-alternative">{spanish ? 'Escríbeme por correo' : 'Get in touch by email'}</h2>
+          <p>{spanish ? 'El formulario no está disponible en este momento. Puedes enviarme tu consulta por correo.' : 'The form is currently unavailable. You can send your enquiry by email.'}</p>
+          <a class="email-button" href={`mailto:${email}`}>{spanish ? 'Abrir correo' : 'Open email'}</a>
+        </section>}
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+<style>
+  .contact-page { padding-block: 2rem 4rem; min-width: 0; }
+  nav { display: flex; justify-content: flex-end; margin-bottom: 2rem; }
+  a { color: var(--link-color); text-underline-offset: .25em; overflow-wrap: anywhere; }
+  .eyebrow { color: var(--link-color); font: .75rem/1.5 var(--font-mono); letter-spacing: .06em; margin-bottom: 1rem; }
+  h1 { font-size: clamp(2.5rem, 7vw, 5rem); line-height: 1.1; letter-spacing: -.04em; }
+  .introduction { max-width: 45ch; margin-top: 1.25rem; color: var(--gray-300); font-size: 1.125rem; line-height: 1.7; }
+  .contact-grid { display: grid; gap: 2rem; margin-top: 3rem; }
+  .contact-details, .form-panel { min-width: 0; }
+  .contact-details { display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; }
+  h2 { font-size: 1.5rem; line-height: 1.3; }
+  p { line-height: 1.7; color: var(--gray-300); }
+  .project-link { margin-top: .5rem; }
+  .form-panel { padding: clamp(1.25rem, 4vw, 2.5rem); border: 1px solid var(--gray-800); border-radius: 1.5rem; background: var(--gradient-subtle); }
+  .form-panel :global(.contact-form) { width: 100%; margin: 0; }
+  .form-panel section > p { margin-top: 1rem; }
+  .email-button { display: inline-flex; min-height: 2.75rem; align-items: center; padding: .75rem 1.25rem; border: 1px solid var(--link-color); border-radius: 999rem; margin-top: 1.5rem; text-decoration: none; }
+  :is(a):focus-visible { outline: 3px solid var(--link-color); outline-offset: 4px; }
+  @media (min-width: 50em) { .contact-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); align-items: start; gap: 3rem; } }
+</style>

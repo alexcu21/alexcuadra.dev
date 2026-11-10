@@ -1,0 +1,46 @@
+---
+import Icon from './Icon.astro';
+import { contentPath, routeBase } from '../data/site-routes.js';
+import { blogSummary } from '../data/blog-content.js';
+interface Props { locale: 'en' | 'es'; projects: {title: string; slug: string; excerpt: string | null; purpose: string | null; state: {value: string; label: string} | null}[]; }
+const { locale, projects } = Astro.props;
+const es = locale === 'es';
+---
+{projects.length > 0 && <section class="home-lab" aria-labelledby="home-lab-title" id="home-lab">
+  <header>
+    <div class="lab-intro"><p class="eyebrow">// LAB</p><h2 id="home-lab-title">{es ? 'Ideas en práctica' : 'Ideas in practice'}</h2><p>{es ? 'Proyectos personales, experimentos y aprendizaje en desarrollo.' : 'Personal projects, experiments and learning in progress.'}</p></div>
+    <a class="archive-link" href={routeBase('lab', locale)}>{es ? 'Explorar LAB' : 'Explore LAB'} <Icon icon="arrow-right" size="1.1em" /></a>
+  </header>
+  <ul class="lab-projects">
+    {projects.map((item, index) => <li data-motion="reveal" data-motion-delay={index * .06}>
+      <a class="lab-card" href={contentPath('lab', locale, item.slug)}>
+        <div class="card-meta"><span class="project-index" aria-hidden="true">0{index + 1}</span>{item.state && <span class="state">{item.state.label}</span>}</div>
+        <h3>{item.title}</h3>
+        {(item.purpose || item.excerpt) && <p>{item.purpose || blogSummary(item.excerpt)}</p>}
+        <span class="read">{es ? 'Explorar proyecto' : 'Explore project'} <Icon icon="arrow-right" size="1.1em" /></span>
+      </a>
+    </li>)}
+  </ul>
+</section>}
+<style>
+  .home-lab { min-width: 0; padding: clamp(1.25rem, 4vw, 2.5rem); border: 1px solid var(--gray-700); border-radius: 1.5rem; background: radial-gradient(ellipse at 100% 0, var(--accent-overlay), transparent 65%), var(--gray-900); }
+  header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; margin-bottom: 2rem; }
+  .lab-intro { min-width: 0; max-width: 54ch; }
+  .eyebrow { color: var(--link-color); font: .75rem/1.5 var(--font-mono); letter-spacing: .08em; margin-bottom: 1rem; }
+  h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.2; letter-spacing: -.035em; overflow-wrap: anywhere; }
+  .lab-intro > p:last-child { margin-top: 1rem; color: var(--gray-300); line-height: 1.7; }
+  .archive-link { display: inline-flex; align-items: center; justify-content: center; gap: .75rem; min-height: 2.75rem; padding: .7rem 1rem; border: 1px solid var(--gray-700); border-radius: .65rem; color: var(--link-color); text-decoration: none; font: .75rem/1.5 var(--font-mono); }
+  .archive-link:is(:hover, :focus-visible) { border-color: var(--link-color); }
+  .lab-projects { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; padding: 0; list-style: none; }
+  .lab-projects > li { min-width: 0; }
+  .lab-card { display: flex; flex-direction: column; gap: 1rem; height: 100%; padding: 1.5rem; border: 1px solid var(--gray-800); border-radius: 1rem; color: var(--gray-0); background: var(--gray-999_40); text-decoration: none; overflow-wrap: anywhere; transition: border-color .2s; }
+  .lab-card:is(:hover, :focus-visible) { border-color: var(--link-color); }
+  .card-meta { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .5rem; }
+  .project-index { color: var(--gray-400); font: .75rem/1.5 var(--font-mono); }
+  .state { color: var(--link-color); border: 1px solid var(--gray-700); border-radius: 999rem; padding: .25rem .6rem; font: .7rem/1.5 var(--font-mono); }
+  h3 { font-size: 1.2rem; line-height: 1.35; }
+  .lab-card p { color: var(--gray-300); font-size: .95rem; line-height: 1.7; }
+  .read { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-top: auto; padding-top: .5rem; color: var(--link-color); font-size: .875rem; font-weight: 600; }
+  @media (min-width: 50em) { .lab-projects { grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); } }
+  @media (prefers-reduced-motion: reduce) { .lab-card { transition: none; } }
+</style>

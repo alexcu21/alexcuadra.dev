@@ -34,9 +34,9 @@ EmDash guarda los cambios como borradores. Las páginas cacheadas reflejan una p
 
 ## Código y desarrollo local con EmDash
 
-Este repositorio contiene el frontend Astro. En el equipo de desarrollo, la rama `codex/emdash-cutover` está en la copia de trabajo `.local/frontend-reconciliation/` dentro del proyecto del CMS. Desde esa copia, `npm run build:emdash-candidate` genera el build SSR y el manifiesto de Wrangler.
+Este repositorio contiene el frontend Astro. `npm ci` instala sus dependencias y `npm run build:emdash-candidate` genera el build SSR y su manifiesto `public-candidate-dist/server/wrangler.candidate.json`. El primer release con EmDash se preparó desde `codex/emdash-cutover`. [Release v0.1.0](https://github.com/alexcu21/alexcuadra.dev/releases/tag/v0.1.0)
 
-El proyecto separado `alexcuadradev` contiene el CMS, su esquema, los contratos de lectura y las herramientas de migración y verificación. Allí, `local/real-cms/` contiene el catálogo migrado y las configuraciones de Astro están en la raíz.
+El proyecto separado del CMS contiene el esquema, los contratos de lectura y las herramientas de migración y verificación. Allí, `local/real-cms/` contiene el código del CMS y las configuraciones de Astro están en la raíz. [Repositorio privado del CMS](https://github.com/alexcu21/alexcuadra-emdash)
 
 Desde la raíz del proyecto del CMS, instala dependencias con `pnpm install` y arranca la plantilla con `pnpm dev`. El panel local de la plantilla está en el puerto `4322`. `pnpm dev:real` arranca el catálogo migrado en el puerto `4323`. [Panel local](http://127.0.0.1:4322/_emdash/admin)
 
@@ -45,7 +45,7 @@ En el proyecto del CMS, `docs/CORTE-Y-REVERSIÓN.md` documenta el despliegue, la
 <details>
 <summary>Guía de desarrollo con WordPress</summary>
 
-Esta guía corresponde al código en `main`. El despliegue de producción con EmDash se preparó desde `codex/emdash-cutover`.
+Esta guía documenta el build anterior con WordPress y sus comandos de compatibilidad. El build con EmDash usa el manifiesto indicado arriba.
 
 ## Stack
 

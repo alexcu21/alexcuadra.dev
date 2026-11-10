@@ -1,0 +1,68 @@
+---
+import LanguageLabel from "./LanguageLabel.astro";
+import WordPressContent from './WordPressContent.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactCTA from './ContactCTA.astro';
+interface Props { aboutData: any; locale: 'en' | 'es'; alternate: boolean; }
+const { aboutData, locale, alternate } = Astro.props;
+const heading = locale === 'es' ? 'Sobre mí' : 'About';
+const alternates: { locale: 'en' | 'es'; path: string }[] = alternate
+  ? [{ locale: 'en', path: '/about/' }, { locale: 'es', path: '/es/sobre-mi/' }] : [];
+---
+<BaseLayout title={`${heading} | Alex Cuadra`} description={aboutData.aboutPage.introText || heading} locale={locale} alternates={alternates}>
+	<div class="stack about-flow">
+		<main id="main-content" tabindex="-1" class="wrapper about">
+      {alternate && <nav aria-label={locale === 'es' ? 'Idioma de la página' : 'Page language'}>
+        <a href={locale === 'es' ? '/about/' : '/es/sobre-mi/'} lang={locale === 'es' ? 'en' : 'es'}><LanguageLabel locale={locale === 'es' ? 'en' : 'es'} /></a>
+      </nav>}
+      <header class="about-header">
+        <div>
+          <h1>{heading}</h1>
+          {aboutData.aboutPage.introText && <p class="intro">{aboutData.aboutPage.introText}</p>}
+        </div>
+        {aboutData.featuredImage?.node?.sourceUrl && <img src={aboutData.featuredImage.node.sourceUrl} alt="" decoding="async" />}
+      </header>
+
+			{aboutData.content && <section>
+				<h2 class="section-title">{locale === 'es' ? 'Trayectoria' : 'Background'}</h2>
+				<div class="content">
+					<WordPressContent html={aboutData.content} />
+				</div>
+			</section>}
+			{aboutData.aboutPage.education && <section>
+				<h2 class="section-title">{locale === 'es' ? 'Formación' : 'Education'}</h2>
+				<div class="content">
+					<p>{aboutData.aboutPage.education}</p>
+				</div>
+			</section>}
+			{aboutData.aboutPage.skillsText && <section>
+				<h2 class="section-title">{locale === 'es' ? 'Habilidades' : 'Skills'}</h2>
+				<div class="content">
+					<p>{aboutData.aboutPage.skillsText}</p>
+				</div>
+			</section>}
+		</main>
+
+		<ContactCTA locale={locale} />
+	</div>
+</BaseLayout>
+
+<style>
+  .about-flow { gap: 4rem; }
+  .about { display: flex; flex-direction: column; gap: 2.5rem; padding-top: 2rem; min-width: 0; }
+  nav a { color: var(--gray-300); text-underline-offset: .3em; }
+  .about-header { display: grid; gap: 2rem; align-items: center; }
+  h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); letter-spacing: -.04em; overflow-wrap: anywhere; }
+  .intro { font-size: clamp(1.125rem, 2vw, 1.5rem); line-height: 1.7; color: var(--gray-300); margin-top: 1.5rem; max-width: 50ch; }
+  img { display: block; width: 100%; height: auto; border-radius: 1.25rem; border: 1px solid var(--gray-800); }
+  section { display: grid; gap: 1.25rem; padding-top: 2.5rem; border-top: 1px solid var(--gray-800); min-width: 0; }
+  .section-title { font-size: 1.25rem; line-height: 1.4; }
+  .content { min-width: 0; max-width: 70ch; line-height: 1.75; overflow-wrap: anywhere; }
+  @media (min-width: 50em) {
+    .about-flow { gap: 5rem; }
+    .about { padding-top: 3rem; gap: 3.5rem; }
+    .about-header:has(img) { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3rem; }
+    section { grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: 3rem; }
+    .content { font-size: 1.125rem; }
+  }
+</style>

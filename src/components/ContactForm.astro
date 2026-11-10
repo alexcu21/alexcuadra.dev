@@ -1,0 +1,8 @@
+---
+import { getContactCopy } from '../data/contact-content.js';
+import ContactFormFields from './ContactFormFields.astro';
+interface Props { locale?: 'en' | 'es'; sitekey: string; email: string; }
+const { locale = 'en', sitekey, email } = Astro.props;
+const copy = await getContactCopy(locale);
+---
+{copy && <ContactFormFields locale={locale} sitekey={sitekey} email={email} copy={copy} />}
