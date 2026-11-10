@@ -1,0 +1,105 @@
+---
+import LanguageLabel from "./LanguageLabel.astro";
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { sortProjectsByModified } from '../data/projects.js';
+import ContactCTA from '../components/ContactCTA.astro';
+import PortfolioPreview from '../components/PortfolioPreview.astro';
+import Grid from '../components/Grid.astro';
+import PageMotion from './PageMotion.astro';
+import { projectFilterOptions } from '../scripts/project-filter.js';
+
+import { getProjectsInfo } from '../data/client';
+
+interface Props { locale: 'en' | 'es'; }
+const { locale } = Astro.props;
+const spanish = locale === 'es';
+const projectsData = await getProjectsInfo(locale);
+const alternates: {locale: 'en' | 'es'; path: string}[] = [{locale:'en',path:'/work/'},{locale:'es',path:'/es/proyectos/'}];
+
+const projects = sortProjectsByModified(projectsData);
+const categories = projectFilterOptions(projects, 'categories', locale);
+const technologies = projectFilterOptions(projects, 'tags', locale);
+
+---
+
+<BaseLayout
+	title={`${spanish ? 'Proyectos' : 'My Work'} | Alex Cuadra`}
+	description={spanish ? 'Proyectos de Alex Cuadra' : "Learn about Alex Cuadra's most recent projects"} locale={locale} alternates={alternates}
+>
+	<div class="stack projects-flow">
+		<main id="main-content" tabindex="-1" class="wrapper stack projects-archive" data-project-directory data-locale={locale}>
+			<nav aria-label={spanish ? 'Idioma de la página' : 'Page language'}><a href={spanish ? '/work/' : '/es/proyectos/'} lang={spanish ? 'en' : 'es'}><LanguageLabel locale={spanish ? 'en' : 'es'} /></a></nav>
+      <header class="archive-header">
+        <div class="archive-meta">
+          <p class="eyebrow">{spanish ? '// Trabajo seleccionado' : '// Selected work'}</p>
+          <p class="archive-count"><span>{String(projects.length).padStart(2, '0')}</span> {spanish ? 'proyectos' : 'projects'}</p>
+        </div>
+        <h1>{spanish ? 'Proyectos' : 'My Work'}</h1>
+        <p>{spanish ? 'Explora mis proyectos y experiencia.' : 'See my most recent projects below to get an idea of my past experience.'}</p>
+      </header>
+			{projects.length === 0 && <section class="empty">
+        <p>{spanish ? 'Todavía no hay proyectos publicados en español.' : 'There are no published projects yet.'}</p>
+        {spanish && <a href="/work/" hreflang="en">Ver proyectos en inglés</a>}
+      </section>}
+      {projects.length > 0 && <section class="project-discovery" aria-label={spanish ? 'Explorar proyectos' : 'Browse projects'}>
+        <form role="search" aria-label={spanish ? 'Buscar proyectos' : 'Find projects'} class="project-filters" data-project-controls hidden>
+          <div><label for="project-search">{spanish ? 'Buscar por título' : 'Search titles'}</label><input id="project-search" type="search" maxlength="200" autocomplete="off" aria-controls="project-results" /></div>
+          <div><label for="project-category">{spanish ? 'Categoría' : 'Category'}</label><select id="project-category" data-project-category aria-controls="project-results"><option value="">{spanish ? 'Todas las categorías' : 'All categories'}</option>{categories.map(name => <option value={name}>{name}</option>)}</select></div>
+          <div><label for="project-technology">{spanish ? 'Tecnología o área' : 'Technology or practice area'}</label><select id="project-technology" data-project-technology aria-controls="project-results"><option value="">{spanish ? 'Todas las tecnologías y áreas' : 'All technologies and areas'}</option>{technologies.map(name => <option value={name}>{name}</option>)}</select></div>
+          <button type="button">{spanish ? 'Limpiar filtros' : 'Clear filters'}</button>
+        </form>
+        <p class="project-result-count" role="status" aria-live="polite" aria-atomic="true" data-project-status>{projects.length} {spanish ? 'proyectos' : 'projects'}</p>
+        <p data-project-empty hidden>{spanish ? 'Ningún proyecto coincide. Prueba otros filtros o límpialos para ver todos.' : 'No projects match. Try different filters or clear them to see all projects.'}</p>
+      </section>}
+      <div id="project-results"><Grid>
+				{
+					projects.map((project:any, index: number) => (
+						<li data-project-entry data-title={project.title} data-categories={JSON.stringify(project.categories.nodes.map((term: {name: string}) => term.name))} data-technologies={JSON.stringify(project.tags.nodes.map((term: {name: string}) => term.name))} data-motion="reveal" data-motion-delay={(index % 4) * .06}>
+							<PortfolioPreview project={project} locale={locale} headingLevel="h2" />
+						</li>
+					))
+				}
+			</Grid></div>
+		</main>
+		<ContactCTA locale={locale} />
+	</div>
+  <script>
+    import { mountProjectFilter } from '../scripts/project-filter.js';
+    document.querySelectorAll('[data-project-directory]').forEach(mountProjectFilter);
+  </script>
+  <PageMotion />
+</BaseLayout>
+
+<style>
+  .projects-flow { gap: 4rem; }
+  .project-filters { display: grid; gap: 1rem; align-items: end; }
+  .project-filters > div { min-width: 0; }
+  .project-filters[hidden], [data-project-entry][hidden], [data-project-empty][hidden] { display: none; }
+  label { display: block; margin-bottom: .5rem; font-size: .875rem; font-weight: 600; }
+  input, select, button { width: 100%; min-width: 0; min-height: 2.75rem; padding: .75rem; border: 1px solid var(--gray-800); border-radius: .6rem; background: var(--gray-999); color: var(--gray-0); font: inherit; }
+  button { cursor: pointer; color: var(--link-color); }
+  button:disabled { opacity: .5; cursor: default; }
+  :is(input,select,button):focus-visible { outline: 2px solid var(--link-color); outline-offset: 3px; }
+  .project-result-count { margin-top: 1rem; color: var(--gray-300); font: .8rem/1.5 var(--font-mono); }
+  [data-project-empty] { margin-top: 1rem; padding: 1.5rem; border: 1px dashed var(--gray-800); border-radius: 1rem; line-height: 1.7; }
+  .projects-archive { padding-top: 2rem; gap: 2.5rem; }
+  nav a, .empty { color: var(--gray-300); text-underline-offset: .3em; }
+  .archive-header { padding-bottom: 2rem; border-bottom: 1px solid var(--gray-800); }
+  .archive-meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; }
+  .eyebrow, .archive-count { font: .75rem/1.5 var(--font-mono); }
+  .eyebrow { color: var(--link-color); text-transform: uppercase; letter-spacing: .08em; }
+  .archive-count { color: var(--gray-300); }
+  .archive-count span { color: var(--link-color); }
+  h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; letter-spacing: -.04em; overflow-wrap: anywhere; }
+  .archive-header > p { color: var(--gray-300); font-size: 1.125rem; line-height: 1.7; margin-top: 1.25rem; max-width: 54ch; }
+  .projects-archive :global(.grid) { gap: 1.5rem; grid-auto-rows: auto; grid-template-columns: minmax(0, 1fr); }
+  .projects-archive :global(.grid > li) { min-width: 0; }
+  .empty { padding: 2rem; border: 1px solid var(--gray-800); border-radius: 1rem; background: var(--gray-900); }
+  .empty a { display: inline-block; margin-top: 1rem; }
+  @media (min-width: 50em) {
+    .project-filters { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1.5fr) auto; }
+    .projects-flow { gap: 5rem; }
+    .projects-archive { padding-top: 3rem; gap: 3rem; }
+    .projects-archive :global(.grid) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+</style>

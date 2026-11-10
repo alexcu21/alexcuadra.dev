@@ -1,0 +1,181 @@
+---
+import LanguageLabel from "./LanguageLabel.astro";
+interface Props { page: any; locale: 'en' | 'es'; alternate: boolean; }
+const { page, locale, alternate } = Astro.props;
+const spanish = locale === 'es';
+const alternates: {locale: 'en' | 'es'; path: string}[] = alternate ? [{locale:'en',path:'/'},{locale:'es',path:'/es/'}] : [];
+import { getProjectsInfo } from '../data/client';
+
+import {getReferenceCategoryCards} from '../data/reference-categories.js';
+import ReferenceChannelCard from './ReferenceChannelCard.astro';
+
+const projectsData = await getProjectsInfo(locale);
+
+// Layout import — provides basic page elements: <head>, <nav>, <footer> etc.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { sortProjectsByModified } from '../data/projects.js';
+import { routeBase } from '../data/site-routes.js';
+
+// Component Imports
+import CallToAction from '../components/CallToAction.astro';
+import Grid from '../components/Grid.astro';
+import Icon from '../components/Icon.astro';
+import Pill from '../components/Pill.astro';
+import PortfolioPreview from '../components/PortfolioPreview.astro';
+
+// Page section components
+import ContactCTA from '../components/ContactCTA.astro';
+import Skills from '../components/Skills.astro';
+import PageMotion from './PageMotion.astro';
+import HomeLab from './HomeLab.astro';
+import { getHomeLabProjects } from '../data/lab-content.js';
+
+// Content Fetching: List four most recent work projects
+const projects = sortProjectsByModified(projectsData)
+	.slice(0, 4);
+const featured = projects[0];
+const photo = page.homePageFields.photo_field?.node?.sourceUrl;
+
+const data = [page]
+
+const categories = await getReferenceCategoryCards(locale);
+const labProjects = await getHomeLabProjects(locale);
+const hasSkills = [1, 2, 3].some(index => page.homePageFields.skills?.[`skillName${index}`]?.trim());
+
+---
+
+<BaseLayout title="Alex Cuadra" description={page.homePageFields.tagLine_field || undefined} locale={locale} alternates={alternates} labAvailable={labProjects.length > 0}>
+	<div class="stack home-flow">
+		<main id="main-content" tabindex="-1" class="stack home-main">
+      <div class="wrapper stack intro">
+			{alternate && <nav aria-label={spanish ? 'Idioma de la página' : 'Page language'}><a href={spanish ? '/' : '/es/'} lang={spanish ? 'en' : 'es'}><LanguageLabel locale={spanish ? 'en' : 'es'} /></a></nav>}
+      <header class:list={['hero', { 'hero-solo': !featured && !photo }]}>
+        <div class="hero-copy">
+          <p class="eyebrow">{data[0].homePageFields.role1_field}</p>
+          <h1 data-motion="hero"><span>{spanish ? 'Hola, soy' : "Hello, I'm"}</span><strong>{data[0].homePageFields.name_field || 'Alex Cuadra'}</strong></h1>
+          <p class="lead" data-motion="hero" data-motion-delay="0.06">{data[0].homePageFields.tagLine_field}</p>
+          <div class="roles">
+            {[data[0].homePageFields.role1_field, data[0].homePageFields.role2_field, data[0].homePageFields.role3_field].filter(Boolean).map(role => <Pill>{role}</Pill>)}
+          </div>
+          <div class="hero-actions" data-motion="hero" data-motion-delay="0.12">
+            <CallToAction href="#selected-work">{spanish ? 'Explorar proyectos' : 'Explore projects'}<Icon icon="arrow-right" size="1.2em" /></CallToAction>
+            <a class="secondary-link" href={spanish ? '/es/sobre-mi/' : '/about/'}>{spanish ? 'Sobre mí' : 'About me'} <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        {(featured || photo) && <div class="hero-aside">
+          {featured && <section class="featured-preview" aria-label={spanish ? 'Una muestra de mi trabajo' : 'A sample of my work'}>
+            <p class="showcase-label">{spanish ? '// Del portafolio' : '// From the portfolio'}</p>
+            <PortfolioPreview project={featured} locale={locale} headingLevel="h2" variant="featured" />
+          </section>}
+          {photo && <figure class="portrait">
+            <img alt="Alex Cuadra" width="80" height="80" src={photo} />
+            <figcaption>{data[0].homePageFields.name_field}<span>{data[0].homePageFields.role3_field}</span></figcaption>
+          </figure>}
+        </div>}
+      </header>
+      {hasSkills && <section class="disciplines" aria-labelledby="disciplines-title">
+        <p class="eyebrow">{spanish ? '// Bases de trabajo' : '// Foundations'}</p>
+        <h2 id="disciplines-title">{spanish ? 'Especialidades' : 'Core disciplines'}</h2>
+
+			<Skills skills={page.homePageFields.skills} />
+      </section>}
+		</div>
+
+		<div class="wrapper stack home-sections">
+			<section id="selected-work" class="section with-cta">
+				<header class="section-header stack gap-2 lg:gap-4">
+					<h2>{spanish ? 'Proyectos destacados' : 'Selected Work'}</h2>
+					<p>{projects.length === 0 ? (spanish ? 'Todavía no hay proyectos publicados en español.' : 'No projects are published in English yet.') : (spanish ? 'Algunos de mis proyectos destacados para clientes de los últimos años.' : 'Take a look below at some of my featured work for clients from the past few years.')}</p>
+				</header>
+
+				<div class="gallery">
+					<Grid>
+						{
+							projects.map((project:any, index: number) => (
+								<li data-motion="reveal" data-motion-delay={(index % 4) * .06}>
+									<PortfolioPreview project={project} locale={locale} />
+								</li>
+							))
+						}
+					</Grid>
+				</div>
+
+				<div class="cta">
+					<CallToAction href={routeBase('projects', locale)}>
+						{spanish ? 'Ver todos' : 'View All'}
+						<Icon icon="arrow-right" size="1.2em" />
+					</CallToAction>
+				</div>
+			</section>
+
+      <HomeLab projects={labProjects} locale={locale} />
+			{categories.length > 0 && <section class="section" id="articles">
+				<header class="section-header stack gap-2 lg:gap-4">
+          <p class="eyebrow">{spanish ? '// Publicaciones y conversaciones' : '// Publications & conversations'}</p>
+					<h2>{spanish ? 'Artículos y menciones' : 'Articles & Mentions'}</h2>
+					<p>
+						{spanish ? 'He escrito y creado contenido para la comunidad.' : 'I have been writing and creating content for the community.'}
+					</p>
+				</header>
+
+          <ul class="channel-grid">
+						{
+							categories.map((category:any, index: number) => (
+								<li data-motion="reveal" data-motion-delay={(index % 4) * .06}>
+                    <ReferenceChannelCard category={category} locale={locale} />
+								</li>
+							))
+						}
+          </ul>
+			</section>}
+		</div>
+    </main>
+
+		<ContactCTA locale={locale} />
+	</div>
+  <slot name="preview-controls" />
+  <PageMotion />
+</BaseLayout>
+
+<style>
+  .home-main { gap: 5rem; }
+  .home-flow { gap: 5rem; padding-top: 2rem; }
+  .intro { gap: 4rem; }
+  nav a { color: var(--gray-300); font-size: .875rem; text-underline-offset: .3em; }
+  .hero { display: grid; gap: 2.5rem; align-items: center; }
+  .eyebrow { color: var(--link-color); text-transform: uppercase; letter-spacing: .08em; font: .75rem/1.5 var(--font-mono); margin-bottom: 1rem; }
+  h1 { color: var(--gray-0); font-size: clamp(2.35rem, 5vw, 4.5rem); line-height: 1.1; letter-spacing: -.04em; overflow-wrap: anywhere; }
+  h1 span, h1 strong { display: block; }
+  h1 strong { color: var(--link-color); font-weight: 800; }
+  .lead { color: var(--gray-200); font-size: clamp(1.05rem, 2vw, 1.25rem); max-width: 42ch; margin-top: 1.5rem; line-height: 1.7; }
+  .roles { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: 1.5rem; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; margin-top: 2rem; }
+  .secondary-link { color: var(--gray-0); font-weight: 600; text-underline-offset: .3em; }
+  .hero-copy, .hero-aside { min-width: 0; }
+  .hero-aside { display: grid; gap: 1rem; }
+  .showcase-label { color: var(--link-color); font: .7rem/1.5 var(--font-mono); text-transform: uppercase; letter-spacing: .06em; margin-bottom: .75rem; }
+  .featured-preview { min-width: 0; }
+  .portrait { display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--gray-900); border: 1px solid var(--gray-800); border-radius: 1rem; margin: 0; }
+  .portrait img { display: block; flex: 0 0 4rem; width: 4rem; height: 4rem; border-radius: .75rem; object-fit: cover; object-position: center 25%; }
+  figcaption { min-width: 0; color: var(--gray-0); font-weight: 700; overflow-wrap: anywhere; }
+  figcaption span { display: block; color: var(--gray-300); font-weight: 400; font-size: .875rem; margin-top: .25rem; }
+  .disciplines h2 { margin-bottom: 1.5rem; }
+  h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); color: var(--gray-0); letter-spacing: -.035em; line-height: 1.2; }
+  .home-sections { gap: 5rem; }
+  .section { display: grid; gap: 2rem; min-width: 0; }
+  .section-header { align-items: start; max-width: 58ch; color: var(--gray-300); }
+  .section-header p { line-height: 1.7; }
+  .gallery :global(.grid) { gap: 1.5rem; }
+  .channel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); gap: 1rem; padding: 0; list-style: none; }
+  .channel-grid > li { min-width: 0; }
+  @media (min-width: 50em) {
+    .home-main { gap: 6rem; }
+    .home-flow { padding-top: 3rem; gap: 6rem; }
+    .intro { gap: 5rem; }
+    .hero { grid-template-columns: 1.3fr 1fr; gap: 4rem; }
+    .hero-solo { grid-template-columns: minmax(0, 1fr); }
+    .section.with-cta { grid-template-columns: 1fr auto; }
+    .with-cta .gallery { grid-column: 1 / -1; grid-row: 2; }
+    .with-cta .cta { grid-column: 2; grid-row: 1; align-self: center; }
+  }
+</style>

@@ -1,0 +1,42 @@
+---
+interface Props { locale?: 'en' | 'es'; sitekey: string; email: string; copy: Record<string, string>; }
+const { locale = 'en', sitekey, email, copy } = Astro.props;
+---
+{copy && <section class="contact-form" aria-labelledby="contact-heading">
+  <h2 id="contact-heading">{copy.heading}</h2>
+  <p>{copy.introduction}</p>
+  <p class="required-note">{locale === 'es' ? 'Todos los campos son obligatorios.' : 'All fields are required.'}</p>
+  <form method="post" action="/api/contact" data-contact-form data-sitekey={sitekey} data-locale={locale}
+    data-sending={copy.sending_message} data-success={copy.success_message}
+    data-invalid={copy.validation_message} data-challenge={copy.challenge_message}
+    data-limited={copy.rate_limit_message} data-unavailable={copy.unavailable_message}
+    data-unknown={copy.unknown_delivery_message}>
+    <label for="contact-name">{copy.name_label}</label>
+    <input id="contact-name" name="name" autocomplete="name" required maxlength="100" aria-describedby="contact-status" />
+    <label for="contact-email">{copy.email_label}</label>
+    <input id="contact-email" name="email" type="email" inputmode="email" autocomplete="email" required maxlength="254" aria-describedby="contact-status" />
+    <label for="contact-message">{copy.message_label}</label>
+    <textarea id="contact-message" name="message" required maxlength="5000" rows="6" aria-describedby="contact-status"></textarea>
+    <p>{copy.privacy_text} <a href={copy.privacy_url}>{copy.privacy_link_label}</a></p>
+    <div data-contact-challenge></div>
+    <button type="submit" disabled>{copy.submit_label}</button>
+    <p id="contact-status" role="status" aria-live="polite" tabindex="-1">{copy.challenge_message}</p>
+  </form>
+  <a href={`mailto:${email}`}>{copy.alternative_label}</a>
+</section>}
+<script>
+  import { initializeContactForm } from '../scripts/contact-form';
+  document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach(initializeContactForm);
+</script>
+<style>
+  .contact-form { width: min(100% - 1rem, 45rem); margin: 4rem auto; overflow-wrap: anywhere; color: var(--gray-0); }
+  h2, a { color: inherit; }
+  a { text-decoration: underline; }
+  form { display: grid; gap: .8rem; margin: 2rem 0; }
+  input, textarea, button { font: inherit; padding: .8rem; border: 1px solid currentColor; border-radius: .3rem; }
+  input, textarea { color: var(--gray-0); background: var(--gray-999); width: 100%; box-sizing: border-box; }
+  button { cursor: pointer; }
+  button:disabled { cursor: not-allowed; opacity: .6; }
+  [data-contact-challenge] { min-width: 0; }
+  :is(input, textarea, button, a):focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
+</style>

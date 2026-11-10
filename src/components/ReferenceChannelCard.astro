@@ -1,0 +1,26 @@
+---
+import {channelPath} from '../data/reference-preview.js';
+import Icon from './Icon.astro';
+import CountBadge from './CountBadge.astro';
+interface Props { category: { name: string; slug: string; count: number }; locale?: 'en' | 'es'; headingLevel?: 'h2' | 'h3'; }
+const { category, locale = 'en', headingLevel = 'h3' } = Astro.props;
+const es = locale === 'es';
+const Heading = headingLevel;
+const icon = category.slug === 'podcast' ? 'microphone-stage' : category.slug === 'medium' ? 'quote' : 'web';
+const unit = es ? (category.count === 1 ? 'referencia' : 'referencias') : (category.count === 1 ? 'reference' : 'references');
+---
+<a class="channel-card" href={channelPath(locale,category.slug)} hreflang={locale}>
+  <div class="card-meta"><span class="channel-icon"><Icon icon={icon} size="1.25rem" /></span><span class="reference-count"><CountBadge count={category.count} /><span>{unit}</span></span></div>
+  <Heading>{category.name}</Heading>
+  <span class="channel-action">{es ? 'Explorar canal' : 'Explore channel'} <Icon icon="arrow-right" size="1.1em" /></span>
+</a>
+<style>
+  .channel-card { min-width: 0; display: flex; flex-direction: column; gap: 1.25rem; height: 100%; min-height: 12rem; padding: 1.5rem; border: 1px solid var(--gray-800); border-radius: 1rem; background: var(--gradient-subtle); color: var(--gray-0); text-decoration: none; overflow-wrap: anywhere; transition: border-color .2s, box-shadow .2s; }
+  .channel-card:is(:hover, :focus-visible) { border-color: var(--link-color); box-shadow: var(--shadow-md); }
+  .card-meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; }
+  .channel-icon { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border: 1px solid var(--gray-800); border-radius: .6rem; background: var(--accent-subtle-overlay); color: var(--link-color); }
+  .reference-count { display: inline-flex; flex-wrap: wrap; gap: .4rem; align-items: center; color: var(--gray-300); font: .65rem/1.5 var(--font-mono); }
+  :is(h2, h3) { font-size: 1.25rem; line-height: 1.35; letter-spacing: -.02em; }
+  .channel-action { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-top: auto; padding-top: .25rem; color: var(--link-color); font-size: .8rem; font-weight: 600; }
+  @media (prefers-reduced-motion: reduce) { .channel-card { transition: none; } }
+</style>

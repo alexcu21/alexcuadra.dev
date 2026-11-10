@@ -1,0 +1,16 @@
+<script>
+  import { animate } from 'motion/mini';
+  import { inView } from 'motion';
+  import { mountPageMotion } from '../scripts/page-motion.js';
+
+  let dispose = () => {};
+  const mount = () => {
+    dispose();
+    dispose = mountPageMotion({ root: document, preference: matchMedia('(prefers-reduced-motion: reduce)'), animate, inView });
+  };
+  mount();
+  document.addEventListener('astro:before-swap', () => dispose());
+  document.addEventListener('astro:page-load', mount);
+  addEventListener('pagehide', () => dispose());
+  addEventListener('pageshow', event => { if (event.persisted) mount(); });
+</script>

@@ -1,0 +1,7 @@
+---
+import BlogPage from '../../components/BlogPage.astro';
+import { getBlogPost } from '../../data/blog-content.js';
+const post = await getBlogPost(Astro.params.slug, 'en');
+if (!post) return new Response('Not found', { status: 404, headers: { 'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex' } });
+---
+<BlogPage locale="en" post={post} />

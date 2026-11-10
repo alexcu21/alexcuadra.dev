@@ -1,0 +1,8 @@
+---
+import ReferencesPreview from '../../../components/ReferencesPreview.astro';
+import {referencePage} from '../../../data/reference-preview.js';
+const model=await referencePage('es',{});
+if(!model)return new Response('Not found',{status:404});
+if('redirect' in model)return Astro.redirect(model.redirect+Astro.url.search,301);
+---
+<ReferencesPreview locale="es" model={model}/>

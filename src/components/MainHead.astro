@@ -1,29 +1,35 @@
 ---
-const site = Astro.site || 'http://localhost:4321';
-const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+import { canonicalUrl, socialImageUrl, openGraphLocale } from '../data/page-seo.js';
 import '../styles/global.css';
 
 interface Props {
 	title?: string | undefined;
 	description?: string | undefined;
+	locale?: 'en' | 'es';
+	regionalLocale?: string;
+	image?: string;
+	imageAlt?: string;
+	alternates?: { locale: 'en' | 'es'; path: string }[];
 }
 
 const {
 	title = 'Alex Cuadra',
 	description = 'My personal portfolio',
+	locale = 'en', regionalLocale, image, imageAlt, alternates = [],
 } = Astro.props;
+const canonicalURL = canonicalUrl(Astro.url.pathname);
+const socialImage = socialImageUrl(image);
+const ogLocale = openGraphLocale(locale, regionalLocale);
 ---
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
 	<!-- Primary Meta Tags -->
 	<title>{title}</title>
 	<meta name="title" content={title} />
 	<meta name="description" content={description} />
 	<link rel="canonical" href={canonicalURL} />
-	<meta name="description" property="og:description" content={description} />
-	<meta name="viewport" content="width=device-width" />
+	{alternates.map(alternate => <link rel="alternate" hreflang={alternate.locale} href={canonicalUrl(alternate.path)} />)}
 	<meta name="generator" content={Astro.generator} />
 
 	<!-- Global Metadata -->
@@ -32,46 +38,28 @@ const {
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 	<link
-	href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,700;1,400&family=Rubik:wght@500;600&display=swap"
+	href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
 	rel="stylesheet"
 	/>
 
 	<meta name="theme-color" content="#ffffff" />
 
 	<!-- Open Graph / Facebook -->
-	<meta property="og:locale" content="es_ES" />
+	{ogLocale && <meta property="og:locale" content={ogLocale} />}
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content={canonicalURL} />
 	<meta property="og:title" content={title} />
 	<meta property="og:description" content={description} />
-	<meta property="og:image" content="" />
+	{socialImage && <meta property="og:image" content={socialImage} />}
+	{socialImage && imageAlt && <meta property="og:image:alt" content={imageAlt} />}
 
 	<!-- Twitter -->
-	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:card" content={socialImage ? 'summary_large_image' : 'summary'} />
 	<meta name="twitter:title" content={title} />
 	<meta name="twitter:description" content={description} />
-	<meta name="twitter:image" content="" />
-	<meta name="twitter:image:alt" content={title} />
+	{socialImage && <meta name="twitter:image" content={socialImage} />}
+	{socialImage && imageAlt && <meta name="twitter:image:alt" content={imageAlt} />}
 	<meta name="twitter:site" content="@alexcuadr4" />
 	<meta name="twitter:creator" content="@alexcuadr4" />
 
-<script is:inline>
-	// This code is inlined in the head to make dark mode instant & blocking.
-	const getThemePreference = () => {
-		if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-			return localStorage.getItem('theme');
-		}
-		return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-	};
-	const isDark = getThemePreference() === 'dark';
-	document.documentElement.classList[isDark ? 'add' : 'remove']('theme-dark');
-
-	if (typeof localStorage !== 'undefined') {
-		// Watch the document element and persist user preference when it changes.
-		const observer = new MutationObserver(() => {
-			const isDark = document.documentElement.classList.contains('theme-dark');
-			localStorage.setItem('theme', isDark ? 'dark' : 'light');
-		});
-		observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-	}
-</script>
+<script is:inline src="/theme-init.js"></script>

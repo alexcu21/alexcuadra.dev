@@ -34,18 +34,20 @@ EmDash guarda los cambios como borradores. Las páginas cacheadas reflejan una p
 
 ## Código y desarrollo local con EmDash
 
-Este repositorio contiene el frontend Astro. En el equipo de desarrollo, la rama `codex/emdash-cutover` está en la copia de trabajo `.local/frontend-reconciliation/` dentro del proyecto del CMS. Desde esa copia, `npm run build:emdash-candidate` genera el build SSR y el manifiesto de Wrangler.
+Este repositorio contiene el frontend Astro. `npm ci` instala sus dependencias y `npm run build:emdash-candidate` genera el build SSR y su manifiesto `public-candidate-dist/server/wrangler.candidate.json`. El primer release con EmDash se preparó desde `codex/emdash-cutover`. [Release v0.1.0](https://github.com/alexcu21/alexcuadra.dev/releases/tag/v0.1.0)
 
-El proyecto separado `alexcuadradev` contiene el CMS, su esquema, los contratos de lectura y las herramientas de migración y verificación. Allí, `local/real-cms/` contiene el catálogo migrado y las configuraciones de Astro están en la raíz.
+El proyecto separado del CMS contiene el esquema, los contratos de lectura y las herramientas de migración y verificación. Allí, `local/real-cms/` contiene el código del CMS y las configuraciones de Astro están en la raíz. [Repositorio privado del CMS](https://github.com/alexcu21/alexcuadra-emdash)
 
 Desde la raíz del proyecto del CMS, instala dependencias con `pnpm install` y arranca la plantilla con `pnpm dev`. El panel local de la plantilla está en el puerto `4322`. `pnpm dev:real` arranca el catálogo migrado en el puerto `4323`. [Panel local](http://127.0.0.1:4322/_emdash/admin)
 
 En el proyecto del CMS, `docs/CORTE-Y-REVERSIÓN.md` documenta el despliegue, las verificaciones y la reversión. `docs/RESPALDO-Y-RESTAURACION.md` cubre la recuperación de datos y archivos. Las credenciales, respaldos y recibos privados se guardan fuera del control de versiones.
 
+`npm test` verifica el contrato de catálogo publicado, las rutas y la caché de EmDash, además de las funciones compartidas del frontend. Las suites que ejercitan el proveedor WPGraphQL pertenecen a la revisión anterior al corte. Para revisarlas con el código que probaban, usa una copia separada de esa revisión. [Revisión anterior al corte](https://github.com/alexcu21/alexcuadra.dev/tree/bce311080c678e8ff2d129ea04891727cd4a4f16)
+
 <details>
 <summary>Guía de desarrollo con WordPress</summary>
 
-Esta guía corresponde al código en `main`. El despliegue de producción con EmDash se preparó desde `codex/emdash-cutover`.
+Esta guía documenta el código y los comandos de la revisión anterior al corte. El build con EmDash usa el manifiesto indicado arriba.
 
 ## Stack
 

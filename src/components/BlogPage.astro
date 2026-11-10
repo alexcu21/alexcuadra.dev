@@ -1,0 +1,64 @@
+---
+import LanguageLabel from "./LanguageLabel.astro";
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WordPressContent from './WordPressContent.astro';
+import { contentPath, routeBase } from '../data/site-routes.js';
+import { blogDate, blogSummary } from '../data/blog-content.js';
+interface Props { locale: 'en' | 'es'; posts?: any[]; post?: any; archiveAlternate?: boolean; }
+const { locale, posts = [], post, archiveAlternate = false } = Astro.props;
+const spanish = locale === 'es';
+const base = routeBase('blog', locale);
+const alternate = post?.translations?.find((item: any) => item.locale !== locale);
+const alternates: { locale: 'en' | 'es'; path: string }[] = alternate ? [{ locale, path: contentPath('blog', locale, post.slug) },
+  { locale: alternate.locale, path: contentPath('blog', alternate.locale, alternate.slug) }] : archiveAlternate ? [
+  { locale: 'en', path: routeBase('blog', 'en') }, { locale: 'es', path: routeBase('blog', 'es') }] : [];
+const date = post ? blogDate(post.dateGmt, locale) : null;
+const image = post?.featuredImage?.node?.sourceUrl;
+const description = post ? blogSummary(post.excerpt) || post.title : (spanish ? 'Publicaciones de Alex Cuadra.' : 'Posts by Alex Cuadra.');
+---
+<BaseLayout title={post ? `${post.title} | Blog | Alex Cuadra` : 'Blog | Alex Cuadra'} description={description} locale={locale} alternates={alternates} image={image} blogAvailable={Boolean(post) || posts.length > 0}>
+  <main id="main-content" tabindex="-1" class:list={['wrapper blog', { reading: !!post }]}>
+    {post ? <>
+      <nav aria-label={spanish ? 'Navegación del blog' : 'Blog navigation'}>
+        <a href={base}>← Blog</a>
+        {alternate && <a href={contentPath('blog', alternate.locale, alternate.slug)} hreflang={alternate.locale} lang={alternate.locale}><LanguageLabel locale={spanish ? 'en' : 'es'} /></a>}
+      </nav>
+      <header><p class="eyebrow">Blog</p><h1>{post.title}</h1>{date && <time datetime={date.iso}>{date.label}</time>}</header>
+      {image && <img class="cover" src={image} alt="" decoding="async" />}
+      {post.content && <WordPressContent html={post.content} scope="blog" toc locale={locale} />}
+    </> : <>
+      {archiveAlternate && <nav aria-label={spanish ? 'Idioma del blog' : 'Blog language'}><a href={routeBase('blog', spanish ? 'en' : 'es')} hreflang={spanish ? 'en' : 'es'} lang={spanish ? 'en' : 'es'}><LanguageLabel locale={spanish ? 'en' : 'es'} /></a></nav>}
+      <header><h1>Blog</h1></header>
+      <ul class="posts">
+        {posts.map(item => {
+          const date = blogDate(item.dateGmt, locale);
+          const summary = blogSummary(item.excerpt);
+          return <li><a class="post-card" href={contentPath('blog', locale, item.slug)}>
+            <h2>{item.title}</h2>
+            {date && <time datetime={date.iso}>{date.label}</time>}
+            {summary && <p>{summary}</p>}
+            <span>{spanish ? 'Leer publicación' : 'Read post'} →</span>
+          </a></li>;
+        })}
+      </ul>
+    </>}
+  </main>
+</BaseLayout>
+<style>
+  .blog { padding-block: 2rem 4rem; min-width: 0; }
+  .reading { max-width: 76rem; }
+  nav { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; margin-bottom: 2rem; }
+  nav a { color: var(--gray-300); text-underline-offset: .3em; }
+  header { margin-bottom: 2rem; }
+  h1 { font-size: clamp(2rem, 5vw, 4rem); line-height: 1.15; letter-spacing: -.035em; overflow-wrap: anywhere; }
+  .eyebrow { color: var(--link-color); font-weight: 700; margin-bottom: 1rem; }
+  time { display: block; margin-top: 1rem; font-size: .875rem; color: var(--gray-400); }
+  .cover { display: block; width: 100%; height: auto; border-radius: 1rem; margin-bottom: 2rem; }
+  .posts { list-style: none; padding: 0; display: grid; gap: 1.5rem; }
+  .post-card { display: flex; flex-direction: column; gap: 1rem; padding: 1.5rem; border: 1px solid var(--gray-800); border-radius: 1rem; background: var(--gray-900); color: var(--gray-0); text-decoration: none; overflow-wrap: anywhere; }
+  .post-card:hover { border-color: var(--accent-regular); }
+  .post-card h2 { font-size: 1.5rem; line-height: 1.35; }
+  .post-card p { color: var(--gray-300); line-height: 1.7; }
+  .post-card span { color: var(--link-color); font-weight: 600; }
+  @media (min-width: 50em) { .blog { padding-block: 3rem 5rem; } }
+</style>

@@ -1,5 +1,7 @@
 # build output
 dist/
+public-candidate-dist/
+.vite-cache/
 # generated types
 .astro/
 

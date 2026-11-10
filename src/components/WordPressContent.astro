@@ -1,0 +1,41 @@
+---
+import { prepareWordPressDocument } from '../data/wordpress-html.js';
+import TableOfContentsList from './TableOfContentsList.astro';
+import '../styles/wordpress-content.css';
+interface Section { key: string; title?: string; html?: string | null; text?: string | null; }
+interface Props { html?: string | null; sections?: Section[]; scope?: string; toc?: boolean; locale?: 'en' | 'es'; }
+const { html, sections, scope = 'body', toc = false, locale = 'en' } = Astro.props;
+const document = prepareWordPressDocument(sections ?? [{ key: 'body', html }], scope);
+const tocLabel = locale === 'es' ? 'En esta página' : 'On this page';
+const hasOutline = toc && document.headings.length >= 2;
+const readerId = `wp-reader-${scope}`;
+---
+<div class:list={['editorial-document', { 'has-outline': hasOutline }]}>
+{hasOutline && <aside class="editorial-sidebar" aria-label={tocLabel}>
+  <div class="editorial-sidebar-inner">
+    <p class="editorial-sidebar-title">{tocLabel}</p>
+    <a class="editorial-reader-link" href={`#${readerId}`}>{locale === 'es' ? 'Leer contenido' : 'Read content'} ↓</a>
+    <nav aria-label={tocLabel} tabindex="0"><TableOfContentsList items={document.outline} /></nav>
+  </div>
+</aside>}
+{hasOutline && <details class="editorial-toc">
+  <summary>{tocLabel}</summary>
+  <nav aria-label={tocLabel}><TableOfContentsList items={document.outline} /></nav>
+</details>}
+<div class="wordpress-content" id={readerId} tabindex="-1">
+  {document.sections.map(section => section.title ? <section class="wordpress-section">
+    <h2 id={section.id} tabindex="-1">{section.title}</h2>
+    {section.text != null ? <p class="editorial-plain">{section.text}</p> : <Fragment set:html={section.html} />}
+  </section> : <Fragment set:html={section.html} />)}
+</div>
+</div>
+<script>
+  import { mountResponsiveFocus } from '../scripts/responsive-focus.js';
+  document.querySelectorAll('.editorial-document.has-outline').forEach(root => {
+    const compact = root.querySelector<HTMLDetailsElement>('.editorial-toc')!;
+    const sidebar = root.querySelector<HTMLElement>('.editorial-sidebar')!;
+    mountResponsiveFocus({root:document, media:matchMedia('(min-width: 64rem)'),
+      narrow:{region:compact,target:compact.querySelector('summary')!},
+      wide:{region:sidebar,target:sidebar.querySelector('.editorial-reader-link')!}});
+  });
+</script>

@@ -1,0 +1,29 @@
+---
+interface Props { locale: 'en' | 'es'; }
+const { locale } = Astro.props;
+---
+<span class="language-label">
+  <svg viewBox="0 0 30 20" width="21" height="14" aria-hidden="true" focusable="false">
+    {locale === 'en' ? <>
+      <rect width="30" height="20" fill="#fff" />
+      <path d="M0 0h30v1.54H0zm0 3.08h30v1.54H0zm0 3.07h30V7.7H0zm0 3.08h30v1.54H0zm0 3.08h30v1.54H0zm0 3.08h30v1.54H0zm0 3.07h30V20H0z" fill="#b31942" />
+      <rect width="12" height="10.77" fill="#0a3161" />
+      {Array.from({ length: 9 }, (_, row) =>
+        Array.from({ length: row % 2 ? 5 : 6 }, (_, column) =>
+          <circle cx={1 + column * 2 + row % 2} cy={1 + row * 1.09} r=".37" fill="#fff" />
+        )
+      )}
+    </> : <>
+      <rect width="30" height="20" fill="#aa151b" />
+      <path d="M0 5h30v10H0z" fill="#f1bf00" />
+      <path d="M8 7h5v1H8zm0 2h5v3l-2.5 1.5L8 12z" fill="#aa151b" />
+      <path d="M10.5 9H13v3l-2.5 1.5z" fill="#fff" />
+    </>}
+  </svg>
+  {locale === 'en' ? 'English' : 'Español'}
+</span>
+
+<style>
+  .language-label { display: inline-flex; align-items: center; gap: .4em; vertical-align: middle; }
+  svg { flex: none; border-radius: 2px; box-shadow: 0 0 0 1px color-mix(in srgb, currentColor 25%, transparent); }
+</style>

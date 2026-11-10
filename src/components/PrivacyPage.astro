@@ -1,0 +1,29 @@
+---
+import LanguageLabel from "./LanguageLabel.astro";
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WordPressContent from './WordPressContent.astro';
+interface Props {
+  page: { title: string; content: string };
+  locale: 'en' | 'es';
+  alternate: { title: string; content: string } | null;
+}
+const { page, locale, alternate } = Astro.props;
+const paths = { en: '/privacy/', es: '/es/privacidad/' };
+const target = locale === 'en' ? 'es' : 'en';
+const alternates: { locale: 'en' | 'es'; path: string }[] = alternate ? [{ locale, path: paths[locale] }, { locale: target, path: paths[target] }] : [];
+---
+<BaseLayout title={`${page.title} | Alex Cuadra`} description={page.title} locale={locale} alternates={alternates}>
+  <main id="main-content" tabindex="-1" class="privacy wrapper">
+    {alternate && <nav aria-label={locale === 'en' ? 'Privacy notice language' : 'Idioma del aviso de privacidad'}>
+      <a href={paths[target]} lang={target} hreflang={target}><LanguageLabel locale={target} /></a>
+    </nav>}
+    <h1>{page.title}</h1>
+    <WordPressContent html={page.content} />
+  </main>
+</BaseLayout>
+<style>
+  .privacy { width: min(100% - 2rem, 48rem); margin: 4rem auto; color: var(--gray-0); }
+  h1 { margin-bottom: 2rem; font-size: clamp(2rem, 6vw, 3rem); line-height: 1.15; overflow-wrap: anywhere; }
+  nav { margin-bottom: 1rem; }
+  a { color: inherit; }
+</style>

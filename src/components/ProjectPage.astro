@@ -1,0 +1,128 @@
+---
+import LanguageLabel from "./LanguageLabel.astro";
+import WordPressContent from './WordPressContent.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LinksToProject from './LinksToProjects.astro';
+import ContactCTA from './ContactCTA.astro';
+import Icon from './Icon.astro';
+import Pill from './Pill.astro';
+import ProjectMedia from './ProjectMedia.astro';
+import { routeBase, contentPath } from '../data/site-routes.js';
+import { publicTranslationLinks } from '../data/content-language.js';
+import { projectNavigation } from '../data/projects.js';
+import { matchesProject, projectFilterOptions, projectFilterState, projectFilterUrl } from '../scripts/project-filter.js';
+interface Props { project: any; projects?: any[]; locale: 'en' | 'es'; }
+const { project, projects = [], locale } = Astro.props;
+const filterContext = projectFilterState(Astro.url.searchParams,
+  projectFilterOptions(projects,'categories',locale),projectFilterOptions(projects,'tags',locale));
+const hasFilterContext = !!(filterContext.query || filterContext.category || filterContext.technology);
+const navigationProjects = hasFilterContext ? projects.filter(candidate => matchesProject({title:candidate.title,
+  categories:(candidate.categories?.nodes || []).map((term:{name:string})=>term.name),
+  technologies:(candidate.tags?.nodes || []).map((term:{name:string})=>term.name)},
+  filterContext.query,filterContext.category,filterContext.technology)) : projects;
+const adjacent = projectNavigation(navigationProjects, project.slug, locale);
+const withFilterContext = (path: string) => {
+  const url = projectFilterUrl(new URL(path,Astro.url),filterContext);
+  return url.pathname + url.search;
+};
+const { title, content } = project;
+const { githuburl, projectTagline, websiteurl } = project.projects || {};
+const tags = (project.tags?.nodes || []).filter((tag: {name?: string}) => tag.name);
+const categories = (project.categories?.nodes || []).filter((term: {name?: string}) => term.name);
+const img = project.featuredImage?.node?.sourceUrl;
+const hasBody = typeof content === 'string' && content.trim().length > 0;
+const targetLocale = locale === 'en' ? 'es' : 'en';
+const alternate = publicTranslationLinks(project).find((target: {locale: string; slug: string}) => target.locale === targetLocale);
+const alternates: {locale: 'en' | 'es'; path: string}[] = alternate ? [{locale, path:contentPath('projects',locale,project.slug)},
+  {locale:targetLocale, path:contentPath('projects',alternate.locale,alternate.slug)}] : [];
+---
+<BaseLayout title={title} description={projectTagline || undefined} locale={locale} alternates={alternates}>
+  <main id="main-content" tabindex="-1" class="project wrapper">
+    <nav class="project-nav" aria-label={locale === 'es' ? 'Navegación del proyecto' : 'Project navigation'}>
+      <a class="back-link" href={routeBase('projects', locale)}><Icon icon="arrow-left" /> {locale === 'es' ? 'Todos los proyectos' : 'All projects'}</a>
+      {alternate && <a href={contentPath('projects', alternate.locale, alternate.slug)} lang={alternate.locale} hreflang={alternate.locale}><LanguageLabel locale={alternate.locale} /></a>}
+    </nav>
+    <header class="project-header">
+      <p class="eyebrow">{locale === 'es' ? '// Proyecto seleccionado' : '// Selected project'}</p>
+      <h1>{title}</h1>
+      {projectTagline && <p class="description">{projectTagline}</p>}
+    </header>
+    {(categories.length > 0 || tags.length > 0 || githuburl || websiteurl) && <div class="project-details">
+      {categories.length > 0 && <div class="detail-group">
+        <p class="detail-label">{locale === 'es' ? 'Categorías del proyecto' : 'Project categories'}</p>
+        <ul class="tags" aria-label={locale === 'es' ? 'Categorías del proyecto' : 'Project categories'}>
+          {categories.map((term: {name: string}) => <li><Pill>{term.name}</Pill></li>)}
+        </ul>
+      </div>}
+      {tags.length > 0 && <div class="detail-group">
+        <p class="detail-label">{locale === 'es' ? 'Tecnologías y áreas de trabajo' : 'Technologies and practice areas'}</p>
+        <ul class="tags" aria-label={locale === 'es' ? 'Tecnologías y áreas de trabajo' : 'Technologies and practice areas'}>
+          {(tags as { name: string }[]).map(tag => <li><Pill>{tag.name}</Pill></li>)}
+        </ul>
+      </div>}
+      {(githuburl || websiteurl) && <div class="detail-group">
+        <p class="detail-label">{locale === 'es' ? 'Explora el proyecto' : 'Explore the project'}</p>
+        <div class="links-to-project">
+          {websiteurl && <LinksToProject href={websiteurl} text={locale === 'es' ? 'Sitio web' : 'Website'} />}
+          {githuburl && <LinksToProject href={githuburl} text="GitHub" />}
+        </div>
+      </div>}
+    </div>}
+    {img && <figure class="project-image"><ProjectMedia src={img} title={title} /></figure>}
+    {hasBody && <section class="project-story" aria-labelledby="project-story-title">
+      <div class="story-heading"><p class="eyebrow" aria-hidden="true">// 01</p><h2 id="project-story-title">{locale === 'es' ? 'Sobre el proyecto' : 'About the project'}</h2></div>
+      <div class="story-content"><WordPressContent html={content} toc locale={locale} /></div>
+    </section>}
+    <nav class="project-end" aria-label={locale === 'es' ? 'Más proyectos' : 'More projects'}>
+      {(adjacent.previous || adjacent.next) && <div class="adjacent-projects">
+        {adjacent.previous && <a class="adjacent-link previous" href={withFilterContext(adjacent.previous.path)} rel="prev">
+          <span class="adjacent-label">← {locale === 'es' ? 'Proyecto anterior' : 'Previous project'}</span>
+          <span class="adjacent-title">{adjacent.previous.title}</span>
+        </a>}
+        {adjacent.next && <a class="adjacent-link next" href={withFilterContext(adjacent.next.path)} rel="next">
+          <span class="adjacent-label">{locale === 'es' ? 'Siguiente proyecto' : 'Next project'} →</span>
+          <span class="adjacent-title">{adjacent.next.title}</span>
+        </a>}
+      </div>}
+      <a class="back-link" href={withFilterContext(routeBase('projects', locale))}><Icon icon="arrow-left" /> {hasFilterContext
+        ? (locale === 'es' ? 'Volver a resultados' : 'Back to results')
+        : (locale === 'es' ? 'Volver a proyectos' : 'Back to projects')}</a>
+    </nav>
+  </main>
+  <ContactCTA locale={locale} />
+</BaseLayout>
+
+<style>
+  .project { padding-block: 2rem 4rem; min-width: 0; }
+  .project-nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 3rem; font-size: .875rem; }
+  nav a { color: var(--gray-300); text-underline-offset: .3em; }
+  .back-link { display: inline-flex; align-items: center; gap: .5rem; }
+  .project-header { max-width: 64rem; padding-bottom: 2rem; }
+  .eyebrow { color: var(--link-color); text-transform: uppercase; letter-spacing: .08em; font: .75rem/1.5 var(--font-mono); margin-bottom: 1rem; }
+  h1 { font-size: clamp(2.25rem, 5.5vw, 4rem); font-weight: 800; letter-spacing: -.04em; line-height: 1.1; overflow-wrap: anywhere; }
+  .description { color: var(--gray-300); font-size: clamp(1.1rem, 2vw, 1.5rem); line-height: 1.6; max-width: 54ch; margin-top: 1.5rem; }
+  .project-details { display: flex; flex-wrap: wrap; align-items: start; gap: 1.5rem 3rem; margin-bottom: 2rem; padding: 1.25rem; border: 1px solid var(--gray-800); border-radius: 1rem; background: var(--gradient-subtle); }
+  .detail-group { min-width: 0; }
+  .detail-label { margin-bottom: .75rem; color: var(--gray-300); font: .7rem/1.5 var(--font-mono); text-transform: uppercase; letter-spacing: .06em; }
+  .tags { display: flex; flex-wrap: wrap; gap: .5rem; list-style: none; padding: 0; }
+  .links-to-project { display: flex; flex-wrap: wrap; gap: .75rem; }
+  .project-image { margin: 0; }
+  .project-story { display: grid; gap: 1.5rem; padding-block: 3rem; border-bottom: 1px solid var(--gray-800); min-width: 0; }
+  h2 { font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.2; letter-spacing: -.03em; }
+  .story-content { min-width: 0; font-size: 1.0625rem; }
+  .project-end { padding-top: 2.5rem; }
+  .adjacent-projects { display: grid; gap: 1rem; margin-bottom: 2rem; }
+  .adjacent-link { display: flex; flex-direction: column; gap: .75rem; min-width: 0; padding: 1.5rem; border: 1px solid var(--gray-800); border-radius: 1rem; background: var(--gradient-subtle); text-decoration: none; }
+  .adjacent-link:hover { border-color: var(--link-color); }
+  .adjacent-link:focus-visible { outline: 2px solid var(--link-color); outline-offset: 4px; }
+  .adjacent-label { color: var(--link-color); font: .75rem/1.5 var(--font-mono); }
+  .adjacent-title { color: var(--gray-0); font-size: 1.125rem; font-weight: 700; line-height: 1.5; overflow-wrap: anywhere; }
+  @media (min-width: 50em) {
+    .adjacent-projects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .adjacent-link.next { grid-column: 2; text-align: right; }
+    .project { padding-block: 3rem 5rem; }
+    .project-nav { margin-bottom: 3rem; }
+    .project-header { padding-bottom: 2.5rem; }
+    .project-story { gap: 2rem; padding-block: 4rem; }
+  }
+</style>

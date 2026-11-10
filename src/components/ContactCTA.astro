@@ -1,49 +1,40 @@
 ---
-import { getHomeInfo } from '../data/client';
 import CallToAction from './CallToAction.astro';
 import Icon from './Icon.astro';
+import {getHomeInfo} from '../data/client.js';
+import { routeBase } from '../data/site-routes.js';
 
-const data = await getHomeInfo();
+interface Props { locale?: 'en' | 'es'; }
+const { locale = 'en' } = Astro.props;
+const email=(await getHomeInfo(locale))[0].homePageFields.email;
 ---
 
-<aside>
-	<h2>Interested in working together?</h2>
-	<CallToAction href={`mailto:${data[0].homePageFields.email}`}>
-		Send Me a Message
-		<Icon icon="paper-plane-tilt" size="1.2em" />
-	</CallToAction>
-</aside>
+<div class="wrapper contact-shell">
+  <aside class="contact-panel" id="contact-cta" aria-labelledby="contact-cta-title">
+    <div class="contact-copy">
+      <p class="eyebrow">{locale === 'es' ? '// Conversemos' : "// Let's talk"}</p>
+      <h2 id="contact-cta-title">{locale === 'es' ? '¿Te interesa trabajar conmigo?' : 'Interested in working together?'}</h2>
+      <p class="contact-intro">{locale === 'es' ? 'Cuéntame qué quieres construir o mejorar.' : "Tell me what you'd like to build or improve."}</p>
+    </div>
+    <div class="contact-actions">
+      <CallToAction href={`mailto:${email}`}>
+        {locale === 'es' ? 'Envíame un mensaje' : 'Send Me a Message'}
+        <Icon icon="paper-plane-tilt" size="1.2em" />
+      </CallToAction>
+      <a class="work-link" href={routeBase('lab', locale)}>{locale === 'es' ? 'Explorar LAB' : 'Explore LAB'} <Icon icon="arrow-right" size="1.1em" /></a>
+    </div>
+  </aside>
+</div>
 
 <style>
-	aside {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 3rem;
-		border-top: 1px solid var(--gray-800);
-		border-bottom: 1px solid var(--gray-800);
-		padding: 5rem 1.5rem;
-		background-color: var(--gray-999_40);
-		box-shadow: var(--shadow-sm);
-	}
-
-	h2 {
-		font-size: var(--text-xl);
-		text-align: center;
-		max-width: 15ch;
-	}
-
-	@media (min-width: 50em) {
-		aside {
-			padding: 7.5rem;
-			flex-direction: row;
-			flex-wrap: wrap;
-			justify-content: space-between;
-		}
-
-		h2 {
-			font-size: var(--text-3xl);
-			text-align: left;
-		}
-	}
+  .contact-shell { padding-block: 0 2rem; }
+  .contact-panel { display: grid; gap: 2rem; padding: clamp(1.5rem, 5vw, 3.5rem); border: 1px solid var(--gray-800); border-radius: 1.5rem; background: radial-gradient(ellipse at 0 100%, var(--accent-overlay), transparent 70%), var(--gradient-subtle); }
+  .contact-copy, .contact-actions { min-width: 0; }
+  .eyebrow { margin-bottom: 1rem; color: var(--link-color); font: .75rem/1.5 var(--font-mono); letter-spacing: .06em; }
+  h2 { max-width: 20ch; font-size: clamp(1.75rem, 3.5vw, 3rem); line-height: 1.15; font-weight: 700; letter-spacing: -.035em; overflow-wrap: anywhere; }
+  .contact-intro { max-width: 42ch; margin-top: 1.25rem; color: var(--gray-300); line-height: 1.7; }
+  .contact-actions { display: flex; flex-direction: column; gap: .75rem; }
+  .work-link { display: inline-flex; align-items: center; justify-content: center; gap: .75rem; min-height: 2.75rem; margin-top: .25rem; padding: .75rem 1rem; border: 1px solid var(--gray-700); border-radius: 999rem; color: var(--link-color); text-decoration: none; font-size: .875rem; font-weight: 600; }
+  .work-link:is(:hover, :focus-visible) { border-color: var(--link-color); }
+  @media (min-width: 50em) { .contact-panel { grid-template-columns: minmax(0, 1fr) minmax(14rem, 20rem); align-items: center; gap: 3rem; } }
 </style>
