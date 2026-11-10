@@ -12,12 +12,9 @@ function failure(status) {
 }
 
 async function publishedMedia(request, env, url) {
-  // Grant public access only to media approved for the published catalog.
-  if (!Array.isArray(env.CATALOG_PUBLIC_MEDIA_PATHS)
-    || !env.CATALOG_PUBLIC_MEDIA_PATHS.includes(url.pathname)) return failure(404);
   const key = env.CMS_MEDIA_READ_KEY;
   if (typeof key !== 'string' || !key) return failure(503);
-  const upstream = await cmsRequest(env, url.origin, url.pathname, request.method, key);
+  const upstream = await cmsRequest(env, url.origin, '/api/published-media/' + url.pathname.slice(mediaPrefix.length), request.method, key);
   if (upstream.status !== 200) return failure(upstream.status === 404 ? 404 : 503);
   const contentType = upstream.headers.get('content-type');
   if (!imageTypes.has(contentType?.split(';', 1)[0])) return failure(415);
