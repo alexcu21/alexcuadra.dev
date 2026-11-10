@@ -1,4 +1,5 @@
 ---
+import LanguageLabel from "./LanguageLabel.astro";
 import {referencePreviewBreadcrumbs} from '../data/reference-preview-seo.js';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import WordPressContent from './WordPressContent.astro';
@@ -26,7 +27,7 @@ const alternates=mode==='archive'?[{locale:'en' as const,path:'/articles/'},{loc
  <script is:inline type="application/ld+json" set:html={referencePreviewBreadcrumbs(locale,{category,entry})}/>
  <main id="main-content" tabindex="-1" class="wrapper references">
   <nav aria-label={es?'Navegación de referencias':'Reference navigation'}>
-   {mode==='archive'?<a href={referenceBase(es?'en':'es')} lang={es?'en':'es'}>{es?'English':'Español'}</a>:<a href={mode==='detail'?channelPath(locale,category.slug):referenceBase(locale)}><Icon icon="arrow-left" /> {mode==='detail'?category.name:title}</a>}
+   {mode==='archive'?<a href={referenceBase(es?'en':'es')} lang={es?'en':'es'}><LanguageLabel locale={es ? 'en' : 'es'} /></a>:<a href={mode==='detail'?channelPath(locale,category.slug):referenceBase(locale)}><Icon icon="arrow-left" /> {mode==='detail'?category.name:title}</a>}
   </nav>
   <header>
    {mode==='archive'&&<p class="eyebrow">{es?'// Publicaciones y conversaciones':'// Publications & conversations'}</p>}

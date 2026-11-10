@@ -1,4 +1,5 @@
 ---
+import LanguageLabel from "./LanguageLabel.astro";
 import BaseLayout from '../layouts/BaseLayout.astro';
 import WordPressContent from './WordPressContent.astro';
 interface Props {
@@ -14,7 +15,7 @@ const alternates: { locale: 'en' | 'es'; path: string }[] = alternate ? [{ local
 <BaseLayout title={`${page.title} | Alex Cuadra`} description={page.title} locale={locale} alternates={alternates}>
   <main id="main-content" tabindex="-1" class="privacy wrapper">
     {alternate && <nav aria-label={locale === 'en' ? 'Privacy notice language' : 'Idioma del aviso de privacidad'}>
-      <a href={paths[target]} lang={target} hreflang={target}>{target === 'es' ? 'Español' : 'English'}</a>
+      <a href={paths[target]} lang={target} hreflang={target}><LanguageLabel locale={target} /></a>
     </nav>}
     <h1>{page.title}</h1>
     <WordPressContent html={page.content} />

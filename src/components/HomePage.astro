@@ -1,4 +1,5 @@
 ---
+import LanguageLabel from "./LanguageLabel.astro";
 interface Props { page: any; locale: 'en' | 'es'; alternate: boolean; }
 const { page, locale, alternate } = Astro.props;
 const spanish = locale === 'es';
@@ -47,7 +48,7 @@ const hasSkills = [1, 2, 3].some(index => page.homePageFields.skills?.[`skillNam
 	<div class="stack home-flow">
 		<main id="main-content" tabindex="-1" class="stack home-main">
       <div class="wrapper stack intro">
-			{alternate && <nav aria-label={spanish ? 'Idioma de la página' : 'Page language'}><a href={spanish ? '/' : '/es/'} lang={spanish ? 'en' : 'es'}>{spanish ? 'English' : 'Español'}</a></nav>}
+			{alternate && <nav aria-label={spanish ? 'Idioma de la página' : 'Page language'}><a href={spanish ? '/' : '/es/'} lang={spanish ? 'en' : 'es'}><LanguageLabel locale={spanish ? 'en' : 'es'} /></a></nav>}
       <header class:list={['hero', { 'hero-solo': !featured && !photo }]}>
         <div class="hero-copy">
           <p class="eyebrow">{data[0].homePageFields.role1_field}</p>

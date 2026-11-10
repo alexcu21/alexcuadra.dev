@@ -1,4 +1,5 @@
 ---
+import LanguageLabel from "./LanguageLabel.astro";
 import WordPressContent from './WordPressContent.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LinksToProject from './LinksToProjects.astro';
@@ -39,7 +40,7 @@ const alternates: {locale: 'en' | 'es'; path: string}[] = alternate ? [{locale, 
   <main id="main-content" tabindex="-1" class="project wrapper">
     <nav class="project-nav" aria-label={locale === 'es' ? 'Navegación del proyecto' : 'Project navigation'}>
       <a class="back-link" href={routeBase('projects', locale)}><Icon icon="arrow-left" /> {locale === 'es' ? 'Todos los proyectos' : 'All projects'}</a>
-      {alternate && <a href={contentPath('projects', alternate.locale, alternate.slug)} lang={alternate.locale} hreflang={alternate.locale}>{alternate.locale === 'es' ? 'Español' : 'English'}</a>}
+      {alternate && <a href={contentPath('projects', alternate.locale, alternate.slug)} lang={alternate.locale} hreflang={alternate.locale}><LanguageLabel locale={alternate.locale} /></a>}
     </nav>
     <header class="project-header">
       <p class="eyebrow">{locale === 'es' ? '// Proyecto seleccionado' : '// Selected project'}</p>

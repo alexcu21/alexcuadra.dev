@@ -1,4 +1,5 @@
 ---
+import LanguageLabel from "./LanguageLabel.astro";
 import WordPressContent from './WordPressContent.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactCTA from './ContactCTA.astro';
@@ -12,7 +13,7 @@ const alternates: { locale: 'en' | 'es'; path: string }[] = alternate
 	<div class="stack about-flow">
 		<main id="main-content" tabindex="-1" class="wrapper about">
       {alternate && <nav aria-label={locale === 'es' ? 'Idioma de la página' : 'Page language'}>
-        <a href={locale === 'es' ? '/about/' : '/es/sobre-mi/'} lang={locale === 'es' ? 'en' : 'es'}>{locale === 'es' ? 'English' : 'Español'}</a>
+        <a href={locale === 'es' ? '/about/' : '/es/sobre-mi/'} lang={locale === 'es' ? 'en' : 'es'}><LanguageLabel locale={locale === 'es' ? 'en' : 'es'} /></a>
       </nav>}
       <header class="about-header">
         <div>

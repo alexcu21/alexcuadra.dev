@@ -1,4 +1,5 @@
 ---
+import LanguageLabel from "./LanguageLabel.astro";
 import BaseLayout from '../layouts/BaseLayout.astro';
 import WordPressContent from './WordPressContent.astro';
 import { contentPath, routeBase } from '../data/site-routes.js';
@@ -34,7 +35,7 @@ const editorialSections = project ? [
   <main id="main-content" tabindex="-1" class:list={['wrapper lab', { reading: !!project }]}>
     <nav aria-label={es ? 'Navegación de LAB' : 'LAB navigation'}>
       {project && <a href={base}>← LAB</a>}
-      {alternatePath && <a class="language" href={alternatePath} lang={targetLocale} hreflang={targetLocale}>{es ? 'English' : 'Español'}</a>}
+      {alternatePath && <a class="language" href={alternatePath} lang={targetLocale} hreflang={targetLocale}><LanguageLabel locale={targetLocale} /></a>}
     </nav>
     {project ? <>
       <header>

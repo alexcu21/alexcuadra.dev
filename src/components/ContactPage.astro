@@ -1,4 +1,5 @@
 ---
+import LanguageLabel from "./LanguageLabel.astro";
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactFormFields from './ContactFormFields.astro';
 import { getContactCopy } from '../data/contact-content.js';
@@ -21,7 +22,7 @@ const alternates: {locale: 'en' | 'es'; path: string}[] = [
 <BaseLayout title={`${title} | Alex Cuadra`} description={introduction} locale={locale} alternates={alternates}>
   <main id="main-content" tabindex="-1" class="wrapper contact-page">
     <nav aria-label={spanish ? 'Idioma de contacto' : 'Contact language'}>
-      <a href={routeBase('contact', spanish ? 'en' : 'es')} lang={spanish ? 'en' : 'es'} hreflang={spanish ? 'en' : 'es'}>{spanish ? 'English' : 'Español'}</a>
+      <a href={routeBase('contact', spanish ? 'en' : 'es')} lang={spanish ? 'en' : 'es'} hreflang={spanish ? 'en' : 'es'}><LanguageLabel locale={spanish ? 'en' : 'es'} /></a>
     </nav>
     <header><p class="eyebrow">{spanish ? '// Conversemos' : "// Let's talk"}</p><h1>{title}</h1><p class="introduction">{introduction}</p></header>
     <div class="contact-grid">

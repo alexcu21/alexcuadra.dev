@@ -1,4 +1,5 @@
 ---
+import LanguageLabel from "./LanguageLabel.astro";
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { sortProjectsByModified } from '../data/projects.js';
 import ContactCTA from '../components/ContactCTA.astro';
@@ -27,7 +28,7 @@ const technologies = projectFilterOptions(projects, 'tags', locale);
 >
 	<div class="stack projects-flow">
 		<main id="main-content" tabindex="-1" class="wrapper stack projects-archive" data-project-directory data-locale={locale}>
-			<nav aria-label={spanish ? 'Idioma de la página' : 'Page language'}><a href={spanish ? '/work/' : '/es/proyectos/'} lang={spanish ? 'en' : 'es'}>{spanish ? 'English' : 'Español'}</a></nav>
+			<nav aria-label={spanish ? 'Idioma de la página' : 'Page language'}><a href={spanish ? '/work/' : '/es/proyectos/'} lang={spanish ? 'en' : 'es'}><LanguageLabel locale={spanish ? 'en' : 'es'} /></a></nav>
       <header class="archive-header">
         <div class="archive-meta">
           <p class="eyebrow">{spanish ? '// Trabajo seleccionado' : '// Selected work'}</p>
