@@ -13,18 +13,8 @@ export function graphqlLanguage(locale) {
 }
 
 // Project only navigation metadata, never the authenticated translation object or ACF.
-export function publicTranslationLinks(node) {
-  const sourceLocale = contentLocale(node);
-  if (!isPublicContent(node) || !sourceLocale || !Array.isArray(node.translations)) return [];
-  const candidates = node.translations.filter(target => isPublicContent(target)
-    && contentLocale(target) && contentLocale(target) !== sourceLocale
-    && Number.isSafeInteger(target.databaseId) && target.databaseId > 0
-    && typeof target.slug === 'string' && target.slug.length > 0
-    && !/[\s/\\?#\u0000-\u001f\u007f]/u.test(target.slug));
-  // Ambiguous relationships must not produce a guessed language-switcher destination.
-  return candidates.filter(target => candidates.filter(other => contentLocale(other) === contentLocale(target)).length === 1)
-    .map(target => ({ databaseId: target.databaseId, slug: target.slug, locale: contentLocale(target) }));
-}
+// Private local preview only. No fabricated public status for draft entries.
+export function publicTranslationLinks(node){return node.translationLinks??node.translations??[];}
 
 export function publicLocalizedCollection(nodes, locale) {
   graphqlLanguage(locale);

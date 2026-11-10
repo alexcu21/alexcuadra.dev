@@ -1,10 +1,12 @@
 ---
 import CallToAction from './CallToAction.astro';
 import Icon from './Icon.astro';
+import {getHomeInfo} from '../data/client.js';
 import { routeBase } from '../data/site-routes.js';
 
 interface Props { locale?: 'en' | 'es'; }
 const { locale = 'en' } = Astro.props;
+const email=(await getHomeInfo(locale))[0].homePageFields.email;
 ---
 
 <div class="wrapper contact-shell">
@@ -15,11 +17,11 @@ const { locale = 'en' } = Astro.props;
       <p class="contact-intro">{locale === 'es' ? 'Cuéntame qué quieres construir o mejorar.' : "Tell me what you'd like to build or improve."}</p>
     </div>
     <div class="contact-actions">
-      <CallToAction href={routeBase('contact', locale)}>
+      <CallToAction href={`mailto:${email}`}>
         {locale === 'es' ? 'Envíame un mensaje' : 'Send Me a Message'}
         <Icon icon="paper-plane-tilt" size="1.2em" />
       </CallToAction>
-      <a class="work-link" href={routeBase('projects', locale)}>{locale === 'es' ? 'Explorar proyectos' : 'Explore projects'} <Icon icon="arrow-right" size="1.1em" /></a>
+      <a class="work-link" href={routeBase('lab', locale)}>{locale === 'es' ? 'Explorar LAB' : 'Explore LAB'} <Icon icon="arrow-right" size="1.1em" /></a>
     </div>
   </aside>
 </div>

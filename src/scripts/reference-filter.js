@@ -42,7 +42,7 @@ export function mountReferenceFilter(root) {
       if (link) link.href = referenceFilterUrl(link.href,{query:search.value,channel:channel.value}).href;
       if (visible) count++;
     }
-    status.textContent = `${count} of ${entries.length} ${entries.length === 1 ? 'reference' : 'references'}`;
+    status.textContent = root.dataset.locale==='es'?`${count} de ${entries.length} ${entries.length===1?'referencia':'referencias'}`:`${count} of ${entries.length} ${entries.length === 1 ? 'reference' : 'references'}`;
     empty.hidden = count !== 0;
     clear.disabled = !search.value && !channel.value;
   };

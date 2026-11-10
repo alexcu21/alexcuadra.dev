@@ -1,5 +1,5 @@
-import { contentLocale } from './content-language.js';
-import { isPublicContent } from './content-visibility.js';
+
+
 import { contentPath } from './site-routes.js';
 
 // WordPress returns ISO date strings; subtracting them produces NaN.
@@ -9,8 +9,8 @@ export function sortProjectsByModified(projects) {
 }
 
 export function projectNavigation(projects, currentSlug, locale) {
-  const ordered = sortProjectsByModified(projects).filter(project => isPublicContent(project)
-    && contentLocale(project) === locale && typeof project.title === 'string' && project.title.trim())
+  const ordered = sortProjectsByModified(projects).filter(project => ['draft','published'].includes(project.publicationStatus)
+    && project.locale === locale && typeof project.title === 'string' && project.title.trim())
     .flatMap(project => {
       try { return [{slug:project.slug, title:project.title, path:contentPath('projects',locale,project.slug)}]; }
       catch { return []; }

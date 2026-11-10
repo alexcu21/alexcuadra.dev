@@ -1,25 +1,8 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import ContactCTA from '../components/ContactCTA.astro';
-import ReferenceChannelCard from '../components/ReferenceChannelCard.astro';
-import PageMotion from '../components/PageMotion.astro';
-import ReferenceDirectory from '../components/ReferenceDirectory.astro';
-import { getReferenceArchive } from '../data/reference-categories.js';
-import '../styles/references.css';
-const { channels: categories, entries } = await getReferenceArchive();
+import ReferencesPreview from '../components/ReferencesPreview.astro';
+import {referencePage} from '../data/reference-preview.js';
+const model=await referencePage('en',{});
+if(!model)return new Response('Not found',{status:404});
+if('redirect' in model)return Astro.redirect(model.redirect+Astro.url.search,301);
 ---
-<BaseLayout title="Articles and Mentions | Alex Cuadra" description="External publications and mentions featuring Alex Cuadra.">
-  <main id="main-content" tabindex="-1" class="wrapper references">
-    <header><p class="eyebrow">// Publications &amp; conversations</p><h1>Articles &amp; Mentions</h1><p class="intro">External publications and mentions.</p></header>
-    {categories.length === 0 && <p class="intro">No public references are available yet.</p>}
-    <ul class="reference-grid">
-      {categories.map((category: any, index: number) => <li data-motion="reveal" data-motion-delay={(index % 4) * .06}><ReferenceChannelCard category={category} headingLevel="h2" /></li>)}
-    </ul>
-    <ReferenceDirectory entries={entries} channels={categories} />
-  </main>
-  <ContactCTA />
-  <PageMotion />
-</BaseLayout>
-<style>
-  .eyebrow { margin-bottom: 1rem; color: var(--link-color); font: .75rem/1.5 var(--font-mono); text-transform: uppercase; letter-spacing: .08em; }
-</style>
+<ReferencesPreview locale="en" model={model}/>

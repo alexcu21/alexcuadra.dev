@@ -1,22 +1,9 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import { referenceCategoryPage, referenceNotFound } from '../../../data/reference-pages.js';
-import Icon from '../../../components/Icon.astro';
-import '../../../styles/references.css';
-import { referenceBreadcrumbs } from '../../../data/reference-seo.js';
-const { slug } = Astro.params;
-const page = await referenceCategoryPage(slug);
-if (!page) return referenceNotFound();
-const { category, articles } = page;
+import ReferencesPreview from '../../../components/ReferencesPreview.astro';
+import {referencePage} from '../../../data/reference-preview.js';
+if(!Astro.params.slug)return new Response('Not found',{status:404});
+const model=await referencePage('en',{category:Astro.params.slug});
+if(!model)return new Response('Not found',{status:404});
+if('redirect' in model)return Astro.redirect(model.redirect+Astro.url.search,301);
 ---
-<BaseLayout title={`${category.name} | Articles & Mentions | Alex Cuadra`} description={`External publications and mentions in ${category.name}.`}>
-  <script is:inline type="application/ld+json" set:html={referenceBreadcrumbs(category)} />
-  <main id="main-content" tabindex="-1" class="wrapper references">
-    <nav aria-label="Reference navigation"><a href="/articles/"><Icon icon="arrow-left" /> Articles &amp; Mentions</a></nav>
-    <header><h1>{category.name}</h1><p class="intro">External publications and mentions.</p></header>
-    {articles.length === 0 && <p>No references published in this category yet.</p>}
-    <ul class="reference-grid">
-      {articles.map((article: any) => <li class="reference-card"><a href={`/articles/category/${slug}/${article.slug}`}><h2>{article.title}</h2><span aria-hidden="true">↗</span></a></li>)}
-    </ul>
-  </main>
-</BaseLayout>
+<ReferencesPreview locale="en" model={model}/>

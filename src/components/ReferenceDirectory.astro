@@ -1,24 +1,26 @@
 ---
 interface Props {
+  locale?: 'en' | 'es';
   entries: { title: string; path: string; channels: { slug: string; name: string }[] }[];
   channels: { slug: string; name: string }[];
 }
-const { entries, channels } = Astro.props;
+const { entries, channels, locale='en' } = Astro.props;
+const es=locale==='es';
 ---
-{entries.length > 0 && <section class="directory" aria-labelledby="reference-directory-title" data-reference-directory>
-  <header><h2 id="reference-directory-title" tabindex="-1">Browse references</h2><p>Find a publication or mention by title and channel.</p></header>
-  <form role="search" aria-label="Find references" class="filters" data-reference-controls hidden>
-    <div><label for="reference-search">Search titles</label><input id="reference-search" type="search" maxlength="200" placeholder="Enter a title or keyword" autocomplete="off" aria-controls="reference-results" /></div>
-    <div><label for="reference-channel">Channel</label><select id="reference-channel" aria-controls="reference-results"><option value="">All channels</option>{channels.map(channel => <option value={channel.slug}>{channel.name}</option>)}</select></div>
-    <button type="button" data-reference-clear>Clear filters</button>
+{entries.length > 0 && <section class="directory" aria-labelledby="reference-directory-title" data-reference-directory data-locale={locale}>
+  <header><h2 id="reference-directory-title" tabindex="-1">{es?'Explorar referencias':'Browse references'}</h2><p>{es?'Busca una publicación o mención por título y canal.':'Find a publication or mention by title and channel.'}</p></header>
+  <form role="search" aria-label={es?'Buscar referencias':'Find references'} class="filters" data-reference-controls hidden>
+    <div><label for="reference-search">{es?'Buscar por título':'Search titles'}</label><input id="reference-search" type="search" maxlength="200" placeholder={es?'Escribe un título o palabra clave':'Enter a title or keyword'} autocomplete="off" aria-controls="reference-results" /></div>
+    <div><label for="reference-channel">{es?'Canal':'Channel'}</label><select id="reference-channel" aria-controls="reference-results"><option value="">{es?'Todos los canales':'All channels'}</option>{channels.map(channel => <option value={channel.slug}>{channel.name}</option>)}</select></div>
+    <button type="button" data-reference-clear>{es?'Limpiar filtros':'Clear filters'}</button>
   </form>
-  <p class="result-count" role="status" aria-live="polite" aria-atomic="true" data-reference-status>{entries.length} {entries.length === 1 ? 'reference' : 'references'}</p>
+  <p class="result-count" role="status" aria-live="polite" aria-atomic="true" data-reference-status>{entries.length} {es?(entries.length===1?'referencia':'referencias'):(entries.length===1?'reference':'references')}</p>
   <ul id="reference-results" class="entries">
     {entries.map(entry => <li data-reference-entry data-title={entry.title} data-channels={JSON.stringify(entry.channels.map(channel => channel.slug))}>
       <article><p class="channel-names">{entry.channels.map(channel => channel.name).join(' / ')}</p><h3><a href={entry.path}>{entry.title}<span aria-hidden="true"> ↗</span></a></h3></article>
     </li>)}
   </ul>
-  <p class="empty" data-reference-empty hidden>No references match these filters. Try another title or clear the filters.</p>
+  <p class="empty" data-reference-empty hidden>{es?'No hay referencias que coincidan. Prueba otro título o limpia los filtros.':'No references match these filters. Try another title or clear the filters.'}</p>
 </section>}
 <script>
   import { mountReferenceFilter } from '../scripts/reference-filter.js';

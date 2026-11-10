@@ -1,30 +1,28 @@
 ---
 import { getHomeInfo } from '../data/client';
-import { publicTranslationLinks } from '../data/content-language.js';
-import { hasPageTranslation } from '../data/page-navigation.js';
-import { navigationAvailability } from '../data/navigation-availability.js';
+const publicTranslationLinks = (page: any) => page.translationLinks ?? [];
+
+
 import Icon from './Icon.astro';
 import ThemeToggle from './ThemeToggle.astro';
 import type { iconPaths } from './IconPaths';
-import { routeBase } from '../data/site-routes.js';
+
 
 interface Props { locale?: 'en' | 'es'; labAvailable?: boolean; blogAvailable?: boolean; }
-const { locale = 'en', labAvailable, blogAvailable } = Astro.props;
+const { locale = 'en' } = Astro.props;
 const spanish = locale === 'es';
 const data = await getHomeInfo('en');
 const spanishHome = spanish && publicTranslationLinks(data[0]).some((target: { locale: 'en' | 'es' }) => target.locale === 'es');
-const spanishAbout = spanish && await hasPageTranslation(68, 'es');
-const { blogAvailable: showBlog, labAvailable: showLab } = await navigationAvailability(locale, { blogAvailable, labAvailable });
+
 /** Main menu items */
-const textLinks: { label: string; href: string }[] = [
-	{ label: spanishHome ? 'Inicio' : spanish ? 'Inicio (EN)' : 'Home', href: spanishHome ? '/es/' : '/' },
-	{ label: spanish ? 'Proyectos' : 'Work', href: spanish ? '/es/proyectos/' : '/work/' },
-	{ label: spanishAbout ? 'Sobre mí' : spanish ? 'Sobre mí (EN)' : 'About', href: spanishAbout ? '/es/sobre-mi/' : '/about/' },
-	{ label: spanish ? 'Artículos (EN)' : 'Articles & Mentions', href:'/articles/'}
+const textLinks: {label:string;href:string}[] = [
+ {label:spanish?'Inicio':'Home',href:spanish?'/es/':'/'},
+ {label:spanish?'Sobre mí':'About',href:spanish?'/es/sobre-mi/':'/about/'},
+ {label:spanish?'Proyectos':'Work',href:spanish?'/es/proyectos/':'/work/'},
+ {label:spanish?'Referencias':'References',href:spanish?'/es/articulos/':'/articles/'},
+ {label:'Blog',href:spanish?'/es/blog/':'/blog/'},
+ {label:'LAB',href:spanish?'/es/laboratorio/':'/lab/'}
 ];
-if (showBlog) textLinks.push({ label: 'Blog', href: spanish ? '/es/blog/' : '/blog/' });
-if (showLab) textLinks.push({ label: 'LAB', href: spanish ? '/es/laboratorio/' : '/lab/' });
-textLinks.push({ label: spanish ? 'Contacto' : 'Contact', href: routeBase('contact', locale) });
 
 /** Icon links to social media — edit these with links to your profiles! */
 const iconLinks: { label: string; href: string; icon: keyof typeof iconPaths }[] = [

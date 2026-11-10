@@ -1,0 +1,51 @@
+---
+import {referencePreviewBreadcrumbs} from '../data/reference-preview-seo.js';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WordPressContent from './WordPressContent.astro';
+import ContactCTA from './ContactCTA.astro';
+import ReferenceChannelCard from './ReferenceChannelCard.astro';
+import ReferenceDirectory from './ReferenceDirectory.astro';
+import PageMotion from './PageMotion.astro';
+import Icon from './Icon.astro';
+import {referenceFilterState,referenceFilterUrl} from '../scripts/reference-filter.js';
+import {referenceBase,channelPath} from '../data/reference-preview.js';
+import '../styles/references.css';
+interface Props {locale:'en'|'es';model:any;}
+const {locale,model}=Astro.props;
+const es=locale==='es',title=es?'Artículos y menciones':'Articles & Mentions';
+const {mode,entry,category,entries,channels}=model;
+const heading=mode==='detail'?entry.title:mode==='category'?category.name:title;
+const description=mode==='detail'?entry.fields.quote||entry.title:es?'Publicaciones externas y menciones de Alex Cuadra.':'External publications and mentions featuring Alex Cuadra.';
+const directory=entries.map((item:any)=>({title:item.title,path:item.route,channels:item.terms.reference_category}));
+const filter=referenceFilterState(Astro.url.searchParams,channels.map((c:{slug:string})=>c.slug));
+const backToResults=referenceFilterUrl(new URL(referenceBase(locale),Astro.url),filter);
+backToResults.hash='reference-directory-title';
+const alternates=mode==='archive'?[{locale:'en' as const,path:'/articles/'},{locale:'es' as const,path:'/es/articulos/'}]:[];
+---
+<BaseLayout title={`${heading} | Alex Cuadra`} description={description} locale={locale} alternates={alternates} image={entry?.image?.url}>
+ <script is:inline type="application/ld+json" set:html={referencePreviewBreadcrumbs(locale,{category,entry})}/>
+ <main id="main-content" tabindex="-1" class="wrapper references">
+  <nav aria-label={es?'Navegación de referencias':'Reference navigation'}>
+   {mode==='archive'?<a href={referenceBase(es?'en':'es')} lang={es?'en':'es'}>{es?'English':'Español'}</a>:<a href={mode==='detail'?channelPath(locale,category.slug):referenceBase(locale)}><Icon icon="arrow-left" /> {mode==='detail'?category.name:title}</a>}
+  </nav>
+  <header>
+   {mode==='archive'&&<p class="eyebrow">{es?'// Publicaciones y conversaciones':'// Publications & conversations'}</p>}
+   <h1>{heading}</h1>
+   {mode!=='detail'&&<p class="intro">{description}</p>}
+   {mode==='detail'&&entry.fields.quote&&<blockquote><p>{entry.fields.quote}</p>{entry.fields.quoteTranslated&&<cite>{es?'Traducción al español de la cita original.':'Spanish translation of the original quote.'}</cite>}</blockquote>}
+  </header>
+  {mode==='archive'&&<ul class="reference-grid">{channels.map((channel:any,index:number)=><li data-motion="reveal" data-motion-delay={(index%4)*.06}><ReferenceChannelCard category={channel} locale={locale} headingLevel="h2"/></li>)}</ul>}
+  {mode==='archive'&&<ReferenceDirectory entries={directory} channels={channels} locale={locale}/>}
+  {mode==='category'&&<ul class="reference-grid">{entries.map((item:any)=><li class="reference-card"><a href={item.route}><h2>{item.title}</h2><span aria-hidden="true">↗</span></a></li>)}</ul>}
+  {mode==='detail'&&entry.image&&<img class="reference-image" src={entry.image.url} alt={entry.image.alt} decoding="async"/>}
+  {mode==='detail'&&entry.contentHtml&&<div class="reference-body"><WordPressContent html={entry.contentHtml}/></div>}
+  {mode==='detail'&&(filter.query||filter.channel)&&<nav class="reference-return" aria-label={es?'Navegación de resultados':'Search results navigation'}><a href={backToResults.pathname+backToResults.search+backToResults.hash}><Icon icon="arrow-left"/> {es?'Volver a los resultados':'Back to results'}</a></nav>}
+ </main>
+ {mode==='archive'&&<><ContactCTA locale={locale}/><PageMotion/></>}
+</BaseLayout>
+<style>
+ nav { display:flex;gap:1rem;margin-block:1rem 2rem; }
+ nav a { display:inline-flex;gap:.75rem;align-items:center;color:var(--gray-300); }
+ .eyebrow { margin-bottom:1rem;color:var(--link-color);font:.75rem/1.5 var(--font-mono);text-transform:uppercase;letter-spacing:.08em; }
+ cite { display:block;margin-top:.75rem;font-size:.8rem;font-style:normal; }
+</style>

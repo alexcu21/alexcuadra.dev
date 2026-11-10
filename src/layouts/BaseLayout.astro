@@ -27,6 +27,9 @@ const { title, description, locale = 'en', regionalLocale, image, imageAlt, alte
 		<MainHead title={title} description={description} locale={locale} regionalLocale={regionalLocale} image={image} imageAlt={imageAlt} alternates={alternates} />
 	</head>
 	<body>
+    <aside role="note" style="padding:1rem;border-bottom:1px solid currentColor;text-align:center">
+      {locale === 'es' ? 'Vista previa privada. Contacto sin envíos.' : 'Private preview. Contact submissions disabled.'}
+    </aside>
 		<a class="skip-link" href="#main-content">{locale === 'es' ? 'Saltar al contenido' : 'Skip to content'}</a>
 		<div class="stack backgrounds">
 			<Nav locale={locale} labAvailable={labAvailable} blogAvailable={blogAvailable} />

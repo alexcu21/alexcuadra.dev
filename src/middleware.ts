@@ -1,30 +1,21 @@
-import { defineMiddleware } from 'astro:middleware';
-import { withCmsRequest } from './data/cms-request.js';
-import { allowsPublicCmsCache } from './data/cms-cache.js';
-import { env } from 'cloudflare:workers';
-import { isWordPressRestProbe } from './data/request-policy.js';
-import { presentDocumentError } from './data/error-document.js';
-
-export const onRequest = defineMiddleware(async (context, next) => {
-  const requestId = crypto.randomUUID();
-  context.locals.requestId = requestId;
-  if (isWordPressRestProbe(context.url)) {
-    return new Response('Not found', { status: 404, headers: {
-      'Content-Type': 'text/plain; charset=utf-8', 'X-Robots-Tag': 'noindex',
-      'X-Request-ID': requestId,
-    } });
-  }
-  let edgeCache;
-  if (allowsPublicCmsCache(context.request)) {
-    try { edgeCache = await caches.open('alexcuadra-public-cms'); } catch { /* Cache is optional. */ }
-  }
-  const response = presentDocumentError(context.request, await withCmsRequest(next, { requestId, edgeCache, cacheOrigin: context.url.origin,
-    cmsConfig: env, routePattern: context.routePattern, bufferHtml: true }));
-  const headers = new Headers(response.headers);
-  headers.set('X-Request-ID', requestId);
-  // Staging uses workers.dev; this is an indexing policy, not access control.
-  if (context.url.hostname.endsWith('.workers.dev')) {
-    headers.set('X-Robots-Tag', 'noindex, nofollow');
-  }
-  return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+import {isPreviewRoute} from './data/preview-route.js';
+import {defineMiddleware}from'astro:middleware';
+import {withPreviewRequest}from'./data/emdash-provider.js';
+const cms='http://127.0.0.1:4323';
+const headers={'Cache-Control':'private, no-store','X-Robots-Tag':'noindex, nofollow'};
+export const onRequest=defineMiddleware(async(context,next)=>{
+  if(!import.meta.env.DEV)return new Response('Local preview only',{status:404,headers});
+  if(!['GET','HEAD'].includes(context.request.method))return new Response('Read-only preview',{status:405,headers});
+  if(context.url.pathname.startsWith('/_astro/')||context.url.pathname.startsWith('/@'))return next();
+  const session=/(?:^|;)\s*(alexcuadra-real-session=[^;]+)/.exec(context.request.headers.get('cookie')??'')?.[1]??'';
+  if(!session)return new Response('<a href="http://127.0.0.1:4323/_emdash/api/auth/dev-bypass?redirect=/frontend-preview">Entrar a la vista previa local</a>',{status:401,headers:{...headers,'Content-Type':'text/html;charset=utf-8'}});
+  let auth;
+  try{auth=await fetch(`${cms}/api/preview-session.json`,{headers:{Cookie:session+'; emdash-edit-mode=true'},signal:AbortSignal.timeout(5000)});}catch{return new Response('CMS unavailable',{status:503,headers});}
+  if(!auth.ok)return new Response(auth.status===401?'Entra de nuevo al admin local de la muestra':'CMS unavailable',{status:auth.status===401?401:503,headers});
+  if(!isPreviewRoute(context.url.pathname))return new Response('Esta ruta está fuera del alcance de la vista previa local.',{status:501,headers});
+  try{
+    const response=await withPreviewRequest(next,session+'; emdash-edit-mode=true');
+    const out=new Headers(response.headers);for(const[k,v]of Object.entries(headers))out.set(k,v);
+    return new Response(response.body,{status:response.status,headers:out});
+  }catch(error){return new Response('No se pudo leer el contenido del CMS',{status:[401,404,501].includes(error?.status)?error.status:503,headers});}
 });

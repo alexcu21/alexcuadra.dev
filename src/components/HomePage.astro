@@ -4,7 +4,8 @@ const { page, locale, alternate } = Astro.props;
 const spanish = locale === 'es';
 const alternates: {locale: 'en' | 'es'; path: string}[] = alternate ? [{locale:'en',path:'/'},{locale:'es',path:'/es/'}] : [];
 import { getProjectsInfo } from '../data/client';
-import { getReferenceCategoryCards } from '../data/reference-categories.js';
+
+import {getReferenceCategoryCards} from '../data/reference-categories.js';
 import ReferenceChannelCard from './ReferenceChannelCard.astro';
 
 const projectsData = await getProjectsInfo(locale);
@@ -36,7 +37,7 @@ const photo = page.homePageFields.photo_field?.node?.sourceUrl;
 
 const data = [page]
 
-const categories = await getReferenceCategoryCards();
+const categories = await getReferenceCategoryCards(locale);
 const labProjects = await getHomeLabProjects(locale);
 const hasSkills = [1, 2, 3].some(index => page.homePageFields.skills?.[`skillName${index}`]?.trim());
 
