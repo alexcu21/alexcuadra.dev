@@ -1,6 +1,51 @@
-# alexcuadra.dev
+# Alex Cuadra · Astro y EmDash
 
-Portfolio de Alex Cuadra, desarrollador web senior con experiencia en calidad, automatización y DevOps. El proyecto está en proceso de rediseño bilingüe (inglés y español) y migración de Cloudflare Pages a Workers.
+El portfolio de Alex Cuadra es un sitio bilingüe en Astro con renderizado en servidor (SSR). EmDash gestiona el catálogo desde un panel editorial separado. Ambos se ejecutan en Cloudflare Workers. WordPress se conserva como origen histórico de la migración y opción de reversión. [alexcuadra.dev](https://alexcuadra.dev)
+
+```mermaid
+flowchart LR
+    Visitante --> Astro["alexcuadra.dev · Astro SSR"]
+    Astro --> Cache["Cache API · HTML y sitemap"]
+    Astro -->|Binding CMS| CMS["alexcuadra-cms-prod · EmDash"]
+    Editor --> Access["Cloudflare Access · cms.alexcuadra.dev"]
+    Access --> CMS
+    CMS --> D1["D1 · catálogo"]
+    CMS --> R2["R2 · medios"]
+    CMS --> KV["KV · sesiones"]
+```
+
+## Infraestructura de producción
+
+| Componente | Recurso | Función |
+| --- | --- | --- |
+| Frontend | Worker `alexcuadra-dev` | Sirve páginas SSR en inglés y español, archivos estáticos, sitemap y redirecciones históricas. |
+| CMS | Worker `alexcuadra-cms-prod` | Aloja el panel en `cms.alexcuadra.dev`, protegido por Cloudflare Access y la autenticación de EmDash. |
+| Base de datos | D1 `alexcuadra-catalog-prod` | Guarda páginas, proyectos, Blog, LAB y referencias, junto con revisiones, traducciones y taxonomías. |
+| Medios | R2 `alexcuadra-media-prod` | Guarda los archivos. El CMS comprueba que se usan en contenido publicado antes de servirlos. |
+| Sesiones | KV `alexcuadra-cms-prod-session` | Guarda las sesiones del CMS. |
+
+## Lectura, caché y publicación
+
+Astro consulta `/api/content-v1.json` por el binding privado `CMS`. El contrato devuelve solo contenido publicado. El frontend sirve las imágenes bajo su propio dominio y usa credenciales separadas para contenido y medios.
+
+El Worker guarda las respuestas elegibles de HTML y sitemap en Cache API por hasta 60 segundos. La caché se separa por ruta y versión y es local a cada centro de datos de Cloudflare. Una respuesta vigente se sirve directamente desde caché y evita otra consulta al CMS y otro renderizado de Astro.
+
+EmDash guarda los cambios como borradores. Las páginas cacheadas reflejan una publicación o retirada al vencer ese plazo. La purga automática al publicar queda pendiente. Las páginas de contacto ofrecen un enlace directo al correo y el formulario está deshabilitado.
+
+## Código y desarrollo local con EmDash
+
+Este repositorio contiene el frontend Astro. En el equipo de desarrollo, la rama `codex/emdash-cutover` está en la copia de trabajo `.local/frontend-reconciliation/` dentro del proyecto del CMS. Desde esa copia, `npm run build:emdash-candidate` genera el build SSR y el manifiesto de Wrangler.
+
+El proyecto separado `alexcuadradev` contiene el CMS, su esquema, los contratos de lectura y las herramientas de migración y verificación. Allí, `local/real-cms/` contiene el catálogo migrado y las configuraciones de Astro están en la raíz.
+
+Desde la raíz del proyecto del CMS, instala dependencias con `pnpm install` y arranca la plantilla con `pnpm dev`. El panel local de la plantilla está en el puerto `4322`. `pnpm dev:real` arranca el catálogo migrado en el puerto `4323`. [Panel local](http://127.0.0.1:4322/_emdash/admin)
+
+En el proyecto del CMS, `docs/CORTE-Y-REVERSIÓN.md` documenta el despliegue, las verificaciones y la reversión. `docs/RESPALDO-Y-RESTAURACION.md` cubre la recuperación de datos y archivos. Las credenciales, respaldos y recibos privados se guardan fuera del control de versiones.
+
+<details>
+<summary>Guía de desarrollo con WordPress</summary>
+
+Esta guía corresponde al código en `main`. El despliegue de producción con EmDash se preparó desde `codex/emdash-cutover`.
 
 ## Stack
 
@@ -87,3 +132,5 @@ Los planes, guías y documentos de seguimiento se guardan en `docs/`:
 - [Migración de producción a Workers](docs/WORKERS_PRODUCTION.md): entorno separado, pasos de creación, traslado del dominio y reversión.
 
 Las referencias de diseño bajo `docs/design-proposal/` permanecen locales y están excluidas de Git. Las colecciones Markdown heredadas se conservan durante la transición; no son la fuente editorial prevista para el rediseño.
+
+</details>
