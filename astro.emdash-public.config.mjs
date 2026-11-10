@@ -9,6 +9,7 @@ export default defineConfig({
   adapter: cloudflare({ configPath: './wrangler.emdash-public.jsonc', remoteBindings: false, imageService: 'compile' }),
   vite: {
     ...local.vite,
+    define: { ...local.vite.define, "import.meta.env.PUBLIC_CATALOG_FRONTEND": "true" },
     plugins: [...local.vite.plugins, {
       name: 'catalog-public-middleware',
       enforce: 'pre',
