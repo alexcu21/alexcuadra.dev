@@ -1,8 +1,6 @@
-import { handle } from '@astrojs/cloudflare/handler';
+import { cmsRequest, renderCatalog } from './data/catalog-render.js';
 import { DurableObject } from 'cloudflare:workers';
 import { timingSafeEqual } from 'node:crypto';
-import { withStagingRequest } from './data/emdash-provider.js';
-import { stagingSitemap } from './data/staging-sitemap.js';
 import { catalogCacheKey, catalogCacheTag, catalogExpiryHeader, readCatalogCache } from './data/catalog-cache.js';
 import { CatalogFill } from './data/catalog-fill.js';
 import { CatalogWriteFence } from './data/catalog-write-fence.js';
@@ -20,32 +18,6 @@ function restrict(response) {
   headers.set('X-Content-Type-Options', 'nosniff');
   for (const [name, value] of Object.entries(readHeaders)) headers.set(name, value);
   return new Response(response.body, { status: response.status, headers });
-}
-
-function cmsRequest(env, origin, path, method = 'GET') {
-  return env.CMS.fetch(new URL(path, origin).href, {
-    method,
-    headers: { Authorization: 'Bearer ' + (path.startsWith('/api/content-v1.json?') ? env.CMS_CONTENT_READ_KEY : env.STAGING_CMS_KEY) },
-    redirect: 'manual',
-  });
-}
-
-function renderCatalog(request, env, context, published) {
-  const url = new URL(request.url);
-  return withStagingRequest(async () => {
-    if (url.pathname === '/sitemap.xml') {
-      const xml = await stagingSitemap();
-      return new Response(request.method === 'HEAD' ? null : xml, { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });
-    }
-    const response = await handle(request, env, context);
-    if (response.status === 200 && response.headers.get('content-type')?.startsWith('text/html')
-      && !url.pathname.endsWith('/')) {
-      await response.body?.cancel();
-      return new Response(null, { status: 301, headers: { Location: url.pathname + '/' + url.search } });
-    }
-    return response;
-  }, query => cmsRequest(env, url.origin, (published ? '/api/content-v1.json?' : '/api/staging-v1.json?') + query),
-  published ? 'published' : 'preview');
 }
 
 export class CatalogFillCoordinator extends DurableObject {

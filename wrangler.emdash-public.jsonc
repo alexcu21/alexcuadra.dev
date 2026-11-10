@@ -1,0 +1,86 @@
+{
+  "name": "alexcuadra-dev",
+  "main": "src/worker-emdash.js",
+  "exports": {
+    "CmsOriginCoordinator": {
+      "type": "durable-object",
+      "storage": "sqlite"
+    },
+    "ContactCoordinator": {
+      "type": "durable-object",
+      "storage": "sqlite"
+    }
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "CMS_ORIGIN_COORDINATOR",
+        "class_name": "CmsOriginCoordinator"
+      },
+      {
+        "name": "CONTACT_COORDINATOR",
+        "class_name": "ContactCoordinator"
+      }
+    ]
+  },
+  "send_email": [
+    {
+      "name": "CONTACT_EMAIL",
+      "allowed_sender_addresses": [
+        "contact@forms.alexcuadra.dev"
+      ]
+    }
+  ],
+  "ratelimits": [
+    {
+      "name": "CONTACT_RATE_LIMITER",
+      "namespace_id": "2026103101",
+      "simple": {
+        "limit": 5,
+        "period": 60
+      }
+    }
+  ],
+  "workers_dev": true,
+  "routes": [
+    {
+      "pattern": "alexcuadra.dev",
+      "custom_domain": true
+    }
+  ],
+  "vars": {
+    "WPGRAPHQL_AUTH_ENABLED": "true",
+    "WPGRAPHQL_USERNAME": "AlexSuscriptor",
+    "CMS_ORIGIN_COOLDOWN_ENABLED": "true",
+    "CMS_ORIGIN_COORDINATOR_ENABLED": "true",
+    "CONTACT_FORM_ENABLED": "false",
+    "CONTACT_ORIGIN": "https://alexcuadra.dev",
+    "CONTACT_FROM_EMAIL": "contact@forms.alexcuadra.dev",
+    "TURNSTILE_SITE_KEY": "0x4AAAAAAFax8LJ1rzWgJsb8",
+    "CONTACT_TURNSTILE_SHARED_WIDGET_ALLOWED": "true",
+    "CONTACT_PRIVACY_PAGE_ID": "180",
+    "CONTACT_PRIVACY_ES_PAGE_ID": "182",
+    "CATALOG_CACHE_NAMESPACE": "emdash-cutover-v1"
+  },
+  "compatibility_date": "2026-10-17",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "keep_vars": true,
+  "assets": {
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "observability": {
+    "logs": {
+      "enabled": true,
+      "invocation_logs": true
+    }
+  },
+  "services": [
+    {
+      "binding": "CMS",
+      "service": "alexcuadra-cms-prod"
+    }
+  ]
+}

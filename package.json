@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
+    "build:emdash-candidate": "astro build --config astro.emdash-public.config.mjs && node scripts/seal-emdash-public.mjs",
     "build:production": "CLOUDFLARE_ENV=production npm run build",
     "preview": "astro preview",
     "astro": "astro",
