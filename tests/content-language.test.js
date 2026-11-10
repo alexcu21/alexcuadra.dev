@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { contentLocale, graphqlLanguage, publicTranslationLinks, publicLocalizedCollection } from '../src/data/content-language.js';
+import { contentLocale, graphqlLanguage, publicLocalizedCollection } from '../src/data/content-language.js';
 import { publicCacheKey } from '../src/data/cms-cache.js';
 
 const node = (code, overrides = {}) => ({ status: 'publish', isRestricted: false, hasPassword: false,
@@ -12,21 +12,6 @@ test('locale comes from the CMS enum, with no slug or default-language fallback'
   assert.equal(graphqlLanguage('en'), 'EN');
   assert.equal(graphqlLanguage('es'), 'ES');
   for (const value of [undefined, 'ALL', 'EN', 'fr']) assert.throws(() => graphqlLanguage(value), TypeError);
-});
-
-test('translation links discard unpublished, protected, restricted and incomplete targets', () => {
-  const valid = node('ES', { content: 'PRIVATE_EXTRA', acf: { secret: 'SECRET' } });
-  const invalid = [{ status: 'draft' }, { status: 'private' }, { status: 'future' }, { hasPassword: true },
-    { isRestricted: true }, { status: undefined }, { language: null }, { databaseId: null }, { slug: '../path' }];
-  const source = node('EN', { translations: [valid, ...invalid.map(change => node('ES', change)), node('EN'), null] });
-  assert.deepEqual(publicTranslationLinks(source), [{ databaseId: 10, slug: 'example', locale: 'es' }]);
-  assert.doesNotMatch(JSON.stringify(publicTranslationLinks(source)), /PRIVATE_EXTRA|SECRET|acf|content/);
-  assert.deepEqual(publicTranslationLinks({ ...source, hasPassword: true }), []);
-  assert.deepEqual(publicTranslationLinks(node('EN')), []);
-});
-
-test('ambiguous translation relationships fail closed', () => {
-  assert.deepEqual(publicTranslationLinks(node('EN', { translations: [node('ES'), node('ES', { databaseId: 11 })] })), []);
 });
 
 test('localized lists reject mixed languages and unpublished records', () => {

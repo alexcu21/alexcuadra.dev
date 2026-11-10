@@ -42,10 +42,12 @@ Desde la raíz del proyecto del CMS, instala dependencias con `pnpm install` y a
 
 En el proyecto del CMS, `docs/CORTE-Y-REVERSIÓN.md` documenta el despliegue, las verificaciones y la reversión. `docs/RESPALDO-Y-RESTAURACION.md` cubre la recuperación de datos y archivos. Las credenciales, respaldos y recibos privados se guardan fuera del control de versiones.
 
+`npm test` verifica el contrato de catálogo publicado, las rutas y la caché de EmDash, además de las funciones compartidas del frontend. Las suites que ejercitan el proveedor WPGraphQL pertenecen a la revisión anterior al corte. Para revisarlas con el código que probaban, usa una copia separada de esa revisión. [Revisión anterior al corte](https://github.com/alexcu21/alexcuadra.dev/tree/bce311080c678e8ff2d129ea04891727cd4a4f16)
+
 <details>
 <summary>Guía de desarrollo con WordPress</summary>
 
-Esta guía documenta el build anterior con WordPress y sus comandos de compatibilidad. El build con EmDash usa el manifiesto indicado arriba.
+Esta guía documenta el código y los comandos de la revisión anterior al corte. El build con EmDash usa el manifiesto indicado arriba.
 
 ## Stack
 

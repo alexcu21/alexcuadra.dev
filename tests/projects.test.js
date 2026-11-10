@@ -22,7 +22,7 @@ test('handles an empty collection', () => {
   assert.deepEqual(sortProjectsByModified([]), []);
 });
 
-const entry = (slug, modified, extra = {}) => ({slug,title:slug,modified,status:'publish',isRestricted:false,hasPassword:false,language:{code:'EN'},...extra});
+const entry = (slug, modified, extra = {}) => ({slug,title:slug,modified,publicationStatus:'published',locale:'en',...extra});
 test('adjacent projects follow the archive order with no wrap or source mutation', () => {
   const projects = [entry('old','2024-01-01'),entry('new','2026-01-01'),entry('middle','2025-01-01')];
   assert.deepEqual(projectNavigation(projects,'middle','en'),{
@@ -33,14 +33,13 @@ test('adjacent projects follow the archive order with no wrap or source mutation
   assert.equal(projects[0].slug,'old');
 });
 test('adjacent projects exclude other languages, nonpublic entries and invalid destinations', () => {
-  const projects = [entry('source','2026-01-01'),entry('draft','2025-01-01',{status:'draft'}),
-    entry('protected','2025-01-01',{hasPassword:true}),entry('restricted','2025-01-01',{isRestricted:true}),
-    entry('spanish','2025-01-01',{language:{code:'ES'}}),entry('bad%2fpath','2025-01-01'),
+  const projects = [entry('source','2026-01-01'),entry('private','2025-01-01',{publicationStatus:'private'}),
+    entry('spanish','2025-01-01',{locale:'es'}),entry('bad%2fpath','2025-01-01'),
     entry('empty-title','2025-01-01',{title:''}),entry('target','2024-01-01')];
   assert.deepEqual(projectNavigation(projects,'source','en'),{previous:null,next:{title:'target',path:'/work/target'}});
 });
 test('Spanish project navigation uses Spanish routes and projects only', () => {
-  const projects = [entry('uno','2026-01-01',{language:{code:'ES'}}),entry('dos','2025-01-01',{language:{code:'ES'}})];
+  const projects = [entry('uno','2026-01-01',{locale:'es'}),entry('dos','2025-01-01',{locale:'es'})];
   assert.deepEqual(projectNavigation(projects,'uno','es').next,{title:'dos',path:'/es/proyectos/dos'});
 });
 test('missing, singleton and ambiguous project navigation does not invent links', () => {

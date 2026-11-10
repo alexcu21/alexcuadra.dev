@@ -1,7 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { sitemapPaths, sitemapXml, sitemapReferences, loadSitemap } from '../src/data/sitemap.js';
-import { withCmsRequest } from '../src/data/cms-request.js';
+import { sitemapPaths, sitemapXml } from '../src/data/sitemap.js';
 
 const visible = { status: 'publish', isRestricted: false, hasPassword: false };
 const inventory = () => ({ pages: { '/': {}, '/es/': null, '/es/sobre-mi/': {} },
@@ -60,78 +59,3 @@ test('XML is canonical, escaped, deduplicated and has no fabricated dates', () =
   assert.throws(() => sitemapXml(['//other.test']), TypeError);
   assert.throws(() => sitemapXml(Array(50001).fill('/')), TypeError);
 });
-
-test('reference inventory paginates and preserves the current category relation', async t => {
-  const after = [];
-  t.mock.method(globalThis, 'fetch', async (_url, options) => {
-    const cursor = JSON.parse(options.body).variables.after; after.push(cursor);
-    return Response.json({ data: { articles: { nodes: [{ ...visible, slug: cursor ? 'second' : 'first',
-      categories: { nodes: [{ slug: 'medium' }], pageInfo: { hasNextPage: false } } }],
-    pageInfo: { hasNextPage: !cursor, endCursor: cursor ? null : 'cursor-1' } } } });
-  });
-  assert.equal((await sitemapReferences()).length, 2);
-  assert.deepEqual(after, [null, 'cursor-1']);
-});
-
-test('CMS failures return non-cacheable503 rather than an empty successful sitemap', async t => {
-  t.mock.method(console, 'error', () => {});
-  t.mock.method(globalThis, 'fetch', async () => new Response('private', { status: 429 }));
-  const response = await withCmsRequest(async () => new Response(sitemapXml(sitemapPaths({
-    ...inventory(), references: await sitemapReferences(),
-  })), { headers: { 'Content-Type': 'application/xml' } }));
-  assert.equal(response.status, 503);
-  assert.equal(response.headers.get('cache-control'), 'no-store');
-  assert.doesNotMatch(await response.text(), /<urlset|private/);
-});
-
-test('repeated pagination cursors and truncated category connections fail closed', async t => {
-  t.mock.method(console, 'error', () => {});
-  let categoriesComplete = true;
-  t.mock.method(globalThis, 'fetch', async () => Response.json({ data: { articles: {
-    nodes: [{ ...visible, slug: 'a', categories: { nodes: [], pageInfo: { hasNextPage: !categoriesComplete } } }],
-    pageInfo: { hasNextPage: true, endCursor: 'repeat' },
-  } } }));
-  await assert.rejects(sitemapReferences(), { code: 'CMS_PAGINATION' });
-  categoriesComplete = false;
-  await assert.rejects(sitemapReferences(), { code: 'CMS_SITEMAP_CONTRACT' });
-});
-
-for (const fail of [false, true]) {
-  test(`full sitemap bounds origin concurrency and stops after a failure: ${fail}`, async t => {
-    t.mock.method(console, 'error', () => {});
-    let active = 0, peak = 0;
-    const calls = [];
-    const connection = { nodes: [], pageInfo: { hasNextPage: false } };
-    t.mock.method(globalThis, 'fetch', async (_url, init) => {
-      const { query } = JSON.parse(init.body);
-      const operation = /query (\w+)/.exec(query)[1];
-      calls.push(operation);
-      peak = Math.max(peak, ++active);
-      await new Promise(resolve => setImmediate(resolve));
-      active--;
-      if (fail && operation === 'BlogPosts') return new Response('', { status: 429 });
-      let data;
-      if (operation === 'LocalizedHome') data = { viewer: { databaseId: 1 }, page: {
-        ...visible, language: { code: 'EN' }, translations: [], homePageFields: {},
-      } };
-      else if (operation === 'LocalizedAbout') data = { page: null };
-      else if (operation === 'LocalizedProjects') data = { projects: connection };
-      else if (operation === 'SitemapReferences') data = { articles: connection };
-      else if (operation === 'BlogPosts') data = { posts: connection };
-      else if (operation === 'LabProjects') data = { labProjects: connection };
-      else assert.fail(`Unexpected operation ${operation}`);
-      return Response.json({ data });
-    });
-    const response = await withCmsRequest(async () => new Response(await loadSitemap({})));
-    assert.equal(peak, 1, 'The sitemap must not burst parallel CMS queries');
-    assert.equal(calls.filter(item => item === 'LocalizedHome').length, 1, 'Shared source remains deduplicated');
-    if (fail) {
-      assert.equal(response.status, 503);
-      assert.ok(!calls.includes('LabProjects'), 'No later inventory queries after failure');
-      assert.doesNotMatch(await response.text(), /<urlset/);
-    } else {
-      assert.equal(response.status, 200);
-      assert.match(await response.text(), /https:\/\/alexcuadra.dev\//);
-    }
-  });
-}
